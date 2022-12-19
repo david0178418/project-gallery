@@ -2,12 +2,28 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Copy `.env.local.sample` to `.env.local` and change the values as needed:
+
+```bash
+NODE_ENV="development"
+DB_NAME="awesome-default-db"
+MONGODB_URI="mongodb://127.0.0.1:27017"
+JWT_SECRET="jwt-super-secret"
+NEXTAUTH_SECRET="some-super-secret"
+HOST="http://localhost:3000"
+NEXTAUTH_URL="${HOST}"
+```
+
+Optionally, spin up the mongo docker container if you don't have a mongo server to connect to.  This will spin up a server at `mongodb://127.0.0.1:27017`:
+
+```bash
+npm run dev:db
+```
+
 First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
