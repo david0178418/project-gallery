@@ -1,0 +1,12 @@
+import { ObjectId } from 'mongodb';
+
+export
+interface DbUserMeta {
+	userId: ObjectId;
+	created: string;
+}
+
+export
+type UiUserMeta = Omit<DbUserMeta, 'userId'> & {
+	userId: string;
+}
