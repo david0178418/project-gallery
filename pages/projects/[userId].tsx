@@ -1,13 +1,15 @@
 import { AppName, SpecialCharacterCodes } from '@common/constants';
 import { useRouteBackDefault } from '@common/hooks';
 import { ScrollContent } from '@components/scroll-content';
+import { BackIcon } from '@components/icons';
 import Head from 'next/head';
+import PorjectCard from '@components/project-card';
 import {
 	Box,
+	Grid,
 	IconButton,
 	Typography,
 } from '@mui/material';
-import { BackIcon } from '@components/icons';
 
 export default
 function UserProjects() {
@@ -29,12 +31,57 @@ function UserProjects() {
 							<IconButton color="primary" onClick={routeBack}>
 								<BackIcon />
 							</IconButton>{SpecialCharacterCodes.NBSP}
-							Post
+							Projects
 						</Typography>
 					</Box>
 				}
 			>
-				Foo
+				<Box padding={1}>
+					<Grid container spacing={1} >
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<PorjectCard />
+						</Grid>
+					</Grid>
+				</Box>
 			</ScrollContent>
 		</>
 	);

@@ -99,6 +99,11 @@ function uniqueBy<T>(arr: T[], key: keyof T) {
 }
 
 export
+function random(min = 0, max = 100) {
+	return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export
 function uuid() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
 		// eslint-disable-next-line eqeqeq, no-mixed-operators
