@@ -12,6 +12,8 @@ import {
 	HomeIcon,
 	ProfileActiveIcon,
 	ProfileIcon,
+	SettingsActiveIcon,
+	SettingsIcon,
 } from '@components/icons';
 import {
 	List,
@@ -20,6 +22,7 @@ import {
 	ListItemIcon,
 	ListItemText,
 } from '@mui/material';
+import { urlJoin } from '@common/utils';
 
 interface Props {
 	label: string;
@@ -110,25 +113,46 @@ function LeftRail() {
 					</>
 				)}
 				{!!user && (
-					<ListItem disablePadding>
-						<Link
-							shallow
-							passHref
-							href={Paths.Profile}
-						>
-							<ListItemButton>
-								<RailButtonContent
-									label={user.username}
-								>
-									{
-										Paths.Profile === pathname ?
-											<ProfileActiveIcon /> :
-											<ProfileIcon />
-									}
-								</RailButtonContent>
-							</ListItemButton>
-						</Link>
-					</ListItem>
+					<>
+						<ListItem disablePadding>
+							<Link
+								shallow
+								passHref
+								href={urlJoin(Paths.Projects, user?.username)}
+							>
+								<ListItemButton>
+									<RailButtonContent
+										label={user.username}
+									>
+										{
+											pathname.startsWith(Paths.Projects) ?
+												<ProfileActiveIcon /> :
+												<ProfileIcon />
+										}
+									</RailButtonContent>
+								</ListItemButton>
+							</Link>
+						</ListItem>
+						<ListItem disablePadding>
+							<Link
+								shallow
+								passHref
+								href={Paths.Settings}
+							>
+								<ListItemButton>
+									<RailButtonContent
+										label="Settings"
+									>
+										{
+											Paths.Settings === pathname ?
+												<SettingsActiveIcon /> :
+												<SettingsIcon />
+										}
+									</RailButtonContent>
+								</ListItemButton>
+							</Link>
+						</ListItem>
+					</>
 				)}
 			</List>
 		</>

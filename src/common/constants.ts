@@ -86,8 +86,7 @@ export
 const Paths = {
 	Home: '/',
 	Settings: '/settings',
-	Projects: '/p',
-	Profile: '/profile',
+	Projects: '/projects',
 } as const;
 
 export

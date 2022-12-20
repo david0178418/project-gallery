@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { getServerSession } from '@server/auth-options';
 import { Box, Button } from '@mui/material';
 import { PasswordChangeForm } from '@components/password-change-form';
+import { urlJoin } from '@common/utils';
 
 export
 const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -32,6 +33,12 @@ const ProfilePage: NextPage<any> = () => {
 		query,
 	} = router;
 
+	if(!session.data?.user) {
+		return null;
+	}
+
+	const user = session.data.user;
+
 	return (
 		<Box padding={2}>
 			Signed in as {session.data?.user.username}
@@ -54,7 +61,7 @@ const ProfilePage: NextPage<any> = () => {
 				<Link
 					shallow
 					passHref
-					href={Paths.Projects}
+					href={urlJoin(Paths.Projects, user.username)}
 				>
 					<Button>
 						My Projects

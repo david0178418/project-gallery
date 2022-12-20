@@ -23,5 +23,6 @@ export { default as MoreIcon } from '@mui/icons-material/MoreHoriz';
 export { default as ProfileActiveIcon } from '@mui/icons-material/Person';
 export { default as ProfileIcon } from '@mui/icons-material/PersonOutline';
 export { default as SearchIcon } from '@mui/icons-material/Search';
-export { default as SettingsIcon } from '@mui/icons-material/Settings';
+export { default as SettingsActiveIcon } from '@mui/icons-material/Settings';
+export { default as SettingsIcon } from '@mui/icons-material/SettingsOutlined';
 export { default as SettingsOutlinedIcon } from '@mui/icons-material/SettingsOutlined';
