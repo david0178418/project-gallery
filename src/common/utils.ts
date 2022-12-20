@@ -151,7 +151,7 @@ export
 function localizedDateFormat(date: string) {
 	return IsSsr ?
 		'-' :
-		format(new Date(date), 'p · PP');
+		format(new Date(date), 'PPP');
 }
 
 export

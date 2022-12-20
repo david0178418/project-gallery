@@ -3,10 +3,8 @@ import { useRouteBackDefault } from '@common/hooks';
 import { ScrollContent } from '@components/scroll-content';
 import { BackIcon } from '@components/icons';
 import Head from 'next/head';
-import PorjectCard from '@components/project-card';
 import {
 	Box,
-	Grid,
 	IconButton,
 	Typography,
 } from '@mui/material';
@@ -36,52 +34,6 @@ function UserProjects() {
 					</Box>
 				}
 			>
-				<Box padding={1}>
-					<Grid container spacing={1} >
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<PorjectCard />
-						</Grid>
-					</Grid>
-				</Box>
 			</ScrollContent>
 		</>
 	);

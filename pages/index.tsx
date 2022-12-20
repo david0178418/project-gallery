@@ -1,13 +1,18 @@
 import Head from 'next/head';
-import { LoginBtn } from '@components/login-btn';
-import { useIsLoggedIn } from '@common/hooks';
 import { GetServerSideProps } from 'next';
 import { getServerSession } from '@server/auth-options';
-import { Container } from '@mui/material';
 import { AppName } from '@common/constants';
+import { ScrollContent } from '@components/scroll-content';
+import PorjectCard from '@components/project-card';
+import { random } from '@common/utils';
+import {
+	Box,
+	Container,
+	Grid,
+} from '@mui/material';
 
 interface Props {
-	myData: any;
+	projects: any[];
 }
 
 export
@@ -17,14 +22,42 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	return {
 		props: {
 			session,
-			myData: { someData: 'foo' },
+			projects: [
+				{
+					_id: 'asdfasdfasdf',
+					created: new Date().toISOString(),
+					createdBy: 'Foo',
+					lastUpdated: new Date().toISOString(),
+					title: 'My Awesome Title',
+					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+					summary: 'Anotbher awesome Project',
+					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+				}, {
+					_id: 'fadsgsdfsd',
+					created: new Date().toISOString(),
+					createdBy: 'Foo',
+					lastUpdated: new Date().toISOString(),
+					title: 'My Awesome Title',
+					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+					summary: 'My Awesome Project Summary',
+					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+				}, {
+					_id: '11b231j2k',
+					created: new Date().toISOString(),
+					createdBy: 'Foo',
+					lastUpdated: new Date().toISOString(),
+					title: 'My Awesome Title',
+					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+					summary: 'My Awesome Project Summary',
+					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+				},
+			],
 		},
 	};
 };
 
 export default function Home(props: Props) {
-	const { myData } = props;
-	const isLoggedIn = useIsLoggedIn();
+	const { projects } = props;
 
 	return (
 		<Container>
@@ -33,22 +66,22 @@ export default function Home(props: Props) {
 				<meta name="description" content={AppName} />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			{!isLoggedIn && (
-				<>
-					<strong>
-						Not logged in
-					</strong>
-					<LoginBtn />
-				</>
-			)}
-			{isLoggedIn && (
-				<strong>
-					Logged In
-				</strong>
-			)}
-			<pre>
-				myData: {JSON.stringify(myData)}
-			</pre>
+			<ScrollContent>
+				<Box padding={1}>
+					<Grid container spacing={1} >
+						{projects.map(p => (
+							<Grid
+								key={p._id}
+								item
+								xs={12}
+								md={6}
+							>
+								<PorjectCard {...p} />
+							</Grid>
+						))}
+					</Grid>
+				</Box>
+			</ScrollContent>
 		</Container>
 	);
 }
