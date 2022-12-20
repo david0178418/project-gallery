@@ -10,6 +10,7 @@ import {
 	Container,
 	Grid,
 } from '@mui/material';
+import { SearchForm } from '@components/search-form';
 
 interface Props {
 	projects: any[];
@@ -66,7 +67,37 @@ export default function Home(props: Props) {
 				<meta name="description" content={AppName} />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<ScrollContent>
+			<ScrollContent
+				header={
+					<Box
+						sx={{
+							paddingTop: 1,
+							paddingBottom: 1,
+						}}
+					>
+						<Box
+							paddingBottom={1}
+							sx={{
+								paddingLeft: {
+									xs: 2,
+									sm: 10,
+									md: 15,
+									lg: 20,
+								},
+								paddingRight: {
+									xs: 2,
+									sm: 10,
+									md: 15,
+									lg: 20,
+								},
+							}}
+						>
+							<SearchForm />
+						</Box>
+						{/* TODO <HomeSortTabs /> */}
+					</Box>
+				}
+			>
 				<Box padding={1}>
 					<Grid container spacing={1} >
 						{projects.map(p => (

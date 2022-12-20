@@ -29,6 +29,9 @@ export
 const IsSsr = typeof window === 'undefined';
 
 export
+const MaxSearchTermSize = 100;
+
+export
 const MongoIdLength = 24;
 
 export
@@ -85,6 +88,7 @@ const NotLoggedInErrMsg = {
 export
 const Paths = {
 	Home: '/',
+	Search: '/search',
 	Settings: '/settings',
 	Projects: '/projects',
 } as const;
