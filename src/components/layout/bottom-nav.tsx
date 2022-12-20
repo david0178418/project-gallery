@@ -17,7 +17,10 @@ import {
 	LoginIcon,
 	ProfileActiveIcon,
 	ProfileIcon,
+	SettingsActiveIcon,
+	SettingsIcon,
 } from '@components/icons';
+import { urlJoin } from '@common/utils';
 
 // TODO Figure out the weird link behavior
 
@@ -48,14 +51,14 @@ function BottomNav() {
 			}}
 		>
 			<BottomNavigation
-				showLabels
+				// showLabels Something wrong with this combined with the BottomNavigationAction/Link combo
 				value={value}
 				onChange={(event, newValue) => setValue(newValue)}
 			>
 				<BottomNavigationAction
 					LinkComponent={Link}
 					href={Paths.Home}
-					label="Home"
+					// label="Home"
 					icon={
 						Paths.Home === asPath ?
 							<HomeActiveIcon /> :
@@ -63,9 +66,8 @@ function BottomNav() {
 					}
 				/>
 				{!user && (
-
 					<BottomNavigationAction
-						label="Login"
+						// label="Login"
 						icon={<LoginIcon />}
 						href="TODO-why-is-this-hack-needed"
 						LinkComponent={forwardRef((props, ref) => (
@@ -84,16 +86,28 @@ function BottomNav() {
 					/>
 				)}
 				{!!user && (
-					<BottomNavigationAction
-						LinkComponent={Link}
-						label={user.username}
-						href={Paths.Profile}
-						icon={
-							Paths.Profile === pathname ?
-								<ProfileActiveIcon /> :
-								<ProfileIcon />
-						}
-					/>
+					<>
+						<BottomNavigationAction
+							LinkComponent={Link}
+							// label={user.username}
+							href={urlJoin(Paths.Projects, user?.username)}
+							icon={
+								pathname.startsWith(Paths.Projects) ?
+									<ProfileActiveIcon /> :
+									<ProfileIcon />
+							}
+						/>
+						<BottomNavigationAction
+							LinkComponent={Link}
+							label="Settings"
+							href={Paths.Settings}
+							icon={
+								Paths.Settings === pathname ?
+									<SettingsActiveIcon /> :
+									<SettingsIcon />
+							}
+						/>
+					</>
 				)}
 			</BottomNavigation>
 		</Paper>
