@@ -4,6 +4,7 @@ import { ExpandedToggleButton } from '@components/expand-toggle-button';
 import { FavoriteBorder } from '@mui/icons-material';
 import { useState } from 'react';
 import { localizedDateFormat } from '@common/utils';
+import { UiProject } from '@common/types/Project';
 import {
 	Avatar,
 	Card,
@@ -16,16 +17,14 @@ import {
 	Typography,
 } from '@mui/material';
 
+interface Props {
+	project: UiProject;
+}
+
 export default
-function PorjectCard(props: any) {
+function PorjectCard(props: Props) {
 	const [expanded, setExpanded] = useState(false);
-	const {
-		title,
-		created,
-		summary,
-		detail,
-		titleImageUrl,
-	} = props;
+	const { project } = props;
 
 	function handleExpandClick() {
 		setExpanded(!expanded);
@@ -34,8 +33,13 @@ function PorjectCard(props: any) {
 	return (
 		<Card elevation={2}>
 			<CardHeader
-				title={title}
-				subheader={localizedDateFormat(created)}
+				title={project.title}
+				subheader={(
+					<>
+						created: {localizedDateFormat(project.projectCreated)}<br/>
+						last updated: {localizedDateFormat(project.projectLastUpdated)}
+					</>
+				)}
 				avatar={
 					<Avatar sx={{ bgcolor: red[500] }}>
 						F
@@ -45,11 +49,11 @@ function PorjectCard(props: any) {
 			<CardMedia
 				component="img"
 				height="194"
-				image={titleImageUrl}
+				image={project.titleImageUrl}
 			/>
 			<CardContent>
 				<Typography variant="body2" color="text.secondary">
-					{summary}
+					{project.summary}
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
@@ -67,7 +71,7 @@ function PorjectCard(props: any) {
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent>
 					<Typography paragraph>
-						{detail}
+						{project.detail}
 					</Typography>
 				</CardContent>
 			</Collapse>

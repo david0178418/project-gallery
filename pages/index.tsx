@@ -5,15 +5,15 @@ import { AppName } from '@common/constants';
 import { ScrollContent } from '@components/scroll-content';
 import PorjectCard from '@components/project-card';
 import { random } from '@common/utils';
+import { SearchForm } from '@components/search-form';
+import { UiProject } from '@common/types/Project';
 import {
 	Box,
-	Container,
 	Grid,
 } from '@mui/material';
-import { SearchForm } from '@components/search-form';
 
 interface Props {
-	projects: any[];
+	projects: UiProject[];
 }
 
 export
@@ -27,8 +27,13 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 				{
 					_id: 'asdfasdfasdf',
 					created: new Date().toISOString(),
-					createdBy: 'Foo',
+					createdBy: {
+						_id: 'asfdasdfa',
+						username: 'Foo',
+					},
 					lastUpdated: new Date().toISOString(),
+					projectCreated: new Date().toISOString(),
+					projectLastUpdated: new Date().toISOString(),
 					title: 'My Awesome Title',
 					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
 					summary: 'Anotbher awesome Project',
@@ -36,8 +41,13 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 				}, {
 					_id: 'fadsgsdfsd',
 					created: new Date().toISOString(),
-					createdBy: 'Foo',
+					createdBy: {
+						_id: 'asfdasdfa',
+						username: 'Foo',
+					},
 					lastUpdated: new Date().toISOString(),
+					projectCreated: new Date().toISOString(),
+					projectLastUpdated: new Date().toISOString(),
 					title: 'My Awesome Title',
 					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
 					summary: 'My Awesome Project Summary',
@@ -45,8 +55,55 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 				}, {
 					_id: '11b231j2k',
 					created: new Date().toISOString(),
-					createdBy: 'Foo',
+					createdBy: {
+						_id: 'asfdasdfa',
+						username: 'Foo',
+					},
 					lastUpdated: new Date().toISOString(),
+					projectCreated: new Date().toISOString(),
+					projectLastUpdated: new Date().toISOString(),
+					title: 'My Awesome Title',
+					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+					summary: 'My Awesome Project Summary',
+					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+				}, {
+					_id: '11b2gasdfasdfasd31j2k',
+					created: new Date().toISOString(),
+					createdBy: {
+						_id: 'asfdasdfa',
+						username: 'Foo',
+					},
+					lastUpdated: new Date().toISOString(),
+					projectCreated: new Date().toISOString(),
+					projectLastUpdated: new Date().toISOString(),
+					title: 'My Awesome Title',
+					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+					summary: 'My Awesome Project Summary',
+					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+				}, {
+					_id: '11b2gasdffasd31j2k',
+					created: new Date().toISOString(),
+					createdBy: {
+						_id: 'asfdasdfa',
+						username: 'Foo',
+					},
+					lastUpdated: new Date().toISOString(),
+					projectCreated: new Date().toISOString(),
+					projectLastUpdated: new Date().toISOString(),
+					title: 'My Awesome Title',
+					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+					summary: 'My Awesome Project Summary',
+					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+				}, {
+					_id: '11b2gasgsagasasdfasd31j2k',
+					created: new Date().toISOString(),
+					createdBy: {
+						_id: 'asfdasdfa',
+						username: 'Foo',
+					},
+					lastUpdated: new Date().toISOString(),
+					projectCreated: new Date().toISOString(),
+					projectLastUpdated: new Date().toISOString(),
 					title: 'My Awesome Title',
 					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
 					summary: 'My Awesome Project Summary',
@@ -61,7 +118,7 @@ export default function Home(props: Props) {
 	const { projects } = props;
 
 	return (
-		<Container>
+		<>
 			<Head>
 				<title>{AppName}</title>
 				<meta name="description" content={AppName} />
@@ -98,21 +155,21 @@ export default function Home(props: Props) {
 					</Box>
 				}
 			>
-				<Box padding={1}>
-					<Grid container spacing={1} >
-						{projects.map(p => (
-							<Grid
-								key={p._id}
-								item
-								xs={12}
-								md={6}
-							>
-								<PorjectCard {...p} />
-							</Grid>
-						))}
-					</Grid>
-				</Box>
+				<Grid padding={1} container spacing={1} >
+					{projects.map(p => (
+						<Grid
+							key={p._id}
+							item
+							xs={12}
+							md={6}
+						>
+							<PorjectCard
+								project={p}
+							/>
+						</Grid>
+					))}
+				</Grid>
 			</ScrollContent>
-		</Container>
+		</>
 	);
 }

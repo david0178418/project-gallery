@@ -1,4 +1,4 @@
-import type { DbUser } from '@server/db-schema/DbUser';
+import type { DbUser } from '@common/types/User';
 import type { WithId } from 'mongodb';
 
 import { getCollection } from '@server/mongodb';

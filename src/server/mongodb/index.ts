@@ -1,15 +1,15 @@
 import { DbCollections } from '@common/constants';
 import { setupDb } from './setup-db';
-import { DbTextGram } from '@server/db-schema/DbTextGram';
-import { DbUser } from '@server/db-schema/DbUser';
-import { DbUserMeta } from '@server/db-schema/DbUserMeta';
+import { DbTextGram } from '@common/types/TextGram';
+import { DbUser } from '@common/types/User';
+import { DbUserMeta } from '@common/types/UserMeta';
+import { Enum } from '@common/types';
 import {
 	Collection,
 	Db,
 	MongoClient,
 	MongoClientOptions,
 } from 'mongodb';
-import { Enum } from '@common/types';
 
 type DbCollectionsEnum = Enum<typeof DbCollections>;
 
