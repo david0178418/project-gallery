@@ -51,14 +51,14 @@ function BottomNav() {
 			}}
 		>
 			<BottomNavigation
-				// showLabels Something wrong with this combined with the BottomNavigationAction/Link combo
+				showLabels
 				value={value}
 				onChange={(event, newValue) => setValue(newValue)}
 			>
 				<BottomNavigationAction
 					LinkComponent={Link}
 					href={Paths.Home}
-					// label="Home"
+					label="Home"
 					icon={
 						Paths.Home === asPath ?
 							<HomeActiveIcon /> :
@@ -67,9 +67,9 @@ function BottomNav() {
 				/>
 				{!user && (
 					<BottomNavigationAction
-						// label="Login"
-						icon={<LoginIcon />}
+						label="Login"
 						href="TODO-why-is-this-hack-needed"
+						icon={<LoginIcon />}
 						LinkComponent={forwardRef((props, ref) => (
 							<Link
 								ref={ref}
@@ -86,18 +86,20 @@ function BottomNav() {
 					/>
 				)}
 				{!!user && (
-					<>
+					[
 						<BottomNavigationAction
+							key="a"
 							LinkComponent={Link}
-							// label={user.username}
+							label={user.username}
 							href={urlJoin(Paths.Projects, user?.username)}
 							icon={
 								pathname.startsWith(Paths.Projects) ?
 									<ProfileActiveIcon /> :
 									<ProfileIcon />
 							}
-						/>
+						/>,
 						<BottomNavigationAction
+							key="b"
 							LinkComponent={Link}
 							label="Settings"
 							href={Paths.Settings}
@@ -106,8 +108,8 @@ function BottomNav() {
 									<SettingsActiveIcon /> :
 									<SettingsIcon />
 							}
-						/>
-					</>
+						/>,
+					]
 				)}
 			</BottomNavigation>
 		</Paper>
