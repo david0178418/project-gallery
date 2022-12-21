@@ -14,8 +14,10 @@ import {
 	ProfileIcon,
 	SettingsActiveIcon,
 	SettingsIcon,
+	CreateIcon,
 } from '@components/icons';
 import {
+	Fab,
 	List,
 	ListItem,
 	ListItemButton,
@@ -152,6 +154,44 @@ function LeftRail() {
 								</ListItemButton>
 							</Link>
 						</ListItem>
+						<Link
+							shallow
+							href={{
+								pathname,
+								query: {
+									a: ModalActions.CreateProject,
+									...query,
+								},
+							}}
+						>
+							<>
+								<Fab
+									color="primary"
+									sx={{
+										display: {
+											xs: 'inline-flex',
+											md: 'none',
+										},
+									}}
+								>
+									<CreateIcon/>
+								</Fab>
+								<Fab
+									variant="extended"
+									color="primary"
+									style={{ width: '100%' }}
+									sx={{
+										display: {
+											xs: 'none',
+											md: 'inline-flex',
+										},
+									}}
+								>
+									<CreateIcon sx={{ mr: 1 }} />
+									Create Project
+								</Fab>
+							</>
+						</Link>
 					</>
 				)}
 			</List>

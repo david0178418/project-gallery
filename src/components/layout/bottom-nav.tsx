@@ -9,9 +9,11 @@ import {
 import {
 	BottomNavigation,
 	BottomNavigationAction,
+	Fab,
 	Paper,
 } from '@mui/material';
 import {
+	CreateIcon,
 	HomeActiveIcon,
 	HomeIcon,
 	LoginIcon,
@@ -112,6 +114,30 @@ function BottomNav() {
 					]
 				)}
 			</BottomNavigation>
+			{!!user && (
+				<Link
+					shallow
+					passHref
+					href={{
+						pathname,
+						query: {
+							a: ModalActions.CreateProject,
+							...query,
+						},
+					}}
+				>
+					<Fab
+						color="primary"
+						sx={{
+							position: 'absolute',
+							top: -64,
+							right: 16,
+						}}
+					>
+						<CreateIcon />
+					</Fab>
+				</Link>
+			)}
 		</Paper>
 	);
 }

@@ -75,9 +75,10 @@ const ExtendedWhitespaceRegex = /\s{2,}/g;
 
 export
 const ModalActions = {
+	CreateProject: 'create-project',
 	LoginRegister: 'login-register',
 	Logout: 'logout',
-};
+} as const;
 
 export
 const NotLoggedInErrMsg = {
