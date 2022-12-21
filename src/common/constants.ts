@@ -32,6 +32,24 @@ export
 const MaxSearchTermSize = 100;
 
 export
+const MaxProjectDetailLength = 1000;
+
+export
+const MinProjectDetailLength = 10;
+
+export
+const MaxProjectSummaryLength = 280;
+
+export
+const MinProjectSummaryLength = 10;
+
+export
+const MaxProjectTitleLength = 100;
+
+export
+const MinProjectTitleLength = 10;
+
+export
 const MongoIdLength = 24;
 
 export

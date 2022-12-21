@@ -7,6 +7,15 @@ interface ApiResponse<T = any> {
 	data?: T;
 	errors?: string[];
 }
+export
+interface CommonButtonProps {
+	disabled?: boolean;
+	fullWidth?: boolean;
+	label?: string;
+	href?: string;
+	onClick?(): void;
+	children?: ReactNode;
+}
 
 export
 interface Settings {
