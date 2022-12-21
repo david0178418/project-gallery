@@ -79,7 +79,7 @@ const BaseReq: RequestInit = {
 		Accept: 'application/json, text/plain, */*',
 		'Content-Type': 'application/json',
 	},
-};
+} as const;
 
 export
 const DbCollections = {
@@ -117,7 +117,7 @@ const SpecialCharacterCodes = {
 	NBSP: '\u00A0',
 	DOT: '\u2022',
 	QUOTE: '\u0022',
-};
+} as const;
 
 export
 // Source: https://99webtools.com/blog/list-of-english-stop-words/
