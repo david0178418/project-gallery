@@ -5,6 +5,7 @@ import { getCollection } from '@server/mongodb';
 import { getServerSession } from '@server/auth-options';
 import { fetchUser } from '@server/queries';
 import { passwordToHash } from '@server/transforms';
+import { ObjectId } from 'mongodb';
 import {
 	DbCollections,
 	PasswordMaxLength,
@@ -13,7 +14,6 @@ import {
 	UsernameMinLength,
 	UserRoles,
 } from '@common/constants';
-import { ObjectId } from 'mongodb';
 
 interface Schema {
 	password: string;
