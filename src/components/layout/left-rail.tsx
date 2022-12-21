@@ -75,6 +75,7 @@ function LeftRail() {
 					<Link
 						shallow
 						passHref
+						legacyBehavior
 						href={Paths.Home}
 					>
 						<ListItemButton>
@@ -94,6 +95,7 @@ function LeftRail() {
 							<Link
 								shallow
 								passHref
+								legacyBehavior
 								href={{
 									pathname,
 									query: {
@@ -120,6 +122,7 @@ function LeftRail() {
 							<Link
 								shallow
 								passHref
+								legacyBehavior
 								href={urlJoin(Paths.Projects, user?.username)}
 							>
 								<ListItemButton>
@@ -139,6 +142,7 @@ function LeftRail() {
 							<Link
 								shallow
 								passHref
+								legacyBehavior
 								href={Paths.Settings}
 							>
 								<ListItemButton>
