@@ -4,9 +4,9 @@ const nextConfig = {
 	swcMinify: true,
 	experimental: {
 		legacyBrowsers: false,
-	  // Enabled in preperation of release of canary feature.
-	  // serverComponents: true,
+		// Enabled in preperation of release of canary feature.
+		// serverComponents: true,
 	},
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -36,7 +36,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 					projectLastUpdated: new Date().toISOString(),
 					title: 'My Awesome Title',
 					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
-					summary: 'Anotbher awesome Project',
+					summary: 'Anotbher awesome Project #hashtagtest',
 					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
 				}, {
 					_id: 'fadsgsdfsd',
@@ -50,7 +50,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 					projectLastUpdated: new Date().toISOString(),
 					title: 'My Awesome Title',
 					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
-					summary: 'My Awesome Project Summary',
+					summary: 'My Awesome Project Summary https://twitter.com',
 					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
 				}, {
 					_id: '11b231j2k',

@@ -16,6 +16,7 @@ import {
 	IconButton,
 	Typography,
 } from '@mui/material';
+import { ParsedContent } from './parsed-content';
 
 interface Props {
 	project: UiProject;
@@ -53,7 +54,9 @@ function PorjectCard(props: Props) {
 			/>
 			<CardContent>
 				<Typography variant="body2" color="text.secondary">
-					{project.summary}
+					<ParsedContent>
+						{project.summary}
+					</ParsedContent>
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
@@ -71,7 +74,9 @@ function PorjectCard(props: Props) {
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent>
 					<Typography paragraph>
-						{project.detail}
+						<ParsedContent>
+							{project.detail}
+						</ParsedContent>
 					</Typography>
 				</CardContent>
 			</Collapse>

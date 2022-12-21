@@ -23,6 +23,8 @@
     "@vercel/analytics": "^0.1.6",
     "bcryptjs": "^2.4.3",
     "date-fns": "^2.29.3",
+    "interweave-autolink": "^5.1.0",
+    "interweave-ssr": "^2.0.0",
     "jotai": "^1.11.2",
     "mongodb": "^4.12.1",
     "next": "^13.0.7",
