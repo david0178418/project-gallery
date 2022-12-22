@@ -12,7 +12,6 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { Session } from 'next-auth';
 import dynamic from 'next/dynamic';
 import { Layout } from '@components/layout';
-import { Analytics } from '@vercel/analytics/react';
 
 interface Props {
 	session: Session | null;
@@ -63,7 +62,6 @@ function App(props: AppProps<Props>) {
 					<CommonModals />
 				</SessionProvider>
 			</ThemeProvider>
-			<Analytics/>
 		</>);
 }
 
