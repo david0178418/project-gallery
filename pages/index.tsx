@@ -19,9 +19,12 @@ interface Props {
 
 export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
+	console.log(111);
 	const session = await getServerSession(ctx.req, ctx.res);
+	console.log(2222);
 	const dbProjects = await fetchProjects() || [];
 
+	console.log(3333);
 	return {
 		props: {
 			session,
@@ -31,6 +34,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 };
 
 export default function Home(props: Props) {
+	console.log(444);
 	const { projects } = props;
 
 	return (
