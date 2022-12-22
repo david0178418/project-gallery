@@ -157,6 +157,12 @@ function nowISOString() {
 }
 
 export
+function isISOString(str: string) {
+	const date = new Date(str);
+	return !isNaN(date.getTime()) && date.toISOString() === str;
+}
+
+export
 function multiplyList<T>(list: T[], multiple: number) {
 	return range(multiple).map(() => list).flat();
 }

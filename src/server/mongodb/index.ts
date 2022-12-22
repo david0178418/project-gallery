@@ -4,6 +4,7 @@ import { DbTextGram } from '@common/types/TextGram';
 import { DbUser } from '@common/types/User';
 import { DbUserMeta } from '@common/types/UserMeta';
 import { Enum } from '@common/types';
+import { DbProject } from '@common/types/Project';
 import {
 	Collection,
 	Db,
@@ -46,6 +47,7 @@ if (process.env.NODE_ENV === 'development') {
 /* eslint-disable @typescript-eslint/indent */
 type CollectionType<T> =
 	T extends typeof DbCollections.Grams ? DbTextGram :
+	T extends typeof DbCollections.Projects ? DbProject :
 	T extends typeof DbCollections.Users ? DbUser :
 	T extends typeof DbCollections.UsersMeta ? DbUserMeta :
 	never;

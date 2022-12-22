@@ -47,7 +47,7 @@ export
 const MaxProjectTitleLength = 100;
 
 export
-const MinProjectTitleLength = 10;
+const MinProjectTitleLength = 3;
 
 export
 const MongoIdLength = 24;
@@ -84,6 +84,7 @@ const BaseReq: RequestInit = {
 export
 const DbCollections = {
 	Grams: 'grams',
+	Projects: 'projects',
 	Users: 'users',
 	UsersMeta: 'users-meta',
 } as const;
