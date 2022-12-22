@@ -16,6 +16,76 @@ interface Props {
 	projects: UiProject[];
 }
 
+const dummyProjects: UiProject[] = [
+	{
+		_id: 'asdfasdfasdf',
+		createdDate: new Date().toISOString(),
+		ownerId: 'asfdasdfa',
+		lastUpdatedDate: new Date().toISOString(),
+		projectCreatedDate: new Date().toISOString(),
+		projectLastUpdatedDate: new Date().toISOString(),
+		title: 'My Awesome Title',
+		titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+		summary: 'Anotbher awesome Project #hashtagtest',
+		detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+	}, {
+		_id: 'fadsgsdfsd',
+		createdDate: new Date().toISOString(),
+		ownerId: 'asfdasdfa',
+		lastUpdatedDate: new Date().toISOString(),
+		projectCreatedDate: new Date().toISOString(),
+		projectLastUpdatedDate: new Date().toISOString(),
+		title: 'My Awesome Title',
+		titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+		summary: 'My Awesome Project Summary https://twitter.com',
+		detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+	}, {
+		_id: '11b231j2k',
+		createdDate: new Date().toISOString(),
+		ownerId: 'asfdasdfa',
+		lastUpdatedDate: new Date().toISOString(),
+		projectCreatedDate: new Date().toISOString(),
+		projectLastUpdatedDate: new Date().toISOString(),
+		title: 'My Awesome Title',
+		titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+		summary: 'My Awesome Project Summary',
+		detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+	}, {
+		_id: '11b2gasdfasdfasd31j2k',
+		createdDate: new Date().toISOString(),
+		ownerId: 'asfdasdfa',
+		lastUpdatedDate: new Date().toISOString(),
+		projectCreatedDate: new Date().toISOString(),
+		projectLastUpdatedDate: new Date().toISOString(),
+		title: 'My Awesome Title',
+		titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+		summary: 'My Awesome Project Summary',
+		detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+	}, {
+		_id: '11b2gasdffasd31j2k',
+		createdDate: new Date().toISOString(),
+		ownerId: 'asfdasdfa',
+		lastUpdatedDate: new Date().toISOString(),
+		projectCreatedDate: new Date().toISOString(),
+		projectLastUpdatedDate: new Date().toISOString(),
+		title: 'My Awesome Title',
+		titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+		summary: 'My Awesome Project Summary',
+		detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+	}, {
+		_id: '11b2gasgsagasasdfasd31j2k',
+		createdDate: new Date().toISOString(),
+		ownerId: 'asfdasdfa',
+		lastUpdatedDate: new Date().toISOString(),
+		projectCreatedDate: new Date().toISOString(),
+		projectLastUpdatedDate: new Date().toISOString(),
+		title: 'My Awesome Title',
+		titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
+		summary: 'My Awesome Project Summary',
+		detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
+	},
+];
+
 export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const session = await getServerSession(ctx.req, ctx.res);
@@ -23,93 +93,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	return {
 		props: {
 			session,
-			projects: [
-				{
-					_id: 'asdfasdfasdf',
-					created: new Date().toISOString(),
-					createdBy: {
-						_id: 'asfdasdfa',
-						username: 'Foo',
-					},
-					lastUpdated: new Date().toISOString(),
-					projectCreated: new Date().toISOString(),
-					projectLastUpdated: new Date().toISOString(),
-					title: 'My Awesome Title',
-					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
-					summary: 'Anotbher awesome Project #hashtagtest',
-					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
-				}, {
-					_id: 'fadsgsdfsd',
-					created: new Date().toISOString(),
-					createdBy: {
-						_id: 'asfdasdfa',
-						username: 'Foo',
-					},
-					lastUpdated: new Date().toISOString(),
-					projectCreated: new Date().toISOString(),
-					projectLastUpdated: new Date().toISOString(),
-					title: 'My Awesome Title',
-					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
-					summary: 'My Awesome Project Summary https://twitter.com',
-					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
-				}, {
-					_id: '11b231j2k',
-					created: new Date().toISOString(),
-					createdBy: {
-						_id: 'asfdasdfa',
-						username: 'Foo',
-					},
-					lastUpdated: new Date().toISOString(),
-					projectCreated: new Date().toISOString(),
-					projectLastUpdated: new Date().toISOString(),
-					title: 'My Awesome Title',
-					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
-					summary: 'My Awesome Project Summary',
-					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
-				}, {
-					_id: '11b2gasdfasdfasd31j2k',
-					created: new Date().toISOString(),
-					createdBy: {
-						_id: 'asfdasdfa',
-						username: 'Foo',
-					},
-					lastUpdated: new Date().toISOString(),
-					projectCreated: new Date().toISOString(),
-					projectLastUpdated: new Date().toISOString(),
-					title: 'My Awesome Title',
-					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
-					summary: 'My Awesome Project Summary',
-					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
-				}, {
-					_id: '11b2gasdffasd31j2k',
-					created: new Date().toISOString(),
-					createdBy: {
-						_id: 'asfdasdfa',
-						username: 'Foo',
-					},
-					lastUpdated: new Date().toISOString(),
-					projectCreated: new Date().toISOString(),
-					projectLastUpdated: new Date().toISOString(),
-					title: 'My Awesome Title',
-					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
-					summary: 'My Awesome Project Summary',
-					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
-				}, {
-					_id: '11b2gasgsagasasdfasd31j2k',
-					created: new Date().toISOString(),
-					createdBy: {
-						_id: 'asfdasdfa',
-						username: 'Foo',
-					},
-					lastUpdated: new Date().toISOString(),
-					projectCreated: new Date().toISOString(),
-					projectLastUpdated: new Date().toISOString(),
-					title: 'My Awesome Title',
-					titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
-					summary: 'My Awesome Project Summary',
-					detail: 'Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. Detail. Lots and lots and loooooots of details. ',
-				},
-			],
+			projects: dummyProjects,
 		},
 	};
 };

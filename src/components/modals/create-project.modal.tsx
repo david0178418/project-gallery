@@ -8,14 +8,17 @@ import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import { inRange } from '@common/utils';
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { CloseIcon } from '@components/icons';
+import { projectSave } from '@client/api-calls';
 import {
 	useEffect,
 	useRef,
 	useState,
 } from 'react';
 import {
+	MaxProjectDetailLength,
 	MaxProjectSummaryLength,
 	MaxProjectTitleLength,
+	MinProjectDetailLength,
 	MinProjectSummaryLength,
 	MinProjectTitleLength,
 	ModalActions,
@@ -27,12 +30,22 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
+	Grid,
 	IconButton,
+	TextField,
 	Toolbar,
 	Typography,
 	useMediaQuery,
 	useTheme,
 } from '@mui/material';
+
+function dateToDateSubstring(date: Date) {
+	return date.toISOString().substring(0, 10);
+}
+
+function dateInputStrToDate(str: string) {
+	return new Date(str.replaceAll('-', '/'));
+}
 
 export
 function CreateProjectModal() {
@@ -40,6 +53,8 @@ function CreateProjectModal() {
 	const setLoading = useSetAtom(loadingAtom);
 	const isLoggedOut = useIsLoggedOut();
 	const router = useRouter();
+	const [projectCreatedDate, setProjectCreatedDate] = useState(() => new Date());
+	const [projectLastUpdatedDate, setProjectLastUpdatedDate] = useState(() => new Date());
 	const [title, setTitle] = useState('');
 	const [summary, setSummary] = useState('');
 	const [detail, setDetail] = useState('');
@@ -54,8 +69,9 @@ function CreateProjectModal() {
 	const actionIsCreatePost = action === ModalActions.CreateProject;
 	const isOpen = actionIsCreatePost && !isLoggedOut;
 	const isValid = (
+		inRange(title.length, MinProjectTitleLength, MaxProjectTitleLength) &&
 		inRange(summary.length, MinProjectSummaryLength, MaxProjectSummaryLength) &&
-		inRange(title.length, MinProjectTitleLength, MaxProjectTitleLength)
+		inRange(detail.length, MinProjectDetailLength, MaxProjectDetailLength)
 	);
 
 	useEffect(() => {
@@ -85,13 +101,13 @@ function CreateProjectModal() {
 	async function handleSave() {
 		try {
 			setLoading(true);
-			// await postSave({
-			// 	title,
-			// 	body,
-			// 	points,
-			// 	nsfl,
-			// 	nsfw,
-			// }));
+			await projectSave({
+				title,
+				summary,
+				detail,
+				projectCreatedDate: projectCreatedDate.toISOString(),
+				projectLastUpdatedDate: projectLastUpdatedDate.toISOString(),
+			});
 			close();
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
@@ -157,10 +173,32 @@ function CreateProjectModal() {
 						placeholder="Project title"
 						type="text"
 						maxLength={MaxProjectTitleLength}
-						minLength={MinProjectSummaryLength}
+						minLength={MinProjectTitleLength}
 						value={title}
 						onChange={e => setTitle(e.target.value)}
 					/>
+					<Grid container>
+						<Grid item xs>
+							<TextField
+								label="Created"
+								type="date"
+								variant="standard"
+								margin="dense"
+								value={dateToDateSubstring(projectCreatedDate)}
+								onChange={e => setProjectCreatedDate(dateInputStrToDate(e.target.value))}
+							/>
+						</Grid>
+						<Grid item xs>
+							<TextField
+								label="Last Updated"
+								type="date"
+								variant="standard"
+								margin="dense"
+								value={dateToDateSubstring(projectLastUpdatedDate)}
+								onChange={e => setProjectLastUpdatedDate(dateInputStrToDate(e.target.value))}
+							/>
+						</Grid>
+					</Grid>
 					<TextFieldLengthValidation
 						fullWidth
 						multiline

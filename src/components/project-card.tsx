@@ -37,8 +37,8 @@ function PorjectCard(props: Props) {
 				title={project.title}
 				subheader={(
 					<>
-						created: {localizedDateFormat(project.projectCreated)}<br/>
-						last updated: {localizedDateFormat(project.projectLastUpdated)}
+						created: {localizedDateFormat(project.projectCreatedDate)}<br/>
+						last updated: {localizedDateFormat(project.projectLastUpdatedDate)}
 					</>
 				)}
 				avatar={
