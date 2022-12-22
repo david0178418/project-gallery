@@ -1,6 +1,6 @@
 import { ShareIcon } from '@components/icons';
 import { red } from '@mui/material/colors';
-import { ExpandedToggleButton } from '@components/expand-toggle-button';
+// import { ExpandedToggleButton } from '@components/expand-toggle-button';
 import { FavoriteBorder } from '@mui/icons-material';
 import { useState } from 'react';
 import { localizedDateFormat } from '@common/utils';
@@ -24,12 +24,12 @@ interface Props {
 
 export default
 function PorjectCard(props: Props) {
-	const [expanded, setExpanded] = useState(false);
+	const [expanded] = useState(false);
 	const { project } = props;
 
-	function handleExpandClick() {
-		setExpanded(!expanded);
-	}
+	// function handleExpandClick() {
+	// 	setExpanded(!expanded);
+	// }
 
 	return (
 		<Card elevation={2}>
@@ -66,10 +66,10 @@ function PorjectCard(props: Props) {
 				<IconButton>
 					<ShareIcon />
 				</IconButton>
-				<ExpandedToggleButton
+				{/* <ExpandedToggleButton
 					expanded={expanded}
 					onClick={handleExpandClick}
-				/>
+				/> */}
 			</CardActions>
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent>
