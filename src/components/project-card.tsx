@@ -1,17 +1,17 @@
 // import { ShareIcon } from '@components/icons';
-// import { red } from '@mui/material/colors';
+import { red } from '@mui/material/colors';
 // import { ExpandedToggleButton } from '@components/expand-toggle-button';
 // import { FavoriteBorder } from '@mui/icons-material';
 import { useState } from 'react';
-// import { localizedDateFormat } from '@common/utils';
+import { localizedDateFormat } from '@common/utils';
 import { UiProject } from '@common/types/Project';
 import { ParsedContent } from './parsed-content';
 import {
-	// Avatar,
+	Avatar,
 	Card,
 	CardActions,
 	CardContent,
-	// CardHeader,
+	CardHeader,
 	CardMedia,
 	Collapse,
 	// IconButton,
@@ -33,7 +33,7 @@ function PorjectCard(props: Props) {
 
 	return (
 		<Card elevation={2}>
-			{/* <CardHeader
+			<CardHeader
 				title={project.title}
 				subheader={(
 					<>
@@ -46,7 +46,7 @@ function PorjectCard(props: Props) {
 						F
 					</Avatar>
 				}
-			/> */}
+			/>
 			<CardMedia
 				component="img"
 				height="194"
