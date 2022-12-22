@@ -3,7 +3,7 @@ import Head from 'next/head';
 // import { getServerSession } from '@server/auth-options';
 import { AppName } from '@common/constants';
 import { ScrollContent } from '@components/scroll-content';
-// import PorjectCard from '@components/project-card';
+import PorjectCard from '@components/project-card';
 import { SearchForm } from '@components/search-form';
 // import { UiProject } from '@common/types/Project';
 // import { fetchProjects } from '@server/queries';
@@ -80,10 +80,9 @@ export default function Home() {
 							xs={12}
 							md={6}
 						>
-							asldfkjsj
-							{/* <PorjectCard
+							<PorjectCard
 								project={p}
-							/> */}
+							/>
 						</Grid>
 					))}
 				</Grid>
