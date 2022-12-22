@@ -2,6 +2,7 @@ import { forwardRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { urlJoin } from '@common/utils';
 import {
 	ModalActions,
 	Paths,
@@ -9,11 +10,13 @@ import {
 import {
 	BottomNavigation,
 	BottomNavigationAction,
-	Fab,
+	Box,
 	Paper,
+	SpeedDial,
+	SpeedDialAction,
 } from '@mui/material';
 import {
-	CreateIcon,
+	SpeedDialIcon,
 	HomeActiveIcon,
 	HomeIcon,
 	LoginIcon,
@@ -21,22 +24,22 @@ import {
 	ProfileIcon,
 	SettingsActiveIcon,
 	SettingsIcon,
+	ProjectIcon,
+	JournalIcon,
 } from '@components/icons';
-import { urlJoin } from '@common/utils';
 
 // TODO Figure out the weird link behavior
 
 export
 function BottomNav() {
-	const router = useRouter();
 	const { data } = useSession();
 	const [value, setValue] = useState(0);
-	const user = data?.user;
 	const {
 		asPath,
 		pathname,
 		query,
-	} = router;
+	} = useRouter();
+	const user = data?.user;
 
 	return (
 		<Paper
@@ -115,29 +118,60 @@ function BottomNav() {
 				)}
 			</BottomNavigation>
 			{!!user && (
-				<Link
-					shallow
-					passHref
-					href={{
-						pathname,
-						query: {
-							a: ModalActions.CreateProject,
-							...query,
-						},
-					}}
-				>
-					<Fab
-						color="primary"
-						sx={{
-							position: 'absolute',
-							top: -64,
-							right: 16,
-						}}
-					>
-						<CreateIcon />
-					</Fab>
-				</Link>
+				<CreateButton/>
 			)}
 		</Paper>
+	);
+}
+
+function CreateButton() {
+	const [open, setOpen] = useState(false);
+	const {
+		pathname,
+		query,
+		push,
+	} = useRouter();
+
+	// Is NextJS Url type exposed somewhere??
+	function handleRoute(url: Parameters<typeof push>[0]) {
+		push(url);
+		setOpen(false);
+	}
+
+	return (
+		<Box
+			sx={{
+				position: 'absolute',
+				bottom: 64,
+				right: 16,
+			}}>
+			<SpeedDial
+				ariaLabel=""
+				icon={<SpeedDialIcon />}
+				direction="up"
+				open={open}
+				onOpen={() => setOpen(true)}
+				onClose={() => setOpen(false)}
+			>
+				<SpeedDialAction
+					tooltipTitle="Project"
+					icon={<ProjectIcon/>}
+					onClick={() => handleRoute(
+						{
+							pathname,
+							query: {
+								a: ModalActions.CreateProject,
+								...query,
+							},
+						},
+					)}
+				/>
+				<SpeedDialAction
+					tooltipTitle="Journal Entry"
+					icon={<JournalIcon/>}
+					onClick={() => setOpen(false)}
+				/>
+			</SpeedDial>
+		</Box>
 	);
 }
