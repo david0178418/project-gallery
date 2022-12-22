@@ -23,7 +23,7 @@ interface Props {
 
 export default
 function PorjectCard(props: Props) {
-	const [expanded] = useState(false);
+	const [expanded, setExpanded] = useState(false);
 	const { project } = props;
 
 	function handleExpandClick() {
