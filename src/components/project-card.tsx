@@ -42,7 +42,7 @@ function PorjectCard(props: Props) {
 				)}
 				avatar={
 					<Avatar sx={{ bgcolor: red[500] }}>
-						F
+						{project.owner.username[0].toLocaleUpperCase()}
 					</Avatar>
 				}
 			/>

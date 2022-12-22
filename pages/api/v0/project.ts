@@ -18,6 +18,7 @@ import {
 	nowISOString,
 	random,
 } from '@common/utils';
+import { UiUser } from '@common/types/User';
 
 const MongoIdString = z
 	.string()
@@ -75,12 +76,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
 	const project = result.data.project;
 
-	await createPost(session.user._id, project);
+	await createPost(session.user, project);
 
 	res.send({ ok: true });
 }
 
-async function createPost(userId: string, project: WriteProject) {
+async function createPost(user: UiUser, project: WriteProject) {
 	const col = await getCollection(DbCollections.Projects);
 	const now = nowISOString();
 	const _id = project._id ?
@@ -91,7 +92,10 @@ async function createPost(userId: string, project: WriteProject) {
 		.insertOne({
 			...project,
 			_id,
-			ownerId: new ObjectId(userId),
+			owner: {
+				_id: new ObjectId(user._id),
+				username: user.username,
+			},
 			createdDate: now,
 			lastUpdatedDate: now,
 			titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
