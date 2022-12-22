@@ -10,7 +10,7 @@ import { SearchForm } from '@components/search-form';
 // import { dbProjectToUiProject } from '@server/transforms';
 import {
 	Box,
-	// Grid,
+	Grid,
 } from '@mui/material';
 
 // interface Props {
@@ -32,6 +32,7 @@ import {
 
 export default function Home() {
 	// const { projects } = props;
+	const projects: any[] = [];
 
 	return (
 		<>
@@ -71,7 +72,7 @@ export default function Home() {
 					</Box>
 				}
 			>
-				{/* <Grid padding={1} container spacing={1} >
+				<Grid padding={1} container spacing={1} >
 					{projects.map(p => (
 						<Grid
 							key={p._id}
@@ -79,13 +80,13 @@ export default function Home() {
 							xs={12}
 							md={6}
 						>
-							<PorjectCard
+							asldfkjsj
+							{/* <PorjectCard
 								project={p}
-							/>
+							/> */}
 						</Grid>
 					))}
-				</Grid> */}
-				hi
+				</Grid>
 			</ScrollContent>
 		</>
 	);
