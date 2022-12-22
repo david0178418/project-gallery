@@ -11,6 +11,8 @@ import {
 	Box,
 	Grid,
 } from '@mui/material';
+import { fetchProjects } from '@server/queries';
+import { dbProjectToUiProject } from '@server/transforms';
 
 interface Props {
 	projects: UiProject[];
@@ -89,11 +91,12 @@ const dummyProjects: UiProject[] = [
 export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const session = await getServerSession(ctx.req, ctx.res);
+	const dbProjects = await fetchProjects() || [];
 
 	return {
 		props: {
 			session,
-			projects: dummyProjects,
+			projects: dbProjects.map(dbProjectToUiProject).concat(dummyProjects),
 		},
 	};
 };
