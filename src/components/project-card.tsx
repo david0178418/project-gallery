@@ -1,7 +1,7 @@
-// import { ShareIcon } from '@components/icons';
+import { ShareIcon } from '@components/icons';
 import { red } from '@mui/material/colors';
 // import { ExpandedToggleButton } from '@components/expand-toggle-button';
-// import { FavoriteBorder } from '@mui/icons-material';
+import { FavoriteBorder } from '@mui/icons-material';
 import { useState } from 'react';
 import { localizedDateFormat } from '@common/utils';
 import { UiProject } from '@common/types/Project';
@@ -14,7 +14,7 @@ import {
 	CardHeader,
 	CardMedia,
 	Collapse,
-	// IconButton,
+	IconButton,
 	Typography,
 } from '@mui/material';
 
@@ -60,13 +60,13 @@ function PorjectCard(props: Props) {
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
-				{/* <IconButton>
+				<IconButton>
 					<FavoriteBorder />
 				</IconButton>
 				<IconButton>
 					<ShareIcon />
 				</IconButton>
-				<ExpandedToggleButton
+				{/* <ExpandedToggleButton
 					expanded={expanded}
 					onClick={handleExpandClick}
 				/> */}
