@@ -12,7 +12,6 @@ import {
 	Box,
 	Grid,
 } from '@mui/material';
-
 interface Props {
 	projects: UiProject[];
 }

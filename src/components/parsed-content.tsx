@@ -1,70 +1,66 @@
+import { Link as MuiLink } from '@mui/material';
+import { Interweave } from 'interweave';
+import { polyfill } from 'interweave-ssr';
+import Link from 'next/link';
+import { forwardRef } from 'react';
+import { Paths } from '@common/constants';
+import {
+	UrlMatcher,
+	HashtagMatcher,
+	HashtagProps,
+	UrlProps,
+} from 'interweave-autolink';
+
+polyfill();
+
+interface Props {
+	children: string;
+}
+
 export
-// Debug to see if this is causing vercel timeouts
-const ParsedContent = (props: any) => <>{props.children}</>;
+function ParsedContent(props: Props) {
+	const { children } = props;
 
-// import { Link as MuiLink } from '@mui/material';
-// import { Interweave } from 'interweave';
-// import { polyfill } from 'interweave-ssr';
-// import Link from 'next/link';
-// import { forwardRef } from 'react';
-// import {
-// 	UrlMatcher,
-// 	HashtagMatcher,
-// 	HashtagProps,
-// 	UrlProps,
-// } from 'interweave-autolink';
-// import { Paths } from '@common/constants';
+	return (
+		<Interweave
+			content={children}
+			matchers={[new UrlMatcher('url', { validateTLD: false }, Url), new HashtagMatcher('hashtag', {}, Hashtag)]}
+		/>
+	);
+}
 
-// polyfill();
+function Url(props: UrlProps) {
+	const { url } = props;
 
-// interface Props {
-// 	children: string;
-// }
+	return (
+		<MuiLink href={url} target="__blank">
+			{url}
+		</MuiLink>
+	);
+}
 
-// export
-// function ParsedContent(props: Props) {
-// 	const { children } = props;
+function Hashtag(props: HashtagProps) {
+	const { hashtag } = props;
 
-// 	return (
-// 		<Interweave
-// 			content={children}
-// 			matchers={[new UrlMatcher('url', { validateTLD: false }, Url), new HashtagMatcher('hashtag', {}, Hashtag)]}
-// 		/>
-// 	);
-// }
+	return (
 
-// function Url(props: UrlProps) {
-// 	const { url } = props;
+		<MuiLink
+			href={`${Paths.Search}?q=${encodeURIComponent(hashtag)}`}
+			component={
+				// Hackhackhack
+				forwardRef<HTMLAnchorElement>(
+					(p, ref) => (
+						<Link
+							ref={ref}
+							href=""
+							{...p}
+						/>
+					)
+				)
+			}
+		>
+			{hashtag}
+		</MuiLink>
 
-// 	return (
-// 		<MuiLink href={url} target="__blank">
-// 			{url}
-// 		</MuiLink>
-// 	);
-// }
-
-// function Hashtag(props: HashtagProps) {
-// 	const { hashtag } = props;
-
-// 	return (
-
-// 		<MuiLink
-// 			href={`${Paths.Search}?q=${encodeURIComponent(hashtag)}`}
-// 			component={
-// 				// Hackhackhack
-// 				forwardRef<HTMLAnchorElement>(
-// 					(p, ref) => (
-// 						<Link
-// 							ref={ref}
-// 							href=""
-// 							{...p}
-// 						/>
-// 					)
-// 				)
-// 			}
-// 		>
-// 			{hashtag}
-// 		</MuiLink>
-
-// 	);
-// }
+	);
+}
