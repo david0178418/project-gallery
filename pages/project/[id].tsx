@@ -1,5 +1,7 @@
 import Head from 'next/head';
-import { AppName, SpecialCharacterCodes } from '@common/constants';
+import {
+	AppName, Paths, SpecialCharacterCodes,
+} from '@common/constants';
 import { useRouteBackDefault } from '@common/hooks';
 import { ScrollContent } from '@components/scroll-content';
 import { BackIcon } from '@components/icons';
@@ -9,13 +11,14 @@ import { fetchProject } from '@server/queries';
 import { dbProjectToUiProject } from '@server/transforms';
 import { UiProject } from '@common/types/Project';
 import { MongoIdValidation } from '@server/validations';
-import { localizedDateFormat } from '@common/utils';
+import { localizedDateFormat, urlJoin } from '@common/utils';
 import { ParsedContent } from '@components/parsed-content';
 import {
 	Box,
 	IconButton,
 	Typography,
 } from '@mui/material';
+import Link from 'next/link';
 
 interface Props {
 	project: UiProject | null;
@@ -75,19 +78,26 @@ function UserGallery(props: Props) {
 				{project && (
 					<>
 						<Typography variant="subtitle2">
+							<Link href={urlJoin(Paths.UserGallery, project.owner.username)}>
+								By {project.owner.username}
+							</Link>
+						</Typography>
+						<Typography variant="subtitle2" paddingTop={1}>
 							created: {localizedDateFormat(project.projectCreatedDate)}<br/>
 						</Typography>
 						<Typography variant="subtitle2">
 							last updated: {localizedDateFormat(project.projectLastUpdatedDate)}
 						</Typography>
-						<Typography>
+						<Typography paddingTop={2}>
 							<ParsedContent>
 								{`Summary: ${project.summary}`}
 							</ParsedContent>
 						</Typography>
-						{/* eslint-disable-next-line @next/next/no-img-element */}
-						<img src={project.titleImageUrl} />
-						<Typography>
+						<Box paddingTop={2}>
+							{/* eslint-disable-next-line @next/next/no-img-element */}
+							<img src={project.titleImageUrl} />
+						</Box>
+						<Typography paddingTop={2}>
 							<ParsedContent>
 								{project.summary}
 							</ParsedContent>
