@@ -67,12 +67,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
 	const project = result.data.project;
 
-	await createPost(session.user, project);
+	await createProject(session.user, project);
 
 	res.send({ ok: true });
 }
 
-async function createPost(user: User, project: WriteProject) {
+async function createProject(user: User, project: WriteProject) {
 	const col = await getCollection(DbCollections.Projects);
 	const now = nowISOString();
 	const _id = project._id ?
