@@ -14,10 +14,8 @@ import {
 } from 'react';
 import {
 	MaxJournalPostLength,
-	MaxProjectDetailLength,
 	MaxProjectTitleLength,
 	MinJournalPostLength,
-	MinProjectDetailLength,
 	MinProjectTitleLength,
 	ModalActions,
 } from '@common/constants';
@@ -54,7 +52,7 @@ function CreateJournalModal() {
 	const isOpen = actionIsCreatePost && !isLoggedOut;
 	const isValid = (
 		inRange(title.length, MinProjectTitleLength, MaxProjectTitleLength) &&
-		inRange(body.length, MinProjectDetailLength, MaxProjectDetailLength)
+		inRange(body.length, MinJournalPostLength, MaxJournalPostLength)
 	);
 
 	useEffect(() => {
