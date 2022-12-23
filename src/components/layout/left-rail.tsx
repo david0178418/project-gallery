@@ -129,14 +129,14 @@ function LeftRail() {
 								shallow
 								passHref
 								legacyBehavior
-								href={urlJoin(Paths.Projects, user?.username)}
+								href={urlJoin(Paths.UserGallery, user?.username)}
 							>
 								<ListItemButton>
 									<RailButtonContent
 										label={user.username}
 									>
 										{
-											pathname.startsWith(Paths.Projects) ?
+											pathname.startsWith(Paths.UserGallery) ?
 												<ProfileActiveIcon /> :
 												<ProfileIcon />
 										}

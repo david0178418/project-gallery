@@ -23,5 +23,14 @@ async function fetchProjects(): Promise<Array<WithId<DbProject>>> {
 		{ $sort: { createdDate: -1 } },
 		{ $limit: 20 },
 	]).toArray();
+}
 
+export
+async function fetchUserGallery(username: string): Promise<Array<WithId<DbProject>>> {
+	const col = await getCollection(DbCollections.Projects);
+	return col.aggregate<WithId<DbProject>>([
+		{ $sort: { createdDate: -1 } },
+		{ $match: { 'owner.username': username } },
+		{ $limit: 20 },
+	]).toArray();
 }

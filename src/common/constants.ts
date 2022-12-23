@@ -108,9 +108,10 @@ const NotLoggedInErrMsg = {
 export
 const Paths = {
 	Home: '/',
+	UserGallery: '/',
+	Project: '/project',
 	Search: '/search',
 	Settings: '/settings',
-	Projects: '/projects',
 } as const;
 
 export

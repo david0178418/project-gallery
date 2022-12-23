@@ -1,36 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { z, ZodType } from 'zod';
 import { getCollection } from '@server/mongodb';
 import { getServerSession } from '@server/auth-options';
 import { fetchUser } from '@server/queries';
 import { passwordToHash } from '@server/transforms';
 import { ObjectId } from 'mongodb';
+import { UserCredentialValidation } from '@common/types/UserCredentials';
 import {
 	DbCollections,
-	PasswordMaxLength,
-	PasswordMinLength,
-	UsernameMaxLength,
-	UsernameMinLength,
 	UserRoles,
 } from '@common/constants';
-
-interface Schema {
-	password: string;
-	username: string;
-}
-
-const schema: ZodType<Schema> = z.object({
-	username: z
-		.string()
-		.min(UsernameMinLength)
-		.max(UsernameMaxLength)
-		.regex(/^[a-z0-9]+$/i),
-	password: z
-		.string()
-		.min(PasswordMinLength)
-		.max(PasswordMaxLength),
-});
 
 export default
 async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
@@ -39,7 +18,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
 	if(session) {
 		return res.status(400).end();
 	}
-	const result = await schema.safeParseAsync(req.body);
+
+	const result = await UserCredentialValidation.safeParseAsync(req.body);
 
 	if(!result.success) {
 		return res

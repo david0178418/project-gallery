@@ -61,7 +61,7 @@ const ProfilePage: NextPage<any> = () => {
 				<Link
 					shallow
 					passHref
-					href={urlJoin(Paths.Projects, user.username)}
+					href={urlJoin(Paths.UserGallery, user.username)}
 				>
 					<Button>
 						My Projects

@@ -2,9 +2,11 @@ import { ShareIcon, FavoriteIcon } from '@components/icons';
 import { red } from '@mui/material/colors';
 import { ExpandedToggleButton } from '@components/expand-toggle-button';
 import { useState } from 'react';
-import { localizedDateFormat } from '@common/utils';
+import { localizedDateFormat, urlJoin } from '@common/utils';
 import { UiProject } from '@common/types/Project';
 import { ParsedContent } from './parsed-content';
+import Link from 'next/link';
+import { Paths } from '@common/constants';
 import {
 	Avatar,
 	Card,
@@ -14,6 +16,7 @@ import {
 	CardMedia,
 	Collapse,
 	IconButton,
+	Tooltip,
 	Typography,
 } from '@mui/material';
 
@@ -24,7 +27,17 @@ interface Props {
 export default
 function PorjectCard(props: Props) {
 	const [expanded, setExpanded] = useState(false);
-	const { project } = props;
+	const {
+		project: {
+			detail,
+			projectCreatedDate,
+			projectLastUpdatedDate,
+			summary,
+			title,
+			titleImageUrl,
+			owner: { username },
+		},
+	} = props;
 
 	function handleExpandClick() {
 		setExpanded(!expanded);
@@ -33,28 +46,40 @@ function PorjectCard(props: Props) {
 	return (
 		<Card elevation={2}>
 			<CardHeader
-				title={project.title}
+				title={title}
 				subheader={(
 					<>
-						created: {localizedDateFormat(project.projectCreatedDate)}<br/>
-						last updated: {localizedDateFormat(project.projectLastUpdatedDate)}
+						created: {localizedDateFormat(projectCreatedDate)}<br/>
+						last updated: {localizedDateFormat(projectLastUpdatedDate)}
 					</>
 				)}
 				avatar={
-					<Avatar sx={{ bgcolor: red[500] }}>
-						{project.owner.username[0].toLocaleUpperCase()}
-					</Avatar>
+					<Link
+						shallow
+						href={urlJoin(Paths.UserGallery, username)}
+					>
+						<Tooltip
+							arrow
+							disableFocusListener
+							disableTouchListener
+							title={username}
+						>
+							<Avatar sx={{ bgcolor: red[500] }}>
+								{username[0].toLocaleUpperCase()}
+							</Avatar>
+						</Tooltip>
+					</Link>
 				}
 			/>
 			<CardMedia
 				component="img"
 				height="194"
-				image={project.titleImageUrl}
+				image={titleImageUrl}
 			/>
 			<CardContent>
 				<Typography variant="body2" color="text.secondary">
 					<ParsedContent>
-						{project.summary}
+						{summary}
 					</ParsedContent>
 				</Typography>
 			</CardContent>
@@ -74,7 +99,7 @@ function PorjectCard(props: Props) {
 				<CardContent>
 					<Typography paragraph>
 						<ParsedContent>
-							{project.detail}
+							{detail}
 						</ParsedContent>
 					</Typography>
 				</CardContent>

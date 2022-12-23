@@ -96,9 +96,9 @@ function BottomNav() {
 							key="a"
 							LinkComponent={Link}
 							label={user.username}
-							href={urlJoin(Paths.Projects, user?.username)}
+							href={urlJoin(Paths.UserGallery, user?.username)}
 							icon={
-								pathname.startsWith(Paths.Projects) ?
+								pathname.startsWith(Paths.UserGallery) ?
 									<ProfileActiveIcon /> :
 									<ProfileIcon />
 							}
