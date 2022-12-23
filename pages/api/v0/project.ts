@@ -5,7 +5,6 @@ import { getCollection } from '@server/mongodb';
 import { getServerSession } from '@server/auth-options';
 import { ObjectId } from 'mongodb';
 import { WriteProject } from '@common/types/Project';
-import { UiUser } from '@common/types/User';
 import { IsoDateValidation, MongoIdValidation } from '@server/validations';
 import {
 	DbCollections,
@@ -19,6 +18,7 @@ import {
 	nowISOString,
 	random,
 } from '@common/utils';
+import { User } from 'next-auth';
 
 interface Schema {
 	project: WriteProject;
@@ -72,7 +72,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	res.send({ ok: true });
 }
 
-async function createPost(user: UiUser, project: WriteProject) {
+async function createPost(user: User, project: WriteProject) {
 	const col = await getCollection(DbCollections.Projects);
 	const now = nowISOString();
 	const _id = project._id ?
@@ -84,7 +84,7 @@ async function createPost(user: UiUser, project: WriteProject) {
 			...project,
 			_id,
 			owner: {
-				_id: new ObjectId(user._id),
+				_id: new ObjectId(user.id),
 				username: user.username,
 			},
 			createdDate: now,
