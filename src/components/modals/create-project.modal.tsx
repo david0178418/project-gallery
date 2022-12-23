@@ -228,7 +228,7 @@ function CreateProjectModal() {
 						query: newQuery,
 					}}
 				>
-					<CancelButton fullWidth={fullScreen} />
+					<CancelButton fullWidth={fullScreen} onClick={close} />
 				</Link>
 				<ConfirmButton
 					onClick={handleSave}

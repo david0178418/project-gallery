@@ -26,6 +26,15 @@ async function fetchProjects(): Promise<Array<WithId<DbProject>>> {
 }
 
 export
+async function fetchProjectsByUser(userId: string): Promise<Array<WithId<DbProject>>> {
+	const col = await getCollection(DbCollections.Projects);
+	return col.aggregate<WithId<DbProject>>([
+		{ $sort: { title: 1 } },
+		{ $match: { 'owner._id': new ObjectId(userId) } },
+	]).toArray();
+}
+
+export
 async function fetchProject(id: string): Promise<WithId<DbProject> | null> {
 	const col = await getCollection(DbCollections.Projects);
 

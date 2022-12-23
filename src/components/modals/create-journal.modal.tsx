@@ -19,6 +19,8 @@ import {
 	MinProjectTitleLength,
 	ModalActions,
 } from '@common/constants';
+import { UiProject } from '@common/types/Project';
+import { getProjects } from '@client/api-calls';
 import {
 	AppBar,
 	Box,
@@ -26,7 +28,11 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
+	FormControl,
 	IconButton,
+	InputLabel,
+	MenuItem,
+	Select,
 	Toolbar,
 	Typography,
 	useMediaQuery,
@@ -37,6 +43,8 @@ export
 function CreateJournalModal() {
 	const [title, setTitle] = useState('');
 	const [body, setBody] = useState('');
+	const [projects, setProjects] = useState<UiProject[]>([]);
+	const [selectedProjectId, setSelectedProjectId] = useState('');
 	const pushToastMsg = useSetAtom(pushToastMsgAtom);
 	const setLoading = useSetAtom(loadingAtom);
 	const isLoggedOut = useIsLoggedOut();
@@ -65,7 +73,16 @@ function CreateJournalModal() {
 				pathname: router.pathname,
 				query: newQuery,
 			}, undefined, { shallow: true });
+
+			return;
 		}
+
+		getProjects().then(res => {
+			if(res?.data?.projects.length) {
+				setProjects(res.data.projects);
+				setSelectedProjectId(res.data.projects[0]._id);
+			}
+		});
 	}, [actionIsCreatePost, isLoggedOut]);
 
 	async function handleSave() {
@@ -84,6 +101,9 @@ function CreateJournalModal() {
 	}
 
 	function close() {
+		console.log(1111);
+		setProjects([]);
+		setSelectedProjectId('');
 		setBody('');
 		setTitle('');
 		router.back();
@@ -129,11 +149,30 @@ function CreateJournalModal() {
 					autoComplete="off"
 					component="form"
 				>
+					<FormControl margin="dense">
+						<InputLabel >Project</InputLabel>
+						<Select
+							label="Project"
+							value={selectedProjectId}
+							onChange={e => setSelectedProjectId(e.target.value)}
+							sx={{ minWidth: 200 }}
+						>
+							{projects.map(p => (
+								<MenuItem
+									key={p._id}
+									value={p._id}
+								>
+									{p.title}
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
 					<TextFieldLengthValidation
 						autoFocus
 						fullWidth
 						label="Title"
 						variant="standard"
+						margin="normal"
 						type="text"
 						maxLength={MaxProjectTitleLength}
 						minLength={MinProjectTitleLength}
@@ -164,7 +203,7 @@ function CreateJournalModal() {
 						query: newQuery,
 					}}
 				>
-					<CancelButton fullWidth={fullScreen} />
+					<CancelButton fullWidth={fullScreen} onClick={close} />
 				</Link>
 				<ConfirmButton
 					onClick={handleSave}

@@ -4,7 +4,7 @@ import { signIn, signOut } from 'next-auth/react';
 import { get, post } from '@client/client-utils';
 import { urlJoin } from '@common/utils';
 import { ApiUrl } from '@common/constants';
-import { WriteProject } from '@common/types/Project';
+import { UiProject, WriteProject } from '@common/types/Project';
 
 export
 async function login(username: string, password: string) {
@@ -49,6 +49,11 @@ async function getNotificaitons(): Promise<Notification[]> {
 export
 function projectSave(project: WriteProject) {
 	return apiPost('/project', { project });
+}
+
+export
+function getProjects() {
+	return apiGet<ApiResponse<{projects: UiProject[]}>>('/projects');
 }
 
 export

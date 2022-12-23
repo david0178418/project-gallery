@@ -1,5 +1,5 @@
+import { User } from 'next-auth';
 import type { ReactNode } from 'react';
-import type { UiUser } from './User';
 
 export
 interface ApiResponse<T = any> {
@@ -30,15 +30,20 @@ interface ToastMesssage {
 }
 
 declare module 'next-auth' {
+	interface User {
+		id: string;
+		username: string;
+	}
+
 	interface Session {
-		user: UiUser;
+		user: User;
 	}
 
 }
 
 declare module 'next-auth/jwt' {
 	interface JWT {
-		user: UiUser;
+		user: User;
 	}
 }
 
