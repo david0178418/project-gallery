@@ -1,6 +1,6 @@
 import type { DbUser } from '@common/types/User';
 import type { DbProject } from '@common/types/Project';
-import type { WithId } from 'mongodb';
+import { ObjectId, WithId } from 'mongodb';
 
 import { getCollection } from '@server/mongodb';
 import { DbCollections } from '@common/constants';
@@ -23,6 +23,13 @@ async function fetchProjects(): Promise<Array<WithId<DbProject>>> {
 		{ $sort: { createdDate: -1 } },
 		{ $limit: 20 },
 	]).toArray();
+}
+
+export
+async function fetchProject(id: string): Promise<WithId<DbProject> | null> {
+	const col = await getCollection(DbCollections.Projects);
+
+	return col.findOne({ _id: new ObjectId(id) });
 }
 
 export

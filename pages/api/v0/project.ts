@@ -5,6 +5,8 @@ import { getCollection } from '@server/mongodb';
 import { getServerSession } from '@server/auth-options';
 import { ObjectId } from 'mongodb';
 import { WriteProject } from '@common/types/Project';
+import { UiUser } from '@common/types/User';
+import { IsoDateValidation, MongoIdValidation } from '@server/validations';
 import {
 	DbCollections,
 	MaxProjectSummaryLength,
@@ -14,20 +16,9 @@ import {
 	MinProjectTitleLength,
 } from '@common/constants';
 import {
-	isISOString,
 	nowISOString,
 	random,
 } from '@common/utils';
-import { UiUser } from '@common/types/User';
-
-const MongoIdString = z
-	.string()
-	.trim()
-	.length(24);
-
-const IsoString = z
-	.string()
-	.refine(isISOString, { message: 'Not a valid ISO string date ' });
 
 interface Schema {
 	project: WriteProject;
@@ -35,7 +26,7 @@ interface Schema {
 
 const schema: ZodType<Schema> = z.object({
 	project: z.object({
-		_id: MongoIdString.optional(),
+		_id: MongoIdValidation.optional(),
 		title: z
 			.string()
 			.min(MinProjectTitleLength, { message: `Project title must be at least ${MinProjectTitleLength} characters long.` })
@@ -48,8 +39,8 @@ const schema: ZodType<Schema> = z.object({
 			.string()
 			.min(MinProjectSummaryLength, { message: `Project summary must be at least ${MinProjectSummaryLength} characters long.` })
 			.max(MaxProjectSummaryLength, { message: `Project summary can be no more than ${MaxProjectSummaryLength} characters long.` }),
-		projectCreatedDate: IsoString,
-		projectLastUpdatedDate: IsoString,
+		projectCreatedDate: IsoDateValidation,
+		projectLastUpdatedDate: IsoDateValidation,
 	}),
 });
 

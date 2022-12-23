@@ -29,6 +29,7 @@ function ProjectCard(props: Props) {
 	const [expanded, setExpanded] = useState(false);
 	const {
 		project: {
+			_id,
 			detail,
 			projectCreatedDate,
 			projectLastUpdatedDate,
@@ -71,11 +72,13 @@ function ProjectCard(props: Props) {
 					</Link>
 				}
 			/>
-			<CardMedia
-				component="img"
-				height="194"
-				image={titleImageUrl}
-			/>
+			<Link href={urlJoin(Paths.Project, _id)}>
+				<CardMedia
+					component="img"
+					height="194"
+					image={titleImageUrl}
+				/>
+			</Link>
 			<CardContent>
 				<Typography variant="body2" color="text.secondary">
 					<ParsedContent>
