@@ -25,7 +25,7 @@ interface Props {
 }
 
 export default
-function PorjectCard(props: Props) {
+function ProjectCard(props: Props) {
 	const [expanded, setExpanded] = useState(false);
 	const {
 		project: {

@@ -1,8 +1,9 @@
+import Head from 'next/head';
+import ProjectCard from '@components/project-card';
 import { AppName, SpecialCharacterCodes } from '@common/constants';
 import { useRouteBackDefault } from '@common/hooks';
 import { ScrollContent } from '@components/scroll-content';
 import { BackIcon } from '@components/icons';
-import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { UiProject } from '@common/types/Project';
@@ -11,12 +12,14 @@ import { fetchUserGallery } from '@server/queries';
 import { dbProjectToUiProject } from '@server/transforms';
 import {
 	Box,
+	Grid,
 	IconButton,
 	Typography,
 } from '@mui/material';
 
 interface Props {
 	unknownUser?: boolean;
+	username: string;
 	projects: UiProject[];
 }
 
@@ -29,6 +32,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 		return {
 			props: {
 				session,
+				username: 'unknown',
 				unknownUser: true,
 				projects: [],
 			},
@@ -41,6 +45,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	return {
 		props: {
 			session,
+			username,
 			projects: dbProjects.map(dbProjectToUiProject),
 		},
 	};
@@ -49,6 +54,10 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 export default
 function UserGallery(props: Props) {
 	const routeBack = useRouteBackDefault();
+	const {
+		username,
+		projects,
+	} = props;
 
 	return (
 		<>
@@ -66,12 +75,26 @@ function UserGallery(props: Props) {
 							<IconButton color="primary" onClick={routeBack}>
 								<BackIcon />
 							</IconButton>{SpecialCharacterCodes.NBSP}
-							Projects
+							{username}{SpecialCharacterCodes.RSQUO}s Gallery
 						</Typography>
 					</Box>
 				}
 			>
-				{JSON.stringify(props)}
+				<Grid padding={1} container spacing={1} >
+					{projects.map(p => (
+						<Grid
+							key={p._id}
+							item
+							xs={12}
+							md={6}
+						>
+							<ProjectCard
+								key={p._id}
+								project={p}
+							/>
+						</Grid>
+					))}
+				</Grid>
 			</ScrollContent>
 		</>
 	);

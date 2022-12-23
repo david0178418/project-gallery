@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { getServerSession } from '@server/auth-options';
 import { AppName } from '@common/constants';
 import { ScrollContent } from '@components/scroll-content';
-import PorjectCard from '@components/project-card';
+import ProjectCard from '@components/project-card';
 import { SearchForm } from '@components/search-form';
 import { UiProject } from '@common/types/Project';
 import { fetchProjects } from '@server/queries';
@@ -79,7 +79,7 @@ export default function Home(props: Props) {
 							xs={12}
 							md={6}
 						>
-							<PorjectCard
+							<ProjectCard
 								project={p}
 							/>
 						</Grid>

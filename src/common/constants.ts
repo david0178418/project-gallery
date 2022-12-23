@@ -2,7 +2,7 @@ export
 const ApiUrl = '/api/v0';
 
 export
-const AppName = 'Project Showcase';
+const AppName = 'ProjectGallery.me';
 
 export
 const BaseUrl = process.env.HOST;
@@ -119,6 +119,7 @@ const SpecialCharacterCodes = {
 	NBSP: '\u00A0',
 	DOT: '\u2022',
 	QUOTE: '\u0022',
+	RSQUO: '\u2019',
 } as const;
 
 export
