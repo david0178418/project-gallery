@@ -1,3 +1,4 @@
+import { UserRoles } from '@common/constants';
 import { User } from 'next-auth';
 import type { ReactNode } from 'react';
 
@@ -33,6 +34,7 @@ declare module 'next-auth' {
 	interface User {
 		id: string;
 		username: string;
+		role: Enum<typeof UserRoles>;
 	}
 
 	interface Session {
