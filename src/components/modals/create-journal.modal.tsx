@@ -39,12 +39,14 @@ import {
 	useTheme,
 } from '@mui/material';
 
+const GeneralPost = 'general-post';
+
 export
 function CreateJournalModal() {
 	const [title, setTitle] = useState('');
 	const [body, setBody] = useState('');
 	const [projects, setProjects] = useState<UiProject[]>([]);
-	const [selectedProjectId, setSelectedProjectId] = useState('');
+	const [selectedProjectId, setSelectedProjectId] = useState(GeneralPost);
 	const pushToastMsg = useSetAtom(pushToastMsgAtom);
 	const setLoading = useSetAtom(loadingAtom);
 	const isLoggedOut = useIsLoggedOut();
@@ -80,7 +82,6 @@ function CreateJournalModal() {
 		getProjects().then(res => {
 			if(res?.data?.projects.length) {
 				setProjects(res.data.projects);
-				setSelectedProjectId(res.data.projects[0]._id);
 			}
 		});
 	}, [actionIsCreatePost, isLoggedOut]);
@@ -101,9 +102,8 @@ function CreateJournalModal() {
 	}
 
 	function close() {
-		console.log(1111);
 		setProjects([]);
-		setSelectedProjectId('');
+		setSelectedProjectId(GeneralPost);
 		setBody('');
 		setTitle('');
 		router.back();
@@ -114,6 +114,8 @@ function CreateJournalModal() {
 		// some instances. May be related to the "shallow" prop on NextJS Link
 		return null;
 	}
+
+	console.log('selectedProjectId', selectedProjectId);
 
 	return (
 		<Dialog
@@ -157,6 +159,9 @@ function CreateJournalModal() {
 							onChange={e => setSelectedProjectId(e.target.value)}
 							sx={{ minWidth: 200 }}
 						>
+							<MenuItem value={GeneralPost}>
+								General Post
+							</MenuItem>
 							{projects.map(p => (
 								<MenuItem
 									key={p._id}
