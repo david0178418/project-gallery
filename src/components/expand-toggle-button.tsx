@@ -1,10 +1,11 @@
 import { IconButton } from '@mui/material';
+import { ComponentProps } from 'react';
 import {
 	ExpandLessIcon,
 	ExpandMoreIcon,
 } from './icons';
 
-interface Props {
+type Props = ComponentProps<typeof IconButton> & {
 	expanded?: boolean;
 	onClick(): void;
 }
@@ -12,12 +13,12 @@ interface Props {
 export
 function ExpandedToggleButton(props: Props) {
 	const {
-		onClick,
 		expanded,
+		...passThroughProps
 	} = props;
 
 	return (
-		<IconButton onClick={onClick}>
+		<IconButton {...passThroughProps}>
 			{
 				expanded ?
 					<ExpandLessIcon/> :

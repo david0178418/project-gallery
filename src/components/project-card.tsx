@@ -1,4 +1,3 @@
-import { ShareIcon, FavoriteIcon } from '@components/icons';
 import { red } from '@mui/material/colors';
 import { ExpandedToggleButton } from '@components/expand-toggle-button';
 import { useState } from 'react';
@@ -7,6 +6,11 @@ import { UiProject } from '@common/types/Project';
 import { ParsedContent } from './parsed-content';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
+import {
+	ShareIcon,
+	FavoriteIcon,
+	JournalIcon,
+} from '@components/icons';
 import {
 	Avatar,
 	Card,
@@ -87,13 +91,39 @@ function ProjectCard(props: Props) {
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
-				<IconButton>
-					<FavoriteIcon />
-				</IconButton>
-				<IconButton>
-					<ShareIcon />
-				</IconButton>
+				<Tooltip
+					arrow
+					disableFocusListener
+					disableTouchListener
+					title="Favorite"
+				>
+					<IconButton>
+						<FavoriteIcon />
+					</IconButton>
+				</Tooltip>
+				<Tooltip
+					arrow
+					disableFocusListener
+					disableTouchListener
+					title="Share"
+				>
+					<IconButton>
+						<ShareIcon />
+					</IconButton>
+				</Tooltip>
+
+				<Tooltip
+					arrow
+					disableFocusListener
+					disableTouchListener
+					title="Last Journal Entry"
+				>
+					<IconButton>
+						<JournalIcon />
+					</IconButton>
+				</Tooltip>
 				<ExpandedToggleButton
+					sx={{ marginLeft: 'auto' }}
 					expanded={expanded}
 					onClick={handleExpandClick}
 				/>

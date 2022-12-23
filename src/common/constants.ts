@@ -112,6 +112,7 @@ const Paths = {
 	Project: '/project',
 	Search: '/search',
 	Settings: '/settings',
+	Journal: '/journal',
 } as const;
 
 export
