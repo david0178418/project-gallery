@@ -9,6 +9,8 @@ import { fetchProject } from '@server/queries';
 import { dbProjectToUiProject } from '@server/transforms';
 import { UiProject } from '@common/types/Project';
 import { MongoIdValidation } from '@server/validations';
+import { localizedDateFormat } from '@common/utils';
+import { ParsedContent } from '@components/parsed-content';
 import {
 	Box,
 	IconButton,
@@ -70,7 +72,28 @@ function UserGallery(props: Props) {
 					</Box>
 				}
 			>
-				{JSON.stringify(project)}
+				{project && (
+					<>
+						<Typography variant="subtitle2">
+							created: {localizedDateFormat(project.projectCreatedDate)}<br/>
+						</Typography>
+						<Typography variant="subtitle2">
+							last updated: {localizedDateFormat(project.projectLastUpdatedDate)}
+						</Typography>
+						<Typography>
+							<ParsedContent>
+								{`Summary: ${project.summary}`}
+							</ParsedContent>
+						</Typography>
+						{/* eslint-disable-next-line @next/next/no-img-element */}
+						<img src={project.titleImageUrl} />
+						<Typography>
+							<ParsedContent>
+								{project.summary}
+							</ParsedContent>
+						</Typography>
+					</>
+				)}
 			</ScrollContent>
 		</>
 	);
