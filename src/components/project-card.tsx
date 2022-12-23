@@ -111,7 +111,6 @@ function ProjectCard(props: Props) {
 						<ShareIcon />
 					</IconButton>
 				</Tooltip>
-
 				<Tooltip
 					arrow
 					disableFocusListener

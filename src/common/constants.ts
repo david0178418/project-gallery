@@ -32,6 +32,11 @@ export
 const MaxSearchTermSize = 100;
 
 export
+const MaxJournalPostLength = 280;
+
+export
+const MinJournalPostLength = 10;
+export
 const MaxProjectDetailLength = 1000;
 
 export
@@ -95,6 +100,7 @@ const ExtendedWhitespaceRegex = /\s{2,}/g;
 export
 const ModalActions = {
 	CreateProject: 'create-project',
+	CreateJournal: 'create-journal',
 	LoginRegister: 'login-register',
 	Logout: 'logout',
 } as const;

@@ -227,7 +227,6 @@ function CreateDropdown() {
 				onClose={handleClose}
 				MenuListProps={{ 'aria-labelledby': 'basic-button' }}
 			>
-
 				<Link
 					shallow
 					href={{
@@ -245,12 +244,23 @@ function CreateDropdown() {
 						Project
 					</MenuItem>
 				</Link>
-				<MenuItem onClick={handleClose}>
-					<ListItemIcon>
-						<JournalIcon fontSize="small" />
-					</ListItemIcon>
-					Journal Entry
-				</MenuItem>
+				<Link
+					shallow
+					href={{
+						pathname,
+						query: {
+							a: ModalActions.CreateJournal,
+							...query,
+						},
+					}}
+				>
+					<MenuItem onClick={handleClose}>
+						<ListItemIcon>
+							<JournalIcon fontSize="small" />
+						</ListItemIcon>
+						Journal Post
+					</MenuItem>
+				</Link>
 			</Menu>
 		</>
 	);

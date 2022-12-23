@@ -8,17 +8,16 @@ import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import { inRange } from '@common/utils';
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { CloseIcon } from '@components/icons';
-import { projectSave } from '@client/api-calls';
 import {
 	useEffect,
 	useState,
 } from 'react';
 import {
+	MaxJournalPostLength,
 	MaxProjectDetailLength,
-	MaxProjectSummaryLength,
 	MaxProjectTitleLength,
+	MinJournalPostLength,
 	MinProjectDetailLength,
-	MinProjectSummaryLength,
 	MinProjectTitleLength,
 	ModalActions,
 } from '@common/constants';
@@ -29,30 +28,17 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	Grid,
 	IconButton,
-	TextField,
 	Toolbar,
 	Typography,
 	useMediaQuery,
 	useTheme,
 } from '@mui/material';
 
-function dateToDateSubstring(date: Date) {
-	return date.toISOString().substring(0, 10);
-}
-
-function dateInputStrToDate(str: string) {
-	return new Date(str.replaceAll('-', '/'));
-}
-
 export
-function CreateProjectModal() {
-	const [projectCreatedDate, setProjectCreatedDate] = useState(() => new Date());
-	const [projectLastUpdatedDate, setProjectLastUpdatedDate] = useState(() => new Date());
+function CreateJournalModal() {
 	const [title, setTitle] = useState('');
-	const [summary, setSummary] = useState('');
-	const [detail, setDetail] = useState('');
+	const [body, setBody] = useState('');
 	const pushToastMsg = useSetAtom(pushToastMsgAtom);
 	const setLoading = useSetAtom(loadingAtom);
 	const isLoggedOut = useIsLoggedOut();
@@ -64,12 +50,11 @@ function CreateProjectModal() {
 		...newQuery
 	} = router.query;
 
-	const actionIsCreatePost = action === ModalActions.CreateProject;
+	const actionIsCreatePost = action === ModalActions.CreateJournal;
 	const isOpen = actionIsCreatePost && !isLoggedOut;
 	const isValid = (
 		inRange(title.length, MinProjectTitleLength, MaxProjectTitleLength) &&
-		inRange(summary.length, MinProjectSummaryLength, MaxProjectSummaryLength) &&
-		inRange(detail.length, MinProjectDetailLength, MaxProjectDetailLength)
+		inRange(body.length, MinProjectDetailLength, MaxProjectDetailLength)
 	);
 
 	useEffect(() => {
@@ -88,13 +73,7 @@ function CreateProjectModal() {
 	async function handleSave() {
 		try {
 			setLoading(true);
-			await projectSave({
-				title,
-				summary,
-				detail,
-				projectCreatedDate: projectCreatedDate.toISOString(),
-				projectLastUpdatedDate: projectLastUpdatedDate.toISOString(),
-			});
+			// Do Save Here
 			close();
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
@@ -107,10 +86,7 @@ function CreateProjectModal() {
 	}
 
 	function close() {
-		setProjectCreatedDate(() => new Date());
-		setProjectLastUpdatedDate(() => new Date());
-		setDetail('');
-		setSummary('');
+		setBody('');
 		setTitle('');
 		router.back();
 	}
@@ -132,7 +108,7 @@ function CreateProjectModal() {
 				<AppBar sx={{ position: 'relative' }}>
 					<Toolbar>
 						<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-							Create Project
+							Create Journal Post
 						</Typography>
 						<IconButton
 							edge="end"
@@ -146,7 +122,7 @@ function CreateProjectModal() {
 			)}
 			{!fullScreen && (
 				<DialogTitle>
-					Create Project
+					Create Journal Post
 				</DialogTitle>
 			)}
 			<DialogContent>
@@ -160,60 +136,22 @@ function CreateProjectModal() {
 						fullWidth
 						label="Title"
 						variant="standard"
-						placeholder="Project title"
 						type="text"
 						maxLength={MaxProjectTitleLength}
 						minLength={MinProjectTitleLength}
 						value={title}
 						onChange={e => setTitle(e.target.value)}
 					/>
-					<Grid container>
-						<Grid item xs>
-							<TextField
-								label="Created"
-								type="date"
-								variant="standard"
-								margin="dense"
-								value={dateToDateSubstring(projectCreatedDate)}
-								onChange={e => setProjectCreatedDate(dateInputStrToDate(e.target.value))}
-							/>
-						</Grid>
-						<Grid item xs>
-							<TextField
-								label="Last Updated"
-								type="date"
-								variant="standard"
-								margin="dense"
-								value={dateToDateSubstring(projectLastUpdatedDate)}
-								onChange={e => setProjectLastUpdatedDate(dateInputStrToDate(e.target.value))}
-							/>
-						</Grid>
-					</Grid>
 					<TextFieldLengthValidation
 						fullWidth
 						multiline
 						margin="dense"
-						label="Project Summy"
-						variant="standard"
-						placeholder="Short project summary..."
-						type="text"
-						maxLength={MaxProjectSummaryLength}
-						minLength={MinProjectSummaryLength}
+						label="Post"
+						maxLength={MaxJournalPostLength}
+						minLength={MinJournalPostLength}
 						minRows={3}
-						value={summary}
-						onChange={e => setSummary(e.target.value)}
-					/>
-					<TextFieldLengthValidation
-						fullWidth
-						multiline
-						margin="dense"
-						label="Project Detail"
-						placeholder="General project details..."
-						maxLength={MaxProjectSummaryLength}
-						minLength={MinProjectSummaryLength}
-						minRows={3}
-						value={detail}
-						onChange={e => setDetail(e.target.value)}
+						value={body}
+						onChange={e => setBody(e.target.value)}
 					/>
 				</Box>
 			</DialogContent>

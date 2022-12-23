@@ -167,7 +167,7 @@ function CreateButton() {
 					)}
 				/>
 				<SpeedDialAction
-					tooltipTitle="Journal Entry"
+					tooltipTitle="Journal Post"
 					icon={<JournalIcon/>}
 					onClick={() => setOpen(false)}
 				/>
