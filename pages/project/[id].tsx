@@ -82,10 +82,10 @@ function UserGallery(props: Props) {
 								By {project.owner.username}
 							</Link>
 						</Typography>
-						<Typography variant="subtitle2" paddingTop={1}>
+						<Typography variant="subtitle1" paddingTop={1} fontStyle="italic">
 							created: {localizedDateFormat(project.projectCreatedDate)}<br/>
 						</Typography>
-						<Typography variant="subtitle2">
+						<Typography variant="subtitle1" fontStyle="italic">
 							last updated: {localizedDateFormat(project.projectLastUpdatedDate)}
 						</Typography>
 						<Typography paddingTop={2}>
