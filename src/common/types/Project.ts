@@ -4,14 +4,14 @@ import { DbUser } from './User';
 
 export
 type DbProject = WithId<{
-	title: string;
 	createdDate: string;
-	owner: Pick<DbUser, '_id' | 'username'>;
+	detail: string;
 	lastUpdatedDate: string;
+	owner: Pick<DbUser, '_id' | 'username'>;
 	projectCreatedDate: string;
 	projectLastUpdatedDate: string;
 	summary: string;
-	detail: string;
+	title: string;
 	titleImageUrl: string;
 }>;
 
