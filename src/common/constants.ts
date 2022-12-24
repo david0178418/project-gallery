@@ -1,3 +1,5 @@
+import { urlJoin } from './utils';
+
 export const ApiUrl = '/api/v0';
 export const AppName = 'ProjectGallery.me';
 export const CookieName = AppName;
@@ -63,11 +65,12 @@ const NotLoggedInErrMsg = {
 export
 const Paths = {
 	Home: '/',
-	UserGallery: '/',
 	Project: '/project',
 	Search: '/search',
 	Settings: '/settings',
 	Journal: '/journal',
+	UserGallery: (username: string) => `/${username}`,
+	UserJournals: (username: string) => urlJoin(Paths.UserGallery(username), '/journals'),
 } as const;
 
 export

@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import { getServerSession } from '@server/auth-options';
 import { Box, Button } from '@mui/material';
 import { PasswordChangeForm } from '@components/password-change-form';
-import { urlJoin } from '@common/utils';
 
 export
 const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -61,7 +60,7 @@ const ProfilePage: NextPage<any> = () => {
 				<Link
 					shallow
 					passHref
-					href={urlJoin(Paths.UserGallery, user.username)}
+					href={Paths.UserGallery(user.username)}
 				>
 					<Button>
 						My Projects

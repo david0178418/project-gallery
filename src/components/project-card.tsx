@@ -61,7 +61,7 @@ function ProjectCard(props: Props) {
 				avatar={
 					<Link
 						shallow
-						href={urlJoin(Paths.UserGallery, username)}
+						href={Paths.UserGallery(username)}
 					>
 						<Tooltip
 							arrow

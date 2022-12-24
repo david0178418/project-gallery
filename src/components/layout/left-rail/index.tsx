@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { ReactNode } from 'react';
-import { urlJoin } from '@common/utils';
 import { CreateDropdown } from './create-dropdown';
 import {
 	ModalActions,
@@ -63,9 +62,12 @@ function LeftRail() {
 	const { data } = useSession();
 	const {
 		pathname,
+		asPath,
 		query,
 	} = router;
 	const user = data?.user;
+
+	console.log(router);
 
 	return (
 		<>
@@ -122,14 +124,32 @@ function LeftRail() {
 								shallow
 								passHref
 								legacyBehavior
-								href={urlJoin(Paths.UserGallery, user?.username)}
+								href={Paths.UserGallery(user.username)}
 							>
 								<ListItemButton>
 									<RailButtonContent
 										label={user.username}
 									>
 										{
-											pathname.startsWith(Paths.UserGallery) ?
+											Paths.UserGallery(user.username) === asPath ?
+												<ProfileActiveIcon /> :
+												<ProfileIcon />
+										}
+									</RailButtonContent>
+								</ListItemButton>
+							</Link>
+						</ListItem>
+						<ListItem disablePadding>
+							<Link
+								shallow
+								passHref
+								legacyBehavior
+								href={Paths.UserGallery(user.username)}
+							>
+								<ListItemButton>
+									<RailButtonContent label="My Journals">
+										{
+											Paths.UserJournals(user.username) === asPath ?
 												<ProfileActiveIcon /> :
 												<ProfileIcon />
 										}

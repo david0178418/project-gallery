@@ -2,7 +2,6 @@ import { forwardRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { urlJoin } from '@common/utils';
 import {
 	ModalActions,
 	Paths,
@@ -96,9 +95,9 @@ function BottomNav() {
 							key="a"
 							LinkComponent={Link}
 							label={user.username}
-							href={urlJoin(Paths.UserGallery, user?.username)}
+							href={Paths.UserGallery(user.username)}
 							icon={
-								pathname.startsWith(Paths.UserGallery) ?
+								Paths.UserGallery(user.username) === pathname ?
 									<ProfileActiveIcon /> :
 									<ProfileIcon />
 							}
