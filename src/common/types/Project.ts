@@ -1,11 +1,13 @@
 import { WithId } from 'mongodb';
 import { WithStringId } from '.';
-import { DbUser } from './User';
+import { DbJournal, UiJournal } from './Journal';
+import { DbUser, UiUser } from './User';
 
 export
 type DbProject = WithId<{
 	createdDate: string;
 	detail: string;
+	lastJournalEntry?: Pick<DbJournal, '_id' | 'title'>;
 	lastUpdatedDate: string;
 	owner: Pick<DbUser, '_id' | 'username'>;
 	projectCreatedDate: string;
@@ -16,8 +18,9 @@ type DbProject = WithId<{
 }>;
 
 export
-type UiProject = WithStringId<Omit<DbProject, 'owner'> & {
-	owner: WithStringId<Pick<DbUser, 'username'>>;
+type UiProject = WithStringId<Omit<DbProject, 'owner' | 'lastJournalEntry'> & {
+	owner: Pick<UiUser, '_id' | 'username'>;
+	lastJournalEntry?: Pick<UiJournal, '_id' | 'title'>;
 }>;
 
 export

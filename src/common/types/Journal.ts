@@ -1,7 +1,7 @@
 import { WithId } from 'mongodb';
 import { WithStringId } from '.';
 import { DbProject } from './Project';
-import { DbUser } from './User';
+import { DbUser, UiUser } from './User';
 
 export
 type DbJournal = WithId<{
@@ -15,7 +15,7 @@ type DbJournal = WithId<{
 
 export
 type UiJournal = WithStringId<Omit<DbJournal, 'owner'> & {
-	owner: WithStringId<Pick<DbUser, 'username'>>;
+	owner: Pick<UiUser, '_id' | 'username'>;
 }>;
 
 export

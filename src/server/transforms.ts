@@ -10,12 +10,23 @@ function passwordToHash(password: string) {
 
 export
 function dbProjectToUiProject(dbProject: WithId<DbProject>): UiProject {
-	return {
+	const uiProject = {
 		...dbProject,
 		owner: {
 			_id: dbProject.owner._id.toString(),
 			username: dbProject.owner.username.toString(),
 		},
+		lastJournalEntry: dbProject.lastJournalEntry && {
+			_id: dbProject.lastJournalEntry._id.toString(),
+			title: dbProject.lastJournalEntry.title.toString(),
+		},
 		_id: dbProject._id.toString(),
 	};
+
+	// remove undefined since it breaks serialization unless explicitly set to null
+	if(!uiProject.lastJournalEntry) {
+		delete uiProject.lastJournalEntry;
+	}
+
+	return uiProject;
 }
