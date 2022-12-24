@@ -126,8 +126,6 @@ function CreateJournalModal() {
 		return null;
 	}
 
-	console.log('selectedProjectId', selectedProjectId);
-
 	return (
 		<Dialog
 			fullWidth
