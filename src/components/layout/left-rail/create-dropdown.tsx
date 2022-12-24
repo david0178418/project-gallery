@@ -5,7 +5,7 @@ import { ModalActions } from '@common/constants';
 import {
 	AddIcon,
 	ProjectIcon,
-	JournalIcon,
+	EditIcon,
 } from '@components/icons';
 import {
 	Fab,
@@ -97,7 +97,7 @@ function CreateDropdown() {
 				>
 					<MenuItem onClick={handleClose}>
 						<ListItemIcon>
-							<JournalIcon fontSize="small" />
+							<EditIcon fontSize="small" />
 						</ListItemIcon>
 						Journal Post
 					</MenuItem>

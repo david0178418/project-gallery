@@ -15,6 +15,8 @@ import {
 	ProfileIcon,
 	SettingsActiveIcon,
 	SettingsIcon,
+	JournalActiveIcon,
+	JournalIcon,
 } from '@components/icons';
 import {
 	List,
@@ -144,14 +146,14 @@ function LeftRail() {
 								shallow
 								passHref
 								legacyBehavior
-								href={Paths.UserGallery(user.username)}
+								href={Paths.UserJournals(user.username)}
 							>
 								<ListItemButton>
 									<RailButtonContent label="My Journals">
 										{
 											Paths.UserJournals(user.username) === asPath ?
-												<ProfileActiveIcon /> :
-												<ProfileIcon />
+												<JournalActiveIcon /> :
+												<JournalIcon />
 										}
 									</RailButtonContent>
 								</ListItemButton>
