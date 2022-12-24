@@ -16,10 +16,10 @@ import {
 import {
 	MaxProjectDetailLength,
 	MaxProjectSummaryLength,
-	MaxProjectTitleLength,
+	MaxJournalProjectTitleLength,
 	MinProjectDetailLength,
 	MinProjectSummaryLength,
-	MinProjectTitleLength,
+	MinJournalProjectTitleLength,
 	ModalActions,
 } from '@common/constants';
 import {
@@ -67,7 +67,7 @@ function CreateProjectModal() {
 	const actionIsCreatePost = action === ModalActions.CreateProject;
 	const isOpen = actionIsCreatePost && !isLoggedOut;
 	const isValid = (
-		inRange(title.length, MinProjectTitleLength, MaxProjectTitleLength) &&
+		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
 		inRange(summary.length, MinProjectSummaryLength, MaxProjectSummaryLength) &&
 		inRange(detail.length, MinProjectDetailLength, MaxProjectDetailLength)
 	);
@@ -162,8 +162,8 @@ function CreateProjectModal() {
 						variant="standard"
 						placeholder="Project title"
 						type="text"
-						maxLength={MaxProjectTitleLength}
-						minLength={MinProjectTitleLength}
+						maxLength={MaxJournalProjectTitleLength}
+						minLength={MinJournalProjectTitleLength}
 						value={title}
 						onChange={e => setTitle(e.target.value)}
 					/>

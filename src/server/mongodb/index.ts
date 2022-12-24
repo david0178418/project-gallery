@@ -11,6 +11,7 @@ import {
 	MongoClient,
 	MongoClientOptions,
 } from 'mongodb';
+import { DbJournal } from '@common/types/Journal';
 
 type DbCollectionsEnum = Enum<typeof DbCollections>;
 
@@ -47,6 +48,7 @@ if (process.env.NODE_ENV === 'development') {
 /* eslint-disable @typescript-eslint/indent */
 type CollectionType<T> =
 	T extends typeof DbCollections.Grams ? DbTextGram :
+	T extends typeof DbCollections.Journals ? DbJournal :
 	T extends typeof DbCollections.Projects ? DbProject :
 	T extends typeof DbCollections.Users ? DbUser :
 	T extends typeof DbCollections.UsersMeta ? DbUserMeta :

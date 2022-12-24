@@ -1,18 +1,17 @@
-import type { CommonButtonProps } from '@common/types';
-
 import { CancelIcon } from '@components/icons';
 import { Button as MuiButton } from '@mui/material';
-import { forwardRef } from 'react';
+import { ComponentProps, forwardRef } from 'react';
 import { ConfirmIcon } from '@components/icons';
 
+interface Props extends ComponentProps<typeof MuiButton> {
+	label?: string;
+}
+
 export
-const CancelButton = forwardRef<HTMLButtonElement, CommonButtonProps>((props, ref) => {
+const CancelButton = forwardRef<HTMLButtonElement, Props>((props: Props, ref) => {
 	const {
 		children,
 		label,
-		href,
-		fullWidth,
-		onClick,
 	} = props;
 	const renderedLabel = label || children || 'Cancel';
 
@@ -20,10 +19,7 @@ const CancelButton = forwardRef<HTMLButtonElement, CommonButtonProps>((props, re
 		<MuiButton
 			color="error"
 			variant="outlined"
-			href={href}
 			ref={ref}
-			fullWidth={fullWidth}
-			onClick={onClick}
 			endIcon={<CancelIcon />}
 		>
 			{renderedLabel}
@@ -32,14 +28,10 @@ const CancelButton = forwardRef<HTMLButtonElement, CommonButtonProps>((props, re
 });
 
 export
-const ConfirmButton = forwardRef<HTMLButtonElement, CommonButtonProps>((props, ref) => {
+const ConfirmButton = forwardRef<HTMLButtonElement, Props>((props: Props, ref) => {
 	const {
 		children,
-		disabled,
 		label,
-		href,
-		fullWidth,
-		onClick,
 	} = props;
 	const renderedLabel = label || children || 'Confirm';
 
@@ -47,12 +39,9 @@ const ConfirmButton = forwardRef<HTMLButtonElement, CommonButtonProps>((props, r
 		<MuiButton
 			color="success"
 			variant="outlined"
-			disabled={disabled}
-			href={href}
 			ref={ref}
-			fullWidth={fullWidth}
-			onClick={onClick}
 			endIcon={<ConfirmIcon />}
+			{...props}
 		>
 			{renderedLabel}
 		</MuiButton>

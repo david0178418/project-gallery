@@ -1,81 +1,32 @@
-export
-const ApiUrl = '/api/v0';
+export const ApiUrl = '/api/v0';
+export const AppName = 'ProjectGallery.me';
+export const CookieName = AppName;
+export const AuthUser_tokensCookieName = `${CookieName}.AuthUserTokens`;
+export const AuthUserCookieName = `${CookieName}.AuthUser`;
+export const BaseUrl = process.env.HOST;
+export const DefaultToastMsgDelay = 4000;
+export const ExtendedWhitespaceRegex = /\s{2,}/g;
+export const IsDev = process.env.NODE_ENV !== 'production';
+export const ISODateStringLength = 24;
+export const IsSsr = typeof window === 'undefined';
+export const MaxJournalPostLength = 4000;
+export const MaxJournalProjectTitleLength = 100;
+export const MaxProjectDetailLength = 1000;
+export const MaxProjectSummaryLength = 280;
+export const MaxSearchTermSize = 100;
+export const MinJournalPostLength = 10;
+export const MinJournalProjectTitleLength = 3;
+export const MinProjectDetailLength = 10;
+export const MinProjectSummaryLength = 10;
+export const MongoIdLength = 24;
+export const PasswordMaxLength = 128;
+export const PasswordMinLength = 6;
+export const PasswordSaltLength = 10;
+export const UsernameMaxLength = 24;
+export const UsernameMinLength = 3;
 
-export
-const AppName = 'ProjectGallery.me';
-
-export
-const BaseUrl = process.env.HOST;
-
-export
-const CookieName = AppName;
-
-export
-const AuthUser_tokensCookieName = `${CookieName}.AuthUserTokens`;
-
-export
-const AuthUserCookieName = `${CookieName}.AuthUser`;
-
-export
-const DefaultToastMsgDelay = 4000;
-
-export
-const IsDev = process.env.NODE_ENV !== 'production';
-
-export
-const ISODateStringLength = 24;
-
-export
-const IsSsr = typeof window === 'undefined';
-
-export
-const MaxSearchTermSize = 100;
-
-export
-const MaxJournalPostLength = 280;
-
-export
-const MinJournalPostLength = 10;
-export
-const MaxProjectDetailLength = 1000;
-
-export
-const MinProjectDetailLength = 10;
-
-export
-const MaxProjectSummaryLength = 280;
-
-export
-const MinProjectSummaryLength = 10;
-
-export
-const MaxProjectTitleLength = 100;
-
-export
-const MinProjectTitleLength = 3;
-
-export
-const MongoIdLength = 24;
-
-export
-const PasswordMaxLength = 128;
-
-export
-const PasswordMinLength = 6;
-
-export
-const PasswordSaltLength = 10;
-
-export
 // Source: https://stackoverflow.com/questions/4328500/how-can-i-strip-all-punctuation-from-a-string-in-javascript-using-regex
-const PunctuationRegex = /[^\p{L}\s]/gu;
-// Not sure if this should be used or the other const PunctuationRegex = /[.,-/#!$%^&*;:{}""=\-_`~()@+?><[\]+]/g;
-
-export
-const UsernameMaxLength = 24;
-
-export
-const UsernameMinLength = 3;
+export const PunctuationRegex = /[^\p{L}\s]/gu; // Not sure if this should be used or the other const PunctuationRegex = /[.,-/#!$%^&*;:{}""=\-_`~()@+?><[\]+]/g;
 
 export
 const BaseReq: RequestInit = {
@@ -90,12 +41,10 @@ export
 const DbCollections = {
 	Grams: 'grams',
 	Projects: 'projects',
+	Journals: 'journals',
 	Users: 'users',
 	UsersMeta: 'users-meta',
 } as const;
-
-export
-const ExtendedWhitespaceRegex = /\s{2,}/g;
 
 export
 const ModalActions = {
@@ -153,8 +102,7 @@ const StopWords = [
 	'wasn\'t', 'we\'d', 'we\'ll', 'we\'re', 'weren\'t', 'what\'d', 'what\'s',
 	'when\'d', 'when\'ll', 'when\'s', 'where\'d', 'where\'ll', 'where\'s',
 	'who\'d', 'who\'ll', 'who\'s', 'why\'d', 'why\'ll', 'why\'s', 'won\'t',
-	'would\'ve', 'wouldn\'t', 'you\'d', 'you\'ll', 'you\'re', 'you\'ve',
-];
+	'would\'ve', 'wouldn\'t', 'you\'d', 'you\'ll', 'you\'re', 'you\'ve' ];
 
 export
 const UserRoles = {

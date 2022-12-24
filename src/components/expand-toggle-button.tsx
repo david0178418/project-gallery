@@ -5,7 +5,7 @@ import {
 	ExpandMoreIcon,
 } from './icons';
 
-type Props = ComponentProps<typeof IconButton> & {
+interface Props extends ComponentProps<typeof IconButton> {
 	expanded?: boolean;
 	onClick(): void;
 }

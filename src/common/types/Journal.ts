@@ -9,7 +9,7 @@ type DbJournal = WithId<{
 	publishedDate: string | null;
 	lastUpdatedDate: string | null;
 	owner: Pick<DbUser, '_id' | 'username'>;
-	project: Pick<DbProject, '_id' | 'title'>;
+	project?: Pick<DbProject, '_id' | 'title'>;
 	title: string;
 }>;
 
@@ -21,4 +21,6 @@ type UiJournal = WithStringId<Omit<DbJournal, 'owner'> & {
 export
 type WriteJournal = Pick<UiJournal, 'title' | 'body'> & {
 	_id?: string;
+	projectId?: string | null;
+	publish?: boolean;
 };

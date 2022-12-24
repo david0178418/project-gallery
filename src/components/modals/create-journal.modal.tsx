@@ -7,20 +7,20 @@ import { useIsLoggedOut } from '@common/hooks';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import { inRange } from '@common/utils';
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
-import { CloseIcon } from '@components/icons';
+import { CloseIcon, SaveIcon } from '@components/icons';
 import {
 	useEffect,
 	useState,
 } from 'react';
 import {
 	MaxJournalPostLength,
-	MaxProjectTitleLength,
+	MaxJournalProjectTitleLength,
 	MinJournalPostLength,
-	MinProjectTitleLength,
+	MinJournalProjectTitleLength,
 	ModalActions,
 } from '@common/constants';
 import { UiProject } from '@common/types/Project';
-import { getProjects } from '@client/api-calls';
+import { getProjects, journalSave } from '@client/api-calls';
 import {
 	AppBar,
 	Box,
@@ -60,8 +60,12 @@ function CreateJournalModal() {
 
 	const actionIsCreatePost = action === ModalActions.CreateJournal;
 	const isOpen = actionIsCreatePost && !isLoggedOut;
-	const isValid = (
-		inRange(title.length, MinProjectTitleLength, MaxProjectTitleLength) &&
+	const canSave = (
+		(title.length < MaxJournalProjectTitleLength) &&
+		(body.length < MaxJournalPostLength)
+	);
+	const canPublish = (
+		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
 		inRange(body.length, MinJournalPostLength, MaxJournalPostLength)
 	);
 
@@ -86,10 +90,17 @@ function CreateJournalModal() {
 		});
 	}, [actionIsCreatePost, isLoggedOut]);
 
-	async function handleSave() {
+	async function handleSave(publish = false) {
 		try {
 			setLoading(true);
-			// Do Save Here
+
+			await journalSave({
+				body,
+				publish,
+				title,
+				projectId: selectedProjectId === GeneralPost ? null : selectedProjectId,
+			});
+
 			close();
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
@@ -179,8 +190,8 @@ function CreateJournalModal() {
 						variant="standard"
 						margin="normal"
 						type="text"
-						maxLength={MaxProjectTitleLength}
-						minLength={MinProjectTitleLength}
+						maxLength={MaxJournalProjectTitleLength}
+						minLength={MinJournalProjectTitleLength}
 						value={title}
 						onChange={e => setTitle(e.target.value)}
 					/>
@@ -211,10 +222,21 @@ function CreateJournalModal() {
 					<CancelButton fullWidth={fullScreen} onClick={close} />
 				</Link>
 				<ConfirmButton
-					onClick={handleSave}
+					onClick={() => handleSave()}
 					fullWidth={fullScreen}
-					disabled={!isValid}
-				/>
+					disabled={!canSave}
+					endIcon={<SaveIcon/>}
+				>
+					Save
+				</ConfirmButton>
+				<ConfirmButton
+					onClick={() => handleSave(true)}
+					fullWidth={fullScreen}
+					disabled={!canPublish}
+					variant="contained"
+				>
+					Publish
+				</ConfirmButton>
 			</DialogActions>
 		</Dialog>
 	);

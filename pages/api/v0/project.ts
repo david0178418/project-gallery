@@ -9,10 +9,10 @@ import { IsoDateValidation, MongoIdValidation } from '@server/validations';
 import {
 	DbCollections,
 	MaxProjectSummaryLength,
-	MaxProjectTitleLength,
+	MaxJournalProjectTitleLength,
 	MinProjectDetailLength,
 	MinProjectSummaryLength,
-	MinProjectTitleLength,
+	MinJournalProjectTitleLength,
 } from '@common/constants';
 import {
 	nowISOString,
@@ -29,8 +29,8 @@ const schema: ZodType<Schema> = z.object({
 		_id: MongoIdValidation.optional(),
 		title: z
 			.string()
-			.min(MinProjectTitleLength, { message: `Project title must be at least ${MinProjectTitleLength} characters long.` })
-			.max(MaxProjectTitleLength, { message: `Project title can be no more than ${MaxProjectTitleLength} characters long.` }),
+			.min(MinJournalProjectTitleLength, { message: `Project title must be at least ${MinJournalProjectTitleLength} characters long.` })
+			.max(MaxJournalProjectTitleLength, { message: `Project title can be no more than ${MaxJournalProjectTitleLength} characters long.` }),
 		detail: z
 			.string()
 			.min(MinProjectDetailLength, { message: `Project detail must be at least ${MinProjectDetailLength} characters long.` })

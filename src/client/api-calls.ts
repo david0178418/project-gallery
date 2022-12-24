@@ -5,6 +5,7 @@ import { get, post } from '@client/client-utils';
 import { urlJoin } from '@common/utils';
 import { ApiUrl } from '@common/constants';
 import { UiProject, WriteProject } from '@common/types/Project';
+import { WriteJournal } from '@common/types/Journal';
 
 export
 async function login(username: string, password: string) {
@@ -49,6 +50,11 @@ async function getNotificaitons(): Promise<Notification[]> {
 export
 function projectSave(project: WriteProject) {
 	return apiPost('/project', { project });
+}
+
+export
+function journalSave(journal: WriteJournal) {
+	return apiPost('/journal', { journal });
 }
 
 export
