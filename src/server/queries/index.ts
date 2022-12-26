@@ -4,6 +4,7 @@ import { ObjectId, WithId } from 'mongodb';
 
 import { getCollection } from '@server/mongodb';
 import { DbCollections } from '@common/constants';
+import { DbJournal } from '@common/types/Journal';
 
 export
 async function fetchUser(username: string): Promise<DbUser | null> {
@@ -45,6 +46,16 @@ export
 async function fetchUserGallery(username: string): Promise<Array<WithId<DbProject>>> {
 	const col = await getCollection(DbCollections.Projects);
 	return col.aggregate<WithId<DbProject>>([
+		{ $sort: { createdDate: -1 } },
+		{ $match: { 'owner.username': username } },
+		{ $limit: 20 },
+	]).toArray();
+}
+
+export
+async function fetchUserJournals(username: string): Promise<Array<WithId<DbJournal>>> {
+	const col = await getCollection(DbCollections.Journals);
+	return col.aggregate<WithId<DbJournal>>([
 		{ $sort: { createdDate: -1 } },
 		{ $match: { 'owner.username': username } },
 		{ $limit: 20 },

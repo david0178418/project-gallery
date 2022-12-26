@@ -1,4 +1,5 @@
 import { PasswordSaltLength } from '@common/constants';
+import { DbJournal, UiJournal } from '@common/types/Journal';
 import { DbProject, UiProject } from '@common/types/Project';
 import { hash } from 'bcryptjs';
 import { WithId } from 'mongodb';
@@ -29,4 +30,27 @@ function dbProjectToUiProject(dbProject: WithId<DbProject>): UiProject {
 	}
 
 	return uiProject;
+}
+
+export
+function dbJournalToUiJournal(dbJournal: WithId<DbJournal>): UiJournal {
+	const uiJournal: UiJournal = {
+		...dbJournal,
+		owner: {
+			_id: dbJournal.owner._id.toString(),
+			username: dbJournal.owner.username.toString(),
+		},
+		project: dbJournal.project && {
+			_id: dbJournal.project._id.toString(),
+			title: dbJournal.project.title.toString(),
+		},
+		_id: dbJournal._id.toString(),
+	};
+
+	// remove undefined since it breaks serialization unless explicitly set to null
+	if(!uiJournal.project) {
+		delete uiJournal.project;
+	}
+
+	return uiJournal;
 }
