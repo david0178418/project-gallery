@@ -21,6 +21,7 @@ const CancelButton = forwardRef<HTMLButtonElement, Props>((props: Props, ref) =>
 			variant="outlined"
 			ref={ref}
 			endIcon={<CancelIcon />}
+			{...props}
 		>
 			{renderedLabel}
 		</MuiButton>
