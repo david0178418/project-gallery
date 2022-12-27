@@ -28,7 +28,7 @@ interface Props {
 
 export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-	const result = await MongoIdValidation.safeParseAsync(ctx.query.id);
+	const result = await MongoIdValidation.safeParseAsync(ctx.query.projectId);
 	const session = await getServerSession(ctx.req, ctx.res);
 
 	if(!result.success) {
