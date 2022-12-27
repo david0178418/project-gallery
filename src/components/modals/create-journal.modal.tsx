@@ -20,6 +20,7 @@ import {
 	ModalActions,
 } from '@common/constants';
 import { UiProject } from '@common/types/Project';
+import dynamic from 'next/dynamic';
 import { getProjects, journalSave } from '@client/api-calls';
 import {
 	AppBar,
@@ -33,16 +34,21 @@ import {
 	InputLabel,
 	MenuItem,
 	Select,
+	Tab,
+	Tabs,
 	Toolbar,
 	Typography,
 	useMediaQuery,
 	useTheme,
 } from '@mui/material';
 
+const MarkdownContent = dynamic(() => import('@components/markdown-content'));
+
 const GeneralPost = 'general-post';
 
 export
 function CreateJournalModal() {
+	const [showPreview, setShowPreview] = useState(false);
 	const [title, setTitle] = useState('');
 	const [body, setBody] = useState('');
 	const [projects, setProjects] = useState<UiProject[]>([]);
@@ -193,17 +199,30 @@ function CreateJournalModal() {
 						value={title}
 						onChange={e => setTitle(e.target.value)}
 					/>
-					<TextFieldLengthValidation
-						fullWidth
-						multiline
-						margin="dense"
-						label="Post"
-						maxLength={MaxJournalPostLength}
-						minLength={MinJournalPostLength}
-						minRows={3}
-						value={body}
-						onChange={e => setBody(e.target.value)}
-					/>
+					<Box paddingTop={2}>
+						<Tabs value={showPreview.toString()}>
+							<Tab value="false" label="Edit" onClick={() => setShowPreview(false) }/>
+							<Tab value="true" label="Preview" onClick={() => setShowPreview(true) }/>
+						</Tabs>
+					</Box>
+					{!showPreview && (
+						<TextFieldLengthValidation
+							fullWidth
+							multiline
+							margin="dense"
+							label="Post"
+							maxLength={MaxJournalPostLength}
+							minLength={MinJournalPostLength}
+							minRows={3}
+							value={body}
+							onChange={e => setBody(e.target.value)}
+						/>
+					)}
+					{showPreview && (
+						<MarkdownContent>
+							{body}
+						</MarkdownContent>
+					)}
 				</Box>
 			</DialogContent>
 			<DialogActions sx={{ gap: 2 }}>
