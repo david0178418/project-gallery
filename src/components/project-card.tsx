@@ -37,6 +37,7 @@ function ProjectCard(props: Props) {
 			detail,
 			projectCreatedDate,
 			projectLastUpdatedDate,
+			lastJournalEntry,
 			summary,
 			title,
 			titleImageUrl,
@@ -111,16 +112,23 @@ function ProjectCard(props: Props) {
 						<ShareIcon />
 					</IconButton>
 				</Tooltip>
-				<Tooltip
-					arrow
-					disableFocusListener
-					disableTouchListener
-					title="Last Journal Entry"
-				>
-					<IconButton>
-						<JournalIcon />
-					</IconButton>
-				</Tooltip>
+				{lastJournalEntry && (
+					<Link
+						shallow
+						href={Paths.Journal(lastJournalEntry._id)}
+					>
+						<Tooltip
+							arrow
+							disableFocusListener
+							disableTouchListener
+							title={lastJournalEntry.title}
+						>
+							<IconButton>
+								<JournalIcon />
+							</IconButton>
+						</Tooltip>
+					</Link>
+				)}
 				<ExpandedToggleButton
 					sx={{ marginLeft: 'auto' }}
 					expanded={expanded}
