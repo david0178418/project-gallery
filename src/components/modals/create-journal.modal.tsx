@@ -8,6 +8,9 @@ import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import { inRange } from '@common/utils';
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { CloseIcon, SaveIcon } from '@components/icons';
+import { UiProject } from '@common/types/Project';
+import dynamic from 'next/dynamic';
+import { getProjects, journalSave } from '@client/api-calls';
 import {
 	useEffect,
 	useState,
@@ -19,9 +22,6 @@ import {
 	MinJournalProjectTitleLength,
 	ModalActions,
 } from '@common/constants';
-import { UiProject } from '@common/types/Project';
-import dynamic from 'next/dynamic';
-import { getProjects, journalSave } from '@client/api-calls';
 import {
 	AppBar,
 	Box,
