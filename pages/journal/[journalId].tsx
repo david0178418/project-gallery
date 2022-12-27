@@ -21,6 +21,7 @@ import {
 	Link as MuiLink,
 	Typography,
 } from '@mui/material';
+import MarkdownContent from '@components/markdown-content';
 
 interface Props {
 	journal: UiJournal | null;
@@ -107,9 +108,11 @@ function Journal(props: Props) {
 								last updated: {localizedDateFormat(journal.lastUpdatedDate)}
 							</Typography>
 						)}
-						<Typography paddingTop={2}>
-							{journal.body}
-						</Typography>
+						<Box paddingTop={2}>
+							<MarkdownContent>
+								{journal.body}
+							</MarkdownContent>
+						</Box>
 					</>
 				)}
 			</ScrollContent>
