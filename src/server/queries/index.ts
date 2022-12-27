@@ -43,6 +43,13 @@ async function fetchProject(id: string): Promise<WithId<DbProject> | null> {
 }
 
 export
+async function fetchJournal(id: string): Promise<WithId<DbJournal> | null> {
+	const col = await getCollection(DbCollections.Journals);
+
+	return col.findOne({ _id: new ObjectId(id) });
+}
+
+export
 async function fetchUserGallery(username: string): Promise<Array<WithId<DbProject>>> {
 	const col = await getCollection(DbCollections.Projects);
 	return col.aggregate<WithId<DbProject>>([

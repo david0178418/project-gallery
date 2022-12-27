@@ -65,10 +65,10 @@ const NotLoggedInErrMsg = {
 export
 const Paths = {
 	Home: '/',
-	Project: '/project',
 	Search: '/search',
 	Settings: '/settings',
-	Journal: '/journal',
+	Project: (projectId: string) => urlJoin('/project', projectId),
+	Journal: (journalId: string) => urlJoin('/journal', journalId),
 	UserGallery: (username: string) => `/${username}`,
 	UserJournals: (username: string) => urlJoin(Paths.UserGallery(username), '/journals'),
 } as const;

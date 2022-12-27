@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { AppName, SpecialCharacterCodes } from '@common/constants';
 import { useRouteBackDefault } from '@common/hooks';
 import { ScrollContent } from '@components/scroll-content';
 import { BackIcon } from '@components/icons';
@@ -10,10 +9,20 @@ import { fetchUserJournals } from '@server/queries';
 import { dbJournalToUiJournal } from '@server/transforms';
 import { UiJournal } from '@common/types/Journal';
 import {
+	AppName,
+	Paths,
+	SpecialCharacterCodes,
+} from '@common/constants';
+import {
 	Box,
 	IconButton,
+	List,
+	ListItem,
+	ListItemButton,
+	ListItemText,
 	Typography,
 } from '@mui/material';
+import Link from 'next/link';
 
 interface Props {
 	unknownUser?: boolean;
@@ -78,10 +87,19 @@ function UserJournals(props: Props) {
 					</Box>
 				}
 			>
-				{journals.map(p => (
-					<Typography key={p._id}>
-						{p.title}
-					</Typography>
+				{journals.map(j => (
+					<List key={j._id}>
+						<ListItem>
+							<Link passHref legacyBehavior href={Paths.Journal(j._id)}>
+								<ListItemButton>
+									<ListItemText
+										primary={j.title}
+										secondary={j.project && `Project: ${j.project?.title}`}
+									/>
+								</ListItemButton>
+							</Link>
+						</ListItem>
+					</List>
 				))}
 			</ScrollContent>
 		</>

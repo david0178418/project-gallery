@@ -1,7 +1,7 @@
 import { red } from '@mui/material/colors';
 import { ExpandedToggleButton } from '@components/expand-toggle-button';
 import { useState } from 'react';
-import { localizedDateFormat, urlJoin } from '@common/utils';
+import { localizedDateFormat } from '@common/utils';
 import { UiProject } from '@common/types/Project';
 import { ParsedContent } from './parsed-content';
 import Link from 'next/link';
@@ -76,7 +76,7 @@ function ProjectCard(props: Props) {
 					</Link>
 				}
 			/>
-			<Link href={urlJoin(Paths.Project, _id)}>
+			<Link href={Paths.Project(_id)}>
 				<CardMedia
 					component="img"
 					height="194"
