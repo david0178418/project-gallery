@@ -14,10 +14,10 @@ HOST="http://localhost:3000"
 NEXTAUTH_URL="${HOST}"
 ```
 
-Optionally, spin up the mongo docker container if you don't have a mongo server to connect to.  This will spin up a server at `mongodb://127.0.0.1:27017`:
+Optionally, spin up the external resources (mongo database and minio for s3 services).  This will spin up a server at `mongodb://127.0.0.1:27017`:
 
 ```bash
-npm run dev:db
+npm run dev:services
 ```
 
 First, run the development server:
