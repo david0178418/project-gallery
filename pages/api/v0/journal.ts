@@ -54,6 +54,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if(!session) {
 		return res.status(400).end();
 	}
+
 	const result = await schema.safeParseAsync(req.body);
 
 	if(!result.success) {
