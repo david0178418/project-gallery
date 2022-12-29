@@ -5,7 +5,9 @@ import { getCollection } from '@server/mongodb';
 import { getServerSession } from '@server/auth-options';
 import { ObjectId } from 'mongodb';
 import { WriteProject } from '@common/types/Project';
+import { User } from 'next-auth';
 import { IsoDateValidation, MongoIdValidation } from '@server/validations';
+import { nowISOString, random } from '@common/utils';
 import {
 	DbCollections,
 	MaxProjectSummaryLength,
@@ -14,11 +16,6 @@ import {
 	MinProjectSummaryLength,
 	MinJournalProjectTitleLength,
 } from '@common/constants';
-import {
-	nowISOString,
-	random,
-} from '@common/utils';
-import { User } from 'next-auth';
 
 interface Schema {
 	project: WriteProject;
