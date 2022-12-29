@@ -184,6 +184,15 @@ function truncate(input: string, maxLen = 50) {
 		input;
 }
 
+const ID_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+export
+function makeId(length: number) {
+	return range(length)
+		.map(() => ID_CHARS.charAt(random(0, ID_CHARS.length)))
+		.join('');
+}
+
 export
 const NoOp = () => {};
 
