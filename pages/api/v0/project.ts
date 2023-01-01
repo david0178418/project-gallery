@@ -7,7 +7,7 @@ import { ObjectId } from 'mongodb';
 import { WriteProject } from '@common/types/Project';
 import { User } from 'next-auth';
 import { IsoDateValidation, MongoIdValidation } from '@server/validations';
-import { nowISOString, random } from '@common/utils';
+import { nowISOString } from '@common/utils';
 import {
 	DbCollections,
 	MaxProjectSummaryLength,
@@ -15,6 +15,9 @@ import {
 	MinProjectDetailLength,
 	MinProjectSummaryLength,
 	MinJournalProjectTitleLength,
+	MinImageUrlLength,
+	MaxImageUrlLength,
+	MaxImageDescriptionLength,
 } from '@common/constants';
 
 interface Schema {
@@ -36,6 +39,17 @@ const schema: ZodType<Schema> = z.object({
 			.string()
 			.min(MinProjectSummaryLength, { message: `Project summary must be at least ${MinProjectSummaryLength} characters long.` })
 			.max(MaxProjectSummaryLength, { message: `Project summary can be no more than ${MaxProjectSummaryLength} characters long.` }),
+		images: z.array(
+			z.object({
+				url: z
+					.string()
+					.min(MinImageUrlLength)
+					.max(MaxImageUrlLength),
+				description: z
+					.string()
+					.max(MaxImageDescriptionLength),
+			})
+		),
 		projectCreatedDate: IsoDateValidation,
 		projectLastUpdatedDate: IsoDateValidation,
 	}),
@@ -86,7 +100,6 @@ async function createProject(user: User, project: WriteProject) {
 			},
 			createdDate: now,
 			lastUpdatedDate: now,
-			titleImageUrl: `https://placebacon.net/400/300?image=${random(0, 9)}`,
 		});
 
 	return _id;

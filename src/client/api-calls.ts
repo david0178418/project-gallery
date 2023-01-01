@@ -74,3 +74,60 @@ function apiPost<T = any>(path: string, requestBody?: any) {
 function apiGet<T = any>(path: string, params?: any, signal?: AbortSignal) {
 	return get<T>(urlJoin(ApiUrl, path), params, signal);
 }
+
+interface Foo {
+	url: string;
+	fields: any;
+}
+
+export
+async function postFile(file: File): Promise<ApiResponse> {
+	const fileName = encodeURIComponent(file.name);
+	const fileType = encodeURIComponent(file.type);
+
+	const res = await apiGet<ApiResponse<Foo>>('upload-url', {
+		file: fileName,
+		fileType,
+	});
+
+	if(!res?.data) {
+		return {
+			ok: false,
+			errors: res?.errors,
+		};
+	}
+
+	const {
+		url,
+		fields,
+	} = res.data;
+
+	const formData = new FormData();
+
+	Object.entries({
+		...fields,
+		file,
+	}).forEach(([key, value]) => {
+		formData.append(key, value as string);
+	});
+
+	try {
+		await fetch(url, {
+			method: 'POST',
+			headers: {
+				'X-Amz-Algorithm': fields['X-Amz-Algorithm'],
+				'X-Amz-Credential': fields['X-Amz-Credential'],
+				'X-Amz-Date': fields['X-Amz-Date'],
+				'X-Amz-Signature': fields['X-Amz-Signature'],
+			},
+			body: formData,
+		});
+		return {
+			ok: true,
+			data: { url },
+		};
+	} catch {
+		return { ok: false };
+	}
+
+}
