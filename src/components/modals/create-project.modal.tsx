@@ -9,6 +9,7 @@ import { inRange } from '@common/utils';
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { CloseIcon } from '@components/icons';
 import { projectSave } from '@client/api-calls';
+import { Uploader } from '@components/uploader';
 import {
 	useEffect,
 	useState,
@@ -48,6 +49,7 @@ function dateInputStrToDate(str: string) {
 
 export
 function CreateProjectModal() {
+	const [files, setFiles] = useState<File[]>([]);
 	const [projectCreatedDate, setProjectCreatedDate] = useState(() => new Date());
 	const [projectLastUpdatedDate, setProjectLastUpdatedDate] = useState(() => new Date());
 	const [title, setTitle] = useState('');
@@ -94,6 +96,7 @@ function CreateProjectModal() {
 				detail,
 				projectCreatedDate: projectCreatedDate.toISOString(),
 				projectLastUpdatedDate: projectLastUpdatedDate.toISOString(),
+				images: [],
 			});
 			close();
 		} catch(e: any) {
@@ -189,11 +192,17 @@ function CreateProjectModal() {
 							/>
 						</Grid>
 					</Grid>
+					<Box paddingTop={1}>
+						<Uploader
+							files={files}
+							onChange={fs => setFiles(fs)}
+						/>
+					</Box>
 					<TextFieldLengthValidation
 						fullWidth
 						multiline
 						margin="dense"
-						label="Project Summy"
+						label="Project Summary"
 						variant="standard"
 						placeholder="Short project summary..."
 						type="text"

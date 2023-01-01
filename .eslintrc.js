@@ -51,6 +51,7 @@ module.exports = {
 		indent: OFF,
 		quotes: [WARN, 'single'],
 		semi: ERR,
+		'@next/next/no-img-element': OFF,
 		'@typescript-eslint/ban-ts-comment': OFF,
 		'@typescript-eslint/explicit-module-boundary-types': OFF,
 		'@typescript-eslint/indent': [ERR, 'tab'],
