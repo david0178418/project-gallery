@@ -40,7 +40,7 @@ function ProjectCard(props: Props) {
 			lastJournalEntry,
 			summary,
 			title,
-			titleImageUrl,
+			images,
 			owner: { username },
 		},
 	} = props;
@@ -81,7 +81,7 @@ function ProjectCard(props: Props) {
 				<CardMedia
 					component="img"
 					height="194"
-					image={titleImageUrl}
+					image={images?.[0].url}
 				/>
 			</Link>
 			<CardContent>

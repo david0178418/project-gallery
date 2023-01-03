@@ -3,9 +3,11 @@ import { User } from 'next-auth';
 import type { ReactNode } from 'react';
 
 export
-interface ApiResponse<T = any> {
-	ok: boolean;
-	data?: T;
+type ApiResponse<T = any> = {
+	ok: true;
+	data: T;
+} | {
+	ok: false;
 	errors?: string[];
 }
 export

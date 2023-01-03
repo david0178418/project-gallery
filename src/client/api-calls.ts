@@ -1,9 +1,9 @@
-import type { ApiResponse } from '@common/types';
+import type { ApiResponse, Enum } from '@common/types';
 
 import { signIn, signOut } from 'next-auth/react';
 import { get, post } from '@client/client-utils';
 import { urlJoin } from '@common/utils';
-import { ApiUrl } from '@common/constants';
+import { ApiUrl, FileUploadCategories } from '@common/constants';
 import { UiProject, WriteProject } from '@common/types/Project';
 import { WriteJournal } from '@common/types/Journal';
 
@@ -44,7 +44,10 @@ export
 async function getNotificaitons(): Promise<Notification[]> {
 	const result = await apiGet<ApiResponse<{notifications: Notification[]}>>('/user/notifications');
 
-	return result?.data?.notifications || [];
+	return result?.ok ?
+		result.data.notifications :
+		[];
+
 }
 
 export
@@ -81,16 +84,17 @@ interface Foo {
 }
 
 export
-async function postFile(file: File): Promise<ApiResponse> {
+async function postFile(file: File, category: Enum<typeof FileUploadCategories>): Promise<ApiResponse<{url: string}>> {
 	const fileName = encodeURIComponent(file.name);
 	const fileType = encodeURIComponent(file.type);
 
 	const res = await apiGet<ApiResponse<Foo>>('upload-url', {
 		file: fileName,
+		category,
 		fileType,
 	});
 
-	if(!res?.data) {
+	if(!res?.ok) {
 		return {
 			ok: false,
 			errors: res?.errors,
@@ -124,7 +128,7 @@ async function postFile(file: File): Promise<ApiResponse> {
 		});
 		return {
 			ok: true,
-			data: { url },
+			data: { url: urlJoin(url, fields.key) },
 		};
 	} catch {
 		return { ok: false };

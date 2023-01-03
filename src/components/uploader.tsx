@@ -1,37 +1,46 @@
 import { useDropzone } from 'react-dropzone';
-import { Box, Grid } from '@mui/material';
-import {
-	ImgHTMLAttributes,
-	useCallback,
-	useState,
-} from 'react';
+import { Box } from '@mui/material';
+import { postFile } from '@client/api-calls';
+import { useSetAtom } from 'jotai';
+import { loadingAtom } from '@common/atoms';
+import { isTruthy } from '@common/utils';
+import { Enum } from '@common/types';
+import { FileUploadCategories } from '@common/constants';
 
-// async function uploadPhoto (file: File) {
-// 	const res = await postFile(file);
+async function uploadPhoto (file: File, category: Enum<typeof FileUploadCategories>) {
+	const res = await postFile(file, category);
 
-// 	if (res.ok) {
-// 		console.log('Uploaded successfully!');
-// 	} else {
-// 		console.error('Upload failed.');
-// 	}
-// }
+	if (res.ok) {
+		return res.data.url;
+	} else {
+		return null;
+	}
+}
 
 interface Props {
-	files: File[];
-	onChange?(files: File[]): void;
+	category: Enum<typeof FileUploadCategories>;
+	onAdd(files: string[]): void;
 }
 
 export
 function Uploader(props: Props) {
+	const setLoading = useSetAtom(loadingAtom);
 	const {
-		files,
-		onChange = () => {},
+		category,
+		onAdd,
 	} = props;
 
-	// const [files, setFiles] = useState<File[]>([]);
-	const onDrop = useCallback((acceptedFiles: File[]) => {
-		onChange([...files, ...acceptedFiles]);
-	}, [files]);
+	async function onDrop (acceptedFiles: File[]) {
+		setLoading(true);
+		try {
+			const results = await Promise.all(acceptedFiles.map(f => uploadPhoto(f, category)));
+			onAdd(results.filter(isTruthy));
+		} catch {
+			// do something
+		}
+
+		setLoading(false);
+	}
 
 	const {
 		getRootProps,
@@ -43,68 +52,20 @@ function Uploader(props: Props) {
 	});
 
 	return (
-		<>
-			<Box
-				{...getRootProps()}
-				border="3px dashed"
-				padding={1}
-				borderRadius={2}
-				borderColor={isDragActive ? 'Highlight' : 'InactiveBorder'}
-				sx={{ cursor: 'pointer' }}
-			>
-				<input {...getInputProps()} />
-				{
-					isDragActive ?
-						<p>Drop the files here ...</p> :
-						<p>Drag n drop some files here, or click to select files</p>
-				}
-			</Box>
-			<Grid
-				rowGap={4}
-				marginTop={2}
-				container
-			>
-				{files.map(f => (
-					<Grid
-						item
-						key={`${f.name}-${f.type}-${f.size}`}
-						xs={2}
-					>
-						<FileImgPreview
-							file={f}
-							onClick={() => onChange(files.filter(f2 => f2 !== f))}
-							style={{
-								cursor: 'pointer',
-								height: 100,
-								width: 100,
-							}}
-						/>
-					</Grid>
-				))}
-			</Grid>
-		</>
-	);
-}
-
-interface FooProps extends ImgHTMLAttributes<HTMLImageElement> {
-	file: File;
-}
-
-function FileImgPreview(props: FooProps) {
-	const {
-		file,
-		...imgProps
-	} = props;
-
-	const [objUrl] = useState(() => URL.createObjectURL(file));
-
-	return (
-		<img
-			{...imgProps}
-			src={objUrl}
-			onLoad={() => {
-				URL.revokeObjectURL(objUrl);
-			}}
-		/>
+		<Box
+			{...getRootProps()}
+			border="3px dashed"
+			padding={1}
+			borderRadius={2}
+			borderColor={isDragActive ? 'Highlight' : 'InactiveBorder'}
+			sx={{ cursor: 'pointer' }}
+		>
+			<input {...getInputProps()} />
+			{
+				isDragActive ?
+					<p>Drop the files here ...</p> :
+					<p>Drag n drop some files here, or click to select files</p>
+			}
+		</Box>
 	);
 }
