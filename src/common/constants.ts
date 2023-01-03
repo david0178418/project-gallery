@@ -77,6 +77,13 @@ const Paths = {
 } as const;
 
 export
+const FileUploadCategories = {
+	Profile: 'profile',
+	Posts: 'posts',
+	Journals: 'journals',
+} as const;
+
+export
 const SpecialCharacterCodes = {
 	NBSP: '\u00A0',
 	DOT: '\u2022',

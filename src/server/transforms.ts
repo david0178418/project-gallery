@@ -1,6 +1,9 @@
 import { PasswordSaltLength } from '@common/constants';
 import { DbJournal, UiJournal } from '@common/types/Journal';
-import { DbProject, UiProject } from '@common/types/Project';
+import {
+	DbProject, UiProject, WriteProject,
+} from '@common/types/Project';
+import { pick } from '@common/utils';
 import { hash } from 'bcryptjs';
 import { WithId } from 'mongodb';
 
@@ -30,6 +33,11 @@ function dbProjectToUiProject(dbProject: WithId<DbProject>): UiProject {
 	}
 
 	return uiProject;
+}
+
+export
+function uiProjectToWriteProject(project: UiProject): WriteProject {
+	return pick(project, 'detail', 'projectCreatedDate', 'projectLastUpdatedDate', 'summary', 'title', 'images');
 }
 
 export

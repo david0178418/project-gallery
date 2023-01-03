@@ -5,56 +5,60 @@ import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import { useIsLoggedOut } from '@common/hooks';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
-import { inRange } from '@common/utils';
-import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
+import { inRange, nowISOString } from '@common/utils';
 import { CloseIcon } from '@components/icons';
 import { projectSave } from '@client/api-calls';
-import { Uploader } from '@components/uploader';
+import { CreateProjectForm } from '@components/forms/create-project.form';
+import { useEffect, useState } from 'react';
+import { WriteProject } from '@common/types/Project';
 import {
-	useEffect,
-	useState,
-} from 'react';
-import {
+	MaxJournalProjectTitleLength,
 	MaxProjectDetailLength,
 	MaxProjectSummaryLength,
-	MaxJournalProjectTitleLength,
+	MinJournalProjectTitleLength,
 	MinProjectDetailLength,
 	MinProjectSummaryLength,
-	MinJournalProjectTitleLength,
 	ModalActions,
 } from '@common/constants';
 import {
 	AppBar,
-	Box,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	Grid,
 	IconButton,
-	TextField,
 	Toolbar,
 	Typography,
 	useMediaQuery,
 	useTheme,
 } from '@mui/material';
 
-function dateToDateSubstring(date: Date) {
-	return date.toISOString().substring(0, 10);
+function projectIsValid(project: WriteProject) {
+	const {
+		title,
+		summary,
+		detail,
+	} = project;
+
+	return inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
+		inRange(summary.length, MinProjectSummaryLength, MaxProjectSummaryLength) &&
+		inRange(detail.length, MinProjectDetailLength, MaxProjectDetailLength);
 }
 
-function dateInputStrToDate(str: string) {
-	return new Date(str.replaceAll('-', '/'));
+function createWriteProject(): WriteProject {
+	return {
+		detail: '',
+		projectCreatedDate: nowISOString(),
+		projectLastUpdatedDate: nowISOString(),
+		summary: '',
+		title: '',
+		images: [],
+	};
 }
 
 export
 function CreateProjectModal() {
-	const [files, setFiles] = useState<File[]>([]);
-	const [projectCreatedDate, setProjectCreatedDate] = useState(() => new Date());
-	const [projectLastUpdatedDate, setProjectLastUpdatedDate] = useState(() => new Date());
-	const [title, setTitle] = useState('');
-	const [summary, setSummary] = useState('');
-	const [detail, setDetail] = useState('');
+	const [project, setProject] = useState(createWriteProject);
 	const pushToastMsg = useSetAtom(pushToastMsgAtom);
 	const setLoading = useSetAtom(loadingAtom);
 	const isLoggedOut = useIsLoggedOut();
@@ -68,11 +72,7 @@ function CreateProjectModal() {
 
 	const actionIsCreatePost = action === ModalActions.CreateProject;
 	const isOpen = actionIsCreatePost && !isLoggedOut;
-	const isValid = (
-		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
-		inRange(summary.length, MinProjectSummaryLength, MaxProjectSummaryLength) &&
-		inRange(detail.length, MinProjectDetailLength, MaxProjectDetailLength)
-	);
+	const isValid = projectIsValid(project);
 
 	useEffect(() => {
 		if(!actionIsCreatePost) {
@@ -90,14 +90,7 @@ function CreateProjectModal() {
 	async function handleSave() {
 		try {
 			setLoading(true);
-			await projectSave({
-				title,
-				summary,
-				detail,
-				projectCreatedDate: projectCreatedDate.toISOString(),
-				projectLastUpdatedDate: projectLastUpdatedDate.toISOString(),
-				images: [],
-			});
+			await projectSave(project);
 			close();
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
@@ -110,11 +103,6 @@ function CreateProjectModal() {
 	}
 
 	function close() {
-		setProjectCreatedDate(() => new Date());
-		setProjectLastUpdatedDate(() => new Date());
-		setDetail('');
-		setSummary('');
-		setTitle('');
 		router.back();
 	}
 
@@ -153,78 +141,10 @@ function CreateProjectModal() {
 				</DialogTitle>
 			)}
 			<DialogContent>
-				<Box
-					noValidate
-					autoComplete="off"
-					component="form"
-				>
-					<TextFieldLengthValidation
-						autoFocus
-						fullWidth
-						label="Title"
-						variant="standard"
-						placeholder="Project title"
-						type="text"
-						maxLength={MaxJournalProjectTitleLength}
-						minLength={MinJournalProjectTitleLength}
-						value={title}
-						onChange={e => setTitle(e.target.value)}
-					/>
-					<Grid container>
-						<Grid item xs>
-							<TextField
-								label="Created"
-								type="date"
-								variant="standard"
-								margin="dense"
-								value={dateToDateSubstring(projectCreatedDate)}
-								onChange={e => setProjectCreatedDate(dateInputStrToDate(e.target.value))}
-							/>
-						</Grid>
-						<Grid item xs>
-							<TextField
-								label="Last Updated"
-								type="date"
-								variant="standard"
-								margin="dense"
-								value={dateToDateSubstring(projectLastUpdatedDate)}
-								onChange={e => setProjectLastUpdatedDate(dateInputStrToDate(e.target.value))}
-							/>
-						</Grid>
-					</Grid>
-					<Box paddingTop={1}>
-						<Uploader
-							files={files}
-							onChange={fs => setFiles(fs)}
-						/>
-					</Box>
-					<TextFieldLengthValidation
-						fullWidth
-						multiline
-						margin="dense"
-						label="Project Summary"
-						variant="standard"
-						placeholder="Short project summary..."
-						type="text"
-						maxLength={MaxProjectSummaryLength}
-						minLength={MinProjectSummaryLength}
-						minRows={3}
-						value={summary}
-						onChange={e => setSummary(e.target.value)}
-					/>
-					<TextFieldLengthValidation
-						fullWidth
-						multiline
-						margin="dense"
-						label="Project Detail"
-						placeholder="General project details..."
-						maxLength={MaxProjectSummaryLength}
-						minLength={MinProjectSummaryLength}
-						minRows={3}
-						value={detail}
-						onChange={e => setDetail(e.target.value)}
-					/>
-				</Box>
+				<CreateProjectForm
+					project={project}
+					onChange={newProj => setProject(newProj)}
+				/>
 			</DialogContent>
 			<DialogActions sx={{ gap: 2 }}>
 				<Link

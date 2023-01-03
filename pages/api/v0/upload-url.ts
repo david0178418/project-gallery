@@ -4,6 +4,8 @@ import S3 from 'aws-sdk/clients/s3';
 import { getServerSession } from '@server/auth-options';
 import { z, ZodType } from 'zod';
 import { makeId } from '@common/utils';
+import { FileUploadCategories } from '@common/constants';
+import { Enum } from '@common/types';
 
 const OneMB = 1_048_576;
 
@@ -11,8 +13,8 @@ const FileSizeLimitBytes = 1 * OneMB;
 const ExpirationSeconds = 5;
 
 interface Schema {
-	category: 'profile' | 'posts' | 'journals';
-	fileType: 'image%2Fpng' | 'image%2Fgif' | 'image%2Fsvg' | 'image%2Fjpeg';
+	category: Enum<typeof FileUploadCategories>;
+	fileType: 'image%2Fpng' | 'image%2Fgif' | 'image%2Fsvg' | 'image%2Fjpeg'; // TODO clean this up
 }
 
 const schema: ZodType<Schema> = z.object({

@@ -8,7 +8,7 @@ type DbProject = WithId<{
 	createdDate: string;
 	detail: string;
 	lastJournalEntry?: Pick<DbJournal, '_id' | 'title'>;
-	lastUpdatedDate: string;
+	lastUpdatedDate: string | null;
 	owner: Pick<DbUser, '_id' | 'username'>;
 	projectCreatedDate: string;
 	projectLastUpdatedDate: string;
@@ -19,6 +19,9 @@ type DbProject = WithId<{
 		description: string;
 	}>;
 }>;
+
+export
+type ProjectImage = DbProject['images'][number];
 
 export
 type UiProject = WithStringId<Omit<DbProject, 'owner' | 'lastJournalEntry'> & {

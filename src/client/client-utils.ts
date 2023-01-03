@@ -19,7 +19,7 @@ async function get<T = any>(path: string, params?: any, signal?: AbortSignal): P
 }
 
 export
-async function post<T = any>(path: string, requestBody: any = {}) {
+async function post<T = any>(path: string, requestBody: any = {}, headers: HeadersInit = {}) {
 	const response = await fetch(path, {
 		method: 'POST',
 		body: JSON.stringify(requestBody),
@@ -27,6 +27,7 @@ async function post<T = any>(path: string, requestBody: any = {}) {
 		headers: {
 			Accept: 'application/json, text/plain, */*',
 			'Content-Type': 'application/json',
+			...headers,
 		},
 	});
 

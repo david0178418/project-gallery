@@ -97,7 +97,7 @@ function UserGallery(props: Props) {
 						</Typography>
 						<Box paddingTop={2}>
 							{/* eslint-disable-next-line @next/next/no-img-element */}
-							<img src={project.titleImageUrl} />
+							<img src={project.images?.[0].url} />
 						</Box>
 						<Typography paddingTop={2}>
 							<ParsedContent>
