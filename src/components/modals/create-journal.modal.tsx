@@ -90,7 +90,7 @@ function CreateJournalModal() {
 		}
 
 		getProjects().then(res => {
-			if(res?.data?.projects.length) {
+			if(res?.ok && res.data.projects.length) {
 				setProjects(res.data.projects);
 			}
 		});
