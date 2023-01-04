@@ -11,10 +11,10 @@ import { nowISOString } from '@common/utils';
 import { DbProject } from '@common/types/Project';
 import {
 	DbCollections,
-	MaxProjectSummaryLength,
 	MaxJournalProjectTitleLength,
 	MinJournalProjectTitleLength,
-	MinProjectSummaryLength,
+	MinJournalPostLength,
+	MaxJournalPostLength,
 } from '@common/constants';
 
 interface Schema {
@@ -27,12 +27,12 @@ const publishedJournal = z.object({
 	publish: z.literal(true),
 	title: z
 		.string()
-		.min(MinJournalProjectTitleLength, { message: `Project title must be at least ${MinJournalProjectTitleLength} characters long.` })
-		.max(MaxJournalProjectTitleLength, { message: `Project title can be no more than ${MaxJournalProjectTitleLength} characters long.` }),
+		.min(MinJournalProjectTitleLength, { message: `Journal title must be at least ${MinJournalProjectTitleLength} characters long.` })
+		.max(MaxJournalProjectTitleLength, { message: `Journal title can be no more than ${MaxJournalProjectTitleLength} characters long.` }),
 	body: z
 		.string()
-		.min(MinProjectSummaryLength, { message: `Project detail must be at least ${MinProjectSummaryLength} characters long.` })
-		.max(MaxProjectSummaryLength, { message: `Project detail can be no more than ${MaxProjectSummaryLength} characters long.` }),
+		.min(MinJournalPostLength, { message: `Journal post must be at least ${MinJournalPostLength} characters long.` })
+		.max(MaxJournalPostLength, { message: `Journal post can be no more than ${MaxJournalPostLength} characters long.` }),
 });
 const savedJournal = z.object({
 	_id: MongoIdValidation.optional(),
@@ -43,7 +43,7 @@ const savedJournal = z.object({
 		.max(MaxJournalProjectTitleLength, { message: `Project title can be no more than ${MaxJournalProjectTitleLength} characters long.` }),
 	body: z
 		.string()
-		.max(MaxProjectSummaryLength, { message: `Project detail can be no more than ${MaxProjectSummaryLength} characters long.` }),
+		.max(MaxJournalPostLength, { message: `Journal post can be no more than ${MaxJournalPostLength} characters long.` }),
 });
 
 const schema: ZodType<Schema> = z.object({ journal: publishedJournal.or(savedJournal) });
