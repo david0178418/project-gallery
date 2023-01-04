@@ -12,6 +12,11 @@ JWT_SECRET="jwt-super-secret"
 NEXTAUTH_SECRET="some-super-secret"
 HOST="http://localhost:3000"
 NEXTAUTH_URL="${HOST}"
+AWS_APP_ACCESS_KEY=testkey
+AWS_APP_SECRET_KEY=testsecretkey
+AWS_APP_DEFAULT_REGION=us-east-1
+AWS_APP_BUCKET=my-bucket
+AWS_APP_ENDPOINT=http://localhost:9000
 ```
 
 Optionally, spin up the external resources (mongo database and minio for s3 services).  This will spin up a server at `mongodb://127.0.0.1:27017`:
