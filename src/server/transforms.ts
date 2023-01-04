@@ -1,5 +1,7 @@
 import { PasswordSaltLength } from '@common/constants';
-import { DbJournal, UiJournal } from '@common/types/Journal';
+import {
+	DbJournal, UiJournal, WriteJournal,
+} from '@common/types/Journal';
 import {
 	DbProject, UiProject, WriteProject,
 } from '@common/types/Project';
@@ -38,6 +40,15 @@ function dbProjectToUiProject(dbProject: WithId<DbProject>): UiProject {
 export
 function uiProjectToWriteProject(project: UiProject): WriteProject {
 	return pick(project, '_id', 'detail', 'projectCreatedDate', 'projectLastUpdatedDate', 'summary', 'title', 'images');
+}
+
+export
+function uiJournalToWriteJournal(project: UiJournal): WriteJournal {
+	return {
+		...pick(project, '_id', 'title', 'body'),
+		projectId: project.project?._id,
+		publish: !!project.publishedDate,
+	};
 }
 
 export

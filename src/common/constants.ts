@@ -73,6 +73,7 @@ const Paths = {
 	Project: (projectId: string) => urlJoin('/project', projectId),
 	ProjectEdit: (projectId: string) => urlJoin(Paths.Project(projectId), 'edit'),
 	Journal: (journalId: string) => urlJoin('/journal', journalId),
+	JournalEdit: (journalId: string) => urlJoin(Paths.Journal(journalId), 'edit'),
 	UserGallery: (username: string) => `/${username}`,
 	UserJournals: (username: string) => urlJoin(Paths.UserGallery(username), '/journals'),
 } as const;

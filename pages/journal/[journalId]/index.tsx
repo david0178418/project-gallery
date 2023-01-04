@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import { useRouteBackDefault } from '@common/hooks';
+import { useRouteBackDefault, useUser } from '@common/hooks';
 import { ScrollContent } from '@components/scroll-content';
-import { BackIcon } from '@components/icons';
+import { BackIcon, EditIcon } from '@components/icons';
 import { GetServerSideProps } from 'next';
 import { getServerSession } from '@server/auth-options';
 import { fetchJournal } from '@server/queries';
@@ -17,6 +17,7 @@ import {
 } from '@common/constants';
 import {
 	Box,
+	Fab,
 	IconButton,
 	Link as MuiLink,
 	Typography,
@@ -55,7 +56,9 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 export default
 function Journal(props: Props) {
 	const routeBack = useRouteBackDefault();
+	const user = useUser();
 	const { journal	} = props;
+	const isOwner = !!journal && user?.id === journal.owner._id;
 
 	return (
 		<>
@@ -116,6 +119,23 @@ function Journal(props: Props) {
 					</>
 				)}
 			</ScrollContent>
+			{isOwner && (
+				<Link
+					legacyBehavior
+					href={Paths.JournalEdit(journal._id)}
+				>
+					<Fab
+						color="primary"
+						sx={{
+							position: 'absolute',
+							bottom: 64,
+							right: 16,
+						}}
+					>
+						<EditIcon/>
+					</Fab>
+				</Link>
+			)}
 		</>
 	);
 }

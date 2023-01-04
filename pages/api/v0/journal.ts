@@ -6,8 +6,9 @@ import { getServerSession } from '@server/auth-options';
 import { ObjectId } from 'mongodb';
 import { MongoIdValidation } from '@server/validations';
 import { User } from 'next-auth';
-import { DbJournal, WriteJournal } from '@common/types/Journal';
+import { WriteJournal } from '@common/types/Journal';
 import { nowISOString } from '@common/utils';
+import { DbProject } from '@common/types/Project';
 import {
 	DbCollections,
 	MaxProjectSummaryLength,
@@ -83,48 +84,53 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 async function createJournalPost(user: User, post: WriteJournal) {
 	const col = await getCollection(DbCollections.Journals);
 	const now = nowISOString();
-	const _id = post._id ?
-		new ObjectId(post._id) :
+	let project: DbProject | undefined = undefined;
+	const {
+		_id: journalId,
+		projectId,
+		...updateProps
+	} = post;
+	const _id = journalId ?
+		new ObjectId(journalId) :
 		new ObjectId();
 
-	const journal: DbJournal = {
-		body: post.body,
-		title: post.title,
-		_id,
-		owner: {
-			_id: new ObjectId(user.id),
-			username: user.username,
-		},
-		publishedDate: post.publish ? now : null,
-		lastUpdatedDate: post.publish ? now : null,
-	};
-
-	if(post.projectId) {
+	if(projectId) {
 		const projectsCol = await getCollection(DbCollections.Projects);
 
-		const project = await projectsCol.findOne({ _id: new ObjectId(post.projectId) });
+		project = await projectsCol.findOne({ _id: new ObjectId(projectId) }) || undefined;
 
 		if(!project) {
 			throw 'Project doesn\'t exist';
 		}
 
-		await projectsCol.updateOne({ _id: new ObjectId(post.projectId) }, {
+		await projectsCol.updateOne({ _id: new ObjectId(projectId) }, {
 			$set: {
 				lastJournalEntry: {
-					_id: journal._id,
-					title: journal.title,
+					_id,
+					title: post.title,
 				},
 			},
 		});
-
-		journal.project = {
-			_id: project._id,
-			title: project.title,
-		};
 	}
 
-	await col
-		.insertOne(journal);
+	await col.updateOne({ _id }, {
+		$set: {
+			lastUpdatedDate: now,
+			project: project && {
+				_id: project._id,
+				title: project.title,
+			},
+			...updateProps,
+		},
+		$setOnInsert: {
+			_id,
+			publishedDate: post.publish ? now : null,
+			owner: {
+				_id: new ObjectId(user.id),
+				username: user.username,
+			},
+		},
+	});
 
 	return _id;
 }
