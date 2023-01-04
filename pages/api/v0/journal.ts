@@ -103,14 +103,19 @@ async function createJournalPost(user: User, post: WriteJournal) {
 			throw 'Project doesn\'t exist';
 		}
 
-		await projectsCol.updateOne({ _id: new ObjectId(projectId) }, {
-			$set: {
-				lastJournalEntry: {
-					_id,
-					title: post.title,
+		if(post.publish) {
+			// only attach if published
+			// TODO More logic around updates to cover situations like updating
+			// old posts over writing old posts
+			await projectsCol.updateOne({ _id: new ObjectId(projectId) }, {
+				$set: {
+					lastJournalEntry: {
+						_id,
+						title: post.title,
+					},
 				},
-			},
-		});
+			});
+		}
 	}
 
 	await col.updateOne({ _id }, {
