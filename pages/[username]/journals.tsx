@@ -8,6 +8,7 @@ import { getServerSession } from '@server/auth-options';
 import { fetchUserJournals } from '@server/queries';
 import { dbJournalToUiJournal } from '@server/transforms';
 import { UiJournal } from '@common/types/Journal';
+import Link from 'next/link';
 import {
 	AppName,
 	Paths,
@@ -22,7 +23,6 @@ import {
 	ListItemText,
 	Typography,
 } from '@mui/material';
-import Link from 'next/link';
 
 interface Props {
 	unknownUser?: boolean;
