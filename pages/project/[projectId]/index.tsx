@@ -108,6 +108,7 @@ function UserGallery(props: Props) {
 								style={{
 									maxWidth: '100%',
 									height: 400,
+									objectFit: 'contain',
 								}}
 							/>
 						</Box>

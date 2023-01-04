@@ -33,6 +33,7 @@ function ImagePreviews(props: Props) {
 							cursor: 'pointer',
 							height: 100,
 							width: 100,
+							objectFit: 'contain',
 						}}
 					/>
 				</Grid>
