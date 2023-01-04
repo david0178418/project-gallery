@@ -126,7 +126,6 @@ function UserGallery(props: Props) {
 			</ScrollContent>
 			{isOwner && (
 				<Link
-					id="foo"
 					legacyBehavior
 					href={Paths.ProjectEdit(project._id)}
 				>
