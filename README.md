@@ -19,7 +19,7 @@ AWS_APP_BUCKET=my-bucket
 AWS_APP_ENDPOINT=http://localhost:9000
 ```
 
-Optionally, spin up the external resources (mongo database and minio for s3 services).  This will spin up a server at `mongodb://127.0.0.1:27017`:
+Optionally, spin up the external resources (mongo database and minio for s3 services).  This will spin up the mongo server at `mongodb://127.0.0.1:27017` and the minio server at `http://localhost:9000` with admin dashboard at `http://localhost:9001`:
 
 ```bash
 npm run dev:services
