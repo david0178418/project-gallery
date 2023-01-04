@@ -86,21 +86,32 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 async function createProject(user: User, project: WriteProject) {
 	const col = await getCollection(DbCollections.Projects);
 	const now = nowISOString();
-	const _id = project._id ?
-		new ObjectId(project._id) :
+	const {
+		_id: projId,
+		...updateProps
+	} = project;
+	const _id = projId ?
+		new ObjectId(projId) :
 		new ObjectId();
 
-	await col
-		.insertOne({
-			...project,
-			_id,
-			owner: {
-				_id: new ObjectId(user.id),
-				username: user.username,
+	await col.updateOne(
+		{ _id },
+		{
+			$set: {
+				lastUpdatedDate: now,
+				...updateProps,
 			},
-			createdDate: now,
-			lastUpdatedDate: now,
-		});
+			$setOnInsert: {
+				_id,
+				owner: {
+					_id: new ObjectId(user.id),
+					username: user.username,
+				},
+				createdDate: now,
+			},
+		},
+		{ upsert: true }
+	);
 
 	return _id;
 }

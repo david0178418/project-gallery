@@ -61,7 +61,7 @@ function Page(props: Props) {
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 	const routeBack = useRouteBackDefault();
-	const title = `${project?.title} - Edit` || 'Not Found';
+	const title = `${defaultProject?.title} - Edit` || 'Not Found';
 
 	async function handleSave() {
 		if(!project) {
