@@ -117,7 +117,20 @@ function Page(props: Props) {
 						fullWidth={fullScreen}
 						onClick={routeBack}
 					/>
-					<Box display="inline-block" paddingLeft={2}>
+					<Box
+						sx={{
+							display: {
+								xs: 'block',
+								md: 'inline-block',
+							},
+							paddingLeft: { md: 2 },
+							paddingTop: {
+								xs: 2,
+								md: 0,
+							},
+							paddingBottom: 20,
+						}}
+					>
 						<ConfirmButton
 							onClick={handleSave}
 							fullWidth={fullScreen}

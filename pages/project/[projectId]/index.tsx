@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import { useRouteBackDefault } from '@common/hooks';
+import { useRouteBackDefault, useUser } from '@common/hooks';
 import { ScrollContent } from '@components/scroll-content';
-import { BackIcon } from '@components/icons';
+import { BackIcon, EditIcon } from '@components/icons';
 import { GetServerSideProps } from 'next';
 import { getServerSession } from '@server/auth-options';
 import { fetchProject } from '@server/queries';
@@ -18,6 +18,7 @@ import {
 } from '@common/constants';
 import {
 	Box,
+	Fab,
 	IconButton,
 	Typography,
 } from '@mui/material';
@@ -54,7 +55,9 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 export default
 function UserGallery(props: Props) {
 	const routeBack = useRouteBackDefault();
+	const user = useUser();
 	const { project	} = props;
+	const isOwner = !!project && user?.id === project.owner._id;
 
 	return (
 		<>
@@ -107,6 +110,24 @@ function UserGallery(props: Props) {
 					</>
 				)}
 			</ScrollContent>
+			{isOwner && (
+				<Link
+					id="foo"
+					legacyBehavior
+					href={Paths.ProjectEdit(project._id)}
+				>
+					<Fab
+						color="primary"
+						sx={{
+							position: 'absolute',
+							bottom: 64,
+							right: 16,
+						}}
+					>
+						<EditIcon/>
+					</Fab>
+				</Link>
+			)}
 		</>
 	);
 }
