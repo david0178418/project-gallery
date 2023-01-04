@@ -22,7 +22,7 @@ interface Schema {
 
 const publishedJournal = z.object({
 	_id: MongoIdValidation.optional(),
-	projectId: MongoIdValidation.nullable(),
+	projectId: MongoIdValidation.nullable().optional(),
 	publish: z.literal(true),
 	title: z
 		.string()
@@ -35,7 +35,7 @@ const publishedJournal = z.object({
 });
 const savedJournal = z.object({
 	_id: MongoIdValidation.optional(),
-	projectId: MongoIdValidation.nullable(),
+	projectId: MongoIdValidation.nullable().optional(),
 	publish: z.literal(false).optional(),
 	title: z
 		.string()

@@ -84,6 +84,7 @@ function CreateProjectModal() {
 
 	function close() {
 		router.back();
+		setProject(createWriteProject());
 	}
 
 	if(!isOpen) {

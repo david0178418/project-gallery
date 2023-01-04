@@ -5,54 +5,35 @@ import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import { useIsLoggedOut } from '@common/hooks';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
-import { inRange } from '@common/utils';
-import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { CloseIcon, SaveIcon } from '@components/icons';
-import { UiProject } from '@common/types/Project';
-import dynamic from 'next/dynamic';
-import { getProjects, journalSave } from '@client/api-calls';
-import {
-	useEffect,
-	useState,
-} from 'react';
-import {
-	MaxJournalPostLength,
-	MaxJournalProjectTitleLength,
-	MinJournalPostLength,
-	MinJournalProjectTitleLength,
-	ModalActions,
-} from '@common/constants';
+import EditJournalForm, { journalIsPublishable, journalIsValid } from '@components/forms/edit-journal.form';
+import { WriteJournal } from '@common/types/Journal';
+import { ModalActions } from '@common/constants';
+import { useState } from 'react';
+import { journalSave } from '@client/api-calls';
 import {
 	AppBar,
-	Box,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	FormControl,
 	IconButton,
-	InputLabel,
-	MenuItem,
-	Select,
-	Tab,
-	Tabs,
 	Toolbar,
 	Typography,
 	useMediaQuery,
 	useTheme,
 } from '@mui/material';
 
-const MarkdownContent = dynamic(() => import('@components/markdown-content'));
-
-const GeneralPost = 'general-post';
+function createWriteJournal(): WriteJournal {
+	return {
+		body: '',
+		title: '',
+	};
+}
 
 export
 function CreateJournalModal() {
-	const [showPreview, setShowPreview] = useState(false);
-	const [title, setTitle] = useState('');
-	const [body, setBody] = useState('');
-	const [projects, setProjects] = useState<UiProject[]>([]);
-	const [selectedProjectId, setSelectedProjectId] = useState(GeneralPost);
+	const [journal, setJournal] = useState(createWriteJournal);
 	const pushToastMsg = useSetAtom(pushToastMsgAtom);
 	const setLoading = useSetAtom(loadingAtom);
 	const isLoggedOut = useIsLoggedOut();
@@ -66,45 +47,16 @@ function CreateJournalModal() {
 
 	const actionIsCreatePost = action === ModalActions.CreateJournal;
 	const isOpen = actionIsCreatePost && !isLoggedOut;
-	const canSave = (
-		(title.length < MaxJournalProjectTitleLength) &&
-		(body.length < MaxJournalPostLength)
-	);
-	const canPublish = (
-		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
-		inRange(body.length, MinJournalPostLength, MaxJournalPostLength)
-	);
-
-	useEffect(() => {
-		if(!actionIsCreatePost) {
-			return;
-		}
-
-		if(isLoggedOut) {
-			router.replace({
-				pathname: router.pathname,
-				query: newQuery,
-			}, undefined, { shallow: true });
-
-			return;
-		}
-
-		getProjects().then(res => {
-			if(res?.ok && res.data.projects.length) {
-				setProjects(res.data.projects);
-			}
-		});
-	}, [actionIsCreatePost, isLoggedOut]);
+	const canSave = journalIsValid(journal);
+	const canPublish = journalIsPublishable(journal);
 
 	async function handleSave(publish = false) {
 		try {
 			setLoading(true);
 
 			await journalSave({
-				body,
+				...journal,
 				publish,
-				title,
-				projectId: selectedProjectId === GeneralPost ? null : selectedProjectId,
 			});
 
 			close();
@@ -119,11 +71,8 @@ function CreateJournalModal() {
 	}
 
 	function close() {
-		setProjects([]);
-		setSelectedProjectId(GeneralPost);
-		setBody('');
-		setTitle('');
 		router.back();
+		setJournal(createWriteJournal());
 	}
 
 	if(!isOpen) {
@@ -161,69 +110,10 @@ function CreateJournalModal() {
 				</DialogTitle>
 			)}
 			<DialogContent>
-				<Box
-					noValidate
-					autoComplete="off"
-					component="form"
-				>
-					<FormControl margin="dense">
-						<InputLabel >Project</InputLabel>
-						<Select
-							label="Project"
-							value={selectedProjectId}
-							onChange={e => setSelectedProjectId(e.target.value)}
-							sx={{ minWidth: 200 }}
-						>
-							<MenuItem value={GeneralPost}>
-								General Post
-							</MenuItem>
-							{projects.map(p => (
-								<MenuItem
-									key={p._id}
-									value={p._id}
-								>
-									{p.title}
-								</MenuItem>
-							))}
-						</Select>
-					</FormControl>
-					<TextFieldLengthValidation
-						autoFocus
-						fullWidth
-						label="Title"
-						variant="standard"
-						margin="normal"
-						type="text"
-						maxLength={MaxJournalProjectTitleLength}
-						minLength={MinJournalProjectTitleLength}
-						value={title}
-						onChange={e => setTitle(e.target.value)}
-					/>
-					<Box paddingTop={2}>
-						<Tabs value={showPreview.toString()}>
-							<Tab value="false" label="Edit" onClick={() => setShowPreview(false) }/>
-							<Tab value="true" label="Preview" onClick={() => setShowPreview(true) }/>
-						</Tabs>
-					</Box>
-					{!showPreview && (
-						<TextFieldLengthValidation
-							fullWidth
-							multiline
-							margin="dense"
-							label="Post"
-							maxLength={MaxJournalPostLength}
-							minLength={MinJournalPostLength}
-							minRows={3}
-							value={body}
-							onChange={e => setBody(e.target.value)}
-						/>
-					)}
-					{showPreview && (
-						<MarkdownContent>
-							{body}
-						</MarkdownContent>
-					)}
-				</Box>
+				<EditJournalForm
+					journal={journal}
+					onChange={newJournal => setJournal(newJournal)}
+				/>
 			</DialogContent>
 			<DialogActions sx={{ gap: 2 }}>
 				<Link
