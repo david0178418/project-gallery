@@ -22,6 +22,8 @@ import {
 	IconButton,
 	Typography,
 } from '@mui/material';
+import { ImagePreviews } from '@components/image-previews';
+import { useState } from 'react';
 
 interface Props {
 	project: UiProject | null;
@@ -54,9 +56,10 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 
 export default
 function UserGallery(props: Props) {
+	const { project	} = props;
+	const [activeImage, setActiveImage] = useState(project?.images[0]);
 	const routeBack = useRouteBackDefault();
 	const user = useUser();
-	const { project	} = props;
 	const isOwner = !!project && user?.id === project.owner._id;
 
 	return (
@@ -98,10 +101,20 @@ function UserGallery(props: Props) {
 								{`Summary: ${project.summary}`}
 							</ParsedContent>
 						</Typography>
-						<Box paddingTop={2}>
+						<Box paddingTop={2} textAlign="center">
 							{/* eslint-disable-next-line @next/next/no-img-element */}
-							<img src={project.images?.[0].url} />
+							<img
+								src={activeImage?.url}
+								style={{
+									maxWidth: '100%',
+									height: 400,
+								}}
+							/>
 						</Box>
+						<ImagePreviews
+							images={project.images}
+							onClick={setActiveImage}
+						/>
 						<Typography paddingTop={2}>
 							<ParsedContent>
 								{project.summary}

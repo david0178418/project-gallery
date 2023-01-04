@@ -23,7 +23,8 @@ function ImagePreviews(props: Props) {
 				<Grid
 					key={f.url}
 					item
-					xs={2}
+					xs={4}
+					md={2}
 				>
 					<img
 						src={f.url}
