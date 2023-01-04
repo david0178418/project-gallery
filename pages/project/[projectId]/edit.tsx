@@ -105,12 +105,10 @@ function Page(props: Props) {
 				}
 			>
 				{project && (
-					<>
-						<EditProjectForm
-							project={project}
-							onChange={setProject}
-						/>
-					</>
+					<EditProjectForm
+						project={project}
+						onChange={setProject}
+					/>
 				)}
 				<Box paddingTop={2} textAlign="right">
 					<CancelButton
