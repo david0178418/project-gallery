@@ -47,7 +47,8 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	}
 
 	const username = result.data;
-	const dbJournals = await fetchUserJournals(username) || [];
+	const isOwner = !!username && (username === session?.user.username);
+	const dbJournals = await fetchUserJournals(username, isOwner) || [];
 
 	return {
 		props: {

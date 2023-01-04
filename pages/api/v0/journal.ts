@@ -76,7 +76,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 		await createJournalPost(session.user, post);
 
 		res.send({ ok: true });
-	} catch {
+	} catch{
 		res.send({ ok: false });
 	}
 }
@@ -88,6 +88,7 @@ async function createJournalPost(user: User, post: WriteJournal) {
 	const {
 		_id: journalId,
 		projectId,
+		publish,
 		...updateProps
 	} = post;
 	const _id = journalId ?
@@ -103,7 +104,7 @@ async function createJournalPost(user: User, post: WriteJournal) {
 			throw 'Project doesn\'t exist';
 		}
 
-		if(post.publish) {
+		if(publish) {
 			// only attach if published
 			// TODO More logic around updates to cover situations like updating
 			// old posts over writing old posts
@@ -118,24 +119,31 @@ async function createJournalPost(user: User, post: WriteJournal) {
 		}
 	}
 
-	await col.updateOne({ _id }, {
-		$set: {
-			lastUpdatedDate: now,
-			project: project && {
-				_id: project._id,
-				title: project.title,
+	const existingJournal = await col.findOne({ _id });
+
+	await col.updateOne(
+		{ _id },
+		{
+			$set: {
+				lastUpdatedDate: now,
+				// TODO Fix this mess
+				publishedDate: existingJournal?.publishedDate || (publish ? now : null),
+				project: project && {
+					_id: project._id,
+					title: project.title,
+				},
+				...updateProps,
 			},
-			...updateProps,
-		},
-		$setOnInsert: {
-			_id,
-			publishedDate: post.publish ? now : null,
-			owner: {
-				_id: new ObjectId(user.id),
-				username: user.username,
+			$setOnInsert: {
+				_id,
+				owner: {
+					_id: new ObjectId(user.id),
+					username: user.username,
+				},
 			},
 		},
-	});
+		{ upsert: true }
+	);
 
 	return _id;
 }

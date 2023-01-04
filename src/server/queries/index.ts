@@ -60,11 +60,20 @@ async function fetchUserGallery(username: string): Promise<Array<WithId<DbProjec
 }
 
 export
-async function fetchUserJournals(username: string): Promise<Array<WithId<DbJournal>>> {
+async function fetchUserJournals(username: string, owner: boolean): Promise<Array<WithId<DbJournal>>> {
 	const col = await getCollection(DbCollections.Journals);
+	const ownerCondition = owner ?
+		{} :
+		{ publishedDate: { $ne: null } };
+
 	return col.aggregate<WithId<DbJournal>>([
 		{ $sort: { createdDate: -1 } },
-		{ $match: { 'owner.username': username } },
+		{
+			$match: {
+				'owner.username': username,
+				...ownerCondition,
+			},
+		},
 		{ $limit: 20 },
 	]).toArray();
 }
