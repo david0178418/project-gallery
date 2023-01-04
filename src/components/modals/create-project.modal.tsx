@@ -8,7 +8,7 @@ import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import { nowISOString } from '@common/utils';
 import { CloseIcon } from '@components/icons';
 import { projectSave } from '@client/api-calls';
-import CreateProjectForm, { projectIsValid } from '@components/forms/create-project.form';
+import EditProjectForm, { projectIsValid } from '@components/forms/edit-project.form';
 import { useEffect, useState } from 'react';
 import { WriteProject } from '@common/types/Project';
 import { ModalActions } from '@common/constants';
@@ -121,7 +121,7 @@ function CreateProjectModal() {
 				</DialogTitle>
 			)}
 			<DialogContent>
-				<CreateProjectForm
+				<EditProjectForm
 					project={project}
 					onChange={newProj => setProject(newProj)}
 				/>

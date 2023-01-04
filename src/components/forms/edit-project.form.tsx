@@ -33,7 +33,7 @@ interface Props {
 }
 
 export default
-function CreateProjectForm(props: Props) {
+function EditProjectForm(props: Props) {
 	const {
 		project,
 		onChange,

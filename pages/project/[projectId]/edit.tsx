@@ -8,7 +8,7 @@ import { fetchProject } from '@server/queries';
 import { dbProjectToUiProject, uiProjectToWriteProject } from '@server/transforms';
 import { UiProject } from '@common/types/Project';
 import { MongoIdValidation } from '@server/validations';
-import CreateProjectForm, { projectIsValid } from '@components/forms/create-project.form';
+import EditProjectForm, { projectIsValid } from '@components/forms/edit-project.form';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
@@ -106,7 +106,7 @@ function Page(props: Props) {
 			>
 				{project && (
 					<>
-						<CreateProjectForm
+						<EditProjectForm
 							project={project}
 							onChange={setProject}
 						/>
