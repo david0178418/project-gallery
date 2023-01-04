@@ -24,6 +24,13 @@ function useIsLoggedOut() {
 }
 
 export
+function useUser() {
+	const session = useSession();
+
+	return session.data?.user || null;
+}
+
+export
 function useIsAdmin() {
 	const { data } = useSession();
 

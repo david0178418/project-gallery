@@ -9,12 +9,15 @@ import {
 	MinProjectSummaryLength,
 	MinJournalProjectTitleLength,
 	FileUploadCategories,
+	MinProjectDetailLength,
+	MaxProjectDetailLength,
 } from '@common/constants';
 import {
 	Box,
 	Grid,
 	TextField,
 } from '@mui/material';
+import { inRange } from '@common/utils';
 
 function dateToDateSubstring(date: Date) {
 	return date.toISOString().substring(0, 10);
@@ -29,7 +32,7 @@ interface Props {
 	onChange(project: WriteProject): void;
 }
 
-export
+export default
 function CreateProjectForm(props: Props) {
 	const {
 		project,
@@ -152,4 +155,19 @@ function CreateProjectForm(props: Props) {
 			/>
 		</Box>
 	);
+}
+
+export
+function projectIsValid(project: WriteProject) {
+	const {
+		title,
+		summary,
+		detail,
+		images,
+	} = project;
+
+	return !!images.length &&
+		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
+		inRange(summary.length, MinProjectSummaryLength, MaxProjectSummaryLength) &&
+		inRange(detail.length, MinProjectDetailLength, MaxProjectDetailLength);
 }

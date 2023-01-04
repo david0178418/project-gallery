@@ -10,6 +10,7 @@ import {
 	ShareIcon,
 	FavoriteIcon,
 	JournalIcon,
+	EditIcon,
 } from '@components/icons';
 import {
 	Avatar,
@@ -23,6 +24,7 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material';
+import { useUser } from '@common/hooks';
 
 interface Props {
 	project: UiProject;
@@ -31,6 +33,7 @@ interface Props {
 export default
 function ProjectCard(props: Props) {
 	const [expanded, setExpanded] = useState(false);
+	const user = useUser();
 	const {
 		project: {
 			_id,
@@ -41,9 +44,13 @@ function ProjectCard(props: Props) {
 			summary,
 			title,
 			images,
-			owner: { username },
+			owner: {
+				_id: ownerId,
+				username,
+			},
 		},
 	} = props;
+	const isOwner = user?.id === ownerId;
 
 	function handleExpandClick() {
 		setExpanded(!expanded);
@@ -125,6 +132,23 @@ function ProjectCard(props: Props) {
 						>
 							<IconButton>
 								<JournalIcon />
+							</IconButton>
+						</Tooltip>
+					</Link>
+				)}
+				{isOwner && (
+					<Link
+						shallow
+						href={Paths.ProjectEdit(_id)}
+					>
+						<Tooltip
+							arrow
+							disableFocusListener
+							disableTouchListener
+							title="Edit"
+						>
+							<IconButton>
+								<EditIcon />
 							</IconButton>
 						</Tooltip>
 					</Link>

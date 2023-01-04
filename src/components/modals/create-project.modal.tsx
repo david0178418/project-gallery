@@ -5,21 +5,13 @@ import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import { useIsLoggedOut } from '@common/hooks';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
-import { inRange, nowISOString } from '@common/utils';
+import { nowISOString } from '@common/utils';
 import { CloseIcon } from '@components/icons';
 import { projectSave } from '@client/api-calls';
-import { CreateProjectForm } from '@components/forms/create-project.form';
+import CreateProjectForm, { projectIsValid } from '@components/forms/create-project.form';
 import { useEffect, useState } from 'react';
 import { WriteProject } from '@common/types/Project';
-import {
-	MaxJournalProjectTitleLength,
-	MaxProjectDetailLength,
-	MaxProjectSummaryLength,
-	MinJournalProjectTitleLength,
-	MinProjectDetailLength,
-	MinProjectSummaryLength,
-	ModalActions,
-} from '@common/constants';
+import { ModalActions } from '@common/constants';
 import {
 	AppBar,
 	Dialog,
@@ -32,18 +24,6 @@ import {
 	useMediaQuery,
 	useTheme,
 } from '@mui/material';
-
-function projectIsValid(project: WriteProject) {
-	const {
-		title,
-		summary,
-		detail,
-	} = project;
-
-	return inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
-		inRange(summary.length, MinProjectSummaryLength, MaxProjectSummaryLength) &&
-		inRange(detail.length, MinProjectDetailLength, MaxProjectDetailLength);
-}
 
 function createWriteProject(): WriteProject {
 	return {
