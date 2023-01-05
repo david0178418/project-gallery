@@ -8,7 +8,7 @@ import { GetServerSideProps } from 'next';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { UiProject } from '@common/types/Project';
 import { getServerSession } from '@server/auth-options';
-import { fetchUserGallery } from '@server/queries';
+import { fetchUser, fetchUserGallery } from '@server/queries';
 import { dbProjectToUiProject } from '@server/transforms';
 import {
 	Box,
@@ -39,7 +39,20 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 		};
 	}
 
-	const username = result.data;
+	const pageUser = await fetchUser(result.data);
+	const username = pageUser?.username;
+
+	if(!username) {
+		return {
+			props: {
+				session,
+				username: 'unknown',
+				unknownUser: true,
+				projects: [],
+			},
+		};
+	}
+
 	const dbProjects = await fetchUserGallery(username) || [];
 
 	return {

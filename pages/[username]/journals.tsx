@@ -5,7 +5,7 @@ import { BackIcon } from '@components/icons';
 import { GetServerSideProps } from 'next';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { getServerSession } from '@server/auth-options';
-import { fetchUserJournals } from '@server/queries';
+import { fetchUser, fetchUserJournals } from '@server/queries';
 import { dbJournalToUiJournal } from '@server/transforms';
 import { UiJournal } from '@common/types/Journal';
 import Link from 'next/link';
@@ -46,7 +46,20 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 		};
 	}
 
-	const username = result.data;
+	const pageUser = await fetchUser(result.data);
+	const username = pageUser?.username;
+
+	if(!username) {
+		return {
+			props: {
+				session,
+				username: 'unknown',
+				unknownUser: true,
+				journals: [],
+			},
+		};
+	}
+
 	const isOwner = !!username && (username === session?.user.username);
 	const dbJournals = await fetchUserJournals(username, isOwner) || [];
 
