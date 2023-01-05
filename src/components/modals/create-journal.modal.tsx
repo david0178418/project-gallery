@@ -81,6 +81,7 @@ function CreateJournalModal() {
 		return null;
 	}
 
+	console.log('journal', journal);
 	return (
 		<Dialog
 			fullWidth
@@ -112,7 +113,7 @@ function CreateJournalModal() {
 			<DialogContent>
 				<EditJournalForm
 					journal={journal}
-					onChange={newJournal => setJournal(newJournal)}
+					onChange={setJournal}
 				/>
 			</DialogContent>
 			<DialogActions sx={{ gap: 2 }}>

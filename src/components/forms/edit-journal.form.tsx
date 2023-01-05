@@ -53,7 +53,7 @@ function EditJournalForm(props: Props) {
 			...journal,
 			...projectUpdates,
 		});
-	}, [title, body]);
+	}, [title, body, projectId]);
 
 	function handleSelectProjectId(newProjectId: string) {
 		handleChange({ projectId: newProjectId === GeneralPost ? null : newProjectId });
