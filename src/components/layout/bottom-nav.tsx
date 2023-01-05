@@ -33,7 +33,6 @@ import {
 export
 function BottomNav() {
 	const { data } = useSession();
-	const [value, setValue] = useState(0);
 	const {
 		asPath,
 		pathname,
@@ -57,13 +56,13 @@ function BottomNav() {
 		>
 			<BottomNavigation
 				showLabels
-				value={value}
-				onChange={(event, newValue) => setValue(newValue)}
+				value={asPath}
 			>
 				<BottomNavigationAction
+					label="Home"
 					LinkComponent={Link}
 					href={Paths.Home}
-					label="Home"
+					value={Paths.Home}
 					icon={
 						Paths.Home === asPath ?
 							<HomeActiveIcon /> :
@@ -94,9 +93,10 @@ function BottomNav() {
 					[
 						<BottomNavigationAction
 							key="a"
-							LinkComponent={Link}
 							label={user.username}
+							LinkComponent={Link}
 							href={Paths.UserGallery(user.username)}
+							value={Paths.UserGallery(user.username)}
 							icon={
 								Paths.UserGallery(user.username) === pathname ?
 									<ProfileActiveIcon /> :
@@ -108,6 +108,7 @@ function BottomNav() {
 							label="My Journals"
 							LinkComponent={Link}
 							href={Paths.UserJournals(user.username)}
+							value={Paths.UserJournals(user.username)}
 							icon={
 								Paths.UserJournals(user.username) === pathname ?
 									<JournalActiveIcon /> :
@@ -116,9 +117,10 @@ function BottomNav() {
 						/>,
 						<BottomNavigationAction
 							key="c"
-							LinkComponent={Link}
 							label="Settings"
+							LinkComponent={Link}
 							href={Paths.Settings}
+							value={Paths.Settings}
 							icon={
 								Paths.Settings === pathname ?
 									<SettingsActiveIcon /> :
