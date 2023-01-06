@@ -14,6 +14,7 @@ import dynamic from 'next/dynamic';
 import { Layout } from '@components/layout';
 import { Analytics } from '@vercel/analytics/react';
 import { DefaultSeo } from 'next-seo';
+import { AppName } from '@common/constants';
 
 interface Props {
 	session: Session | null;
@@ -49,9 +50,9 @@ function App(props: AppProps<Props>) {
 					type: 'website',
 					locale: 'en_IE',
 					url: 'https://projectgallery.me/',
-					siteName: 'ProjectGallery.me',
-					title: 'ProjectGallery.me',
-					description: 'Your work, your stories - Share it with the world on ProjectGallery.me!',
+					siteName: AppName,
+					title: AppName,
+					description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
 				}}
 				twitter={{
 					handle: '@justdavidg',
