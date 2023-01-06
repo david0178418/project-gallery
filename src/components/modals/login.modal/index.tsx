@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ModalActions } from '@common/constants';
 import { useIsLoggedIn } from '@common/hooks';
-import { LoginForm } from './login-form';
-import { RegistrationForm } from './register-form';
+import { LoginForm } from './login.form';
+import { RegistrationForm } from './register.form';
 import {
 	Button,
 	Dialog,
