@@ -49,7 +49,7 @@ const schema: ZodType<Schema> = z.object({
 					.string()
 					.max(MaxImageDescriptionLength),
 			})
-		),
+		).min(1, { message: 'Projects must have at least one image' }),
 		projectCreatedDate: IsoDateValidation,
 		projectLastUpdatedDate: IsoDateValidation,
 	}),
