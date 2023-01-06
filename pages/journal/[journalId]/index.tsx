@@ -7,11 +7,14 @@ import { getServerSession } from '@server/auth-options';
 import { fetchJournal } from '@server/queries';
 import { dbJournalToUiJournal } from '@server/transforms';
 import { MongoIdValidation } from '@server/validations';
-import { localizedDateFormat } from '@common/utils';
+import { localizedDateFormat, urlJoin } from '@common/utils';
 import Link from 'next/link';
 import { UiJournal } from '@common/types/Journal';
+import MarkdownContent from '@components/markdown-content';
+import { ArticleJsonLd, NextSeo } from 'next-seo';
 import {
 	AppName,
+	BaseUrl,
 	Paths,
 	SpecialCharacterCodes,
 } from '@common/constants';
@@ -22,7 +25,6 @@ import {
 	Link as MuiLink,
 	Typography,
 } from '@mui/material';
-import MarkdownContent from '@components/markdown-content';
 
 interface Props {
 	journal: UiJournal | null;
@@ -59,12 +61,43 @@ function Journal(props: Props) {
 	const user = useUser();
 	const { journal	} = props;
 	const isOwner = !!journal && user?.id === journal.owner._id;
+	const url = journal ?
+		urlJoin(BaseUrl, Paths.Journal(journal._id)) :
+		'';
+	const description = journal ?
+		journal.body.slice(0, 300) :
+		'';
+	const title = journal ?
+		`${journal.title} - ${AppName}` :
+		'';
 
 	return (
 		<>
-			<Head>
-				<title>{AppName}</title>
-			</Head>
+			{journal && (
+				<>
+					<Head>
+						<title>{`${journal?.title || '???'} - ${AppName}`}</title>
+					</Head>
+					<NextSeo
+						openGraph={{
+							url,
+							siteName: AppName,
+							title,
+							description,
+						}}
+					/>
+					<ArticleJsonLd
+						type="BlogPosting"
+						url={url}
+						title={journal.title}
+						images={[]}
+						datePublished={journal.publishedDate || ''}
+						dateModified={journal.lastUpdatedDate || ''}
+						authorName={journal.owner.username}
+						description={description}
+					/>
+				</>
+			)}
 			<ScrollContent
 				header={
 					<Box sx={{

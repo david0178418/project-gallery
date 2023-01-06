@@ -46,7 +46,7 @@ function App(props: AppProps<Props>) {
 		<>
 			<DefaultSeo
 				openGraph={{
-					type: 'ProjectGallery.me',
+					type: 'website',
 					locale: 'en_IE',
 					url: 'https://projectgallery.me/',
 					siteName: 'ProjectGallery.me',
