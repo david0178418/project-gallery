@@ -15,6 +15,7 @@ import { Layout } from '@components/layout';
 import { Analytics } from '@vercel/analytics/react';
 import { DefaultSeo } from 'next-seo';
 import { AppName } from '@common/constants';
+import { urlJoin } from '@common/utils';
 
 interface Props {
 	session: Session | null;
@@ -33,6 +34,7 @@ const theme = createTheme({
 });
 
 const CommonModals = dynamic(() => import('@common/common-stuff'), { ssr: false });
+const imageUrl = urlJoin(process.env.HOST, '/logo-main.png');
 
 function App(props: AppProps<Props>) {
 	const {
@@ -52,6 +54,12 @@ function App(props: AppProps<Props>) {
 					url: 'https://projectgallery.me/',
 					siteName: AppName,
 					title: AppName,
+					images: [{
+						url: imageUrl,
+						width: 500,
+						height: 500,
+						type: 'image/png',
+					}],
 					description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
 				}}
 				twitter={{
