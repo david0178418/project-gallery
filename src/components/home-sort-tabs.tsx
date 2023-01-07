@@ -26,7 +26,10 @@ function HomeSortTabs(props: Props) {
 					LinkComponent="a"
 					value="journals"
 					label="Journal Posts"
-					sx={{ flex: 1 }}
+					sx={{
+						flex: 1,
+						maxWidth: '50%',
+					}}
 				/>
 			</Link>
 			<Link
@@ -40,7 +43,10 @@ function HomeSortTabs(props: Props) {
 					LinkComponent="a"
 					value="projects"
 					label="Projects"
-					sx={{ flex: 1 }}
+					sx={{
+						flex: 1,
+						maxWidth: '50%',
+					}}
 				/>
 			</Link>
 		</Tabs>
