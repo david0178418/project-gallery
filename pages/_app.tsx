@@ -14,7 +14,7 @@ import dynamic from 'next/dynamic';
 import { Layout } from '@components/layout';
 import { Analytics } from '@vercel/analytics/react';
 import { DefaultSeo } from 'next-seo';
-import { AppName } from '@common/constants';
+import { AppName, BaseUrl } from '@common/constants';
 import { urlJoin } from '@common/utils';
 
 interface Props {
@@ -34,7 +34,7 @@ const theme = createTheme({
 });
 
 const CommonModals = dynamic(() => import('@common/common-stuff'), { ssr: false });
-const imageUrl = urlJoin(process.env.HOST, '/logo-main.png');
+const imageUrl = urlJoin(BaseUrl, '/logo-main.png');
 
 function App(props: AppProps<Props>) {
 	const {
@@ -51,7 +51,7 @@ function App(props: AppProps<Props>) {
 				openGraph={{
 					type: 'website',
 					locale: 'en_IE',
-					url: 'https://projectgallery.me/',
+					url: BaseUrl,
 					siteName: AppName,
 					title: AppName,
 					images: [{
