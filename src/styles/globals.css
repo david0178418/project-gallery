@@ -17,6 +17,7 @@ a {
 
 .parsed-user-content a {
 	color: #5271ff;
+	text-decoration: underline;
 }
 /*
 @media (prefers-color-scheme: dark) {
