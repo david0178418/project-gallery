@@ -78,10 +78,7 @@ function LeftRail() {
 			<Link passHref href={Paths.Home} legacyBehavior>
 				<Box
 					component="a"
-					sx={{
-						width: '100%',
-						paddingLeft: 1.5,
-					}}
+					sx={{ width: '100%' }}
 				>
 					<Box
 						sx={{
@@ -105,7 +102,7 @@ function LeftRail() {
 								xs: 'block',
 								md: 'none',
 							},
-							paddingLeft: 1,
+							paddingLeft: 1.5,
 						}}
 					>
 						<Image
