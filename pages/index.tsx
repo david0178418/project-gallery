@@ -8,12 +8,11 @@ import { SearchForm } from '@components/search-form';
 import { UiProject } from '@common/types/Project';
 import { fetchProjects } from '@server/queries';
 import { dbProjectToUiProject } from '@server/transforms';
-import {
-	Box,
-	Grid,
-} from '@mui/material';
+import { Box, Grid } from '@mui/material';
+import { HomeSortTabs } from '@components/home-sort-tabs';
 
 interface Props {
+	activeTab: 'projects' | 'journals';
 	projects: UiProject[];
 }
 
@@ -22,16 +21,24 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const session = await getServerSession(ctx.req, ctx.res);
 	const dbProjects = await fetchProjects() || [];
 
+	const activeTab = ctx.query.tab === 'projects' ?
+		'projects' :
+		'journals';
+
 	return {
 		props: {
 			session,
+			activeTab,
 			projects: dbProjects.map(dbProjectToUiProject),
 		},
 	};
 };
 
 export default function Home(props: Props) {
-	const { projects } = props;
+	const {
+		activeTab,
+		projects,
+	} = props;
 
 	return (
 		<>
@@ -67,7 +74,9 @@ export default function Home(props: Props) {
 						>
 							<SearchForm />
 						</Box>
-						{/* TODO <HomeSortTabs /> */}
+						<HomeSortTabs
+							activeTab={activeTab}
+						/>
 					</Box>
 				}
 			>
