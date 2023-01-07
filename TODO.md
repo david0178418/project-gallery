@@ -18,4 +18,5 @@ Project Description
 - [ ] Determine shorter term premium offering  
 - [ ] Figure out what content to present on main page  
 - [ ] Clarify intention of project on home page  
+- [ ] Implement search  
 
