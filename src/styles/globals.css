@@ -10,9 +10,13 @@ body {
   box-sizing: border-box;
 }
 
-.MuiList-root a {
+a {
 	color: inherit;
 	text-decoration: none;
+}
+
+.parsed-user-content a {
+	color: #5271ff;
 }
 /*
 @media (prefers-color-scheme: dark) {
