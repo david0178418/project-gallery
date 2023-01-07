@@ -54,17 +54,17 @@ function App(props: AppProps<Props>) {
 					url: BaseUrl,
 					siteName: AppName,
 					title: AppName,
+					description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
 					images: [{
 						url: imageUrl,
 						width: 500,
 						height: 500,
 						type: 'image/png',
 					}],
-					description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
 				}}
 				twitter={{
 					handle: '@justdavidg',
-					cardType: 'summary',
+					cardType: 'summary_large_image',
 				}}
 			/>
 			<Head>
