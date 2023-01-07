@@ -10,11 +10,9 @@ function MarkdownContent(props: Props) {
 	const { children } = props;
 
 	return (
-		<>
-			<ReactMarkdown>
-				{children}
-			</ReactMarkdown>
-		</>
+		<ReactMarkdown className="parsed-user-content">
+			{children}
+		</ReactMarkdown>
 	);
 }
 
