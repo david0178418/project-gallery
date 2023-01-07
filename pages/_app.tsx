@@ -55,12 +55,7 @@ function App(props: AppProps<Props>) {
 					siteName: AppName,
 					title: AppName,
 					description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
-					images: [{
-						url: imageUrl,
-						width: 500,
-						height: 500,
-						type: 'image/png',
-					}],
+					images: [{ url: imageUrl }],
 				}}
 				twitter={{
 					handle: '@justdavidg',

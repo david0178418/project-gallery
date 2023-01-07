@@ -8,11 +8,15 @@ import { fetchProject } from '@server/queries';
 import { dbProjectToUiProject } from '@server/transforms';
 import { UiProject } from '@common/types/Project';
 import { MongoIdValidation } from '@server/validations';
-import { localizedDateFormat } from '@common/utils';
+import { localizedDateFormat, urlJoin } from '@common/utils';
 import { ParsedContent } from '@components/parsed-content';
 import Link from 'next/link';
+import { ImagePreviews } from '@components/image-previews';
+import { useState } from 'react';
+import { NextSeo } from 'next-seo';
 import {
 	AppName,
+	BaseUrl,
 	Paths,
 	SpecialCharacterCodes,
 } from '@common/constants';
@@ -22,8 +26,6 @@ import {
 	IconButton,
 	Typography,
 } from '@mui/material';
-import { ImagePreviews } from '@components/image-previews';
-import { useState } from 'react';
 
 interface Props {
 	project: UiProject | null;
@@ -61,12 +63,30 @@ function UserGallery(props: Props) {
 	const routeBack = useRouteBackDefault();
 	const user = useUser();
 	const isOwner = !!project && user?.id === project.owner._id;
+	const url = project ?
+		urlJoin(BaseUrl, Paths.Journal(project._id)) :
+		'';
+	const description = project ?
+		project.summary :
+		'';
+	const title = project ?
+		`${project.title} - ${AppName}` :
+		'';
 
 	return (
 		<>
 			<Head>
-				<title>{AppName}</title>
+				<title>{`${project?.title || '???'} - ${AppName}`}</title>
 			</Head>
+			<NextSeo
+				openGraph={{
+					url,
+					siteName: AppName,
+					title,
+					description,
+					images: [{ url: project?.images[0]?.url || '' }],
+				}}
+			/>
 			<ScrollContent
 				header={
 					<Box sx={{
