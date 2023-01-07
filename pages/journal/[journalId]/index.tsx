@@ -85,6 +85,7 @@ function Journal(props: Props) {
 							title,
 							description,
 						}}
+						twitter={{ cardType: 'summary' }}
 					/>
 					<ArticleJsonLd
 						type="BlogPosting"
