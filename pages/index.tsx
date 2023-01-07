@@ -6,30 +6,37 @@ import { ScrollContent } from '@components/scroll-content';
 import ProjectCard from '@components/project-card';
 import { SearchForm } from '@components/search-form';
 import { UiProject } from '@common/types/Project';
-import { fetchProjects } from '@server/queries';
-import { dbProjectToUiProject } from '@server/transforms';
 import { Box, Grid } from '@mui/material';
 import { HomeSortTabs } from '@components/home-sort-tabs';
+import { UiJournal } from '@common/types/Journal';
+import { fetchJournals, fetchProjects } from '@server/queries';
+import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
 
-interface Props {
-	activeTab: 'projects' | 'journals';
-	projects: UiProject[];
-}
+type Props = {
+	activeTab: 'projects';
+	items: UiProject[];
+} | {
+	activeTab: 'journals';
+	items: UiJournal[];
+};
 
 export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const session = await getServerSession(ctx.req, ctx.res);
-	const dbProjects = await fetchProjects() || [];
 
-	const activeTab = ctx.query.tab === 'projects' ?
-		'projects' :
-		'journals';
+	const data = ctx.query.tab === 'projects' ?
+		{
+			activeTab: 'projects' as const,
+			items: (await fetchProjects()).map(dbProjectToUiProject),
+		} : {
+			activeTab: 'journals' as const,
+			items: (await fetchJournals()).map(dbJournalToUiJournal),
+		};
 
 	return {
 		props: {
 			session,
-			activeTab,
-			projects: dbProjects.map(dbProjectToUiProject),
+			...data,
 		},
 	};
 };
@@ -37,7 +44,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 export default function Home(props: Props) {
 	const {
 		activeTab,
-		projects,
+		items,
 	} = props;
 
 	return (
@@ -81,7 +88,7 @@ export default function Home(props: Props) {
 				}
 			>
 				<Grid padding={1} container spacing={1} >
-					{projects.map(p => (
+					{activeTab === 'projects' && items.map(p => (
 						<Grid
 							key={p._id}
 							item
@@ -91,6 +98,18 @@ export default function Home(props: Props) {
 							<ProjectCard
 								project={p}
 							/>
+						</Grid>
+					))}
+					{activeTab === 'journals' && items.map(j => (
+						<Grid
+							key={j._id}
+							item
+							xs={12}
+							md={6}
+						>
+							<pre>
+								{JSON.stringify(j, null, 4)}
+							</pre>
 						</Grid>
 					))}
 				</Grid>
