@@ -15,6 +15,7 @@ import {
 } from '@components/icons';
 import {
 	Avatar,
+	Box,
 	Card,
 	CardActions,
 	CardContent,
@@ -84,13 +85,15 @@ function ProjectCard(props: Props) {
 					</Link>
 				}
 			/>
-			<Link href={Paths.Project(_id)}>
-				<CardMedia
-					component="img"
-					height="194"
-					image={images?.[0].url}
-				/>
-			</Link>
+			<Box>
+				<Link href={Paths.Project(_id)}>
+					<CardMedia
+						component="img"
+						height="194"
+						image={images?.[0].url}
+					/>
+				</Link>
+			</Box>
 			<CardContent>
 				<Typography variant="body2" color="text.secondary">
 					<ParsedContent>
