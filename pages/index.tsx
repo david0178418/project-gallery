@@ -6,46 +6,40 @@ import { ScrollContent } from '@components/scroll-content';
 import ProjectCard from '@components/project-card';
 import { SearchForm } from '@components/search-form';
 import { UiProject } from '@common/types/Project';
-import { Box, Grid } from '@mui/material';
-import { HomeSortTabs } from '@components/home-sort-tabs';
 import { UiJournal } from '@common/types/Journal';
 import { fetchJournals, fetchProjects } from '@server/queries';
 import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
 import JournalCard from '@components/journal-card';
+import {
+	Box,
+	Grid,
+	Typography,
+} from '@mui/material';
 
-type Props = {
-	activeTab: 'projects';
-	items: UiProject[];
-} | {
-	activeTab: 'journals';
-	items: UiJournal[];
-};
+interface Props {
+	projects: UiProject[];
+	journals: UiJournal[];
+}
 
 export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const session = await getServerSession(ctx.req, ctx.res);
-
-	const data = ctx.query.tab === 'projects' ?
-		{
-			activeTab: 'projects' as const,
-			items: (await fetchProjects()).map(dbProjectToUiProject),
-		} : {
-			activeTab: 'journals' as const,
-			items: (await fetchJournals()).map(dbJournalToUiJournal),
-		};
+	const projects = (await fetchProjects()).map(dbProjectToUiProject);
+	const journals = (await fetchJournals()).map(dbJournalToUiJournal);
 
 	return {
 		props: {
 			session,
-			...data,
+			projects,
+			journals,
 		},
 	};
 };
 
 export default function Home(props: Props) {
 	const {
-		activeTab,
-		items,
+		projects,
+		journals,
 	} = props;
 
 	return (
@@ -82,14 +76,14 @@ export default function Home(props: Props) {
 						>
 							<SearchForm />
 						</Box>
-						<HomeSortTabs
-							activeTab={activeTab}
-						/>
 					</Box>
 				}
 			>
+				<Typography variant="h6">
+					Projects
+				</Typography>
 				<Grid padding={1} container spacing={1} >
-					{activeTab === 'projects' && items.map(p => (
+					{projects.slice(0, 2).map(p => (
 						<Grid
 							key={p._id}
 							item
@@ -101,7 +95,12 @@ export default function Home(props: Props) {
 							/>
 						</Grid>
 					))}
-					{activeTab === 'journals' && items.map(j => (
+				</Grid>
+				<Typography variant="h6">
+					Journal Posts
+				</Typography>
+				<Grid padding={1} container spacing={1} >
+					{journals.map(j => (
 						<Grid
 							key={j._id}
 							item
