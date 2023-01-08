@@ -14,6 +14,7 @@ Project Description
 - [ ] Create page for project journal entires  
 - [ ] Create cards for journal entries  
 - [ ] Add "Links" section  
+- [ ] Add more links to journal posts like previous/next entry  
 - [ ] Add custom project sections  
 - [ ] Determine shorter term premium offering  
 - [ ] Figure out what content to present on main page  

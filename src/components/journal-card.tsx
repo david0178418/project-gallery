@@ -80,7 +80,20 @@ function JournalCard(props: Props) {
 						</Typography>
 					</Link>
 				)}
-				<Typography component="div" variant="body2" color="text.secondary">
+				{!project && (
+					<Typography variant="subtitle2">
+						Personal Post
+					</Typography>
+				)}
+				<Typography
+					component="div"
+					variant="body2"
+					color="text.secondary"
+					sx={{
+						height: 100,
+						overflow: 'hidden',
+					}}
+				>
 					<MarkdownContent plaintext>
 						{body}
 					</MarkdownContent>
