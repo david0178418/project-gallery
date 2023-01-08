@@ -92,7 +92,7 @@ function Journal(props: Props) {
 	return (
 		<>
 			<Head>
-				<title>{AppName} - {title}</title>
+				<title>{`${AppName} - ${title}`}</title>
 			</Head>
 			<ScrollContent
 				header={

@@ -2,15 +2,27 @@
 import ReactMarkdown from 'react-markdown';
 
 interface Props {
+	plaintext?: boolean;
 	children: string;
 }
 
 export
 function MarkdownContent(props: Props) {
-	const { children } = props;
+	const {
+		plaintext,
+		children,
+	} = props;
+
+	const modeProps = plaintext ? {
+		unwrapDisallowed: true,
+		allowedElements: [],
+	} : {};
 
 	return (
-		<ReactMarkdown className="parsed-user-content">
+		<ReactMarkdown
+			{...modeProps}
+			className="parsed-user-content"
+		>
 			{children}
 		</ReactMarkdown>
 	);

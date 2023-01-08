@@ -11,6 +11,7 @@ import { HomeSortTabs } from '@components/home-sort-tabs';
 import { UiJournal } from '@common/types/Journal';
 import { fetchJournals, fetchProjects } from '@server/queries';
 import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
+import JournalCard from '@components/journal-card';
 
 type Props = {
 	activeTab: 'projects';
@@ -107,9 +108,9 @@ export default function Home(props: Props) {
 							xs={12}
 							md={6}
 						>
-							<pre>
-								{JSON.stringify(j, null, 4)}
-							</pre>
+							<JournalCard
+								journal={j}
+							/>
 						</Grid>
 					))}
 				</Grid>
