@@ -30,7 +30,7 @@ export
 async function fetchJournals(): Promise<Array<WithId<DbJournal>>> {
 	const col = await getCollection(DbCollections.Journals);
 	return col.aggregate<WithId<DbJournal>>([
-		{ $sort: { createdDate: 1 } },
+		{ $sort: { createdDate: -1 } },
 		{ $limit: 20 },
 	]).toArray();
 }
