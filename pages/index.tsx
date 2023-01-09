@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { getServerSession } from '@server/auth-options';
-import { AppName } from '@common/constants';
+import { AppName, Paths } from '@common/constants';
 import { ScrollContent } from '@components/scroll-content';
 import ProjectCard from '@components/project-card';
 import { SearchForm } from '@components/search-form';
@@ -9,12 +9,23 @@ import { UiProject } from '@common/types/Project';
 import { UiJournal } from '@common/types/Journal';
 import { fetchJournals, fetchProjects } from '@server/queries';
 import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
-import JournalCard from '@components/journal-card';
+// import JournalCard from '@components/journal-card';
+import { red } from '@mui/material/colors';
 import {
+	Avatar,
 	Box,
+	Divider,
 	Grid,
+	List,
+	ListItem,
+	ListItemAvatar,
+	ListItemText,
 	Typography,
 } from '@mui/material';
+import MarkdownContent from '@components/markdown-content';
+import { Fragment } from 'react';
+import { formatDate } from '@common/utils';
+import Link from 'next/link';
 
 interface Props {
 	projects: UiProject[];
@@ -99,7 +110,52 @@ export default function Home(props: Props) {
 				<Typography variant="h6">
 					Journal Posts
 				</Typography>
-				<Grid padding={1} container spacing={1} >
+				<List>
+					{journals.map(j => (
+						<Fragment key={j._id}>
+							<ListItem alignItems="flex-start">
+								<ListItemAvatar>
+									<Link href={Paths.UserJournals(j.owner.username)}>
+										<Avatar sx={{ bgcolor: red[500] }}>
+											{j.owner.username[0].toLocaleUpperCase()}
+										</Avatar>
+									</Link>
+								</ListItemAvatar>
+								<ListItemText
+									primary={
+										<>
+
+											<Link href={Paths.Journal(j._id)}>
+												<>
+													{j.title}
+													{j.publishedDate && (
+														<Typography variant="subtitle2">
+															{formatDate(j.publishedDate)}
+														</Typography>
+													)}
+												</>
+											</Link>
+										</>
+									}
+									secondaryTypographyProps={{
+										component: 'div',
+										maxHeight: 40,
+										overflow: 'hidden',
+									}}
+									secondary={
+										<>
+											<MarkdownContent plaintext>
+												{j.body}
+											</MarkdownContent>
+										</>
+									}
+								/>
+							</ListItem>
+							<Divider variant="inset" component="li" />
+						</Fragment>
+					))}
+				</List>
+				{/* <Grid padding={1} container spacing={1} >
 					{journals.map(j => (
 						<Grid
 							key={j._id}
@@ -112,7 +168,7 @@ export default function Home(props: Props) {
 							/>
 						</Grid>
 					))}
-				</Grid>
+				</Grid> */}
 			</ScrollContent>
 		</>
 	);
