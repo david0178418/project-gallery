@@ -90,7 +90,7 @@ function JournalCard(props: Props) {
 					variant="body2"
 					color="text.secondary"
 					sx={{
-						maxHeight: 100,
+						maxHeight: 40,
 						overflow: 'hidden',
 					}}
 				>
