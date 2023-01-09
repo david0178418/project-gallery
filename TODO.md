@@ -6,18 +6,29 @@ Project Description
 
 ### Long Term Todo
 
-- [ ] Implement premium DMs  
+- [ ] Allow users to charge for guaranteed response to DM  
 
 ### Todo
 
-- [ ] Add branding image to site  
+- [ ] Clarify intention of project on home page  
 - [ ] Create page for project journal entires  
-- [ ] Create cards for journal entries  
 - [ ] Add "Links" section  
 - [ ] Add more links to journal posts like previous/next entry  
+- [ ] Add images to journal posts  
 - [ ] Add custom project sections  
 - [ ] Determine shorter term premium offering  
 - [ ] Figure out what content to present on main page  
-- [ ] Clarify intention of project on home page  
 - [ ] Implement search  
+- [ ] Follow users and proejcts  
+- [ ] Add bookmarking of posts  
+- [ ] Add email notifications of updates on followed users/projects  
+- [ ] Add email password recovery  
+- [ ] Add email to users  
+
+### Done
+
+- [ ] Figure out simple task management  
+- [ ] Add branding image to site  
+- [ ] Create cards for journal entries  
+- [ ] Add journal posts to home page  
 
