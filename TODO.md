@@ -11,12 +11,12 @@ Project Description
 ### Todo
 
 - [ ] Clarify intention of project on home page  
+- [ ] Determine shorter term premium offering  
 - [ ] Create page for project journal entires  
 - [ ] Add "Links" section  
 - [ ] Add more links to journal posts like previous/next entry  
 - [ ] Add images to journal posts  
 - [ ] Add custom project sections  
-- [ ] Determine shorter term premium offering  
 - [ ] Figure out what content to present on main page  
 - [ ] Implement search  
 - [ ] Follow users and proejcts  
