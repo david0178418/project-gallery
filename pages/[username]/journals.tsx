@@ -8,6 +8,7 @@ import { getServerSession } from '@server/auth-options';
 import { fetchUser, fetchUserJournals } from '@server/queries';
 import { dbJournalToUiJournal } from '@server/transforms';
 import { UiJournal } from '@common/types/Journal';
+import JournalsList from '@components/journals-list';
 import {
 	AppName,
 	SpecialCharacterCodes,
@@ -17,7 +18,6 @@ import {
 	IconButton,
 	Typography,
 } from '@mui/material';
-import JournalsList from '@pages/journals-list';
 
 interface Props {
 	unknownUser?: boolean;

@@ -9,7 +9,7 @@ import { UiProject } from '@common/types/Project';
 import { UiJournal } from '@common/types/Journal';
 import { fetchJournals, fetchProjects } from '@server/queries';
 import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
-import JournalsList from './journals-list';
+import JournalsList from '@components/journals-list';
 import {
 	Box,
 	Grid,
