@@ -58,7 +58,7 @@ function JournalCard(props: Props) {
 					</Link>
 				)}
 				avatar={
-					<Link href={Paths.UserJournals(username)}>
+					<Link href={Paths.UserGallery(username)}>
 						<Tooltip
 							arrow
 							disableFocusListener
