@@ -8,21 +8,16 @@ import { getServerSession } from '@server/auth-options';
 import { fetchUser, fetchUserJournals } from '@server/queries';
 import { dbJournalToUiJournal } from '@server/transforms';
 import { UiJournal } from '@common/types/Journal';
-import Link from 'next/link';
 import {
 	AppName,
-	Paths,
 	SpecialCharacterCodes,
 } from '@common/constants';
 import {
 	Box,
 	IconButton,
-	List,
-	ListItem,
-	ListItemButton,
-	ListItemText,
 	Typography,
 } from '@mui/material';
+import JournalsList from '@pages/journals-list';
 
 interface Props {
 	unknownUser?: boolean;
@@ -101,20 +96,7 @@ function UserJournals(props: Props) {
 					</Box>
 				}
 			>
-				{journals.map(j => (
-					<List key={j._id}>
-						<ListItem>
-							<Link passHref legacyBehavior href={Paths.Journal(j._id)}>
-								<ListItemButton>
-									<ListItemText
-										primary={j.title}
-										secondary={j.project && `Project: ${j.project?.title}`}
-									/>
-								</ListItemButton>
-							</Link>
-						</ListItem>
-					</List>
-				))}
+				<JournalsList journals={journals} />
 			</ScrollContent>
 		</>
 	);
