@@ -81,7 +81,6 @@ export default function Home(props: Props) {
 				}
 			>
 				<Container>
-
 					<Typography variant="h6">
 					Projects
 					</Typography>
