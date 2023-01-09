@@ -12,6 +12,7 @@ import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
 import JournalCard from '@components/journal-card';
 import {
 	Box,
+	Container,
 	Grid,
 	Typography,
 } from '@mui/material';
@@ -79,40 +80,39 @@ export default function Home(props: Props) {
 					</Box>
 				}
 			>
-				<Typography variant="h6">
+				<Container>
+
+					<Typography variant="h6">
 					Projects
-				</Typography>
-				<Grid padding={1} container spacing={1} >
-					{projects.slice(0, 2).map(p => (
-						<Grid
-							key={p._id}
-							item
-							xs={12}
-							md={6}
-						>
-							<ProjectCard
-								project={p}
-							/>
-						</Grid>
-					))}
-				</Grid>
-				<Typography variant="h6">
+					</Typography>
+					<Grid padding={1} container spacing={1} >
+						{projects.slice(0, 2).map(p => (
+							<Grid
+								key={p._id}
+								item
+								xs={12}
+								md={6}
+							>
+								<ProjectCard
+									project={p}
+								/>
+							</Grid>
+						))}
+					</Grid>
+					<Typography variant="h6">
 					Journal Posts
-				</Typography>
-				<Grid padding={1} container spacing={1} >
+					</Typography>
 					{journals.map(j => (
-						<Grid
+						<Box
+							padding={1}
 							key={j._id}
-							item
-							xs={12}
-							md={6}
 						>
 							<JournalCard
 								journal={j}
 							/>
-						</Grid>
+						</Box>
 					))}
-				</Grid>
+				</Container>
 			</ScrollContent>
 		</>
 	);
