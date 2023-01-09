@@ -54,7 +54,7 @@ function JournalCard(props: Props) {
 				}
 				subheader={(
 					<Link href={Paths.Journal(_id)}>
-						created: {publishedDate && localizedDateFormat(publishedDate)}
+						{publishedDate && localizedDateFormat(publishedDate)}
 					</Link>
 				)}
 				avatar={
