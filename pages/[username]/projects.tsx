@@ -1,8 +1,5 @@
 import Head from 'next/head';
 import ProjectCard from '@components/project-card';
-import {
-	AppName, Paths, SpecialCharacterCodes,
-} from '@common/constants';
 import { useRouteBackDefault } from '@common/hooks';
 import { ScrollContent } from '@components/scroll-content';
 import { BackIcon } from '@components/icons';
@@ -10,21 +7,14 @@ import { GetServerSideProps } from 'next';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { UiProject } from '@common/types/Project';
 import { getServerSession } from '@server/auth-options';
-import JournalsList from '@components/journals-list';
-import { UiJournal } from '@common/types/Journal';
-import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
-import Link from 'next/link';
-import {
-	fetchUser,
-	fetchUserGallery,
-	fetchUserJournals,
-} from '@server/queries';
+import { dbProjectToUiProject } from '@server/transforms';
+import { AppName, SpecialCharacterCodes } from '@common/constants';
+import { fetchUser, fetchUserGallery } from '@server/queries';
 import {
 	Box,
 	Container,
 	Grid,
 	IconButton,
-	Link as MuiLink,
 	Typography,
 } from '@mui/material';
 
