@@ -11,8 +11,8 @@ Project Description
 ### Todo
 
 - [ ] Clarify intention of project on home page  
+- [ ] Sort project images  
 - [ ] Determine shorter term premium offering  
-- [ ] Create page for project journal entires  
 - [ ] Add "Links" section  
 - [ ] Add more links to journal posts like previous/next entry  
 - [ ] Add images to journal posts  
@@ -31,4 +31,5 @@ Project Description
 - [ ] Add branding image to site  
 - [ ] Create cards for journal entries  
 - [ ] Add journal posts to home page  
+- [ ] Create page for project journal entires  
 
