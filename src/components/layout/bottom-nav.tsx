@@ -25,7 +25,6 @@ import {
 	SettingsIcon,
 	ProjectIcon,
 	JournalIcon,
-	JournalActiveIcon,
 } from '@components/icons';
 
 // TODO Figure out the weird link behavior
@@ -105,18 +104,6 @@ function BottomNav() {
 						/>,
 						<BottomNavigationAction
 							key="b"
-							label="My Journals"
-							LinkComponent={Link}
-							href={Paths.UserJournals(user.username)}
-							value={Paths.UserJournals(user.username)}
-							icon={
-								Paths.UserJournals(user.username) === pathname ?
-									<JournalActiveIcon /> :
-									<JournalIcon />
-							}
-						/>,
-						<BottomNavigationAction
-							key="c"
 							label="Settings"
 							LinkComponent={Link}
 							href={Paths.Settings}

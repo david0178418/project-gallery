@@ -18,8 +18,6 @@ import {
 	ProfileIcon,
 	SettingsActiveIcon,
 	SettingsIcon,
-	JournalActiveIcon,
-	JournalIcon,
 } from '@components/icons';
 import {
 	Box,
@@ -175,24 +173,6 @@ function LeftRail() {
 											Paths.UserGallery(user.username) === asPath ?
 												<ProfileActiveIcon /> :
 												<ProfileIcon />
-										}
-									</RailButtonContent>
-								</ListItemButton>
-							</Link>
-						</ListItem>
-						<ListItem disablePadding>
-							<Link
-								shallow
-								passHref
-								legacyBehavior
-								href={Paths.UserJournals(user.username)}
-							>
-								<ListItemButton>
-									<RailButtonContent label="My Journals">
-										{
-											Paths.UserJournals(user.username) === asPath ?
-												<JournalActiveIcon /> :
-												<JournalIcon />
 										}
 									</RailButtonContent>
 								</ListItemButton>
