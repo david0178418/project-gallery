@@ -40,8 +40,8 @@ function ProjectCard(props: Props) {
 			_id,
 			detail,
 			projectCreatedDate,
-			projectLastUpdatedDate,
 			lastJournalEntry,
+			lastUpdatedDate,
 			summary,
 			title,
 			images,
@@ -64,7 +64,11 @@ function ProjectCard(props: Props) {
 				subheader={(
 					<>
 						{localizedDateFormat(projectCreatedDate)}<br/>
-						updated: {localizedDateFormat(projectLastUpdatedDate)}
+						{lastUpdatedDate && (
+							<>
+								updated: {localizedDateFormat(lastUpdatedDate)}
+							</>
+						)}
 					</>
 				)}
 				avatar={

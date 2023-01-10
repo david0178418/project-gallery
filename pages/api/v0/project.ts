@@ -90,6 +90,7 @@ async function createProject(user: User, project: WriteProject) {
 		_id: projId,
 		...updateProps
 	} = project;
+	console.log('updateProps', updateProps);
 	const _id = projId ?
 		new ObjectId(projId) :
 		new ObjectId();
