@@ -38,8 +38,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if(!session) {
 		return res.status(400).end();
 	}
-
+	console.log(111);
 	const result = await schema.safeParseAsync(req.query);
+	console.log(222);
 
 	if(!result.success) {
 		return res
@@ -66,6 +67,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 		secretAccessKey: process.env.AWS_APP_SECRET_KEY,
 	});
 
+	console.log(333);
 	try {
 		const data = await s3.createPresignedPost({
 			Bucket: process.env.AWS_APP_BUCKET,
@@ -83,7 +85,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 			ok: true,
 			data,
 		});
+		console.log(444);
 	} catch(e) {
-		return { ok: false };
+		return res
+			.status(500)
+			.send({
+				ok: false,
+				e,
+			});
 	}
 }

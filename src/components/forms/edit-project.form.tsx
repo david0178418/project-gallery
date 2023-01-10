@@ -1,8 +1,8 @@
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { Uploader } from '@components/uploader';
-import { ImagePreviews } from '@components/image-previews';
 import { ProjectImage, WriteProject } from '@common/types/Project';
 import { useCallback } from 'react';
+import { inRange, swapItems } from '@common/utils';
 import {
 	MaxProjectSummaryLength,
 	MaxJournalProjectTitleLength,
@@ -15,9 +15,14 @@ import {
 import {
 	Box,
 	Grid,
+	IconButton,
 	TextField,
 } from '@mui/material';
-import { inRange } from '@common/utils';
+import {
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	DeleteIcon,
+} from '@components/icons';
 
 function dateToDateSubstring(date: Date) {
 	return date.toISOString().substring(0, 10);
@@ -59,12 +64,6 @@ function EditProjectForm(props: Props) {
 		summary,
 		detail,
 	]);
-	// const [files, setFiles] = useState<Array<File | string>>([]);
-	// const [projectCreatedDate, setProjectCreatedDate] = useState(() => new Date());
-	// const [projectLastUpdatedDate, setProjectLastUpdatedDate] = useState(() => new Date());
-	// const [title, setTitle] = useState('');
-	// const [summary, setSummary] = useState('');
-	// const [detail, setDetail] = useState('');
 
 	const handleAddFiles = useCallback((newImageUrls: string[]) => {
 		const newImages = newImageUrls.map(url => ({
@@ -75,6 +74,12 @@ function EditProjectForm(props: Props) {
 	}, [images]);
 	const handleRemoveFile = useCallback((img: ProjectImage) => {
 		handleChange({ images: images.filter(f => f.url !== img.url) });
+	}, [images]);
+	const handleMoveLeft = useCallback((index: number) => {
+		handleChange({ images: swapItems(images, index, index - 1) });
+	}, [images]);
+	const handleMoveRight = useCallback((index: number) => {
+		handleChange({ images: swapItems(images, index, index + 1) });
 	}, [images]);
 
 	return (
@@ -122,9 +127,11 @@ function EditProjectForm(props: Props) {
 					category={FileUploadCategories.Posts}
 					onAdd={handleAddFiles}
 				/>
-				<ImagePreviews
+				<Foo
 					images={images}
-					onClick={handleRemoveFile}
+					onLeftClick={handleMoveLeft}
+					onRightClick={handleMoveRight}
+					onDelete={handleRemoveFile}
 				/>
 			</Box>
 			<TextFieldLengthValidation
@@ -170,4 +177,90 @@ function projectIsValid(project: WriteProject) {
 		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
 		inRange(summary.length, MinProjectSummaryLength, MaxProjectSummaryLength) &&
 		inRange(detail.length, MinProjectDetailLength, MaxProjectDetailLength);
+}
+
+interface FooProps {
+	images: ProjectImage[];
+	onDelete(file: ProjectImage): void;
+	onLeftClick(imageIndex: number): void;
+	onRightClick(imageIndex: number): void;
+}
+
+function Foo(props: FooProps) {
+	const {
+		images,
+		onDelete,
+		onLeftClick,
+		onRightClick,
+	} = props;
+
+	return (
+		<Grid
+			container
+			rowGap={4}
+			marginTop={2}
+			spacing={2}
+		>
+			{images.map((f, i) => (
+				<Grid
+					item
+					key={f.url}
+					xs={4}
+				>
+					<Box
+						width="100%"
+						position="relative"
+						border="1px solid"
+						overflow="hidden"
+						padding={1}
+						borderRadius={2}
+						sx={{
+							cursor: 'pointer',
+							'& .actions': { sm: { display: 'none' } },
+							'&:hover .actions': { display: 'block' },
+						}}
+					>
+						<img
+							src={f.url}
+							width="100%"
+							style={{ objectFit: 'contain' }}
+						/>
+						<Box className="actions">
+							{!!i && (
+								<Box
+									position="absolute"
+									left={0}
+									bottom={0}
+								>
+									<IconButton onClick={() => onLeftClick(i)}>
+										<ArrowLeftIcon/>
+									</IconButton>
+								</Box>
+							)}
+							{i !== (images.length - 1) && (
+								<Box
+									position="absolute"
+									right={0}
+									bottom={0}
+								>
+									<IconButton onClick={() => onRightClick(i)}>
+										<ArrowRightIcon/>
+									</IconButton>
+								</Box>
+							)}
+							<Box
+								position="absolute"
+								right={0}
+								top={0}
+							>
+								<IconButton onClick={() => onDelete(f)}>
+									<DeleteIcon />
+								</IconButton>
+							</Box>
+						</Box>
+					</Box>
+				</Grid>
+			))}
+		</Grid>
+	);
 }

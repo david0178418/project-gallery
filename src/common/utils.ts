@@ -173,6 +173,16 @@ function range(size: number, startValue = 0) {
 }
 
 export
+function swapItems<T>(arr: T[], indexA: number, indexB: number): T[] {
+	// TODO Cover edge cases
+	const newArr = arr.slice(0);
+
+	[newArr[indexB], newArr[indexA]] = [arr[indexA], arr[indexB]];
+
+	return newArr;
+}
+
+export
 function removeItem<T>(arr: T[], removeIndex: number) {
 	return arr.filter((_, index) => index !== removeIndex);
 }

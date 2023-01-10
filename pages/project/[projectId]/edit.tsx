@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { AppName, SpecialCharacterCodes } from '@common/constants';
 import {
 	Box,
+	Container,
 	IconButton,
 	Typography,
 	useMediaQuery,
@@ -104,38 +105,41 @@ function Page(props: Props) {
 					</Box>
 				}
 			>
-				{project && (
-					<EditProjectForm
-						project={project}
-						onChange={setProject}
-					/>
-				)}
-				<Box paddingTop={2} textAlign="right">
-					<CancelButton
-						fullWidth={fullScreen}
-						onClick={routeBack}
-					/>
-					<Box
-						sx={{
-							display: {
-								xs: 'block',
-								md: 'inline-block',
-							},
-							paddingLeft: { md: 2 },
-							paddingTop: {
-								xs: 2,
-								md: 0,
-							},
-							paddingBottom: 20,
-						}}
-					>
-						<ConfirmButton
-							onClick={handleSave}
-							fullWidth={fullScreen}
-							disabled={!(project && projectIsValid(project))}
+				<Container>
+
+					{project && (
+						<EditProjectForm
+							project={project}
+							onChange={setProject}
 						/>
+					)}
+					<Box paddingTop={2} textAlign="right">
+						<CancelButton
+							fullWidth={fullScreen}
+							onClick={routeBack}
+						/>
+						<Box
+							sx={{
+								display: {
+									xs: 'block',
+									md: 'inline-block',
+								},
+								paddingLeft: { md: 2 },
+								paddingTop: {
+									xs: 2,
+									md: 0,
+								},
+								paddingBottom: 20,
+							}}
+						>
+							<ConfirmButton
+								onClick={handleSave}
+								fullWidth={fullScreen}
+								disabled={!(project && projectIsValid(project))}
+							/>
+						</Box>
 					</Box>
-				</Box>
+				</Container>
 			</ScrollContent>
 		</>
 	);
