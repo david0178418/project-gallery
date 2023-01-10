@@ -64,7 +64,7 @@ function ProjectCard(props: Props) {
 				subheader={(
 					<>
 						{localizedDateFormat(projectCreatedDate)}<br/>
-						{lastUpdatedDate && (
+						{lastUpdatedDate && ( // TODO This conditional may no longer be needed
 							<>
 								updated: {localizedDateFormat(lastUpdatedDate)}
 							</>
