@@ -10,6 +10,8 @@ Project Description
 
 ### Todo
 
+- [ ] Ensure only published journals are shown unless you are the owner  
+- [ ] FIx bug where you are signed out after sitting for a bit  
 - [ ] Clarify intention of project on home page  
 - [ ] Sort project images  
 - [ ] Determine shorter term premium offering  
