@@ -36,6 +36,16 @@ async function fetchJournals(): Promise<Array<WithId<DbJournal>>> {
 }
 
 export
+async function fetchProjectJournals(projectId: string): Promise<Array<WithId<DbJournal>>> {
+	const col = await getCollection(DbCollections.Journals);
+	return col.aggregate<WithId<DbJournal>>([
+		{ $match: { 'project._id': new ObjectId(projectId) } },
+		{ $sort: { publishedDate: -1 } },
+		{ $limit: 20 },
+	]).toArray();
+}
+
+export
 async function fetchProjectsByUser(userId: string): Promise<Array<WithId<DbProject>>> {
 	const col = await getCollection(DbCollections.Projects);
 	return col.aggregate<WithId<DbProject>>([

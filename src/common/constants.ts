@@ -66,11 +66,13 @@ const NotLoggedInErrMsg = {
 };
 
 export
+// TODO Does this still belong here?
 const Paths = {
 	Home: '/',
 	Search: '/search',
 	Settings: '/settings',
 	Project: (projectId: string) => urlJoin('/project', projectId),
+	ProjectJournals: (projectId: string) => urlJoin(Paths.Project(projectId), '/journals'),
 	ProjectEdit: (projectId: string) => urlJoin(Paths.Project(projectId), 'edit'),
 	Journal: (journalId: string) => urlJoin('/journal', journalId),
 	JournalEdit: (journalId: string) => urlJoin(Paths.Journal(journalId), 'edit'),

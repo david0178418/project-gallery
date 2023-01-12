@@ -4,8 +4,7 @@ import { ScrollContent } from '@components/scroll-content';
 import { BackIcon, EditIcon } from '@components/icons';
 import { GetServerSideProps } from 'next';
 import { getServerSession } from '@server/auth-options';
-import { fetchProject } from '@server/queries';
-import { dbProjectToUiProject } from '@server/transforms';
+import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
 import { UiProject } from '@common/types/Project';
 import { MongoIdValidation } from '@server/validations';
 import { localizedDateFormat, urlJoin } from '@common/utils';
@@ -14,6 +13,11 @@ import Link from 'next/link';
 import { ImagePreviews } from '@components/image-previews';
 import { useState } from 'react';
 import { NextSeo } from 'next-seo';
+import { UiJournal } from '@common/types/Journal';
+import {
+	fetchProject,
+	fetchProjectJournals,
+} from '@server/queries';
 import {
 	AppName,
 	BaseUrl,
@@ -24,10 +28,14 @@ import {
 	Box,
 	Fab,
 	IconButton,
+	Tab,
+	Tabs,
 	Typography,
 } from '@mui/material';
+import JournalsList from '@components/journals-list';
 
 interface Props {
+	journals: UiJournal[] | null;
 	project: UiProject | null;
 }
 
@@ -35,22 +43,30 @@ export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const result = await MongoIdValidation.safeParseAsync(ctx.query.projectId);
 	const session = await getServerSession(ctx.req, ctx.res);
+	const [subPath] = ctx.params?.params || [];
 
 	if(!result.success) {
 		return {
 			props: {
 				session,
 				project: null,
+				journals: subPath === 'journals' ?
+					[] as UiJournal[] :
+					null,
 			},
 		};
 	}
 
 	const id = result.data;
 	const project = await fetchProject(id);
+	const journals = subPath === 'journals' ?
+		await fetchProjectJournals(id) :
+		null;
 
 	return {
 		props: {
 			session,
+			journals: journals && journals?.map(dbJournalToUiJournal),
 			project: project && dbProjectToUiProject(project),
 		},
 	};
@@ -58,7 +74,11 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 
 export default
 function UserGallery(props: Props) {
-	const { project	} = props;
+	const {
+		project,
+		journals,
+	} = props;
+
 	const [activeImage, setActiveImage] = useState(project?.images[0]);
 	const routeBack = useRouteBackDefault();
 	const user = useUser();
@@ -121,26 +141,59 @@ function UserGallery(props: Props) {
 								{`Summary: ${project.summary}`}
 							</ParsedContent>
 						</Typography>
-						<Box paddingTop={2} textAlign="center">
-							{/* eslint-disable-next-line @next/next/no-img-element */}
-							<img
-								src={activeImage?.url}
-								style={{
-									maxWidth: '100%',
-									height: 400,
-									objectFit: 'contain',
-								}}
-							/>
+						<Box sx={{
+							paddingTop: 2,
+							borderBottom: 1,
+							borderColor: 'divider',
+						}}>
+							<Tabs value={journals ? 'journals' : 'details'}>
+								<Link
+									href={Paths.Project(project._id)}
+									legacyBehavior
+									passHref
+									// @ts-ignore TODO Why is this needed here instead of on Tab?
+									value="details"
+								>
+									<Tab label="Details" />
+								</Link>
+								<Link
+									href={Paths.ProjectJournals(project._id)}
+									legacyBehavior
+									passHref
+									// @ts-ignore TODO Why is this needed here instead of on Tab?
+									value="journals"
+								>
+									<Tab label="Journals" />
+								</Link>
+							</Tabs>
 						</Box>
-						<ImagePreviews
-							images={project.images}
-							onClick={setActiveImage}
-						/>
-						<Typography paddingTop={2}>
-							<ParsedContent>
-								{project.summary}
-							</ParsedContent>
-						</Typography>
+						{!journals && (
+							<>
+								<Box paddingTop={2} textAlign="center">
+									{/* eslint-disable-next-line @next/next/no-img-element */}
+									<img
+										src={activeImage?.url}
+										style={{
+											maxWidth: '100%',
+											height: 400,
+											objectFit: 'contain',
+										}}
+									/>
+								</Box>
+								<ImagePreviews
+									images={project.images}
+									onClick={setActiveImage}
+								/>
+								<Typography paddingTop={2}>
+									<ParsedContent>
+										{project.summary}
+									</ParsedContent>
+								</Typography>
+							</>
+						)}
+						{!!journals && (
+							<JournalsList journals={journals} />
+						)}
 					</>
 				)}
 			</ScrollContent>
