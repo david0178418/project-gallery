@@ -90,13 +90,13 @@ function UserGallery(props: Props) {
 		project.summary :
 		'';
 	const title = project ?
-		`${project.title} - ${AppName}` :
+		`${project.title || '???'}${journals ? ' Journals' : '' } - ${AppName}` :
 		'';
 
 	return (
 		<>
 			<Head>
-				<title>{`${project?.title || '???'} - ${AppName}`}</title>
+				<title>{title}</title>
 			</Head>
 			<NextSeo
 				openGraph={{
