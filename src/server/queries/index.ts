@@ -106,7 +106,7 @@ async function fetchUserJournals(username: string, owner: boolean): Promise<Arra
 		{ publishedDate: { $ne: null } };
 
 	return col.aggregate<WithId<DbJournal>>([
-		{ $sort: { createdDate: -1 } },
+		{ $sort: { publishedDate: -1 } },
 		{
 			$match: {
 				'owner.username': username,
