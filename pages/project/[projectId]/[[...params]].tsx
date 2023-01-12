@@ -90,7 +90,7 @@ function UserGallery(props: Props) {
 		project.summary :
 		'';
 	const title = project ?
-		`${project.title || '???'}${journals ? ' Journals' : '' } - ${AppName}` :
+		`${project.title || '???'}${journals ? ' Journal' : '' } - ${AppName}` :
 		'';
 
 	return (
@@ -163,7 +163,7 @@ function UserGallery(props: Props) {
 									// @ts-ignore TODO Why is this needed here instead of on Tab?
 									value="journals"
 								>
-									<Tab label="Journals" />
+									<Tab label="Journal" />
 								</Link>
 							</Tabs>
 						</Box>
