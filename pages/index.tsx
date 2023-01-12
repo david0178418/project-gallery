@@ -26,7 +26,7 @@ export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const session = await getServerSession(ctx.req, ctx.res);
 	const projects = (await fetchProjects()).map(dbProjectToUiProject);
-	const journals = (await fetchJournals()).map(dbJournalToUiJournal);
+	const journals = (await fetchJournals(session?.user.id)).map(dbJournalToUiJournal);
 
 	return {
 		props: {

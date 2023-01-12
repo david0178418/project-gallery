@@ -60,7 +60,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const id = result.data;
 	const project = await fetchProject(id);
 	const journals = subPath === 'journals' ?
-		await fetchProjectJournals(id) :
+		await fetchProjectJournals(id, session?.user.id) :
 		null;
 
 	return {

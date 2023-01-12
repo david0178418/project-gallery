@@ -27,19 +27,39 @@ async function fetchProjects(): Promise<Array<WithId<DbProject>>> {
 }
 
 export
-async function fetchJournals(): Promise<Array<WithId<DbJournal>>> {
+async function fetchJournals(ownerId = ''): Promise<Array<WithId<DbJournal>>> {
 	const col = await getCollection(DbCollections.Journals);
+	const publishedOrOwner = ownerId ?
+		{
+			$or: [
+				{ publishedDate: { $ne: null } },
+				{ 'owner._id': new ObjectId(ownerId) },
+			],
+		} : { publishedDate: { $ne: null } };
 	return col.aggregate<WithId<DbJournal>>([
+		{ $match: publishedOrOwner },
 		{ $sort: { publishedDate: -1 } },
 		{ $limit: 20 },
 	]).toArray();
 }
 
 export
-async function fetchProjectJournals(projectId: string): Promise<Array<WithId<DbJournal>>> {
+async function fetchProjectJournals(projectId: string, ownerId = ''): Promise<Array<WithId<DbJournal>>> {
 	const col = await getCollection(DbCollections.Journals);
+	const publishedOrOwner = ownerId ?
+		{
+			$or: [
+				{ publishedDate: { $ne: null } },
+				{ 'owner._id': new ObjectId(ownerId) },
+			],
+		} : { publishedDate: { $ne: null } };
 	return col.aggregate<WithId<DbJournal>>([
-		{ $match: { 'project._id': new ObjectId(projectId) } },
+		{
+			$match: {
+				'project._id': new ObjectId(projectId),
+				...publishedOrOwner,
+			},
+		},
 		{ $sort: { publishedDate: -1 } },
 		{ $limit: 20 },
 	]).toArray();
