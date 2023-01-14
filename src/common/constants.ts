@@ -73,6 +73,7 @@ const Paths = {
 	Settings: '/settings',
 	Project: (projectId: string) => urlJoin('/project', projectId),
 	ProjectJournals: (projectId: string) => urlJoin(Paths.Project(projectId), '/journals'),
+	ProjectAbout: (projectId: string) => urlJoin(Paths.Project(projectId), '/about'),
 	ProjectEdit: (projectId: string) => urlJoin(Paths.Project(projectId), 'edit'),
 	Journal: (journalId: string) => urlJoin('/journal', journalId),
 	JournalEdit: (journalId: string) => urlJoin(Paths.Journal(journalId), 'edit'),

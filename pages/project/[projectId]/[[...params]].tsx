@@ -14,6 +14,7 @@ import { ImagePreviews } from '@components/image-previews';
 import { useState } from 'react';
 import { NextSeo } from 'next-seo';
 import { UiJournal } from '@common/types/Journal';
+import JournalsList from '@components/journals-list';
 import {
 	fetchProject,
 	fetchProjectJournals,
@@ -32,23 +33,42 @@ import {
 	Tabs,
 	Typography,
 } from '@mui/material';
-import JournalsList from '@components/journals-list';
 
 interface Props {
+	subPath: TabPath ;
 	journals: UiJournal[] | null;
 	project: UiProject | null;
 }
+
+const TabPaths = {
+	details: {
+		label: 'Details',
+		value: 'details',
+		path: (projectId: string) => Paths.Project(projectId),
+	},
+	journals: {
+		label: 'Journals',
+		value: 'journals',
+		path: (projectId: string) => Paths.ProjectJournals(projectId),
+	},
+} as const;
+
+type TabPath = keyof typeof TabPaths;
 
 export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const result = await MongoIdValidation.safeParseAsync(ctx.query.projectId);
 	const session = await getServerSession(ctx.req, ctx.res);
-	const [subPath] = ctx.params?.params || [];
+	const [rawSubPath] = ctx.params?.params || [];
+	const subPath = (TabPaths[rawSubPath as TabPath])
+		? TabPaths[rawSubPath as TabPath].value :
+		'details';
 
 	if(!result.success) {
 		return {
 			props: {
 				session,
+				subPath,
 				project: null,
 				journals: subPath === 'journals' ?
 					[] as UiJournal[] :
@@ -66,6 +86,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	return {
 		props: {
 			session,
+			subPath,
 			journals: journals && journals?.map(dbJournalToUiJournal),
 			project: project && dbProjectToUiProject(project),
 		},
@@ -75,6 +96,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 export default
 function UserGallery(props: Props) {
 	const {
+		subPath,
 		project,
 		journals,
 	} = props;
@@ -82,6 +104,7 @@ function UserGallery(props: Props) {
 	const [activeImage, setActiveImage] = useState(project?.images[0]);
 	const routeBack = useRouteBackDefault();
 	const user = useUser();
+	const selectedTab = TabPaths[subPath]?.value || 'details';
 	const isOwner = !!project && user?.id === project.owner._id;
 	const url = project ?
 		urlJoin(BaseUrl, Paths.Journal(project._id)) :
@@ -146,28 +169,22 @@ function UserGallery(props: Props) {
 							borderBottom: 1,
 							borderColor: 'divider',
 						}}>
-							<Tabs value={journals ? 'journals' : 'details'}>
-								<Link
-									href={Paths.Project(project._id)}
-									legacyBehavior
-									passHref
-									// @ts-ignore TODO Why is this needed here instead of on Tab?
-									value="details"
-								>
-									<Tab label="Details" />
-								</Link>
-								<Link
-									href={Paths.ProjectJournals(project._id)}
-									legacyBehavior
-									passHref
-									// @ts-ignore TODO Why is this needed here instead of on Tab?
-									value="journals"
-								>
-									<Tab label="Journal" />
-								</Link>
+							<Tabs value={selectedTab}>
+								{Object.values(TabPaths).map(t => (
+									<Link
+										key={t.value}
+										legacyBehavior
+										passHref
+										href={t.path(project._id)}
+										// @ts-ignore TODO Why is this needed here instead of on Tab?
+										value={t.value}
+									>
+										<Tab label={t.label} />
+									</Link>
+								))}
 							</Tabs>
 						</Box>
-						{!journals && (
+						{TabPaths.details.value === subPath && (
 							<>
 								<Box paddingTop={2} textAlign="center">
 									{/* eslint-disable-next-line @next/next/no-img-element */}
@@ -191,7 +208,7 @@ function UserGallery(props: Props) {
 								</Typography>
 							</>
 						)}
-						{!!journals && (
+						{TabPaths.journals.value === subPath && journals && (
 							<JournalsList journals={journals} />
 						)}
 					</>
