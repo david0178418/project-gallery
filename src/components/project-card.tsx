@@ -98,11 +98,11 @@ function ProjectCard(props: Props) {
 				</Link>
 			</Box>
 			<CardContent>
-				{/* <Typography variant="body2" color="text.secondary">
+				<Typography variant="body2" color="text.secondary">
 					<ParsedContent>
-						{summary}
+						{description}
 					</ParsedContent>
-				</Typography> */}
+				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
 				<Tooltip
