@@ -63,7 +63,7 @@ const ProfilePage: NextPage<any> = () => {
 					href={Paths.UserGallery(user.username)}
 				>
 					<Button>
-						My Projects
+						My Gallery
 					</Button>
 				</Link>
 			</Box>
