@@ -2,7 +2,7 @@ import { TextFieldLengthValidation } from '@components/common/text-field-length-
 import { Uploader } from '@components/uploader';
 import { inRange, swapItems } from '@common/utils';
 import ImageList from './image-list';
-import { DeleteIcon } from '@components/icons';
+import LinksList from '@components/links-list';
 import {
 	useCallback,
 	useState,
@@ -25,12 +25,6 @@ import {
 	Box,
 	Button,
 	Grid,
-	IconButton,
-	Link as MuiLink,
-	List,
-	ListItem,
-	ListItemIcon,
-	ListItemText,
 	Tab,
 	Tabs,
 	TextField,
@@ -187,22 +181,7 @@ function EditProjectForm(props: Props) {
 						<>
 							<LinkForm onAdd={handleAddLink}/>
 							<Box paddingTop={1}>
-								<List>
-									{links.map((l, i) => (
-										<ListItem key={i}>
-											<ListItemIcon>
-												<IconButton onClick={() => handleRemoveLink(i)}>
-													<DeleteIcon />
-												</IconButton>
-											</ListItemIcon>
-											<ListItemText>
-												<MuiLink href={l.url} target="_blank">
-													{l.label}
-												</MuiLink>
-											</ListItemText>
-										</ListItem>
-									))}
-								</List>
+								<LinksList onRemove={handleRemoveLink} links={links} />
 							</Box>
 						</>
 					)}

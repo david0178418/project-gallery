@@ -14,6 +14,8 @@ import { useState } from 'react';
 import { NextSeo } from 'next-seo';
 import { UiJournal } from '@common/types/Journal';
 import JournalsList from '@components/journals-list';
+import MarkdownContent from '@components/markdown-content';
+import LinksList from '@components/links-list';
 import {
 	fetchProject,
 	fetchProjectJournals,
@@ -33,7 +35,6 @@ import {
 	Tabs,
 	Typography,
 } from '@mui/material';
-import MarkdownContent from '@components/markdown-content';
 
 interface Props {
 	subPath: TabPath ;
@@ -212,20 +213,14 @@ function UserGallery(props: Props) {
 						{TabPaths.journals.value === subPath && journals && (
 							<JournalsList journals={journals} />
 						)}
-						{TabPaths.links.value === subPath && journals && (
-							// <JournalsList journals={journals} />
-							<>
-								Links
-							</>
+						{TabPaths.links.value === subPath && (
+							<LinksList links={project.links} />
 						)}
 					</Container>
 				)}
 			</ScrollContent>
 			{isOwner && (
-				<Link
-					legacyBehavior
-					href={Paths.ProjectEdit(project._id)}
-				>
+				<Link href={Paths.ProjectEdit(project._id)}>
 					<Fab
 						color="primary"
 						sx={{

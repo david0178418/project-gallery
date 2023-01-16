@@ -13,7 +13,7 @@ import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import { projectSave } from '@client/api-calls';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { AppName, SpecialCharacterCodes } from '@common/constants';
 import {
 	Box,
@@ -64,7 +64,7 @@ function Page(props: Props) {
 	const routeBack = useRouteBackDefault();
 	const title = `${defaultProject?.title} - Edit` || 'Not Found';
 
-	async function handleSave() {
+	const handleSave = useCallback(async () => {
 		if(!project) {
 			return null;
 		}
@@ -81,7 +81,7 @@ function Page(props: Props) {
 		}
 
 		setLoading(false);
-	}
+	}, [project]);
 
 	return (
 		<>
