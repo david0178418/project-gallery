@@ -1,7 +1,9 @@
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { Uploader } from '@components/uploader';
 import { ProjectImage, WriteProject } from '@common/types/Project';
-import { useCallback, useState } from 'react';
+import {
+	Fragment, useCallback, useState,
+} from 'react';
 import { inRange, swapItems } from '@common/utils';
 import ImageList from './image-list';
 import {
@@ -13,11 +15,19 @@ import {
 } from '@common/constants';
 import {
 	Box,
+	Button,
 	Grid,
+	IconButton,
+	Link as MuiLink,
+	List,
+	ListItem,
+	ListItemIcon,
+	ListItemText,
 	Tab,
 	Tabs,
 	TextField,
 } from '@mui/material';
+import { DeleteIcon } from '@components/icons';
 
 function dateToDateSubstring(date: Date) {
 	return date.toISOString().substring(0, 10);
@@ -44,6 +54,7 @@ function EditProjectForm(props: Props) {
 		projectLastUpdatedDate,
 		title,
 		description,
+		links,
 	} = project;
 	const [selectedTab, setSelectedTab] = useState(0);
 	const handleChange = useCallback((projectUpdates: Partial<WriteProject>) => {
@@ -59,6 +70,20 @@ function EditProjectForm(props: Props) {
 		description,
 	]);
 
+	const handleAddLink = useCallback((label: string, url: string) => {
+		handleChange({
+			links: [
+				{
+					label,
+					url,
+				},
+				...links,
+			],
+		});
+	}, [links]);
+	const handleRemoveLink = useCallback((linkIndex: number) => {
+		handleChange({ links: links.filter((l, i) => i !== linkIndex) });
+	}, [links]);
 	const handleAddFiles = useCallback((newImageUrls: string[]) => {
 		const newImages = newImageUrls.map(url => ({
 			url,
@@ -153,7 +178,25 @@ function EditProjectForm(props: Props) {
 					)}
 					{selectedTab === 2 && (
 						<>
-							Links
+							<LinkForm onAdd={handleAddLink}/>
+							<Box paddingTop={1}>
+								<List>
+									{links.map((l, i) => (
+										<ListItem key={i}>
+											<ListItemIcon>
+												<IconButton onClick={() => handleRemoveLink(i)}>
+													<DeleteIcon />
+												</IconButton>
+											</ListItemIcon>
+											<ListItemText>
+												<MuiLink href={l.url} target="_blank">
+													{l.label}
+												</MuiLink>
+											</ListItemText>
+										</ListItem>
+									))}
+								</List>
+							</Box>
 						</>
 					)}
 				</Box>
@@ -173,4 +216,42 @@ function projectIsValid(project: WriteProject) {
 	return !!images.length &&
 		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
 		inRange(description.length, MinProjectDescriptionLength, MaxProjectDescriptionLength);
+}
+
+interface LinkProps {
+	onAdd(label: string, url: string): void;
+}
+
+function LinkForm(props: LinkProps) {
+	const [label, setLabel] = useState('');
+	const [url, setUrl] = useState('');
+	const { onAdd } = props;
+
+	return (
+		<>
+			<Grid container columnGap={1}>
+				<Grid item>
+					<TextFieldLengthValidation
+						fullWidth
+						margin="dense"
+						label="Label"
+						value={label}
+						onChange={e => setLabel(e.target.value)}
+					/>
+				</Grid>
+				<Grid item>
+					<TextFieldLengthValidation
+						fullWidth
+						margin="dense"
+						label="Url"
+						value={url}
+						onChange={e => setUrl(e.target.value)}
+					/>
+				</Grid>
+			</Grid>
+			<Button onClick={() => onAdd(label, url)}>
+				Add Link
+			</Button>
+		</>
+	);
 }
