@@ -15,14 +15,12 @@ export const MaxImageDescriptionLength = 200;
 export const IsSsr = typeof window === 'undefined';
 export const MaxJournalPostLength = 4000;
 export const MaxJournalProjectTitleLength = 100;
-export const MaxProjectDetailLength = 1000;
-export const MaxProjectSummaryLength = 280;
+export const MaxProjectDescriptionLength = 1000;
 export const MaxSearchTermSize = 100;
 export const MinImageUrlLength = 50;
 export const MinJournalPostLength = 10;
 export const MinJournalProjectTitleLength = 3;
-export const MinProjectDetailLength = 10;
-export const MinProjectSummaryLength = 10;
+export const MinProjectDescriptionLength = 10;
 export const MongoIdLength = 24;
 export const PasswordMaxLength = 128;
 export const PasswordMinLength = 6;
@@ -73,6 +71,7 @@ const Paths = {
 	Settings: '/settings',
 	Project: (projectId: string) => urlJoin('/project', projectId),
 	ProjectJournals: (projectId: string) => urlJoin(Paths.Project(projectId), '/journals'),
+	ProjectLinks: (projectId: string) => urlJoin(Paths.Project(projectId), '/links'),
 	ProjectAbout: (projectId: string) => urlJoin(Paths.Project(projectId), '/about'),
 	ProjectEdit: (projectId: string) => urlJoin(Paths.Project(projectId), 'edit'),
 	Journal: (journalId: string) => urlJoin('/journal', journalId),

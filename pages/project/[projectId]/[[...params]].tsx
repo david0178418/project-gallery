@@ -8,7 +8,6 @@ import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
 import { UiProject } from '@common/types/Project';
 import { MongoIdValidation } from '@server/validations';
 import { localizedDateFormat, urlJoin } from '@common/utils';
-import { ParsedContent } from '@components/parsed-content';
 import Link from 'next/link';
 import { ImagePreviews } from '@components/image-previews';
 import { useState } from 'react';
@@ -27,12 +26,14 @@ import {
 } from '@common/constants';
 import {
 	Box,
+	Container,
 	Fab,
 	IconButton,
 	Tab,
 	Tabs,
 	Typography,
 } from '@mui/material';
+import MarkdownContent from '@components/markdown-content';
 
 interface Props {
 	subPath: TabPath ;
@@ -47,9 +48,14 @@ const TabPaths = {
 		path: (projectId: string) => Paths.Project(projectId),
 	},
 	journals: {
-		label: 'Journals',
+		label: 'Journal',
 		value: 'journals',
 		path: (projectId: string) => Paths.ProjectJournals(projectId),
+	},
+	links: {
+		label: 'Links',
+		value: 'links',
+		path: (projectId: string) => Paths.ProjectLinks(projectId),
 	},
 } as const;
 
@@ -110,7 +116,7 @@ function UserGallery(props: Props) {
 		urlJoin(BaseUrl, Paths.Journal(project._id)) :
 		'';
 	const description = project ?
-		project.summary :
+		project.description :
 		'';
 	const title = project ?
 		`${project.title || '???'}${journals ? ' Journal' : '' } - ${AppName}` :
@@ -147,25 +153,14 @@ function UserGallery(props: Props) {
 				}
 			>
 				{project && (
-					<>
+					<Container>
 						<Typography variant="subtitle2">
 							<Link href={Paths.UserGallery(project.owner.username)}>
 								By {project.owner.username}
 							</Link>
 						</Typography>
-						<Typography variant="subtitle1" paddingTop={1} fontStyle="italic">
-							created: {localizedDateFormat(project.projectCreatedDate)}<br/>
-						</Typography>
-						<Typography variant="subtitle1" fontStyle="italic">
-							last updated: {localizedDateFormat(project.projectLastUpdatedDate)}
-						</Typography>
-						<Typography paddingTop={2}>
-							<ParsedContent>
-								{`Summary: ${project.summary}`}
-							</ParsedContent>
-						</Typography>
 						<Box sx={{
-							paddingTop: 2,
+							paddingY: 2,
 							borderBottom: 1,
 							borderColor: 'divider',
 						}}>
@@ -201,17 +196,29 @@ function UserGallery(props: Props) {
 									images={project.images}
 									onClick={setActiveImage}
 								/>
-								<Typography paddingTop={2}>
-									<ParsedContent>
-										{project.summary}
-									</ParsedContent>
+								<Typography variant="subtitle1" paddingTop={1} fontStyle="italic">
+									created: {localizedDateFormat(project.projectCreatedDate)}<br/>
+								</Typography>
+								<Typography variant="subtitle1" fontStyle="italic">
+									last updated: {localizedDateFormat(project.projectLastUpdatedDate)}
+								</Typography>
+								<Typography paddingTop={2} component="div">
+									<MarkdownContent plaintext>
+										{project.description}
+									</MarkdownContent>
 								</Typography>
 							</>
 						)}
 						{TabPaths.journals.value === subPath && journals && (
 							<JournalsList journals={journals} />
 						)}
-					</>
+						{TabPaths.links.value === subPath && journals && (
+							// <JournalsList journals={journals} />
+							<>
+								Links
+							</>
+						)}
+					</Container>
 				)}
 			</ScrollContent>
 			{isOwner && (

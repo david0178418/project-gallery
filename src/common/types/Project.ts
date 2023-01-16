@@ -6,17 +6,20 @@ import { DbUser, UiUser } from './User';
 export
 type DbProject = WithId<{
 	createdDate: string;
-	detail: string;
+	description: string;
 	lastJournalEntry?: Pick<DbJournal, '_id' | 'title'>;
 	lastUpdatedDate: string | null;
 	owner: Pick<DbUser, '_id' | 'username'>;
 	projectCreatedDate: string;
 	projectLastUpdatedDate: string;
-	summary: string;
 	title: string;
 	images: Array<{
 		url: string;
 		description: string;
+	}>;
+	links: Array<{
+		label: string;
+		url: string;
 	}>;
 }>;
 
@@ -30,6 +33,6 @@ type UiProject = WithStringId<Omit<DbProject, 'owner' | 'lastJournalEntry'> & {
 }>;
 
 export
-type WriteProject = Pick<UiProject, 'detail' | 'summary' | 'title' | 'images' | 'projectCreatedDate' | 'projectLastUpdatedDate'> & {
+type WriteProject = Pick<UiProject, 'description' | 'title' | 'images' | 'projectCreatedDate' | 'projectLastUpdatedDate' | 'links'> & {
 	_id?: string;
 };

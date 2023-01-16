@@ -38,11 +38,10 @@ function ProjectCard(props: Props) {
 	const {
 		project: {
 			_id,
-			detail,
+			description,
 			projectCreatedDate,
 			lastJournalEntry,
 			lastUpdatedDate,
-			summary,
 			title,
 			images,
 			owner: {
@@ -99,11 +98,11 @@ function ProjectCard(props: Props) {
 				</Link>
 			</Box>
 			<CardContent>
-				<Typography variant="body2" color="text.secondary">
+				{/* <Typography variant="body2" color="text.secondary">
 					<ParsedContent>
 						{summary}
 					</ParsedContent>
-				</Typography>
+				</Typography> */}
 			</CardContent>
 			<CardActions disableSpacing>
 				<Tooltip
@@ -170,7 +169,7 @@ function ProjectCard(props: Props) {
 				<CardContent>
 					<Typography paragraph>
 						<ParsedContent>
-							{detail}
+							{description}
 						</ParsedContent>
 					</Typography>
 				</CardContent>

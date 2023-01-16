@@ -3,26 +3,19 @@ import { Uploader } from '@components/uploader';
 import { ProjectImage, WriteProject } from '@common/types/Project';
 import { useCallback } from 'react';
 import { inRange, swapItems } from '@common/utils';
+import ImageList from './image-list';
 import {
-	MaxProjectSummaryLength,
 	MaxJournalProjectTitleLength,
-	MinProjectSummaryLength,
 	MinJournalProjectTitleLength,
 	FileUploadCategories,
-	MinProjectDetailLength,
-	MaxProjectDetailLength,
+	MinProjectDescriptionLength,
+	MaxProjectDescriptionLength,
 } from '@common/constants';
 import {
 	Box,
 	Grid,
-	IconButton,
 	TextField,
 } from '@mui/material';
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	DeleteIcon,
-} from '@components/icons';
 
 function dateToDateSubstring(date: Date) {
 	return date.toISOString().substring(0, 10);
@@ -48,8 +41,7 @@ function EditProjectForm(props: Props) {
 		projectCreatedDate,
 		projectLastUpdatedDate,
 		title,
-		summary,
-		detail,
+		description,
 	} = project;
 	const handleChange = useCallback((projectUpdates: Partial<WriteProject>) => {
 		onChange({
@@ -61,8 +53,7 @@ function EditProjectForm(props: Props) {
 		projectCreatedDate,
 		projectLastUpdatedDate,
 		title,
-		summary,
-		detail,
+		description,
 	]);
 
 	const handleAddFiles = useCallback((newImageUrls: string[]) => {
@@ -127,39 +118,25 @@ function EditProjectForm(props: Props) {
 					category={FileUploadCategories.Posts}
 					onAdd={handleAddFiles}
 				/>
-				<Foo
+				<ImageList
 					images={images}
 					onLeftClick={handleMoveLeft}
 					onRightClick={handleMoveRight}
 					onDelete={handleRemoveFile}
 				/>
+				<TextFieldLengthValidation
+					fullWidth
+					multiline
+					margin="dense"
+					label="Description"
+					placeholder="General project description..."
+					maxLength={MaxProjectDescriptionLength}
+					minLength={MinProjectDescriptionLength}
+					minRows={3}
+					value={description}
+					onChange={e => handleChange({ description: e.target.value })}
+				/>
 			</Box>
-			<TextFieldLengthValidation
-				fullWidth
-				multiline
-				margin="dense"
-				label="Project Summary"
-				variant="standard"
-				placeholder="Short project summary..."
-				type="text"
-				maxLength={MaxProjectSummaryLength}
-				minLength={MinProjectSummaryLength}
-				minRows={3}
-				value={summary}
-				onChange={e => handleChange({ summary: e.target.value })}
-			/>
-			<TextFieldLengthValidation
-				fullWidth
-				multiline
-				margin="dense"
-				label="Project Detail"
-				placeholder="General project details..."
-				maxLength={MaxProjectSummaryLength}
-				minLength={MinProjectSummaryLength}
-				minRows={3}
-				value={detail}
-				onChange={e => handleChange({ detail: e.target.value })}
-			/>
 		</Box>
 	);
 }
@@ -168,99 +145,11 @@ export
 function projectIsValid(project: WriteProject) {
 	const {
 		title,
-		summary,
-		detail,
+		description,
 		images,
 	} = project;
 
 	return !!images.length &&
 		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
-		inRange(summary.length, MinProjectSummaryLength, MaxProjectSummaryLength) &&
-		inRange(detail.length, MinProjectDetailLength, MaxProjectDetailLength);
-}
-
-interface FooProps {
-	images: ProjectImage[];
-	onDelete(file: ProjectImage): void;
-	onLeftClick(imageIndex: number): void;
-	onRightClick(imageIndex: number): void;
-}
-
-function Foo(props: FooProps) {
-	const {
-		images,
-		onDelete,
-		onLeftClick,
-		onRightClick,
-	} = props;
-
-	return (
-		<Grid
-			container
-			rowGap={4}
-			marginTop={2}
-			spacing={2}
-		>
-			{images.map((f, i) => (
-				<Grid
-					item
-					key={f.url}
-					xs={4}
-				>
-					<Box
-						width="100%"
-						position="relative"
-						border="1px solid"
-						overflow="hidden"
-						padding={1}
-						borderRadius={2}
-						sx={{
-							cursor: 'pointer',
-							'& .actions': { sm: { display: 'none' } },
-							'&:hover .actions': { display: 'block' },
-						}}
-					>
-						<img
-							src={f.url}
-							width="100%"
-							style={{ objectFit: 'contain' }}
-						/>
-						<Box className="actions">
-							{!!i && (
-								<Box
-									position="absolute"
-									left={0}
-									bottom={0}
-								>
-									<IconButton onClick={() => onLeftClick(i)}>
-										<ArrowLeftIcon/>
-									</IconButton>
-								</Box>
-							)}
-							{i !== (images.length - 1) && (
-								<Box
-									position="absolute"
-									right={0}
-									bottom={0}
-								>
-									<IconButton onClick={() => onRightClick(i)}>
-										<ArrowRightIcon/>
-									</IconButton>
-								</Box>
-							)}
-							<Box
-								position="absolute"
-								right={0}
-								top={0}
-							>
-								<IconButton onClick={() => onDelete(f)}>
-									<DeleteIcon />
-								</IconButton>
-							</Box>
-						</Box>
-					</Box>
-				</Grid>
-			))}
-		</Grid>
-	);
+		inRange(description.length, MinProjectDescriptionLength, MaxProjectDescriptionLength);
 }

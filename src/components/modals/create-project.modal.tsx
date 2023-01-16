@@ -27,12 +27,12 @@ import {
 
 function createWriteProject(): WriteProject {
 	return {
-		detail: '',
+		description: '',
 		projectCreatedDate: nowISOString(),
 		projectLastUpdatedDate: nowISOString(),
-		summary: '',
 		title: '',
 		images: [],
+		links: [],
 	};
 }
 

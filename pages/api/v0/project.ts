@@ -10,14 +10,13 @@ import { IsoDateValidation, MongoIdValidation } from '@server/validations';
 import { nowISOString } from '@common/utils';
 import {
 	DbCollections,
-	MaxProjectSummaryLength,
 	MaxJournalProjectTitleLength,
-	MinProjectDetailLength,
-	MinProjectSummaryLength,
+	MinProjectDescriptionLength,
 	MinJournalProjectTitleLength,
 	MinImageUrlLength,
 	MaxImageUrlLength,
 	MaxImageDescriptionLength,
+	MaxProjectDescriptionLength,
 } from '@common/constants';
 
 interface Schema {
@@ -31,14 +30,10 @@ const schema: ZodType<Schema> = z.object({
 			.string()
 			.min(MinJournalProjectTitleLength, { message: `Project title must be at least ${MinJournalProjectTitleLength} characters long.` })
 			.max(MaxJournalProjectTitleLength, { message: `Project title can be no more than ${MaxJournalProjectTitleLength} characters long.` }),
-		detail: z
+		description: z
 			.string()
-			.min(MinProjectDetailLength, { message: `Project detail must be at least ${MinProjectDetailLength} characters long.` })
-			.max(MaxProjectSummaryLength, { message: `Project detail can be no more than ${MaxProjectSummaryLength} characters long.` }),
-		summary: z
-			.string()
-			.min(MinProjectSummaryLength, { message: `Project summary must be at least ${MinProjectSummaryLength} characters long.` })
-			.max(MaxProjectSummaryLength, { message: `Project summary can be no more than ${MaxProjectSummaryLength} characters long.` }),
+			.min(MinProjectDescriptionLength, { message: `Project description must be at least ${MinProjectDescriptionLength} characters long.` })
+			.max(MaxProjectDescriptionLength, { message: `Project description can be no more than ${MaxProjectDescriptionLength} characters long.` }),
 		images: z.array(
 			z.object({
 				url: z
@@ -50,6 +45,17 @@ const schema: ZodType<Schema> = z.object({
 					.max(MaxImageDescriptionLength),
 			})
 		).min(1, { message: 'Projects must have at least one image' }),
+		links: z.array(
+			z.object({
+				label: z
+					.string()
+					.max(100),
+				url: z
+					.string()
+					.min(1)
+					.max(100),
+			}),
+		),
 		projectCreatedDate: IsoDateValidation,
 		projectLastUpdatedDate: IsoDateValidation,
 	}),
