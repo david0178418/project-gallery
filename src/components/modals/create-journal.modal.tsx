@@ -75,17 +75,11 @@ function CreateJournalModal() {
 		setJournal(createWriteJournal());
 	}
 
-	if(!isOpen) {
-		// TODO Figure out weird issue with background overlay persisting in
-		// some instances. May be related to the "shallow" prop on NextJS Link
-		return null;
-	}
-
 	console.log('journal', journal);
 	return (
 		<Dialog
 			fullWidth
-			open
+			open={isOpen}
 			fullScreen={fullScreen}
 			maxWidth="md"
 		>

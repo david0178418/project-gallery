@@ -5,7 +5,7 @@ import { useSetAtom } from 'jotai';
 import { loadingAtom } from '@common/atoms';
 import { isTruthy } from '@common/utils';
 import { Enum } from '@common/types';
-import { FileUploadCategories } from '@common/constants';
+import { FileUploadCategories, SpecialCharacterCodes } from '@common/constants';
 
 async function uploadPhoto (file: File, category: Enum<typeof FileUploadCategories>) {
 	const res = await postFile(file, category);
@@ -64,7 +64,7 @@ function Uploader(props: Props) {
 			{
 				isDragActive ?
 					<p>Drop the files here ...</p> :
-					<p>Drag n drop some files here, or click to select files</p>
+					<p>Drag n{SpecialCharacterCodes.RSQUO} drop some files here, or click to select files</p>
 			}
 		</Box>
 	);

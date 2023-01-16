@@ -83,20 +83,14 @@ function CreateProjectModal() {
 	}
 
 	function close() {
-		router.back();
 		setProject(createWriteProject());
-	}
-
-	if(!isOpen) {
-		// TODO Figure out weird issue with background overlay persisting in
-		// some instances. May be related to the "shallow" prop on NextJS Link
-		return null;
+		router.back();
 	}
 
 	return (
 		<Dialog
 			fullWidth
-			open
+			open={isOpen}
 			fullScreen={fullScreen}
 			maxWidth="md"
 		>

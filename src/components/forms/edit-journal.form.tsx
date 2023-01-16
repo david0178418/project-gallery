@@ -57,9 +57,9 @@ function EditJournalForm(props: Props) {
 		});
 	}, [title, body, projectId]);
 
-	function handleSelectProjectId(newProjectId: string) {
+	const handleSelectProjectId = useCallback((newProjectId: string) => {
 		handleChange({ projectId: newProjectId === GeneralPost ? null : newProjectId });
-	}
+	}, [handleChange]);
 
 	useEffect(() => {
 		if(isLoggedOut) {

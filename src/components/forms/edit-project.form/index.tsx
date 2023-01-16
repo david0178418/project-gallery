@@ -63,13 +63,7 @@ function EditProjectForm(props: Props) {
 			...project,
 			...projectUpdates,
 		});
-	}, [
-		images,
-		projectCreatedDate,
-		projectLastUpdatedDate,
-		title,
-		description,
-	]);
+	}, [project]);
 
 	const handleAddLink = useCallback((label: string, url: string) => {
 		handleChange({
@@ -81,26 +75,26 @@ function EditProjectForm(props: Props) {
 				...links,
 			],
 		});
-	}, [links]);
+	}, [handleChange, links]);
 	const handleRemoveLink = useCallback((linkIndex: number) => {
 		handleChange({ links: links.filter((l, i) => i !== linkIndex) });
-	}, [links]);
+	}, [handleChange, links]);
 	const handleAddFiles = useCallback((newImageUrls: string[]) => {
 		const newImages = newImageUrls.map(url => ({
 			url,
 			description: '',
 		}));
 		handleChange({ images: [...images, ...newImages] });
-	}, [images]);
+	}, [handleChange, images]);
 	const handleRemoveFile = useCallback((img: ProjectImage) => {
 		handleChange({ images: images.filter(f => f.url !== img.url) });
-	}, [images]);
+	}, [handleChange, images]);
 	const handleMoveLeft = useCallback((index: number) => {
 		handleChange({ images: swapItems(images, index, index - 1) });
-	}, [images]);
+	}, [handleChange, images]);
 	const handleMoveRight = useCallback((index: number) => {
 		handleChange({ images: swapItems(images, index, index + 1) });
-	}, [images]);
+	}, [handleChange, images]);
 
 	return (
 		<Box
