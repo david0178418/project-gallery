@@ -72,7 +72,7 @@ function Page(props: Props) {
 		try {
 			setLoading(true);
 			await projectSave(project);
-			close();
+			routeBack();
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
 
@@ -81,7 +81,6 @@ function Page(props: Props) {
 		}
 
 		setLoading(false);
-		routeBack();
 	}
 
 	return (

@@ -1,17 +1,25 @@
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { Uploader } from '@components/uploader';
-import { ProjectImage, WriteProject } from '@common/types/Project';
-import {
-	Fragment, useCallback, useState,
-} from 'react';
 import { inRange, swapItems } from '@common/utils';
 import ImageList from './image-list';
+import { DeleteIcon } from '@components/icons';
+import {
+	useCallback,
+	useState,
+} from 'react';
+import {
+	ProjectImage,
+	UiProject,
+	WriteProject,
+} from '@common/types/Project';
 import {
 	MaxJournalProjectTitleLength,
 	MinJournalProjectTitleLength,
 	FileUploadCategories,
 	MinProjectDescriptionLength,
 	MaxProjectDescriptionLength,
+	MinLinkLabelSize,
+	MaxLinkLabelSize,
 } from '@common/constants';
 import {
 	Box,
@@ -27,7 +35,6 @@ import {
 	Tabs,
 	TextField,
 } from '@mui/material';
-import { DeleteIcon } from '@components/icons';
 
 function dateToDateSubstring(date: Date) {
 	return date.toISOString().substring(0, 10);
@@ -208,14 +215,22 @@ function EditProjectForm(props: Props) {
 export
 function projectIsValid(project: WriteProject) {
 	const {
-		title,
 		description,
 		images,
+		links,
+		title,
 	} = project;
 
 	return !!images.length &&
+		links.every(linkIsValid) &&
 		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
 		inRange(description.length, MinProjectDescriptionLength, MaxProjectDescriptionLength);
+}
+
+type ProjectLink = UiProject['links'][number];
+
+function linkIsValid(link: ProjectLink) {
+	return inRange(link.label.length, MinLinkLabelSize, MaxLinkLabelSize);
 }
 
 interface LinkProps {
@@ -249,7 +264,13 @@ function LinkForm(props: LinkProps) {
 					/>
 				</Grid>
 			</Grid>
-			<Button onClick={() => onAdd(label, url)}>
+			<Button
+				disabled={!linkIsValid({
+					label,
+					url,
+				})}
+				onClick={() => onAdd(label, url)}
+			>
 				Add Link
 			</Button>
 		</>

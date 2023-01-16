@@ -17,6 +17,8 @@ import {
 	MaxImageUrlLength,
 	MaxImageDescriptionLength,
 	MaxProjectDescriptionLength,
+	MaxLinkLabelSize,
+	MinLinkLabelSize,
 } from '@common/constants';
 
 interface Schema {
@@ -49,11 +51,11 @@ const schema: ZodType<Schema> = z.object({
 			z.object({
 				label: z
 					.string()
-					.max(100),
+					.min(MinLinkLabelSize)
+					.max(MaxLinkLabelSize),
 				url: z
 					.string()
-					.min(1)
-					.max(100),
+					.url(),
 			}),
 		),
 		projectCreatedDate: IsoDateValidation,
