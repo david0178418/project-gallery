@@ -1,7 +1,7 @@
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { Uploader } from '@components/uploader';
 import { ProjectImage, WriteProject } from '@common/types/Project';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { inRange, swapItems } from '@common/utils';
 import ImageList from './image-list';
 import {
@@ -14,6 +14,8 @@ import {
 import {
 	Box,
 	Grid,
+	Tab,
+	Tabs,
 	TextField,
 } from '@mui/material';
 
@@ -43,6 +45,7 @@ function EditProjectForm(props: Props) {
 		title,
 		description,
 	} = project;
+	const [selectedTab, setSelectedTab] = useState(0);
 	const handleChange = useCallback((projectUpdates: Partial<WriteProject>) => {
 		onChange({
 			...project,
@@ -114,28 +117,46 @@ function EditProjectForm(props: Props) {
 				</Grid>
 			</Grid>
 			<Box paddingTop={1}>
-				<Uploader
-					category={FileUploadCategories.Posts}
-					onAdd={handleAddFiles}
-				/>
-				<ImageList
-					images={images}
-					onLeftClick={handleMoveLeft}
-					onRightClick={handleMoveRight}
-					onDelete={handleRemoveFile}
-				/>
-				<TextFieldLengthValidation
-					fullWidth
-					multiline
-					margin="dense"
-					label="Description"
-					placeholder="General project description..."
-					maxLength={MaxProjectDescriptionLength}
-					minLength={MinProjectDescriptionLength}
-					minRows={3}
-					value={description}
-					onChange={e => handleChange({ description: e.target.value })}
-				/>
+				<Tabs value={selectedTab} onChange={(e, val) => setSelectedTab(val)}>
+					<Tab label="Description" />
+					<Tab label="Images"/>
+					<Tab label="Links" />
+				</Tabs>
+				<Box paddingTop={1}>
+					{selectedTab === 0 && (
+						<TextFieldLengthValidation
+							fullWidth
+							multiline
+							margin="dense"
+							label="Description"
+							placeholder="General project description..."
+							maxLength={MaxProjectDescriptionLength}
+							minLength={MinProjectDescriptionLength}
+							minRows={3}
+							value={description}
+							onChange={e => handleChange({ description: e.target.value })}
+						/>
+					)}
+					{selectedTab === 1 && (
+						<>
+							<Uploader
+								category={FileUploadCategories.Posts}
+								onAdd={handleAddFiles}
+							/>
+							<ImageList
+								images={images}
+								onLeftClick={handleMoveLeft}
+								onRightClick={handleMoveRight}
+								onDelete={handleRemoveFile}
+							/>
+						</>
+					)}
+					{selectedTab === 2 && (
+						<>
+							Links
+						</>
+					)}
+				</Box>
 			</Box>
 		</Box>
 	);
