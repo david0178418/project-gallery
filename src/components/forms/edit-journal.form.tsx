@@ -3,8 +3,12 @@ import { UiProject } from '@common/types/Project';
 import dynamic from 'next/dynamic';
 import { inRange } from '@common/utils';
 import { WriteJournal } from '@common/types/Journal';
+import { getProjects } from '@client/api-calls';
+import { useIsLoggedOut } from '@common/hooks';
 import {
-	useCallback, useEffect, useState,
+	useCallback,
+	useEffect,
+	useState,
 } from 'react';
 import {
 	MaxJournalPostLength,
@@ -21,8 +25,6 @@ import {
 	Tab,
 	Tabs,
 } from '@mui/material';
-import { getProjects } from '@client/api-calls';
-import { useIsLoggedOut } from '@common/hooks';
 
 const MarkdownContent = dynamic(() => import('@components/markdown-content'));
 
