@@ -67,9 +67,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const result = await MongoIdValidation.safeParseAsync(ctx.query.projectId);
 	const session = await getServerSession(ctx.req, ctx.res);
 	const [rawSubPath] = ctx.params?.params || [];
-	const subPath = (TabPaths[rawSubPath as TabPath])
-		? TabPaths[rawSubPath as TabPath].value :
-		'details';
+	const subPath = TabPaths[rawSubPath as TabPath]?.value || TabPaths.details.value;
 
 	if(!result.success) {
 		return {
@@ -103,7 +101,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 export default
 function UserGallery(props: Props) {
 	const {
-		subPath,
+		subPath: selectedTab,
 		project,
 		journals,
 	} = props;
@@ -111,7 +109,6 @@ function UserGallery(props: Props) {
 	const [activeImage, setActiveImage] = useState(project?.images[0]);
 	const routeBack = useRouteBackDefault();
 	const user = useUser();
-	const selectedTab = TabPaths[subPath]?.value || 'details';
 	const isOwner = !!project && user?.id === project.owner._id;
 	const url = project ?
 		urlJoin(BaseUrl, Paths.Journal(project._id)) :
@@ -142,46 +139,57 @@ function UserGallery(props: Props) {
 					<Box sx={{
 						paddingTop: 1,
 						paddingBottom: 2,
+						paddingX: 1,
 					}}>
-						<Typography variant="h5" component="div" gutterBottom>
-							{/** TODO Capture direct links and send them to home page */}
-							<IconButton color="primary" onClick={routeBack}>
-								<BackIcon />
-							</IconButton>{SpecialCharacterCodes.NBSP}
-							{project?.title || 'Not Found'}
-						</Typography>
+						{project && (
+							<>
+								<Typography variant="h5" component="div" gutterBottom>
+									{/** TODO Capture direct links and send them to home page */}
+									<IconButton color="primary" onClick={routeBack}>
+										<BackIcon />
+									</IconButton>{SpecialCharacterCodes.NBSP}
+									{project?.title || 'Not Found'}
+								</Typography>
+								<Typography variant="subtitle2">
+									<Link href={Paths.UserGallery(project.owner.username)}>
+								By {project.owner.username}
+									</Link>
+								</Typography>
+								<Box sx={{
+									paddingTop: 2,
+									borderBottom: 1,
+									borderColor: 'divider',
+								}}>
+									<Tabs value={selectedTab}>
+										{Object.values(TabPaths).map(t => (
+											<Link
+												key={t.value}
+												legacyBehavior
+												passHref
+												href={t.path(project._id)}
+												// @ts-ignore TODO Why is this needed here instead of on Tab?
+												value={t.value}
+											>
+												<Tab label={t.label} />
+											</Link>
+										))}
+									</Tabs>
+								</Box>
+							</>
+						)}
 					</Box>
 				}
 			>
 				{project && (
 					<Container>
-						<Typography variant="subtitle2">
-							<Link href={Paths.UserGallery(project.owner.username)}>
-								By {project.owner.username}
-							</Link>
-						</Typography>
-						<Box sx={{
-							paddingY: 2,
-							borderBottom: 1,
-							borderColor: 'divider',
-						}}>
-							<Tabs value={selectedTab}>
-								{Object.values(TabPaths).map(t => (
-									<Link
-										key={t.value}
-										legacyBehavior
-										passHref
-										href={t.path(project._id)}
-										// @ts-ignore TODO Why is this needed here instead of on Tab?
-										value={t.value}
-									>
-										<Tab label={t.label} />
-									</Link>
-								))}
-							</Tabs>
-						</Box>
-						{TabPaths.details.value === subPath && (
+						{selectedTab === TabPaths.details.value && (
 							<>
+								<Typography variant="subtitle1" paddingTop={1} fontStyle="italic">
+								created: {localizedDateFormat(project.projectCreatedDate)}<br/>
+								</Typography>
+								<Typography variant="subtitle1" fontStyle="italic">
+								last updated: {localizedDateFormat(project.projectLastUpdatedDate)}
+								</Typography>
 								<Box paddingTop={2} textAlign="center">
 									{/* eslint-disable-next-line @next/next/no-img-element */}
 									<img
@@ -197,12 +205,6 @@ function UserGallery(props: Props) {
 									images={project.images}
 									onClick={setActiveImage}
 								/>
-								<Typography variant="subtitle1" paddingTop={1} fontStyle="italic">
-									created: {localizedDateFormat(project.projectCreatedDate)}<br/>
-								</Typography>
-								<Typography variant="subtitle1" fontStyle="italic">
-									last updated: {localizedDateFormat(project.projectLastUpdatedDate)}
-								</Typography>
 								<Typography paddingTop={2} component="div">
 									<MarkdownContent plaintext>
 										{project.description}
@@ -210,11 +212,29 @@ function UserGallery(props: Props) {
 								</Typography>
 							</>
 						)}
-						{TabPaths.journals.value === subPath && journals && (
-							<JournalsList journals={journals} />
+						{selectedTab === TabPaths.journals.value && (
+							<>
+								{!!journals?.length && (
+									<JournalsList journals={journals} />
+								)}
+								{!journals?.length && (
+									<Typography>
+										No journal posts yet
+									</Typography>
+								)}
+							</>
 						)}
-						{TabPaths.links.value === subPath && (
-							<LinksList links={project.links} />
+						{selectedTab === TabPaths.links.value && (
+							<>
+								{!!project.links.length && (
+									<LinksList links={project.links} />
+								)}
+								{!project.links.length && (
+									<Typography>
+										No links yet
+									</Typography>
+								)}
+							</>
 						)}
 					</Container>
 				)}

@@ -24,26 +24,51 @@ import {
 	Container,
 	Grid,
 	IconButton,
-	Link as MuiLink,
+	Tab,
+	Tabs,
 	Typography,
 } from '@mui/material';
+
+const TabPaths = {
+	projects: {
+		label: 'Projects',
+		value: 'projects',
+		path: (username: string) => Paths.UserGallery(username),
+	},
+	journals: {
+		label: 'Journal Posts',
+		value: 'journals',
+		path: (useername: string) => Paths.UserGalleryJournals(useername),
+	},
+	about: {
+		label: 'About',
+		value: 'about',
+		path: (username: string) => Paths.UserGalleryAbout(username),
+	},
+} as const;
+
+type TabPath = keyof typeof TabPaths;
 
 interface Props {
 	unknownUser?: boolean;
 	username: string;
-	projects: UiProject[];
-	journals: UiJournal[];
+	subPath: TabPath ;
+	projects: UiProject[] | null;
+	journals: UiJournal[] | null;
 }
 
 export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const result = await UsernameValidation.safeParseAsync(ctx.query.username);
 	const session = await getServerSession(ctx.req, ctx.res);
+	const [rawSubPath] = ctx.params?.params || [];
+	const subPath = TabPaths[rawSubPath as TabPath]?.value || TabPaths.projects.value;
 
 	if(!result.success) {
 		return {
 			props: {
 				session,
+				subPath,
 				username: 'unknown',
 				unknownUser: true,
 				projects: [],
@@ -59,6 +84,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 		return {
 			props: {
 				session,
+				subPath,
 				username: 'unknown',
 				unknownUser: true,
 				projects: [],
@@ -74,6 +100,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	return {
 		props: {
 			session,
+			subPath,
 			username,
 			projects,
 			journals,
@@ -86,6 +113,7 @@ function UserGallery(props: Props) {
 	const routeBack = useRouteBackDefault();
 	const {
 		username,
+		subPath: selectedTab,
 		projects,
 		journals,
 	} = props;
@@ -108,39 +136,72 @@ function UserGallery(props: Props) {
 							</IconButton>{SpecialCharacterCodes.NBSP}
 							{username}{SpecialCharacterCodes.RSQUO}s Gallery
 						</Typography>
+						<Box sx={{
+							paddingY: 2,
+							borderBottom: 1,
+							borderColor: 'divider',
+						}}>
+							<Tabs value={selectedTab}>
+								{Object.values(TabPaths).map(t => (
+									<Link
+										key={t.value}
+										legacyBehavior
+										passHref
+										href={t.path(username)}
+										// @ts-ignore TODO Why is this needed here instead of on Tab?
+										value={t.value}
+									>
+										<Tab label={t.label} />
+									</Link>
+								))}
+							</Tabs>
+						</Box>
 					</Box>
 				}
 			>
 				<Container>
-					<Typography variant="h6">
-						<Link href={Paths.UserProjects(username)} passHref legacyBehavior>
-							<MuiLink>
-								Projects
-							</MuiLink>
-						</Link>
-					</Typography>
-					<Grid padding={1} container spacing={1} >
-						{projects.slice(0, 2).map(p => (
-							<Grid
-								key={p._id}
-								item
-								xs={12}
-								md={6}
-							>
-								<ProjectCard
-									project={p}
-								/>
-							</Grid>
-						))}
-					</Grid>
-					<Typography variant="h6">
-						<Link href={Paths.UserJournals(username)} passHref legacyBehavior>
-							<MuiLink>
-								Journal Posts
-							</MuiLink>
-						</Link>
-					</Typography>
-					<JournalsList journals={journals} />
+					{selectedTab === TabPaths.projects.value && (
+						<>
+							{!!projects?.length && (
+								<Grid padding={1} container spacing={1} >
+									{projects.map(p => (
+										<Grid
+											key={p._id}
+											item
+											xs={12}
+											md={6}
+										>
+											<ProjectCard
+												project={p}
+											/>
+										</Grid>
+									))}
+								</Grid>
+							)}
+							{!projects?.length && (
+								<Typography>
+									No projects yet
+								</Typography>
+							)}
+						</>
+					)}
+					{selectedTab === TabPaths.journals.value && (
+						<>
+							{!!journals?.length && (
+								<JournalsList journals={journals} />
+							)}
+							{!journals?.length && (
+								<Typography>
+									No journal posts yet
+								</Typography>
+							)}
+						</>
+					)}
+					{selectedTab === TabPaths.about.value && (
+						<Typography>
+							No details about {username} yet
+						</Typography>
+					)}
 				</Container>
 			</ScrollContent>
 		</>
