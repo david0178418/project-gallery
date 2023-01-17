@@ -1,6 +1,4 @@
 import { red } from '@mui/material/colors';
-import { ExpandedToggleButton } from '@components/expand-toggle-button';
-import { useState } from 'react';
 import { localizedDateFormat } from '@common/utils';
 import { UiProject } from '@common/types/Project';
 import { ParsedContent } from './parsed-content';
@@ -21,7 +19,6 @@ import {
 	CardContent,
 	CardHeader,
 	CardMedia,
-	Collapse,
 	IconButton,
 	Tooltip,
 	Typography,
@@ -33,7 +30,6 @@ interface Props {
 
 export default
 function ProjectCard(props: Props) {
-	const [expanded, setExpanded] = useState(false);
 	const user = useUser();
 	const {
 		project: {
@@ -51,10 +47,6 @@ function ProjectCard(props: Props) {
 		},
 	} = props;
 	const isOwner = user?.id === ownerId;
-
-	function handleExpandClick() {
-		setExpanded(!expanded);
-	}
 
 	return (
 		<Card elevation={2}>
@@ -159,21 +151,7 @@ function ProjectCard(props: Props) {
 						</Tooltip>
 					</Link>
 				)}
-				<ExpandedToggleButton
-					sx={{ marginLeft: 'auto' }}
-					expanded={expanded}
-					onClick={handleExpandClick}
-				/>
 			</CardActions>
-			<Collapse in={expanded} timeout="auto" unmountOnExit>
-				<CardContent>
-					<Typography paragraph>
-						<ParsedContent>
-							{description}
-						</ParsedContent>
-					</Typography>
-				</CardContent>
-			</Collapse>
 		</Card>
 	);
 }
