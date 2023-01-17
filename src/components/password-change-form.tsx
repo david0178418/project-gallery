@@ -3,8 +3,8 @@ import { PasswordMaxLength, PasswordMinLength } from '@common/constants';
 import { useState } from 'react';
 import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
+import { ConfirmButton } from './common/buttons';
 import {
-	Button,
 	Grid,
 	TextField,
 	Typography,
@@ -83,9 +83,9 @@ function PasswordChangeForm() {
 					/>
 				</Grid>
 				<Grid item xs={1}>
-					<Button disabled={!canSave} onClick={handleUpdate}>
+					<ConfirmButton disabled={!canSave} onClick={handleUpdate}>
 						Save New Password
-					</Button>
+					</ConfirmButton>
 				</Grid>
 			</Grid>
 		</>

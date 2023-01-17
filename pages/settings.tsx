@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { getServerSession } from '@server/auth-options';
-import { Box, Button } from '@mui/material';
+import {
+	Box, Button, Container, Tab, Tabs,
+} from '@mui/material';
 import { PasswordChangeForm } from '@components/password-change-form';
 import { UiUserProfile } from '@common/types/UserProfile';
 import { useState } from 'react';
@@ -15,6 +17,8 @@ import {
 	Paths,
 } from '@common/constants';
 import UserProfileForm from '@components/forms/user-profile.form';
+import { ScrollContent } from '@components/scroll-content';
+import { ConfirmButton } from '@components/common/buttons';
 
 interface Props {
 	userProfile: UiUserProfile | null;
@@ -47,6 +51,7 @@ const ProfilePage: NextPage<Props> = (props) => {
 	const router = useRouter();
 	const session = useSession();
 	const [userProfile, setUserProfile] = useState(() => props.userProfile && uiUserProfileToWriteUserProfile(props.userProfile));
+	const [selectedTab, setSelectedTab] = useState(0);
 	const {
 		pathname,
 		query,
@@ -59,48 +64,65 @@ const ProfilePage: NextPage<Props> = (props) => {
 	const user = session.data.user;
 
 	return (
-		<Box padding={2}>
-			Signed in as {session.data?.user.username}
-			<Link
-				shallow
-				passHref
-				href={{
-					pathname,
-					query: {
-						a: ModalActions.Logout,
-						...query,
-					},
-				}}
-			>
-				<Button>
-					Logout
-				</Button>
-			</Link>
-			<Box paddingY={2}>
-				<Link
-					shallow
-					passHref
-					href={Paths.UserGallery(user.username)}
+		<ScrollContent
+			header={
+				<Box
+					borderBottom={1}
+					borderColor="divider"
 				>
-					<Button>
-						My Gallery
-					</Button>
-				</Link>
-			</Box>
-			<Box
-				paddingTop={2}
-				borderBottom={1}
-				borderColor="divider"
-			>
-				<UserProfileForm userProfile={userProfile} onChange={setUserProfile} />
-				<Button>
-					Update Profile
-				</Button>
-			</Box>
-			<Box paddingTop={2}>
-				<PasswordChangeForm />
-			</Box>
-		</Box>
+					<Tabs value={selectedTab} onChange={(e, newTab) => setSelectedTab(newTab)}>
+						<Tab label="Profile" />
+						<Tab label="Update Password" />
+					</Tabs>
+				</Box>
+			}
+		>
+			<Container sx={{ paddingTop: 2 }}>
+				{selectedTab === 0 && (
+					<>
+						Signed in as {session.data?.user.username}
+						<Link
+							shallow
+							passHref
+							href={{
+								pathname,
+								query: {
+									a: ModalActions.Logout,
+									...query,
+								},
+							}}
+						>
+							<Button>
+								Logout
+							</Button>
+						</Link>
+						<Box paddingY={2}>
+							<Link
+								shallow
+								passHref
+								href={Paths.UserGallery(user.username)}
+							>
+								<Button>
+									My Gallery
+								</Button>
+							</Link>
+						</Box>
+						<Box></Box>
+						<UserProfileForm userProfile={userProfile} onChange={setUserProfile} />
+						<ConfirmButton>
+							Update Profile
+						</ConfirmButton>
+					</>
+				)}
+				{selectedTab === 1 && (
+					<>
+						<Box paddingTop={2}>
+							<PasswordChangeForm />
+						</Box>
+					</>
+				)}
+			</Container>
+		</ScrollContent>
 	);
 };
 
