@@ -12,10 +12,15 @@ import { UiProject } from '@common/types/Project';
 import { getServerSession } from '@server/auth-options';
 import JournalsList from '@components/journals-list';
 import { UiJournal } from '@common/types/Journal';
-import {
-	dbJournalToUiJournal, dbProjectToUiProject, dbUserProfileToUiUserProfile,
-} from '@server/transforms';
+import { UiUserProfile } from '@common/types/UserProfile';
+import MarkdownContent from '@components/markdown-content';
+import { NextSeo } from 'next-seo';
 import Link from 'next/link';
+import {
+	dbJournalToUiJournal,
+	dbProjectToUiProject,
+	dbUserProfileToUiUserProfile,
+} from '@server/transforms';
 import {
 	fetchUser,
 	fetchUserGallery,
@@ -31,8 +36,6 @@ import {
 	Tabs,
 	Typography,
 } from '@mui/material';
-import { UiUserProfile } from '@common/types/UserProfile';
-import MarkdownContent from '@components/markdown-content';
 
 const TabPaths = {
 	projects: {
@@ -129,13 +132,23 @@ function UserGallery(props: Props) {
 		journals,
 	} = props;
 
-	const galleryLabel = `${username}'s Gallery`;
+	const title = `${username}'s Gallery - ${AppName}`;
+	const url = Paths.UserGallery(username);
+	const description = userProfile?.shortBio || '';
 
 	return (
 		<>
 			<Head>
-				<title>{galleryLabel} - {AppName}</title>
+				<title>{title}</title>
 			</Head>
+			<NextSeo
+				openGraph={{
+					url,
+					siteName: AppName,
+					title,
+					description,
+				}}
+			/>
 			<ScrollContent
 				header={
 					<Box sx={{
