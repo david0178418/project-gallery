@@ -12,12 +12,15 @@ import { UiProject } from '@common/types/Project';
 import { getServerSession } from '@server/auth-options';
 import JournalsList from '@components/journals-list';
 import { UiJournal } from '@common/types/Journal';
-import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
+import {
+	dbJournalToUiJournal, dbProjectToUiProject, dbUserProfileToUiUserProfile,
+} from '@server/transforms';
 import Link from 'next/link';
 import {
 	fetchUser,
 	fetchUserGallery,
 	fetchUserJournals,
+	fetchUserProfileByUsername,
 } from '@server/queries';
 import {
 	Box,
@@ -28,6 +31,8 @@ import {
 	Tabs,
 	Typography,
 } from '@mui/material';
+import { UiUserProfile } from '@common/types/UserProfile';
+import MarkdownContent from '@components/markdown-content';
 
 const TabPaths = {
 	projects: {
@@ -53,6 +58,7 @@ interface Props {
 	unknownUser?: boolean;
 	username: string;
 	subPath: TabPath ;
+	userProfile: UiUserProfile | null;
 	projects: UiProject[] | null;
 	journals: UiJournal[] | null;
 }
@@ -71,6 +77,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 				subPath,
 				username: 'unknown',
 				unknownUser: true,
+				userProfile: null,
 				projects: [],
 				journals: [],
 			},
@@ -87,12 +94,14 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 				subPath,
 				username: 'unknown',
 				unknownUser: true,
+				userProfile: null,
 				projects: [],
 				journals: [],
 			},
 		};
 	}
 
+	const dbUserProfile = await fetchUserProfileByUsername(username);
 	const isOwner = !!username && (username === session?.user.username);
 	const projects = (await fetchUserGallery(username)).map(dbProjectToUiProject);
 	const journals = (await fetchUserJournals(username, isOwner)).map(dbJournalToUiJournal);
@@ -104,6 +113,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 			username,
 			projects,
 			journals,
+			userProfile: dbUserProfile && dbUserProfileToUiUserProfile(dbUserProfile),
 		},
 	};
 };
@@ -115,13 +125,16 @@ function UserGallery(props: Props) {
 		username,
 		subPath: selectedTab,
 		projects,
+		userProfile,
 		journals,
 	} = props;
+
+	const galleryLabel = `${username}'s Gallery`;
 
 	return (
 		<>
 			<Head>
-				<title>{AppName}</title>
+				<title>{galleryLabel} - {AppName}</title>
 			</Head>
 			<ScrollContent
 				header={
@@ -136,6 +149,13 @@ function UserGallery(props: Props) {
 							</IconButton>{SpecialCharacterCodes.NBSP}
 							{username}{SpecialCharacterCodes.RSQUO}s Gallery
 						</Typography>
+						{userProfile?.shortBio && (
+							<Box paddingX={2}>
+								<MarkdownContent>
+									{userProfile.shortBio}
+								</MarkdownContent>
+							</Box>
+						)}
 						<Box sx={{
 							paddingY: 2,
 							borderBottom: 1,
@@ -198,9 +218,18 @@ function UserGallery(props: Props) {
 						</>
 					)}
 					{selectedTab === TabPaths.about.value && (
-						<Typography>
-							No details about {username} yet
-						</Typography>
+						<>
+							{!!userProfile?.detailedBio && (
+								<MarkdownContent>
+									{userProfile.detailedBio}
+								</MarkdownContent>
+							)}
+							{!userProfile?.detailedBio && (
+								<Typography>
+									No details about {username} yet
+								</Typography>
+							)}
+						</>
 					)}
 				</Container>
 			</ScrollContent>
