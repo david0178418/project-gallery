@@ -76,8 +76,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 		await createJournalPost(session.user, post);
 
 		res.send({ ok: true });
-	} catch{
-		res.send({ ok: false });
+	} catch {
+		res.status(500).send({ ok: false });
 	}
 }
 

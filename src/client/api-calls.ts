@@ -6,6 +6,7 @@ import { urlJoin } from '@common/utils';
 import { ApiUrl, FileUploadCategories } from '@common/constants';
 import { UiProject, WriteProject } from '@common/types/Project';
 import { WriteJournal } from '@common/types/Journal';
+import { WriteUserProfile } from '@common/types/UserProfile';
 
 export
 async function login(username: string, password: string) {
@@ -32,7 +33,12 @@ function register(username: string, password: string) {
 
 export
 function updatePassword(password: string) {
-	return apiPost<ApiResponse>('/user/update-password', { password });
+	return apiPost<ApiResponse>('/user/pw', { password });
+}
+
+export
+function updateUserProfile(userProfile: WriteUserProfile) {
+	return apiPost<ApiResponse>('/user/profile', { userProfile });
 }
 
 export

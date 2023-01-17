@@ -8,17 +8,22 @@ import {
 	Box, Button, Container, Tab, Tabs,
 } from '@mui/material';
 import { PasswordChangeForm } from '@components/password-change-form';
-import { UiUserProfile } from '@common/types/UserProfile';
-import { useState } from 'react';
+import { UiUserProfile, WriteUserProfile } from '@common/types/UserProfile';
+import { useCallback, useState } from 'react';
 import { fetchUserProfileByUsername } from '@server/queries';
 import { dbUserProfileToUiUserProfile, uiUserProfileToWriteUserProfile } from '@server/transforms';
-import {
-	ModalActions,
-	Paths,
-} from '@common/constants';
 import UserProfileForm from '@components/forms/user-profile.form';
 import { ScrollContent } from '@components/scroll-content';
 import { ConfirmButton } from '@components/common/buttons';
+import { updateUserProfile } from '@client/api-calls';
+import {
+	MaxUserProfileBioLength,
+	MaxUserProfileShortBioLength,
+	ModalActions,
+	Paths,
+} from '@common/constants';
+import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
+import { useSetAtom } from 'jotai';
 
 interface Props {
 	userProfile: UiUserProfile | null;
@@ -52,6 +57,24 @@ const ProfilePage: NextPage<Props> = (props) => {
 	const session = useSession();
 	const [userProfile, setUserProfile] = useState(() => props.userProfile && uiUserProfileToWriteUserProfile(props.userProfile));
 	const [selectedTab, setSelectedTab] = useState(0);
+	const setLoading = useSetAtom(loadingAtom);
+	const pushToastMsg = useSetAtom(pushToastMsgAtom);
+	const handleUpdateProfile = useCallback(async () => {
+		if(!userProfile) {
+			return;
+		}
+
+		setLoading(true);
+
+		try {
+			await updateUserProfile(userProfile);
+			pushToastMsg('Profile updated!');
+		} catch {
+			pushToastMsg('Something whent wrong');
+		}
+
+		setLoading(false);
+	}, [userProfile]);
 	const {
 		pathname,
 		query,
@@ -109,7 +132,10 @@ const ProfilePage: NextPage<Props> = (props) => {
 						</Box>
 						<Box></Box>
 						<UserProfileForm userProfile={userProfile} onChange={setUserProfile} />
-						<ConfirmButton>
+						<ConfirmButton
+							onClick={handleUpdateProfile}
+							disabled={!isValidProfile(userProfile)}
+						>
 							Update Profile
 						</ConfirmButton>
 					</>
@@ -127,3 +153,10 @@ const ProfilePage: NextPage<Props> = (props) => {
 };
 
 export default ProfilePage;
+
+function isValidProfile(userProfile: WriteUserProfile) {
+	return (
+		userProfile.detailedBio.length <= MaxUserProfileBioLength &&
+		userProfile.shortBio.length <= MaxUserProfileShortBioLength
+	);
+}
