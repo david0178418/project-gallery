@@ -1,13 +1,22 @@
 import { PasswordSaltLength } from '@common/constants';
-import {
-	DbJournal, UiJournal, WriteJournal,
-} from '@common/types/Journal';
-import {
-	DbProject, UiProject, WriteProject,
-} from '@common/types/Project';
 import { pick } from '@common/utils';
 import { hash } from 'bcryptjs';
 import { WithId } from 'mongodb';
+import {
+	DbJournal,
+	UiJournal,
+	WriteJournal,
+} from '@common/types/Journal';
+import {
+	DbProject,
+	UiProject,
+	WriteProject,
+} from '@common/types/Project';
+import {
+	DbUserProfile,
+	UiUserProfile,
+	WriteUserProfile,
+} from '@common/types/UserProfile';
 
 export
 function passwordToHash(password: string) {
@@ -72,4 +81,17 @@ function dbJournalToUiJournal(dbJournal: WithId<DbJournal>): UiJournal {
 	}
 
 	return uiJournal;
+}
+
+export
+function dbUserProfileToUiUserProfile(userProfile: DbUserProfile): UiUserProfile {
+	return {
+		...userProfile,
+		_id: userProfile._id.toString(),
+	};
+}
+
+export
+function uiUserProfileToWriteUserProfile(userProfile: UiUserProfile): WriteUserProfile {
+	return pick(userProfile, 'shortBio', 'detailedBio');
 }

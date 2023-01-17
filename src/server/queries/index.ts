@@ -5,6 +5,7 @@ import { ObjectId, WithId } from 'mongodb';
 import { getCollection } from '@server/mongodb';
 import { DbCollections } from '@common/constants';
 import { DbJournal } from '@common/types/Journal';
+import { DbUserProfile } from '@common/types/UserProfile';
 
 export
 async function fetchUser(username: string): Promise<DbUser | null> {
@@ -41,6 +42,13 @@ async function fetchJournals(ownerId = ''): Promise<Array<WithId<DbJournal>>> {
 		{ $sort: { publishedDate: -1 } },
 		{ $limit: 20 },
 	]).toArray();
+}
+
+export
+async function fetchUserProfileByUsername(username: string): Promise<DbUserProfile | null> {
+	const col = await getCollection(DbCollections.UserProfiles);
+
+	return col.findOne({ username });
 }
 
 export

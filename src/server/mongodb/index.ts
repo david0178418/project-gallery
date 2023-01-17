@@ -5,13 +5,14 @@ import { DbUser } from '@common/types/User';
 import { DbUserMeta } from '@common/types/UserMeta';
 import { Enum } from '@common/types';
 import { DbProject } from '@common/types/Project';
+import { DbJournal } from '@common/types/Journal';
+import { DbUserProfile } from '@common/types/UserProfile';
 import {
 	Collection,
 	Db,
 	MongoClient,
 	MongoClientOptions,
 } from 'mongodb';
-import { DbJournal } from '@common/types/Journal';
 
 type DbCollectionsEnum = Enum<typeof DbCollections>;
 
@@ -52,6 +53,7 @@ type CollectionType<T> =
 	T extends typeof DbCollections.Projects ? DbProject :
 	T extends typeof DbCollections.Users ? DbUser :
 	T extends typeof DbCollections.UsersMeta ? DbUserMeta :
+	T extends typeof DbCollections.UserProfiles ? DbUserProfile :
 	never;
 /* eslint-enable @typescript-eslint/indent */
 

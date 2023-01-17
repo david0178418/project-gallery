@@ -55,7 +55,7 @@ function sleep(ms: number) {
 }
 
 export
-function pick<T, K extends keyof T>(object: T, ...ks: K[]): Pick<T, K> {
+function pick<T extends Record<any, any>, K extends keyof T>(object: T, ...ks: K[]): Pick<T, K> {
 	return Object.assign(
 		{},
 		...ks.map(key => {

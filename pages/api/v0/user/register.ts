@@ -55,7 +55,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
 export
 async function createUser(username: string, password: string) {
 	const usersCol = await getCollection(DbCollections.Users);
-	const usersMeta = await getCollection(DbCollections.UsersMeta);
+	const usersMetaCol = await getCollection(DbCollections.UsersMeta);
+	const userProfilesCol = await getCollection(DbCollections.UserProfiles);
 	const hash = await passwordToHash(password);
 	const nowDate = new Date();
 	const nowISOStr = nowDate.toISOString();
@@ -69,10 +70,18 @@ async function createUser(username: string, password: string) {
 		});
 
 	await Promise.all([
-		usersMeta
+		usersMetaCol
 			.insertOne({
+				_id: result.insertedId,
 				userId: result.insertedId,
 				created: nowISOStr,
+			}),
+		userProfilesCol
+			.insertOne({
+				_id: result.insertedId,
+				shortBio: '',
+				detailedBio: '',
+				username,
 			}),
 	]);
 }

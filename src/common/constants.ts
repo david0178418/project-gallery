@@ -18,6 +18,8 @@ export const MaxJournalProjectTitleLength = 100;
 export const MaxLinkLabelSize = 100;
 export const MaxProjectDescriptionLength = 1000;
 export const MaxSearchTermSize = 100;
+export const MaxUserProfileShortBioLength = 160;
+export const MaxUserProfileBioLength = 4000;
 export const MinImageUrlLength = 50;
 export const MinJournalPostLength = 10;
 export const MinJournalProjectTitleLength = 3;
@@ -49,6 +51,7 @@ const DbCollections = {
 	Journals: 'journals',
 	Users: 'users',
 	UsersMeta: 'users-meta',
+	UserProfiles: 'user-profiles',
 } as const;
 
 export
