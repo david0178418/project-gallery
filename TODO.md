@@ -8,18 +8,20 @@ Project Description
 
 - [ ] Allow users to charge for guaranteed response to DM  
 
+### Bugs to hunt
+
+- [ ] FIx bug where you are signed out after sitting for a bit  
+
 ### Todo
 
-- [ ] Ensure only published journals are shown unless you are the owner  
-- [ ] FIx bug where you are signed out after sitting for a bit  
+- [ ] Sort projects gallery  
+- [ ] Add project labels/categories  
+- [ ] Filter on labels/categories  
 - [ ] Clarify intention of project on home page  
-- [ ] Sort project images  
+- [ ] Figure out what content to present on main page  
 - [ ] Determine shorter term premium offering  
-- [ ] Add "Links" section  
 - [ ] Add more links to journal posts like previous/next entry  
 - [ ] Add images to journal posts  
-- [ ] Add custom project sections  
-- [ ] Figure out what content to present on main page  
 - [ ] Implement search  
 - [ ] Follow users and proejcts  
 - [ ] Add bookmarking of posts  
@@ -29,9 +31,7 @@ Project Description
 
 ### Done
 
-- [ ] Figure out simple task management  
-- [ ] Add branding image to site  
-- [ ] Create cards for journal entries  
-- [ ] Add journal posts to home page  
-- [ ] Create page for project journal entires  
+- [ ] Ensure only published journals are shown unless you are the owner  
+- [ ] Add "Links" section  
+- [ ] Sort project images  
 
