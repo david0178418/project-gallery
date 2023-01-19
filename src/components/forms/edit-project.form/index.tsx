@@ -1,8 +1,12 @@
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { Uploader } from '@components/uploader';
-import { inRange, swapItems } from '@common/utils';
 import ImageList from './image-list';
 import LinksList from '@components/links-list';
+import {
+	inRange,
+	moveItemLeft,
+	moveItemRight,
+} from '@common/utils';
 import {
 	useCallback,
 	useState,
@@ -90,10 +94,10 @@ function EditProjectForm(props: Props) {
 		handleChange({ images: images.filter(f => f.url !== img.url) });
 	}, [handleChange, images]);
 	const handleMoveLeft = useCallback((index: number) => {
-		handleChange({ images: swapItems(images, index, index - 1) });
+		handleChange({ images: moveItemLeft(images, index) });
 	}, [handleChange, images]);
 	const handleMoveRight = useCallback((index: number) => {
-		handleChange({ images: swapItems(images, index, index + 1) });
+		handleChange({ images: moveItemRight(images, index) });
 	}, [handleChange, images]);
 
 	return (

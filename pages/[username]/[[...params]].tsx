@@ -1,11 +1,7 @@
 import Head from 'next/head';
 import ProjectCard from '@components/project-card';
-import {
-	AppName, Paths, SpecialCharacterCodes,
-} from '@common/constants';
 import { useRouteBackDefault } from '@common/hooks';
 import { ScrollContent } from '@components/scroll-content';
-import { BackIcon } from '@components/icons';
 import { GetServerSideProps } from 'next';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { UiProject } from '@common/types/Project';
@@ -16,6 +12,19 @@ import { UiUserProfile } from '@common/types/UserProfile';
 import MarkdownContent from '@components/markdown-content';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
+import { useCallback, useState } from 'react';
+import {
+	ArrowDownIcon,
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	ArrowUpIcon,
+	BackIcon,
+} from '@components/icons';
+import {
+	AppName,
+	Paths,
+	SpecialCharacterCodes,
+} from '@common/constants';
 import {
 	dbJournalToUiJournal,
 	dbProjectToUiProject,
@@ -36,6 +45,7 @@ import {
 	Tabs,
 	Typography,
 } from '@mui/material';
+import { moveItemLeft, moveItemRight } from '@common/utils';
 
 const TabPaths = {
 	projects: {
@@ -58,9 +68,10 @@ const TabPaths = {
 type TabPath = keyof typeof TabPaths;
 
 interface Props {
+	isOwner?: boolean;
 	unknownUser?: boolean;
 	username: string;
-	subPath: TabPath ;
+	subPath: TabPath;
 	userProfile: UiUserProfile | null;
 	projects: UiProject[] | null;
 	journals: UiJournal[] | null;
@@ -111,6 +122,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 
 	return {
 		props: {
+			isOwner,
 			session,
 			subPath,
 			username,
@@ -123,14 +135,31 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 
 export default
 function UserGallery(props: Props) {
-	const routeBack = useRouteBackDefault();
 	const {
+		isOwner,
 		username,
 		subPath: selectedTab,
-		projects,
+		projects: defaultProjects,
 		userProfile,
 		journals,
 	} = props;
+	const routeBack = useRouteBackDefault();
+	const [projects, setProjects] = useState(defaultProjects);
+
+	const handleMoveLeft = useCallback((projectIndex: number) => {
+		if(!projects) {
+			return null;
+		}
+
+		setProjects(moveItemLeft(projects, projectIndex));
+	}, [projects]);
+	const handleMoveRight = useCallback((projectIndex: number) => {
+		if(!projects) {
+			return null;
+		}
+
+		setProjects(moveItemRight(projects, projectIndex));
+	}, [projects]);
 
 	const title = `${username}'s Gallery - ${AppName}`;
 	const url = Paths.UserGallery(username);
@@ -197,16 +226,32 @@ function UserGallery(props: Props) {
 						<>
 							{!!projects?.length && (
 								<Grid padding={1} container spacing={1} >
-									{projects.map(p => (
+									{projects.map((p, i) => (
 										<Grid
-											key={p._id}
 											item
+											key={p._id}
 											xs={12}
 											md={6}
+											position="relative"
+											sx={{
+												'& .change-order-action': {
+													xs: { display: 'flex' },
+													sm: { display: 'none' },
+												},
+												'&:hover .change-order-action': { display: 'flex' },
+											}}
 										>
 											<ProjectCard
 												project={p}
 											/>
+											{isOwner && (
+												<OrderControlBlock
+													first={i === 0}
+													last={i === projects.length - 1}
+													onMoveLeft={() => handleMoveLeft(i)}
+													onMoveRight={() => handleMoveRight(i)}
+												/>
+											)}
 										</Grid>
 									))}
 								</Grid>
@@ -247,5 +292,76 @@ function UserGallery(props: Props) {
 				</Container>
 			</ScrollContent>
 		</>
+	);
+}
+
+interface OrderControlBlockProps {
+	first?: boolean;
+	last?: boolean;
+	onMoveLeft(): void;
+	onMoveRight(): void;
+}
+
+function OrderControlBlock(props: OrderControlBlockProps) {
+	const {
+		onMoveLeft: onMoveUp,
+		onMoveRight: onMoveDown,
+		last,
+		first,
+	} = props;
+	return (
+		<Box
+			top={0}
+			position="absolute"
+			width="100%"
+			className="change-order-action"
+		>
+			{!first && (
+				<Box>
+					<IconButton
+						size="large"
+						onClick={onMoveUp}
+					>
+						<Box
+							component={ArrowLeftIcon}
+							display={{
+								xs: 'none',
+								sm: 'inline',
+							}}
+						/>
+						<Box
+							component={ArrowUpIcon}
+							display={{
+								xs: 'inline',
+								sm: 'none',
+							}}
+						/>
+					</IconButton>
+				</Box>
+			)}
+			{!last && (
+				<Box marginLeft="auto">
+					<IconButton
+						size="large"
+						onClick={onMoveDown}
+					>
+						<Box
+							component={ArrowRightIcon}
+							display={{
+								xs: 'none',
+								sm: 'inline',
+							}}
+						/>
+						<Box
+							component={ArrowDownIcon}
+							display={{
+								xs: 'inline',
+								sm: 'none',
+							}}
+						/>
+					</IconButton>
+				</Box>
+			)}
+		</Box>
 	);
 }

@@ -6,6 +6,7 @@ import { getCollection } from '@server/mongodb';
 import { DbCollections } from '@common/constants';
 import { DbJournal } from '@common/types/Journal';
 import { DbUserProfile } from '@common/types/UserProfile';
+import { DbUserGalleryOrder } from '@common/types/UserGalleryOrder';
 
 export
 async function fetchUser(username: string): Promise<DbUser | null> {
@@ -102,8 +103,13 @@ async function fetchUserGallery(username: string): Promise<Array<WithId<DbProjec
 	return col.aggregate<WithId<DbProject>>([
 		{ $sort: { createdDate: -1 } },
 		{ $match: { 'owner.username': username } },
-		{ $limit: 20 },
 	]).toArray();
+}
+
+export
+async function fetchUserGalleryOrder(username: string): Promise<WithId<DbUserGalleryOrder> | null> {
+	const col = await getCollection(DbCollections.UserGalleryOrder);
+	return col.findOne({ username });
 }
 
 export

@@ -14,6 +14,8 @@ Project Description
 
 ### Todo
 
+- [ ] Delete journal posts  
+- [ ] Delete Posts  
 - [ ] Sort projects gallery  
 - [ ] Add project labels/categories  
 - [ ] Filter on labels/categories  

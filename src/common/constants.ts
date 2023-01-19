@@ -47,11 +47,12 @@ const BaseReq: RequestInit = {
 export
 const DbCollections = {
 	Grams: 'grams',
-	Projects: 'projects',
 	Journals: 'journals',
+	Projects: 'projects',
+	UserGalleryOrder: 'user-gallery-order',
+	UserProfiles: 'user-profiles',
 	Users: 'users',
 	UsersMeta: 'users-meta',
-	UserProfiles: 'user-profiles',
 } as const;
 
 export

@@ -13,6 +13,7 @@ import {
 	MongoClient,
 	MongoClientOptions,
 } from 'mongodb';
+import { DbUserGalleryOrder } from '@common/types/UserGalleryOrder';
 
 type DbCollectionsEnum = Enum<typeof DbCollections>;
 
@@ -51,6 +52,7 @@ type CollectionType<T> =
 	T extends typeof DbCollections.Grams ? DbTextGram :
 	T extends typeof DbCollections.Journals ? DbJournal :
 	T extends typeof DbCollections.Projects ? DbProject :
+	T extends typeof DbCollections.UserGalleryOrder ? DbUserGalleryOrder :
 	T extends typeof DbCollections.Users ? DbUser :
 	T extends typeof DbCollections.UsersMeta ? DbUserMeta :
 	T extends typeof DbCollections.UserProfiles ? DbUserProfile :

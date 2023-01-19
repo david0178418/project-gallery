@@ -1,5 +1,9 @@
 export { default as AddIcon } from '@mui/icons-material/AddOutlined';
+export { default as ArrowLeftCircleIcon } from '@mui/icons-material/ArrowCircleLeft';
+export { default as ArrowDownIcon } from '@mui/icons-material/ExpandMore';
 export { default as ArrowLeftIcon } from '@mui/icons-material/ChevronLeft';
+export { default as ArrowRightCircleIcon } from '@mui/icons-material/ArrowCircleRight';
+export { default as ArrowUpIcon } from '@mui/icons-material/ExpandLess';
 export { default as ArrowRightIcon } from '@mui/icons-material/ChevronRight';
 export { default as AttachmentIcon } from '@mui/icons-material/AttachFile';
 export { default as BackIcon } from '@mui/icons-material/ArrowBack';
