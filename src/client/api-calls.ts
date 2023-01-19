@@ -3,7 +3,9 @@ import type { ApiResponse, Enum } from '@common/types';
 import { signIn, signOut } from 'next-auth/react';
 import { get, post } from '@client/client-utils';
 import { urlJoin } from '@common/utils';
-import { ApiUrl, FileUploadCategories } from '@common/constants';
+import {
+	ApiUrl, Direction, FileUploadCategories,
+} from '@common/constants';
 import { UiProject, WriteProject } from '@common/types/Project';
 import { WriteJournal } from '@common/types/Journal';
 import { WriteUserProfile } from '@common/types/UserProfile';
@@ -39,6 +41,14 @@ function updatePassword(password: string) {
 export
 function updateUserProfile(userProfile: WriteUserProfile) {
 	return apiPost<ApiResponse>('/user/profile', { userProfile });
+}
+
+export
+function updateProjectOrder(projectId: string, direction: Enum<typeof Direction>) {
+	return apiPost<ApiResponse>('/gallery/order', {
+		projectId,
+		direction,
+	});
 }
 
 export

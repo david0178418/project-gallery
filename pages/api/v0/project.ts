@@ -94,6 +94,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 async function createProject(user: User, project: WriteProject) {
 	const col = await getCollection(DbCollections.Projects);
 	const now = nowISOString();
+	const userIdObj = new ObjectId(user.id);
 	const {
 		_id: projId,
 		...updateProps
@@ -103,7 +104,7 @@ async function createProject(user: User, project: WriteProject) {
 		new ObjectId(projId) :
 		new ObjectId();
 
-	await col.updateOne(
+	const result = await col.updateOne(
 		{ _id },
 		{
 			$set: {
@@ -113,7 +114,7 @@ async function createProject(user: User, project: WriteProject) {
 			$setOnInsert: {
 				_id,
 				owner: {
-					_id: new ObjectId(user.id),
+					_id: userIdObj,
 					username: user.username,
 				},
 				createdDate: now,
@@ -121,6 +122,12 @@ async function createProject(user: User, project: WriteProject) {
 		},
 		{ upsert: true }
 	);
+
+	if(result.upsertedCount) {
+		const orderCol = await getCollection(DbCollections.UserGalleryOrder);
+
+		await orderCol.updateOne({ _id: userIdObj }, { $push: { projectIdOrder: _id } });
+	}
 
 	return _id;
 }

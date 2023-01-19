@@ -20,6 +20,7 @@
 *.pem
 *.mongodb
 /docker-service-volumes/
+*.temp.*
 
 # debug
 npm-debug.log*

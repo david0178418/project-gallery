@@ -45,6 +45,12 @@ const BaseReq: RequestInit = {
 } as const;
 
 export
+const Direction = {
+	Left: 'left',
+	Right: 'right',
+} as const;
+
+export
 const DbCollections = {
 	Grams: 'grams',
 	Journals: 'journals',

@@ -55,18 +55,27 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
 export
 async function createUser(username: string, password: string) {
 	const usersCol = await getCollection(DbCollections.Users);
+	const userGalleryOrderCol = await getCollection(DbCollections.UserGalleryOrder);
 	const usersMetaCol = await getCollection(DbCollections.UsersMeta);
 	const userProfilesCol = await getCollection(DbCollections.UserProfiles);
 	const hash = await passwordToHash(password);
 	const nowDate = new Date();
 	const nowISOStr = nowDate.toISOString();
+	const _id = new ObjectId();
 
 	const result = await usersCol
 		.insertOne({
-			_id: new ObjectId(),
+			_id,
 			username,
 			hash,
 			role: UserRoles.User,
+		});
+
+	await userGalleryOrderCol
+		.insertOne({
+			_id,
+			usernameLower: username.toLocaleLowerCase(),
+			projectIdOrder: [],
 		});
 
 	await Promise.all([

@@ -184,11 +184,19 @@ function swapItems<T>(arr: T[], indexA: number, indexB: number): T[] {
 
 export
 function moveItemRight<T>(arr: T[], itemIndex: number): T[] {
+	if(itemIndex >= arr.length) {
+		return arr;
+	}
+
 	return swapItems(arr, itemIndex, itemIndex + 1);
 }
 
 export
 function moveItemLeft<T>(arr: T[], itemIndex: number): T[] {
+	if(itemIndex <= 0) {
+		return arr;
+	}
+
 	return swapItems(arr, itemIndex, itemIndex - 1);
 }
 

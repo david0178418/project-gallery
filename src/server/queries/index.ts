@@ -49,7 +49,7 @@ export
 async function fetchUserProfileByUsername(username: string): Promise<DbUserProfile | null> {
 	const col = await getCollection(DbCollections.UserProfiles);
 
-	return col.findOne({ username });
+	return col.findOne({ username: username.toLocaleLowerCase() });
 }
 
 export
@@ -107,9 +107,15 @@ async function fetchUserGallery(username: string): Promise<Array<WithId<DbProjec
 }
 
 export
-async function fetchUserGalleryOrder(username: string): Promise<WithId<DbUserGalleryOrder> | null> {
+async function fetchUserGalleryOrderByUsername(username: string): Promise<WithId<DbUserGalleryOrder> | null> {
 	const col = await getCollection(DbCollections.UserGalleryOrder);
-	return col.findOne({ username });
+	return col.findOne({ usernameLower: username });
+}
+
+export
+async function fetchUserGalleryOrder(userId: string): Promise<WithId<DbUserGalleryOrder> | null> {
+	const col = await getCollection(DbCollections.UserGalleryOrder);
+	return col.findOne({ _id: new ObjectId(userId) });
 }
 
 export

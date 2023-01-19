@@ -12,6 +12,10 @@ import { UiUserProfile } from '@common/types/UserProfile';
 import MarkdownContent from '@components/markdown-content';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
+import { updateProjectOrder } from '@client/api-calls';
+import { useSetAtom } from 'jotai';
+import { pushToastMsgAtom } from '@common/atoms';
+import { moveItemLeft, moveItemRight } from '@common/utils';
 import { useCallback, useState } from 'react';
 import {
 	ArrowDownIcon,
@@ -22,6 +26,7 @@ import {
 } from '@components/icons';
 import {
 	AppName,
+	Direction,
 	Paths,
 	SpecialCharacterCodes,
 } from '@common/constants';
@@ -45,7 +50,6 @@ import {
 	Tabs,
 	Typography,
 } from '@mui/material';
-import { moveItemLeft, moveItemRight } from '@common/utils';
 
 const TabPaths = {
 	projects: {
@@ -145,20 +149,35 @@ function UserGallery(props: Props) {
 	} = props;
 	const routeBack = useRouteBackDefault();
 	const [projects, setProjects] = useState(defaultProjects);
+	const pustToastMsg = useSetAtom(pushToastMsgAtom);
 
-	const handleMoveLeft = useCallback((projectIndex: number) => {
+	const handleMoveLeft = useCallback(async (projectIndex: number) => {
 		if(!projects) {
 			return null;
 		}
 
 		setProjects(moveItemLeft(projects, projectIndex));
+
+		try {
+			await updateProjectOrder(projects[projectIndex]._id, Direction.Left);
+		} catch {
+			setProjects(projects);
+			pustToastMsg('Something went wrong');
+		}
 	}, [projects]);
-	const handleMoveRight = useCallback((projectIndex: number) => {
+	const handleMoveRight = useCallback(async (projectIndex: number) => {
 		if(!projects) {
 			return null;
 		}
 
 		setProjects(moveItemRight(projects, projectIndex));
+
+		try {
+			await updateProjectOrder(projects[projectIndex]._id, Direction.Right);
+		} catch {
+			setProjects(projects);
+			pustToastMsg('Something went wrong');
+		}
 	}, [projects]);
 
 	const title = `${username}'s Gallery - ${AppName}`;
@@ -304,8 +323,8 @@ interface OrderControlBlockProps {
 
 function OrderControlBlock(props: OrderControlBlockProps) {
 	const {
-		onMoveLeft: onMoveUp,
-		onMoveRight: onMoveDown,
+		onMoveLeft,
+		onMoveRight,
 		last,
 		first,
 	} = props;
@@ -320,7 +339,7 @@ function OrderControlBlock(props: OrderControlBlockProps) {
 				<Box>
 					<IconButton
 						size="large"
-						onClick={onMoveUp}
+						onClick={onMoveLeft}
 					>
 						<Box
 							component={ArrowLeftIcon}
@@ -343,7 +362,7 @@ function OrderControlBlock(props: OrderControlBlockProps) {
 				<Box marginLeft="auto">
 					<IconButton
 						size="large"
-						onClick={onMoveDown}
+						onClick={onMoveRight}
 					>
 						<Box
 							component={ArrowRightIcon}
