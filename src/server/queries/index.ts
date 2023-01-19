@@ -97,12 +97,24 @@ async function fetchJournal(id: string): Promise<WithId<DbJournal> | null> {
 	return col.findOne({ _id: new ObjectId(id) });
 }
 
+const DocPlaceholder = 'docTemp';
+
 export
 async function fetchUserGallery(username: string): Promise<Array<WithId<DbProject>>> {
-	const col = await getCollection(DbCollections.Projects);
+	const col = await getCollection(DbCollections.UserGalleryOrder);
 	return col.aggregate<WithId<DbProject>>([
-		{ $sort: { createdDate: -1 } },
-		{ $match: { 'owner.username': username } },
+		{ $match: { usernameLower: username.toLocaleLowerCase() } },
+		{ $unwind: '$projectIdOrder' },
+		{
+			$lookup: {
+				from: DbCollections.Projects,
+				localField: 'projectIdOrder',
+				foreignField: '_id',
+				as: DocPlaceholder,
+			},
+		},
+		{ $unwind: { path: `$${DocPlaceholder}` } },
+		{ $replaceRoot: { newRoot: `$${DocPlaceholder}` } },
 	]).toArray();
 }
 
