@@ -8,7 +8,7 @@ import {
 	useSetAtom,
 } from 'jotai';
 
-export
+export default
 function Toast() {
 	const toastMsg = useAtomValue(toastMsgAtom);
 	const clearMsg = useSetAtom(clearCurrentToastMsgAtom);
