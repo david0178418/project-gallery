@@ -153,7 +153,7 @@ function UserGallery(props: Props) {
 
 	const handleMoveLeft = useCallback(async (projectIndex: number) => {
 		if(!projects) {
-			return null;
+			return;
 		}
 
 		setProjects(moveItemLeft(projects, projectIndex));
@@ -167,7 +167,7 @@ function UserGallery(props: Props) {
 	}, [projects]);
 	const handleMoveRight = useCallback(async (projectIndex: number) => {
 		if(!projects) {
-			return null;
+			return;
 		}
 
 		setProjects(moveItemRight(projects, projectIndex));

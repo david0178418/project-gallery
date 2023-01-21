@@ -66,7 +66,7 @@ function Page(props: Props) {
 
 	const handleSave = useCallback(async () => {
 		if(!project) {
-			return null;
+			return;
 		}
 
 		try {

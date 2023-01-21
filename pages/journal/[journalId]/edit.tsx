@@ -68,7 +68,7 @@ function Journal(props: Props) {
 
 	async function handleSave(publish = false) {
 		if(!journal) {
-			return null;
+			return;
 		}
 
 		try {

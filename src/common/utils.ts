@@ -58,11 +58,15 @@ export
 function pick<T extends Record<any, any>, K extends keyof T>(object: T, ...ks: K[]): Pick<T, K> {
 	return Object.assign(
 		{},
-		...ks.map(key => {
-			if (object && Object.prototype.hasOwnProperty.call(object, key)) {
-				return { [key]: object[key] };
-			}
-		})
+		...ks
+			.map(key => {
+				if (object && Object.prototype.hasOwnProperty.call(object, key)) {
+					return { [key]: object[key] };
+				}
+
+				return null;
+			})
+			.filter(isTruthy)
 	);
 }
 
@@ -163,12 +167,12 @@ function isISOString(str: string) {
 }
 
 export
-function multiplyList<T>(list: T[], multiple: number) {
+function multiplyList<T>(list: T[], multiple: number): T[] {
 	return range(multiple).map(() => list).flat();
 }
 
 export
-function range(size: number, startValue = 0) {
+function range(size: number, startValue = 0): number[] {
 	return [ ...Array(size).keys() ].map(i => i + startValue);
 }
 
@@ -201,7 +205,7 @@ function moveItemLeft<T>(arr: T[], itemIndex: number): T[] {
 }
 
 export
-function removeItem<T>(arr: T[], removeIndex: number) {
+function removeItem<T>(arr: T[], removeIndex: number): T[] {
 	return arr.filter((_, index) => index !== removeIndex);
 }
 
@@ -215,7 +219,7 @@ function truncate(input: string, maxLen = 50) {
 const ID_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 export
-function makeId(length: number) {
+function makeId(length: number): string {
 	return range(length)
 		.map(() => ID_CHARS.charAt(random(0, ID_CHARS.length)))
 		.join('');

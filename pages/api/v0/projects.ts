@@ -9,7 +9,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getServerSession(req, res);
 
 	if(!session) {
-		return res.status(400).end();
+		res.status(400).end();
+
+		return;
 	}
 
 	try {
