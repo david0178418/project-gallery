@@ -1,3 +1,4 @@
+import { usePushToastMsg } from '@common/atoms';
 import { urlJoin } from '@common/utils';
 import { ShareIcon } from '@components/icons';
 import { IconButton, Tooltip } from '@mui/material';
@@ -9,6 +10,7 @@ interface Props {
 
 export
 function ShareIconButton(props: Props) {
+	const pushToastMsg = usePushToastMsg();
 	const {
 		label,
 		url,
@@ -16,11 +18,11 @@ function ShareIconButton(props: Props) {
 
 	async function handleShare() {
 		const shareMsg = await share(url, label);
-		console.log(shareMsg);
+		pushToastMsg(shareMsg);
 	}
 
 	return (
-		<Tooltip title={label}>
+		<Tooltip title={`Share '${label}'`}>
 			<IconButton size="small" onClick={handleShare}>
 				<ShareIcon fontSize="small" />
 			</IconButton>

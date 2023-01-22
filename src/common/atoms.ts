@@ -1,4 +1,4 @@
-import { atom } from 'jotai';
+import { atom, useSetAtom } from 'jotai';
 import { ToastMesssage } from './types';
 
 export
@@ -32,3 +32,8 @@ const clearCurrentToastMsgAtom = atom(
 		set(toastQueueAtom, [ ...tqa ]);
 	},
 );
+
+export
+function usePushToastMsg() {
+	return useSetAtom(pushToastMsgAtom);
+}

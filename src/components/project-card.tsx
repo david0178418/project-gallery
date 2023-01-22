@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { Paths } from '@common/constants';
 import { useUser } from '@common/hooks';
 import {
-	ShareIcon,
 	FavoriteIcon,
 	JournalIcon,
 	EditIcon,
@@ -23,6 +22,7 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material';
+import { ShareIconButton } from './common/share-button';
 
 interface Props {
 	project: UiProject;
@@ -47,6 +47,7 @@ function ProjectCard(props: Props) {
 		},
 	} = props;
 	const isOwner = user?.id === ownerId;
+	const projectUrl = Paths.Project(_id);
 
 	return (
 		<Card elevation={2}>
@@ -81,7 +82,7 @@ function ProjectCard(props: Props) {
 				}
 			/>
 			<Box>
-				<Link href={Paths.Project(_id)}>
+				<Link href={projectUrl}>
 					<CardMedia
 						component="img"
 						height="194"
@@ -113,9 +114,10 @@ function ProjectCard(props: Props) {
 					disableTouchListener
 					title="Share"
 				>
-					<IconButton>
-						<ShareIcon />
-					</IconButton>
+					<ShareIconButton
+						label={title}
+						url={projectUrl}
+					/>
 				</Tooltip>
 				{lastJournalEntry && (
 					<Link

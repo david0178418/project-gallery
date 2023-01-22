@@ -6,7 +6,6 @@ import { Paths } from '@common/constants';
 import { useUser } from '@common/hooks';
 import MarkdownContent from './markdown-content';
 import {
-	ShareIcon,
 	FavoriteIcon,
 	EditIcon,
 } from '@components/icons';
@@ -20,6 +19,7 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material';
+import { ShareIconButton } from './common/share-button';
 
 interface Props {
 	journal: UiJournal;
@@ -42,18 +42,19 @@ function JournalCard(props: Props) {
 		},
 	} = props;
 	const isOwner = user?.id === ownerId;
+	const journalUrl = Paths.Journal(_id);
 
 	return (
 		<Card elevation={2}>
 			<CardHeader
 
 				title={
-					<Link href={Paths.Journal(_id)}>
+					<Link href={journalUrl}>
 						{title}
 					</Link>
 				}
 				subheader={(
-					<Link href={Paths.Journal(_id)}>
+					<Link href={journalUrl}>
 						{publishedDate && localizedDateFormat(publishedDate)}
 					</Link>
 				)}
@@ -116,9 +117,10 @@ function JournalCard(props: Props) {
 					disableTouchListener
 					title="Share"
 				>
-					<IconButton>
-						<ShareIcon />
-					</IconButton>
+					<ShareIconButton
+						url={Paths.Journal(_id)}
+						label={title}
+					/>
 				</Tooltip>
 				{isOwner && (
 					<Link href={Paths.JournalEdit(_id)}>
