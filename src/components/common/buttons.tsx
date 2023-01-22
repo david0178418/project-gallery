@@ -3,6 +3,8 @@ import { Button as MuiButton } from '@mui/material';
 import { ComponentProps, forwardRef } from 'react';
 import { ConfirmIcon } from '@components/icons';
 
+// TODO Reorganize common buttons
+
 interface Props extends ComponentProps<typeof MuiButton> {
 	label?: string;
 }
