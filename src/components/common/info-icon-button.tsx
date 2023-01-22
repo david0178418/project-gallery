@@ -2,6 +2,7 @@ import type { TooltipProps } from '@mui/material/Tooltip';
 
 import { InfoIcon } from '@components/icons';
 import { IconButton, Tooltip } from '@mui/material';
+import { forwardRef } from 'react';
 
 interface Props {
 	label: string;
@@ -9,16 +10,16 @@ interface Props {
 }
 
 export
-function InfoIconButton(props: Props) {
+const ShareIconButton = forwardRef((props: Props, ref) => {
 	const {
 		label,
 		placement = 'bottom',
 	} = props;
 	return (
-		<Tooltip title={label} placement={placement}>
+		<Tooltip title={label} placement={placement} ref={ref}>
 			<IconButton size="small">
 				<InfoIcon fontSize="small" />
 			</IconButton>
 		</Tooltip>
 	);
-}
+});

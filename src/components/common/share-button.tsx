@@ -2,6 +2,7 @@ import { usePushToastMsg } from '@common/atoms';
 import { urlJoin } from '@common/utils';
 import { ShareIcon } from '@components/icons';
 import { IconButton, Tooltip } from '@mui/material';
+import { forwardRef } from 'react';
 
 interface Props {
 	label: string;
@@ -10,7 +11,7 @@ interface Props {
 }
 
 export
-function ShareIconButton(props: Props) {
+const ShareIconButton = forwardRef((props: Props, ref) => {
 	const pushToastMsg = usePushToastMsg();
 	const {
 		label,
@@ -23,13 +24,13 @@ function ShareIconButton(props: Props) {
 	}
 
 	return (
-		<Tooltip title={`Share '${label}'`}>
+		<Tooltip title={`Share '${label}'`} ref={ref}>
 			<IconButton size="small" onClick={handleShare}>
 				<ShareIcon fontSize="small" />
 			</IconButton>
 		</Tooltip>
 	);
-}
+});
 
 async function share(url: string, label: string, shareMsg: string) {
 	if(!navigator.share) {
