@@ -117,6 +117,7 @@ function ProjectCard(props: Props) {
 					<ShareIconButton
 						label={title}
 						url={projectUrl}
+						shareMsg="Check out this project!"
 					/>
 				</Tooltip>
 				{lastJournalEntry && (

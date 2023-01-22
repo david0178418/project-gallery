@@ -120,6 +120,7 @@ function JournalCard(props: Props) {
 					<ShareIconButton
 						url={Paths.Journal(_id)}
 						label={title}
+						shareMsg="Check out this project journal post!"
 					/>
 				</Tooltip>
 				{isOwner && (

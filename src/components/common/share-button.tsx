@@ -6,6 +6,7 @@ import { IconButton, Tooltip } from '@mui/material';
 interface Props {
 	label: string;
 	url: string;
+	shareMsg: string;
 }
 
 export
@@ -14,11 +15,11 @@ function ShareIconButton(props: Props) {
 	const {
 		label,
 		url,
+		shareMsg,
 	} = props;
 
 	async function handleShare() {
-		const shareMsg = await share(url, label);
-		pushToastMsg(shareMsg);
+		pushToastMsg(await share(url, label, shareMsg));
 	}
 
 	return (
@@ -30,14 +31,14 @@ function ShareIconButton(props: Props) {
 	);
 }
 
-async function share(url: string, label: string) {
+async function share(url: string, label: string, shareMsg: string) {
 	if(!navigator.share) {
 		await navigator.clipboard.writeText(urlJoin(location.origin, url));
 		return `Copied url to "${label}"!`;
 	} else {
 		await navigator.share({
-			title: `ShopLystr List: '${label}'`,
-			text: 'Check out this shopping list!',
+			title: `${label} - ProjectGallery.me`,
+			text: shareMsg,
 			url: url,
 		});
 
