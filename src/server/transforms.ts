@@ -48,7 +48,17 @@ function dbProjectToUiProject(dbProject: WithId<DbProject>): UiProject {
 
 export
 function uiProjectToWriteProject(project: UiProject): WriteProject {
-	return pick(project, '_id', 'description', 'projectCreatedDate', 'projectLastUpdatedDate', 'links', 'title', 'images');
+	return pick(
+		project,
+		'_id',
+		'description',
+		'projectCreatedDate',
+		'projectLastUpdatedDate',
+		'labels',
+		'links',
+		'title',
+		'images',
+	);
 }
 
 export

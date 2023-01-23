@@ -2,6 +2,8 @@ import { TextFieldLengthValidation } from '@components/common/text-field-length-
 import { Uploader } from '@components/uploader';
 import ImageList from './image-list';
 import LinksList from '@components/links-list';
+import LinkForm, { linkIsValid } from './link-form';
+import LabelForm, { labelIsValid } from './label-form';
 import {
 	inRange,
 	moveItemLeft,
@@ -13,7 +15,6 @@ import {
 } from 'react';
 import {
 	ProjectImage,
-	UiProject,
 	WriteProject,
 } from '@common/types/Project';
 import {
@@ -22,12 +23,11 @@ import {
 	FileUploadCategories,
 	MinProjectDescriptionLength,
 	MaxProjectDescriptionLength,
-	MinLinkLabelSize,
-	MaxLinkLabelSize,
+	maxLabelCount,
 } from '@common/constants';
 import {
 	Box,
-	Button,
+	Chip,
 	Grid,
 	Tab,
 	Tabs,
@@ -59,6 +59,7 @@ function EditProjectForm(props: Props) {
 		projectLastUpdatedDate,
 		title,
 		description,
+		labels,
 		links,
 	} = project;
 	const [selectedTab, setSelectedTab] = useState(0);
@@ -69,6 +70,17 @@ function EditProjectForm(props: Props) {
 		});
 	}, [project]);
 
+	const handleAddLabel = useCallback((label: string) => {
+		handleChange({
+			labels: [
+				{ label },
+				...labels,
+			],
+		});
+	}, [handleChange, labels]);
+	const handleRemoveLabel = useCallback((labelIndex: number) => {
+		handleChange({ labels: labels.filter((l, i) => i !== labelIndex) });
+	}, [handleChange, labels]);
 	const handleAddLink = useCallback((label: string, url: string) => {
 		handleChange({
 			links: [
@@ -141,6 +153,20 @@ function EditProjectForm(props: Props) {
 				</Grid>
 			</Grid>
 			<Box paddingTop={1}>
+				<LabelForm onAdd={handleAddLabel} />
+			</Box>
+			{!!labels.length && (
+				<Box paddingTop={1}>
+					{labels.map((l, i) => (
+						<Chip
+							key={l.label}
+							label={l.label}
+							onDelete={() => handleRemoveLabel(i)}
+						/>
+					))}
+				</Box>
+			)}
+			<Box paddingTop={1}>
 				<Tabs value={selectedTab} onChange={(e, val) => setSelectedTab(val)}>
 					<Tab label="Description" />
 					<Tab label="Images"/>
@@ -194,62 +220,15 @@ function projectIsValid(project: WriteProject) {
 	const {
 		description,
 		images,
+		labels,
 		links,
 		title,
 	} = project;
 
 	return !!images.length &&
 		links.every(linkIsValid) &&
+		(labels.length <= maxLabelCount) &&
+		labels.every(labelIsValid) &&
 		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
 		inRange(description.length, MinProjectDescriptionLength, MaxProjectDescriptionLength);
-}
-
-type ProjectLink = UiProject['links'][number];
-
-function linkIsValid(link: ProjectLink) {
-	return inRange(link.label.length, MinLinkLabelSize, MaxLinkLabelSize);
-}
-
-interface LinkProps {
-	onAdd(label: string, url: string): void;
-}
-
-function LinkForm(props: LinkProps) {
-	const [label, setLabel] = useState('');
-	const [url, setUrl] = useState('');
-	const { onAdd } = props;
-
-	return (
-		<>
-			<Grid container columnGap={1}>
-				<Grid item>
-					<TextFieldLengthValidation
-						fullWidth
-						margin="dense"
-						label="Label"
-						value={label}
-						onChange={e => setLabel(e.target.value)}
-					/>
-				</Grid>
-				<Grid item>
-					<TextFieldLengthValidation
-						fullWidth
-						margin="dense"
-						label="Url"
-						value={url}
-						onChange={e => setUrl(e.target.value)}
-					/>
-				</Grid>
-			</Grid>
-			<Button
-				disabled={!linkIsValid({
-					label,
-					url,
-				})}
-				onClick={() => onAdd(label, url)}
-			>
-				Add Link
-			</Button>
-		</>
-	);
 }

@@ -19,6 +19,9 @@ import {
 	MaxProjectDescriptionLength,
 	MaxLinkLabelSize,
 	MinLinkLabelSize,
+	MinLabelSize,
+	MaxLabelSize,
+	maxLabelCount,
 } from '@common/constants';
 
 interface Schema {
@@ -47,6 +50,14 @@ const schema: ZodType<Schema> = z.object({
 					.max(MaxImageDescriptionLength),
 			})
 		).min(1, { message: 'Projects must have at least one image' }),
+		labels: z.array(
+			z.object({
+				label: z
+					.string()
+					.min(MinLabelSize)
+					.max(MaxLabelSize),
+			}),
+		).max(maxLabelCount),
 		links: z.array(
 			z.object({
 				label: z
@@ -99,7 +110,7 @@ async function createProject(user: User, project: WriteProject) {
 		_id: projId,
 		...updateProps
 	} = project;
-	console.log('updateProps', updateProps);
+
 	const _id = projId ?
 		new ObjectId(projId) :
 		new ObjectId();

@@ -18,6 +18,7 @@ import {
 	CardContent,
 	CardHeader,
 	CardMedia,
+	Chip,
 	IconButton,
 	Tooltip,
 	Typography,
@@ -36,6 +37,7 @@ function ProjectCard(props: Props) {
 			_id,
 			description,
 			projectCreatedDate,
+			labels,
 			lastJournalEntry,
 			lastUpdatedDate,
 			title,
@@ -96,6 +98,13 @@ function ProjectCard(props: Props) {
 						{description}
 					</ParsedContent>
 				</Typography>
+				{!!labels.length && (
+					<Box paddingTop={2}>
+						{labels.map((l, i) => (
+							<Chip key={i} label={l.label} />
+						))}
+					</Box>
+				)}
 			</CardContent>
 			<CardActions disableSpacing>
 				<Tooltip
