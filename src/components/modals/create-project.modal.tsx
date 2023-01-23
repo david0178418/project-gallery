@@ -32,6 +32,7 @@ function createWriteProject(): WriteProject {
 		projectLastUpdatedDate: nowISOString(),
 		title: '',
 		images: [],
+		labels: [],
 		links: [],
 	};
 }
