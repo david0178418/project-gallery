@@ -57,17 +57,23 @@ const authOptions: NextAuthOptions = {
 					password,
 				} = credentials;
 
-				const user = await fetchUser(username);
+				try {
+					const user = await fetchUser(username);
 
-				if(!(user?._id && await compare(password, user.hash))) {
+					if(!(user?._id && await compare(password, user.hash))) {
+						return null;
+					}
+
+					return {
+						id: user._id?.toString(),
+						username: user.username,
+						role: user.role || UserRoles.User,
+					};
+				} catch(e) {
+					console.error('Auth Error:', e);
 					return null;
 				}
 
-				return {
-					id: user._id?.toString(),
-					username: user.username,
-					role: user.role || UserRoles.User,
-				};
 			},
 		}),
 		// EmailProvider({
