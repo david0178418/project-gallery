@@ -220,10 +220,10 @@ function UserGallery(props: Props) {
 	const title = `${username}'s Gallery - ${AppName}`;
 	const url = Paths.UserGallery(username);
 	const description = userProfile?.shortBio || '';
+	// TODO CLean this mess up
 	const filteredProjects = projects?.filter(
-		p => p
-			.labels
-			.find(l => !selectedLabels.length || selectedLabels.includes(l.label))
+		p => !selectedLabels.length ||
+			p.labels.some(l => selectedLabels.includes(l.label))
 	) || [];
 
 	return (
@@ -287,17 +287,19 @@ function UserGallery(props: Props) {
 						<>
 							{!!projects?.length && (
 								<>
-									<Box
-										paddingBottom={2}
-										borderBottom={1}
-										borderColor="divider"
-									>
-										<LabelsFilter
-											labels={uniqueLabels}
-											selectedLabels={selectedLabels}
-											onClick={handleLabelSelect}
-										/>
-									</Box>
+									{!!uniqueLabels.length && (
+										<Box
+											paddingBottom={2}
+											borderBottom={1}
+											borderColor="divider"
+										>
+											<LabelsFilter
+												labels={uniqueLabels}
+												selectedLabels={selectedLabels}
+												onClick={handleLabelSelect}
+											/>
+										</Box>
+									)}
 									<Grid
 										padding={1}
 										container
@@ -321,7 +323,7 @@ function UserGallery(props: Props) {
 												<ProjectCard
 													project={p}
 												/>
-												{isOwner && !selectedLabels.length && (
+												{isOwner && projects && !selectedLabels.length && (
 													<OrderControlBlock
 														first={i === 0}
 														last={i === projects.length - 1}
