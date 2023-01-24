@@ -4,9 +4,6 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { getServerSession } from '@server/auth-options';
-import {
-	Box, Button, Container, Tab, Tabs,
-} from '@mui/material';
 import { PasswordChangeForm } from '@components/password-change-form';
 import { UiUserProfile, WriteUserProfile } from '@common/types/UserProfile';
 import { useCallback, useState } from 'react';
@@ -16,14 +13,21 @@ import UserProfileForm from '@components/forms/user-profile.form';
 import { ScrollContent } from '@components/scroll-content';
 import { ConfirmButton } from '@components/common/buttons';
 import { updateUserProfile } from '@client/api-calls';
+import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
+import { useSetAtom } from 'jotai';
 import {
 	MaxUserProfileBioLength,
 	MaxUserProfileShortBioLength,
 	ModalActions,
 	Paths,
 } from '@common/constants';
-import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
-import { useSetAtom } from 'jotai';
+import {
+	Box,
+	Button,
+	Container,
+	Tab,
+	Tabs,
+} from '@mui/material';
 
 interface Props {
 	userProfile: UiUserProfile | null;

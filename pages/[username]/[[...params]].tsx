@@ -15,7 +15,10 @@ import Link from 'next/link';
 import { updateProjectOrder } from '@client/api-calls';
 import { useSetAtom } from 'jotai';
 import { pushToastMsgAtom } from '@common/atoms';
-import { moveItemLeft, moveItemRight } from '@common/utils';
+import {
+	isTruthy,
+	moveItemLeft, moveItemRight, unique, uniqueBy,
+} from '@common/utils';
 import { useCallback, useState } from 'react';
 import {
 	ArrowDownIcon,
@@ -50,6 +53,9 @@ import {
 	Tabs,
 	Typography,
 } from '@mui/material';
+import LabelsFilter from '@components/labels-filter';
+import { useRouter } from 'next/router';
+import { UrlObject } from 'url';
 
 const TabPaths = {
 	projects: {
@@ -139,6 +145,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 
 export default
 function UserGallery(props: Props) {
+	// TODO Clean up all the filtering and routing stuff
 	const {
 		isOwner,
 		username,
@@ -150,7 +157,37 @@ function UserGallery(props: Props) {
 	const routeBack = useRouteBackDefault();
 	const [projects, setProjects] = useState(defaultProjects);
 	const pustToastMsg = useSetAtom(pushToastMsgAtom);
+	const {
+		push,
+		pathname,
+		query,
+	} = useRouter();
+	const {
+		selectedLabels: rawSelectedLabels = '',
+		...otherQueryParams
+	} = query;
+	const selectedLabels = typeof rawSelectedLabels === 'string' ?
+		rawSelectedLabels.split(',').filter(isTruthy) :
+		rawSelectedLabels;
+	const uniqueLabels = projects ?
+		uniqueBy(projects.flatMap(p => p.labels), 'label') :
+		[];
+	const handleLabelSelect = useCallback((label: string) => {
+		const newSelectedLabels = selectedLabels.includes(label) ?
+			unique(selectedLabels.filter(l => l !== label)) :
+			unique([ ...selectedLabels, label]);
 
+		const newQuery: UrlObject['query'] = { ...otherQueryParams };
+
+		if(newSelectedLabels.length) {
+			newQuery.selectedLabels = newSelectedLabels.join(',');
+		}
+
+		push({
+			query: newQuery,
+			pathname: pathname,
+		});
+	}, [selectedLabels.join(',')]);
 	const handleMoveLeft = useCallback(async (projectIndex: number) => {
 		if(!projects) {
 			return;
@@ -183,6 +220,11 @@ function UserGallery(props: Props) {
 	const title = `${username}'s Gallery - ${AppName}`;
 	const url = Paths.UserGallery(username);
 	const description = userProfile?.shortBio || '';
+	const filteredProjects = projects?.filter(
+		p => p
+			.labels
+			.find(l => !selectedLabels.length || selectedLabels.includes(l.label))
+	) || [];
 
 	return (
 		<>
@@ -244,36 +286,53 @@ function UserGallery(props: Props) {
 					{selectedTab === TabPaths.projects.value && (
 						<>
 							{!!projects?.length && (
-								<Grid padding={1} container spacing={1} >
-									{projects.map((p, i) => (
-										<Grid
-											item
-											key={p._id}
-											xs={12}
-											md={6}
-											position="relative"
-											sx={{
-												'& .change-order-action': {
-													xs: { display: 'flex' },
-													sm: { display: 'none' },
-												},
-												'&:hover .change-order-action': { display: 'flex' },
-											}}
-										>
-											<ProjectCard
-												project={p}
-											/>
-											{isOwner && (
-												<OrderControlBlock
-													first={i === 0}
-													last={i === projects.length - 1}
-													onMoveLeft={() => handleMoveLeft(i)}
-													onMoveRight={() => handleMoveRight(i)}
+								<>
+									<Box
+										paddingBottom={2}
+										borderBottom={1}
+										borderColor="divider"
+									>
+										<LabelsFilter
+											labels={uniqueLabels}
+											selectedLabels={selectedLabels}
+											onClick={handleLabelSelect}
+										/>
+									</Box>
+									<Grid
+										padding={1}
+										container
+										spacing={1}
+									>
+										{filteredProjects.map((p, i) => (
+											<Grid
+												item
+												key={p._id}
+												xs={12}
+												md={6}
+												position="relative"
+												sx={{
+													'& .change-order-action': {
+														xs: { display: 'flex' },
+														sm: { display: 'none' },
+													},
+													'&:hover .change-order-action': { display: 'flex' },
+												}}
+											>
+												<ProjectCard
+													project={p}
 												/>
-											)}
-										</Grid>
-									))}
-								</Grid>
+												{isOwner && !selectedLabels.length && (
+													<OrderControlBlock
+														first={i === 0}
+														last={i === projects.length - 1}
+														onMoveLeft={() => handleMoveLeft(i)}
+														onMoveRight={() => handleMoveRight(i)}
+													/>
+												)}
+											</Grid>
+										))}
+									</Grid>
+								</>
 							)}
 							{!projects?.length && (
 								<Typography>
