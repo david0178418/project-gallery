@@ -93,7 +93,13 @@ function ProjectCard(props: Props) {
 				</Link>
 			</Box>
 			<CardContent>
-				<Typography variant="body2" color="text.secondary">
+				<Typography
+					variant="body2"
+					color="text.secondary"
+					height={80}
+					overflow="hidden"
+					sx={{ maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}
+				>
 					<ParsedContent>
 						{description}
 					</ParsedContent>

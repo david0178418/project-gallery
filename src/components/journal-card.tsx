@@ -91,8 +91,9 @@ function JournalCard(props: Props) {
 					variant="body2"
 					color="text.secondary"
 					sx={{
-						maxHeight: 40,
+						height: 55,
 						overflow: 'hidden',
+						maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
 					}}
 				>
 					<MarkdownContent plaintext>
