@@ -320,9 +320,7 @@ function UserGallery(props: Props) {
 													'&:hover .change-order-action': { display: 'flex' },
 												}}
 											>
-												<ProjectCard
-													project={p}
-												/>
+												<ProjectCard project={p} />
 												{isOwner && projects && !selectedLabels.length && (
 													<OrderControlBlock
 														first={i === 0}
