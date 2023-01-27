@@ -87,8 +87,8 @@ function ProjectCard(props: Props) {
 				<Link href={projectUrl}>
 					<CardMedia
 						component="img"
-						height="194"
 						image={images?.[0].url}
+						sx={{ aspectRatio: '4 / 3' }}
 					/>
 				</Link>
 			</Box>
