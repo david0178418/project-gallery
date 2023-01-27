@@ -29,10 +29,10 @@ function LabelsFilter(props: Props) {
 			</Typography>
 			{labels.map(l => (
 				<Box
-					component="span"
 					key={l.label}
-					paddingRight={1}
-					paddingBottom={1}
+					marginRight={1}
+					marginBottom={1}
+					display="inline-block"
 				>
 					<Chip
 						label={l.label}

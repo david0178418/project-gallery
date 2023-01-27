@@ -105,7 +105,7 @@ function ProjectCard(props: Props) {
 					</ParsedContent>
 				</Typography>
 				{!!labels.length && (
-					<Box paddingTop={2} paddingRight={1}>
+					<Box marginTop={2} marginRight={1}>
 						{labels.map((l, i) => (
 							<Chip key={i} label={l.label} />
 						))}
