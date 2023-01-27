@@ -6,7 +6,9 @@ import { useRouter } from 'next/router';
 
 export
 function LoginBtn() {
+	console.log('LoginBtn');
 	const { data: session } = useSession();
+	console.log('LoginBtn done');
 	const router = useRouter();
 	const {
 		pathname,

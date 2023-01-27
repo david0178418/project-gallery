@@ -62,8 +62,10 @@ function RailButtonContent(props: Props) {
 // TODO Implement better path matching for active icon
 export
 function LeftRail() {
+	console.log('LeftRail');
 	const router = useRouter();
 	const { data } = useSession();
+	console.log('LeftRail done');
 	const {
 		pathname,
 		asPath,

@@ -31,7 +31,9 @@ import {
 
 export
 function BottomNav() {
+	console.log('BottomNav');
 	const { data } = useSession();
+	console.log('BottomNav done');
 	const {
 		asPath,
 		pathname,
