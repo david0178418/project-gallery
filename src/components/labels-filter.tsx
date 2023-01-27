@@ -28,7 +28,12 @@ function LabelsFilter(props: Props) {
 				Filter labels
 			</Typography>
 			{labels.map(l => (
-				<Box component="span" key={l.label} paddingRight={1}>
+				<Box
+					component="span"
+					key={l.label}
+					paddingRight={1}
+					paddingBottom={1}
+				>
 					<Chip
 						label={l.label}
 						onClick={() => onClick(l.label)}

@@ -15,11 +15,17 @@ import Link from 'next/link';
 import { updateProjectOrder } from '@client/api-calls';
 import { useSetAtom } from 'jotai';
 import { pushToastMsgAtom } from '@common/atoms';
+import { useCallback, useState } from 'react';
+import LabelsFilter from '@components/labels-filter';
+import { useRouter } from 'next/router';
+import { UrlObject } from 'url';
 import {
 	isTruthy,
-	moveItemLeft, moveItemRight, unique, uniqueBy,
+	moveItemLeft,
+	moveItemRight,
+	unique,
+	uniqueBy,
 } from '@common/utils';
-import { useCallback, useState } from 'react';
 import {
 	ArrowDownIcon,
 	ArrowLeftIcon,
@@ -53,9 +59,6 @@ import {
 	Tabs,
 	Typography,
 } from '@mui/material';
-import LabelsFilter from '@components/labels-filter';
-import { useRouter } from 'next/router';
-import { UrlObject } from 'url';
 
 const TabPaths = {
 	projects: {
