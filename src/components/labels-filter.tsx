@@ -1,9 +1,7 @@
 import NextLink from 'next/link';
-import {
-	Box,
-	Chip, Link as MuiLink, Typography,
-} from '@mui/material';
+import { Link as MuiLink, Typography } from '@mui/material';
 import { ComponentProps, forwardRef } from 'react';
+import Label from './label';
 
 interface Props {
 	labels: Array<{label: string}>;
@@ -28,22 +26,16 @@ function LabelsFilter(props: Props) {
 				Filter labels
 			</Typography>
 			{labels.map(l => (
-				<Box
+				<Label
 					key={l.label}
-					marginRight={1}
-					marginBottom={1}
-					display="inline-block"
-				>
-					<Chip
-						label={l.label}
-						onClick={() => onClick(l.label)}
-						color={
-							selectedLabels.includes(l.label) ?
-								'secondary' :
-								'default'
-						}
-					/>
-				</Box>
+					label={l.label}
+					onClick={() => onClick(l.label)}
+					color={
+						selectedLabels.includes(l.label) ?
+							'secondary' :
+							'default'
+					}
+				/>
 			))}
 		</>
 	);

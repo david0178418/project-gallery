@@ -18,12 +18,12 @@ import {
 	CardContent,
 	CardHeader,
 	CardMedia,
-	Chip,
 	IconButton,
 	Tooltip,
 	Typography,
 } from '@mui/material';
 import { ShareIconButton } from './common/share-button';
+import Label from './label';
 
 interface Props {
 	project: UiProject;
@@ -105,9 +105,12 @@ function ProjectCard(props: Props) {
 					</ParsedContent>
 				</Typography>
 				{!!labels.length && (
-					<Box marginTop={2} marginRight={1}>
+					<Box marginTop={2}>
 						{labels.map((l, i) => (
-							<Chip key={i} label={l.label} />
+							<Label
+								key={i}
+								label={l.label}
+							/>
 						))}
 					</Box>
 				)}

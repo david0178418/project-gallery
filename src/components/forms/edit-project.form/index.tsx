@@ -5,14 +5,14 @@ import LinksList from '@components/links-list';
 import LinkForm, { linkIsValid } from './link-form';
 import LabelForm, { labelIsValid } from './label-form';
 import {
+	useCallback,
+	useState,
+} from 'react';
+import {
 	inRange,
 	moveItemLeft,
 	moveItemRight,
 } from '@common/utils';
-import {
-	useCallback,
-	useState,
-} from 'react';
 import {
 	ProjectImage,
 	WriteProject,
@@ -27,12 +27,12 @@ import {
 } from '@common/constants';
 import {
 	Box,
-	Chip,
 	Grid,
 	Tab,
 	Tabs,
 	TextField,
 } from '@mui/material';
+import Label from '@components/label';
 
 function dateToDateSubstring(date: Date) {
 	return date.toISOString().substring(0, 10);
@@ -75,7 +75,7 @@ function EditProjectForm(props: Props) {
 			labels: [
 				{ label },
 				...labels,
-			],
+			].sort(comparLabel),
 		});
 	}, [handleChange, labels]);
 	const handleRemoveLabel = useCallback((labelIndex: number) => {
@@ -158,7 +158,7 @@ function EditProjectForm(props: Props) {
 			{!!labels.length && (
 				<Box paddingTop={1}>
 					{labels.map((l, i) => (
-						<Chip
+						<Label
 							key={l.label}
 							label={l.label}
 							onDelete={() => handleRemoveLabel(i)}
@@ -231,4 +231,10 @@ function projectIsValid(project: WriteProject) {
 		labels.every(labelIsValid) &&
 		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
 		inRange(description.length, MinProjectDescriptionLength, MaxProjectDescriptionLength);
+}
+
+type Label = WriteProject['labels'][number];
+
+function comparLabel(a: Label, b: Label) {
+	return a.label.localeCompare(b.label);
 }
