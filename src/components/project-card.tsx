@@ -5,6 +5,8 @@ import { ParsedContent } from './parsed-content';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
 import { useUser } from '@common/hooks';
+import { ShareIconButton } from './common/share-button';
+import Label from './label';
 import {
 	FavoriteIcon,
 	JournalIcon,
@@ -22,8 +24,6 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material';
-import { ShareIconButton } from './common/share-button';
-import Label from './label';
 
 interface Props {
 	project: UiProject;
