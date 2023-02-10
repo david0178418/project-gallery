@@ -1,13 +1,17 @@
 import { createUser } from '@pages/api/v0/user/register';
 import { DbCollections } from '@common/constants';
-import { dbClientPromise, getCollection } from '.';
+import { getDb, getCollection } from '.';
 
 export
 async function setupDb() {
+	if(process.env.NODE_ENV !== 'development') {
+		return;
+	}
+
 	const GramTextIndexName = 'gram-text-index';
 
 	console.log('Setting up db');
-	const db = await dbClientPromise;
+	const db = await getDb();
 
 	const collections = await db.listCollections().toArray();
 
