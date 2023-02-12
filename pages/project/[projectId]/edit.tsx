@@ -86,7 +86,7 @@ function Page(props: Props) {
 	return (
 		<>
 			<Head>
-				<title>{AppName} - {title}</title>
+				<title>{title}</title>
 			</Head>
 			<ScrollContent
 				header={

@@ -20,11 +20,12 @@ function Layout(props: Props) {
 		title,
 		children,
 	} = props;
+	const renderdTitle = title ? `${title} - ${AppName}` : AppName;
 
 	return (
 		<>
 			<Head>
-				<title>{AppName} {title ? `- ${title}` : ''}</title>
+				<title>{renderdTitle}</title>
 				<meta name="description" content={AppName} />
 			</Head>
 
