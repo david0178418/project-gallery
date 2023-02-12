@@ -14,7 +14,7 @@ import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import { projectSave } from '@client/api-calls';
 import { useCallback, useState } from 'react';
-import { AppName, SpecialCharacterCodes } from '@common/constants';
+import { SpecialCharacterCodes } from '@common/constants';
 import {
 	Box,
 	Container,
