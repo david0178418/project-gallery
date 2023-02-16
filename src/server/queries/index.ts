@@ -23,6 +23,7 @@ export
 async function fetchProjects(): Promise<Array<WithId<DbProject>>> {
 	const col = await getCollection(DbCollections.Projects);
 	return col.aggregate<WithId<DbProject>>([
+		{ $match: { unlisted: { $ne: true } } },
 		{ $sort: { lastUpdatedDate: -1 } },
 		{ $limit: 20 },
 	]).toArray();
