@@ -240,7 +240,10 @@ function UserGallery(props: Props) {
 				)}
 			</ScrollContent>
 			{isOwner && (
-				<Link href={Paths.ProjectEdit(project._id)}>
+				<Link
+					legacyBehavior
+					href={Paths.ProjectEdit(project._id)}
+				>
 					<Fab
 						color="primary"
 						sx={{
