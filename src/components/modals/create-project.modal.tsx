@@ -34,6 +34,7 @@ function createWriteProject(): WriteProject {
 		images: [],
 		labels: [],
 		links: [],
+		unlisted: false,
 	};
 }
 

@@ -13,6 +13,7 @@ type DbProject = WithId<{
 	projectCreatedDate: string;
 	projectLastUpdatedDate: string;
 	title: string;
+	unlisted: boolean;
 	images: Array<{
 		url: string;
 		description: string;
@@ -36,6 +37,6 @@ type UiProject = WithStringId<Omit<DbProject, 'owner' | 'lastJournalEntry'> & {
 }>;
 
 export
-type WriteProject = Pick<UiProject, 'description' | 'title' | 'images' | 'projectCreatedDate' | 'projectLastUpdatedDate' | 'labels' | 'links'> & {
+type WriteProject = Pick<UiProject, 'description' | 'title' | 'images' | 'projectCreatedDate' | 'projectLastUpdatedDate' | 'labels' | 'links' | 'unlisted'> & {
 	_id?: string;
 };

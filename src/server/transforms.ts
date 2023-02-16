@@ -58,6 +58,7 @@ function uiProjectToWriteProject(project: UiProject): WriteProject {
 		'links',
 		'title',
 		'images',
+		'unlisted',
 	);
 }
 

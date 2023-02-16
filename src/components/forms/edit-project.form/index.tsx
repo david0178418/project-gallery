@@ -27,6 +27,8 @@ import {
 } from '@common/constants';
 import {
 	Box,
+	Checkbox,
+	FormControlLabel,
 	Grid,
 	Tab,
 	Tabs,
@@ -61,6 +63,7 @@ function EditProjectForm(props: Props) {
 		description,
 		labels,
 		links,
+		unlisted = false,
 	} = project;
 	const [selectedTab, setSelectedTab] = useState(0);
 	const handleChange = useCallback((projectUpdates: Partial<WriteProject>) => {
@@ -210,6 +213,17 @@ function EditProjectForm(props: Props) {
 						</>
 					)}
 				</Box>
+			</Box>
+			<Box paddingTop={1}>
+				<FormControlLabel
+					label="Unlisted"
+					control={
+						<Checkbox
+							checked={unlisted}
+							onChange={(e, checked) => handleChange({ unlisted: checked })}
+						/>
+					}
+				/>
 			</Box>
 		</Box>
 	);

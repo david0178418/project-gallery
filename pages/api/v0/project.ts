@@ -50,6 +50,7 @@ const schema: ZodType<Schema> = z.object({
 					.max(MaxImageDescriptionLength),
 			})
 		).min(1, { message: 'Projects must have at least one image' }),
+		unlisted: z.boolean(),
 		labels: z.array(
 			z.object({
 				label: z
