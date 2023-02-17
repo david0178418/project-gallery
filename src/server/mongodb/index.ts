@@ -36,7 +36,6 @@ function getDb() {
 		// is preserved across module reloads caused by HMR (Hot Module Replacement).
 		// @ts-ignore
 		if (!global._mongoClientPromise) {
-			console.log('foooo');
 			// @ts-ignore
 			global._mongoClientPromise = getDbClient();
 		}

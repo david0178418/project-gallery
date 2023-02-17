@@ -75,7 +75,6 @@ function CreateJournalModal() {
 		setJournal(createWriteJournal());
 	}
 
-	console.log('journal', journal);
 	return (
 		<Dialog
 			fullWidth

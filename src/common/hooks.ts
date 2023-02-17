@@ -12,18 +12,14 @@ import { UserRoles } from '@common/constants';
 
 export
 function useIsLoggedIn() {
-	console.log('useIsLoggedIn');
 	const { status } = useSession();
-	console.log('useIsLoggedIn done');
 
 	return status === 'authenticated';
 }
 
 export
 function useIsLoggedOut() {
-	console.log('useIsLoggedOut');
 	const { status } = useSession();
-	console.log('useIsLoggedOut done');
 	return status === 'unauthenticated';
 }
 
@@ -36,9 +32,7 @@ function useUser() {
 
 export
 function useIsAdmin() {
-	console.log('useIsAdmin');
 	const { data } = useSession();
-	console.log('useIsAdmin done');
 
 	return data?.user.role === UserRoles.Admin;
 }
