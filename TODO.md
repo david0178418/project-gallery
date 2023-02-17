@@ -10,16 +10,12 @@ Project Description
 
 ### Bugs to hunt
 
-- [ ] FIx bug where you are signed out after sitting for a bit  
 
 ### Todo
 
+- [ ] Create landing page  
 - [ ] Delete journal posts  
 - [ ] Delete Posts  
-- [ ] Sort projects gallery  
-- [ ] Add project labels/categories  
-- [ ] Filter on labels/categories  
-- [ ] Clarify intention of project on home page  
 - [ ] Figure out what content to present on main page  
 - [ ] Determine shorter term premium offering  
 - [ ] Add more links to journal posts like previous/next entry  
@@ -33,7 +29,4 @@ Project Description
 
 ### Done
 
-- [ ] Ensure only published journals are shown unless you are the owner  
-- [ ] Add "Links" section  
-- [ ] Sort project images  
 
