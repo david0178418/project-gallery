@@ -59,6 +59,11 @@ export
 type Enum<T extends object> = T[keyof T];
 
 export
+type ReplacePropType<T, ToFind, ToReplace> = {
+	[K in keyof T]: T[K] extends ToFind ? ToReplace : T[K]
+}
+
+export
 type Nullable<T> = T | null;
 
 export
