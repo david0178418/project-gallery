@@ -84,6 +84,7 @@ async function createUser(username: string, password: string) {
 				_id: result.insertedId,
 				userId: result.insertedId,
 				created: nowISOStr,
+				lastLogin: nowISOStr,
 			}),
 		userProfilesCol
 			.insertOne({

@@ -7,6 +7,7 @@ import { DbCollections } from '@common/constants';
 import { DbJournal } from '@common/types/Journal';
 import { DbUserProfile } from '@common/types/UserProfile';
 import { DbUserGalleryOrder } from '@common/types/UserGalleryOrder';
+import { nowISOString } from '@common/utils';
 
 export
 async function fetchUser(username: string): Promise<DbUser | null> {
@@ -148,4 +149,14 @@ async function fetchUserJournals(username: string, owner: boolean): Promise<Arra
 		},
 		{ $limit: 20 },
 	]).toArray();
+}
+
+export
+async function updateLastLogin(id: ObjectId) {
+	const col = await getCollection(DbCollections.UsersMeta);
+
+	await col.updateOne(
+		{ _id: id },
+		{ $set: { lastLogin: nowISOString() } },
+	);
 }

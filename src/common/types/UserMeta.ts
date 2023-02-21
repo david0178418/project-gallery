@@ -4,6 +4,7 @@ export
 interface DbUserMeta {
 	userId: ObjectId;
 	created: string;
+	lastLogin: string;
 }
 
 export

@@ -7,7 +7,7 @@ import type {
 import { UserRoles } from '@common/constants';
 import { compare } from 'bcryptjs';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { fetchUser } from '@server/queries';
+import { fetchUser, updateLastLogin } from '@server/queries';
 import {
 	NextAuthOptions,
 	unstable_getServerSession,
@@ -63,6 +63,8 @@ const authOptions: NextAuthOptions = {
 					if(!(user?._id && await compare(password, user.hash))) {
 						return null;
 					}
+
+					updateLastLogin(user._id);
 
 					return {
 						id: user._id?.toString(),
