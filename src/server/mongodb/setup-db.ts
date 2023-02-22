@@ -40,7 +40,11 @@ async function setupDb() {
 
 	if(!(await usersCol.findOne({ username: 'admin' }))) {
 		console.log('Creating default admin user');
-		await createUser('admin', 'password123');
+		await createUser({
+			email: 'admin@test.com',
+			username: 'admin',
+			password: 'password123',
+		});
 	}
 
 	console.log('Setup complete');

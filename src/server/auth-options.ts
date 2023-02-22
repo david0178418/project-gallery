@@ -4,19 +4,16 @@ import type {
 	NextApiResponse,
 } from 'next';
 
-import { UserRoles } from '@common/constants';
 import { compare } from 'bcryptjs';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { fetchUser, updateLastLogin } from '@server/queries';
+import { UserRoles } from '@common/constants';
 import {
 	NextAuthOptions,
 	unstable_getServerSession,
 } from 'next-auth';
 
-const {
-	JWT_SECRET,
-	NEXTAUTH_SECRET,
-} = process.env;
+const { NEXTAUTH_SECRET } = process.env;
 
 type Req = GetServerSidePropsContext['req'] | NextApiRequest;
 type Res = GetServerSidePropsContext['res'] | NextApiResponse;
@@ -40,7 +37,12 @@ const authOptions: NextAuthOptions = {
 				username: {
 					label: 'Username',
 					type: 'text',
-					placeholder: 'player',
+					placeholder: 'username',
+				},
+				email: {
+					label: 'Email',
+					type: 'email',
+					placeholder: 'email',
 				},
 				password: {
 					label: 'Password',
@@ -53,12 +55,12 @@ const authOptions: NextAuthOptions = {
 				}
 
 				const {
-					username,
+					username: usernameOrEmail,
 					password,
 				} = credentials;
 
 				try {
-					const user = await fetchUser(username);
+					const user = await fetchUser(usernameOrEmail);
 
 					if(!(user?._id && await compare(password, user.hash))) {
 						return null;
@@ -69,6 +71,7 @@ const authOptions: NextAuthOptions = {
 					return {
 						id: user._id?.toString(),
 						username: user.username,
+						email: user.email,
 						role: user.role || UserRoles.User,
 					};
 				} catch(e) {
@@ -128,8 +131,6 @@ const authOptions: NextAuthOptions = {
 	// option is set - or by default if no database is specified.
 	// https://next-auth.js.org/configuration/options#jwt
 	jwt: {
-		// A secret to use for key generation (you should set this explicitly)
-		secret: JWT_SECRET,
 		// Set to true to use encryption (default: false)
 		// @ts-ignore TODO Figure out type error. Is this deprecated or is type wrong?
 		encryption: true,
@@ -169,7 +170,6 @@ const authOptions: NextAuthOptions = {
 			} = args;
 
 			if(user) {
-				// @ts-ignore TODO again, figure out if type info is correct or not
 				token.user = user;
 			}
 
@@ -180,6 +180,8 @@ const authOptions: NextAuthOptions = {
 				session,
 				token,
 			} = args;
+
+			updateLastLogin(session.user.id);
 
 			session.user = token.user;
 

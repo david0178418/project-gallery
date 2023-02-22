@@ -1,18 +1,21 @@
 import { urlJoin } from './utils';
 
+export const BaseUrl = process.env.HOST;
+export const IsDev = process.env.NODE_ENV !== 'production';
+export const SmtpPort = +(process.env.SMTP_PORT || '25');
+export const SmtpPw = process.env.SMTP_PW;
+export const SmtpServer = process.env.SMTP_SERVER;
+export const SmtpUsername = process.env.SMTP_USERNAME;
+
 export const ApiUrl = '/api/v0';
 export const AppName = 'ProjectGallery.me';
 export const CookieName = AppName;
-export const AuthUser_tokensCookieName = `${CookieName}.AuthUserTokens`;
-export const AuthUserCookieName = `${CookieName}.AuthUser`;
-export const BaseUrl = process.env.HOST;
 export const DefaultToastMsgDelay = 4000;
 export const ExtendedWhitespaceRegex = /\s{2,}/g;
-export const IsDev = process.env.NODE_ENV !== 'production';
 export const ISODateStringLength = 24;
-export const MaxImageUrlLength = 200;
-export const MaxImageDescriptionLength = 200;
 export const IsSsr = typeof window === 'undefined';
+export const MaxImageDescriptionLength = 200;
+export const MaxImageUrlLength = 200;
 export const MaxJournalPostLength = 4000;
 export const MaxJournalProjectTitleLength = 100;
 export const maxLabelCount = 5;
@@ -20,13 +23,13 @@ export const MaxLabelSize = 20;
 export const MaxLinkLabelSize = 100;
 export const MaxProjectDescriptionLength = 1000;
 export const MaxSearchTermSize = 100;
-export const MaxUserProfileShortBioLength = 160;
 export const MaxUserProfileBioLength = 4000;
+export const MaxUserProfileShortBioLength = 160;
 export const MinImageUrlLength = 50;
 export const MinJournalPostLength = 10;
 export const MinJournalProjectTitleLength = 3;
-export const MinLinkLabelSize = 3;
 export const MinLabelSize = 1;
+export const MinLinkLabelSize = 3;
 export const MinProjectDescriptionLength = 10;
 export const MongoIdLength = 24;
 export const PasswordMaxLength = 128;
@@ -34,6 +37,9 @@ export const PasswordMinLength = 6;
 export const PasswordSaltLength = 10;
 export const UsernameMaxLength = 24;
 export const UsernameMinLength = 3;
+
+export const AuthUser_tokensCookieName = `${CookieName}.AuthUserTokens`;
+export const AuthUserCookieName = `${CookieName}.AuthUser`;
 
 // Source: https://stackoverflow.com/questions/4328500/how-can-i-strip-all-punctuation-from-a-string-in-javascript-using-regex
 export const PunctuationRegex = /[^\p{L}\s]/gu; // Not sure if this should be used or the other const PunctuationRegex = /[.,-/#!$%^&*;:{}""=\-_`~()@+?><[\]+]/g;

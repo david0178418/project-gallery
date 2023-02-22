@@ -27,6 +27,7 @@ import {
 	Container,
 	Tab,
 	Tabs,
+	Typography,
 } from '@mui/material';
 
 interface Props {
@@ -107,22 +108,29 @@ const ProfilePage: NextPage<Props> = (props) => {
 			<Container sx={{ paddingTop: 2 }}>
 				{selectedTab === 0 && (
 					<>
-						Signed in as {session.data?.user.username}
-						<Link
-							shallow
-							passHref
-							href={{
-								pathname,
-								query: {
-									a: ModalActions.Logout,
-									...query,
-								},
-							}}
-						>
-							<Button>
-								Logout
-							</Button>
-						</Link>
+						<Typography>
+							Signed in as <strong>{session.data?.user.username}</strong>
+						</Typography>
+						<Typography>
+							Email: <strong>{session.data?.user.email}</strong>
+						</Typography>
+						<Box paddingTop={2}>
+							<Link
+								shallow
+								passHref
+								href={{
+									pathname,
+									query: {
+										a: ModalActions.Logout,
+										...query,
+									},
+								}}
+							>
+								<Button>
+									Logout
+								</Button>
+							</Link>
+						</Box>
 						<Box paddingY={2}>
 							<Link
 								shallow

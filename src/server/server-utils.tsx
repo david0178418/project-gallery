@@ -1,18 +1,17 @@
 
 import { createTransport } from 'nodemailer';
 import { Address } from 'nodemailer/lib/mailer';
+import {
+	SmtpPort,
+	SmtpPw,
+	SmtpServer,
+	SmtpUsername,
+} from '@common/constants';
 
-const {
-	SMTP_PORT = '25',
-	SMTP_PW = '',
-	SMTP_SERVER = '',
-	SMTP_USERNAME = '',
-} = process.env;
-
-const auth = (SMTP_USERNAME) ?
+const auth = (SmtpUsername) ?
 	{
-		user: SMTP_USERNAME,
-		pass: SMTP_PW,
+		user: SmtpUsername,
+		pass: SmtpPw,
 	} :
 	undefined;
 
@@ -27,8 +26,8 @@ interface SendEmailArgs {
 export
 async function sendEmail(args: SendEmailArgs) {
 	const transporter = createTransport({
-		host: SMTP_SERVER,
-		port: +SMTP_PORT,
+		host: SmtpServer,
+		port: SmtpPort,
 		auth,
 	});
 

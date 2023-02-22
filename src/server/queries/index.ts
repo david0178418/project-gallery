@@ -10,14 +10,47 @@ import { DbUserGalleryOrder } from '@common/types/UserGalleryOrder';
 import { nowISOString } from '@common/utils';
 
 export
-async function fetchUser(username: string): Promise<DbUser | null> {
+async function fetchUser(usernameOrEmail: string): Promise<DbUser | null> {
 	const usersCol = await getCollection(DbCollections.Users);
 	const result = await usersCol.aggregate<WithId<DbUser>>([
-		{ $match: { $expr: { $eq: [ { $toLower: '$username' }, username.toLowerCase() ] } } },
+		{
+			$match: {
+				$or: [
+					{ usernameLower: usernameOrEmail.toLocaleLowerCase() },
+					{ email: usernameOrEmail },
+				],
+			},
+		},
 		{ $limit: 1 },
 	]).toArray();
 
 	return result[0] || null;
+}
+
+export
+async function checkCredentialAvailability(username: string, email: string) {
+	const usersCol = await getCollection(DbCollections.Users);
+	const results = await usersCol.aggregate<WithId<DbUser>>([
+		{
+			$match: {
+				$or: [
+					{ usernameLower: username.toLocaleLowerCase() },
+					{ email },
+				],
+			},
+		},
+		{ $limit: 2 },
+	]).toArray();
+
+	if(!results.length) {
+		return { available: true };
+	}
+
+	return {
+		available: false,
+		email: !!results.find(r => r.email === email),
+		username: !!results.find(r => r.usernameLower === username.toLocaleLowerCase()),
+	};
 }
 
 export
@@ -152,11 +185,11 @@ async function fetchUserJournals(username: string, owner: boolean): Promise<Arra
 }
 
 export
-async function updateLastLogin(id: ObjectId) {
+async function updateLastLogin(id: ObjectId | string) {
 	const col = await getCollection(DbCollections.UsersMeta);
 
 	await col.updateOne(
-		{ _id: id },
+		{ _id: new ObjectId(id) },
 		{ $set: { lastLogin: nowISOString() } },
 	);
 }

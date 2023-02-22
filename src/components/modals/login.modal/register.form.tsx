@@ -25,10 +25,12 @@ function RegistrationForm(props: Props) {
 	const pushToastMsg = useSetAtom(pushToastMsgAtom);
 	const setLoading = useSetAtom(loadingAtom);
 	const [username, setUsername] = useState('');
+	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [repassword, setRepassword] = useState('');
 	const valid = !!(
 		username &&
+		email &&
 		password && (
 			password === repassword
 		)
@@ -49,11 +51,12 @@ function RegistrationForm(props: Props) {
 
 		try {
 			if(
-				await register(username, password) &&
+				await register(username, email, password) &&
 				await login(username, password)
 			) {
 				pushToastMsg(`Logged in as ${username}`);
 				setUsername('');
+				setEmail('');
 			}
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
@@ -88,6 +91,17 @@ function RegistrationForm(props: Props) {
 						value={username}
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setUsername(e.target.value)}
+					/>
+					<TextField
+						autoFocus
+						fullWidth
+						label="Email"
+						variant="standard"
+						placeholder="email"
+						type="email"
+						value={email}
+						onKeyUp={e => handleKeyUp(e.key)}
+						onChange={e => setEmail(e.target.value)}
 					/>
 					<TextField
 						fullWidth

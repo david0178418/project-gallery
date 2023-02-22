@@ -2,14 +2,32 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { getCollection } from '@server/mongodb';
 import { getServerSession } from '@server/auth-options';
-import { fetchUser } from '@server/queries';
+import { checkCredentialAvailability } from '@server/queries';
 import { passwordToHash } from '@server/transforms';
 import { ObjectId } from 'mongodb';
-import { UserCredentialValidation } from '@common/types/UserCredentials';
+import { z, ZodType } from 'zod';
 import {
 	DbCollections,
 	UserRoles,
 } from '@common/constants';
+import {
+	EmailValidation,
+	PasswordValidation,
+	UsernameValidation,
+} from '@common/types/UserCredentials';
+
+interface Schema {
+	email: string;
+	password: string;
+	username: string;
+}
+
+export
+const Validation: ZodType<Schema> = z.object({
+	email: EmailValidation,
+	username: UsernameValidation,
+	password: PasswordValidation,
+});
 
 export default
 async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
@@ -19,7 +37,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
 		return res.status(400).end();
 	}
 
-	const result = await UserCredentialValidation.safeParseAsync(req.body);
+	const result = await Validation.safeParseAsync(req.body);
 
 	if(!result.success) {
 		return res
@@ -35,25 +53,45 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
 
 	const {
 		username,
+		email,
 		password,
 	} = result.data;
 
-	if(await fetchUser(username)) {
+	const availabilityResults = await checkCredentialAvailability(username, email);
+
+	if(!availabilityResults.available) {
+		const errors = [];
+
+		if(availabilityResults.username) {
+			errors.push(`User "${username}" already exists`);
+		}
+
+		if(availabilityResults.email) {
+			errors.push(`Email "${email}" is already used`);
+		}
+
 		return res.send({
 			ok: false,
-			errors: [
-				`User "${username}" already exists`,
-			],
+			errors,
 		});
 	}
 
-	await createUser(username, password);
+	await createUser({
+		username,
+		email,
+		password,
+	});
 
 	res.send({ ok: true });
 }
 
 export
-async function createUser(username: string, password: string) {
+async function createUser(args: Schema) {
+	const {
+		email,
+		password,
+		username,
+	} = args;
 	const usersCol = await getCollection(DbCollections.Users);
 	const userGalleryOrderCol = await getCollection(DbCollections.UserGalleryOrder);
 	const usersMetaCol = await getCollection(DbCollections.UsersMeta);
@@ -67,6 +105,8 @@ async function createUser(username: string, password: string) {
 		.insertOne({
 			_id,
 			username,
+			usernameLower: username.toLocaleLowerCase(),
+			email,
 			hash,
 			role: UserRoles.User,
 		});

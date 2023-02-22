@@ -5,6 +5,7 @@ interface DbUserMeta {
 	userId: ObjectId;
 	created: string;
 	lastLogin: string;
+	emailValidated?: boolean;
 }
 
 export

@@ -1,4 +1,4 @@
-import { z, ZodType } from 'zod';
+import { z } from 'zod';
 import {
 	PasswordMaxLength,
 	PasswordMinLength,
@@ -7,10 +7,17 @@ import {
 } from '@common/constants';
 
 export
-interface UserCredential {
+interface UserLoginCredential {
 	password: string;
-	username: string;
+	usernameOrEmail: string;
 }
+
+export
+const EmailValidation = z
+	.string()
+	.email()
+	.min(5)
+	.transform(s => s.toLocaleLowerCase());
 
 export
 const UsernameValidation = z
@@ -20,13 +27,10 @@ const UsernameValidation = z
 	.regex(/^[a-z0-9]+$/i);
 
 export
+const UsernameOrEmailValidation = z.union([UsernameValidation, EmailValidation]);
+
+export
 const PasswordValidation = z
 	.string()
 	.min(PasswordMinLength)
 	.max(PasswordMaxLength);
-
-export
-const UserCredentialValidation: ZodType<UserCredential> = z.object({
-	username: UsernameValidation,
-	password: PasswordValidation,
-});

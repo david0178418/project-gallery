@@ -5,7 +5,9 @@ import { WithId } from 'mongodb';
 export
 type DbUser = WithId<{
 	role: Enum<typeof UserRoles>;
+	email: string;
 	username: string;
+	usernameLower: string;
 	hash: string,
 }>;
 

@@ -23,9 +23,9 @@ function LoginForm(props: Props) {
 	const { urlObj } = props;
 	const pushToastMsg = useSetAtom(pushToastMsgAtom);
 	const setLoading = useSetAtom(loadingAtom);
-	const [username, setUsername] = useState('');
+	const [usernameOrEmail, setUsernameOrEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const valid = !!(password && username);
+	const valid = !!(password && usernameOrEmail);
 
 	function handleKeyUp(key: string) {
 		if(key === Key.Enter) {
@@ -41,9 +41,11 @@ function LoginForm(props: Props) {
 		setLoading(true);
 
 		try {
-			if(await login(username, password)) {
-				pushToastMsg(`Logged in as ${username}`);
-				setUsername('');
+			const results = await login(usernameOrEmail, password);
+
+			if(results?.ok) {
+				pushToastMsg(`Logged in as ${usernameOrEmail}`);
+				setUsernameOrEmail('');
 			} else {
 				pushToastMsg('Incorrect Login');
 			}
@@ -71,13 +73,13 @@ function LoginForm(props: Props) {
 					<TextField
 						autoFocus
 						fullWidth
-						label="Username"
+						label="Username or Email"
 						variant="standard"
 						placeholder="username"
 						type="text"
-						value={username}
+						value={usernameOrEmail}
 						onKeyUp={e => handleKeyUp(e.key)}
-						onChange={e => setUsername(e.target.value)}
+						onChange={e => setUsernameOrEmail(e.target.value)}
 					/>
 					<TextField
 						fullWidth

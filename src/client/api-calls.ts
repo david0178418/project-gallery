@@ -3,32 +3,29 @@ import type { ApiResponse, Enum } from '@common/types';
 import { signIn, signOut } from 'next-auth/react';
 import { get, post } from '@client/client-utils';
 import { urlJoin } from '@common/utils';
-import {
-	ApiUrl, Direction, FileUploadCategories,
-} from '@common/constants';
 import { UiProject, WriteProject } from '@common/types/Project';
 import { WriteJournal } from '@common/types/Journal';
 import { WriteUserProfile } from '@common/types/UserProfile';
+import {
+	ApiUrl,
+	Direction,
+	FileUploadCategories,
+} from '@common/constants';
 
 export
 async function login(username: string, password: string) {
-	let success = false;
-
-	const result: any = await signIn('credentials', {
+	return signIn('credentials', {
 		username,
 		password,
 		redirect: false,
 	});
-
-	success = !!result?.ok;
-
-	return success;
 }
 
 export
-function register(username: string, password: string) {
+function register(username: string, email: string, password: string) {
 	return apiPost<ApiResponse>('/user/register', {
 		username,
+		email,
 		password,
 	});
 }

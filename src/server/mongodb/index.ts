@@ -13,40 +13,45 @@ import {
 	MongoClient,
 } from 'mongodb';
 
+// In development mode, use a global variable so that the value
+// is preserved across module reloads caused by HMR (Hot Module Replacement).
+declare global {
+	// eslint-disable-next-line no-var
+	var _dbClientPromise: Promise<MongoClient>;
+	// eslint-disable-next-line no-var
+	var _dbPromise: Promise<Db>;
+}
+
 type DbCollectionsEnum = Enum<typeof DbCollections>;
 
 const MongoDbName = process.env.DB_NAME || 'awesome-default-db';
 const uri = process.env.MONGODB_URI || '';
 
-let dbClientPromise: Promise<Db>;
+let dbClientPromise: Promise<MongoClient>;
+let dbPromise: Promise<Db>;
 
-function getDbClient() {
+function getDbClient(): Promise<MongoClient> {
 	if(!dbClientPromise) {
-		dbClientPromise = new MongoClient(uri)
-			.connect()
-			.then((client) => client.db(MongoDbName));
+		dbClientPromise = global._dbClientPromise || new MongoClient(uri).connect();
+	}
+
+	if (process.env.NODE_ENV === 'development' && !global._dbClientPromise) {
+		global._dbClientPromise = dbClientPromise;
 	}
 
 	return dbClientPromise;
 }
 
-function getDb() {
-	if (process.env.NODE_ENV === 'development') {
-		// In development mode, use a global variable so that the value
-		// is preserved across module reloads caused by HMR (Hot Module Replacement).
-		// @ts-ignore
-		if (!global._mongoClientPromise) {
-			// @ts-ignore
-			global._mongoClientPromise = getDbClient();
-		}
-		// @ts-ignore
-		dbClientPromise = global._mongoClientPromise;
-	} else {
-		// In production mode, it's best to not use a global variable.
-		dbClientPromise = getDbClient();
+function getDb(): Promise<Db> {
+	if(!dbPromise) {
+		dbPromise = global._dbPromise || getDbClient().then((client) => client.db(MongoDbName));
 	}
 
-	return dbClientPromise;
+	if (process.env.NODE_ENV === 'development' && !global._dbPromise) {
+		global._dbPromise = dbPromise;
+	}
+
+	return dbPromise;
 }
 
 if (!process.env.MONGODB_URI) {
@@ -74,6 +79,7 @@ async function getCollection<T extends DbCollectionsEnum>(collection: T): Promis
 // Export a module-scoped MongoClient promise. By doing this in a
 // separate module, the client can be shared across functions.
 export {
+	getDbClient,
 	getDb,
 	getCollection,
 };

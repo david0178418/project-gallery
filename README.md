@@ -8,7 +8,6 @@ Copy `.env.local.sample` to `.env.local` and change the values as needed:
 NODE_ENV="development"
 DB_NAME="awesome-default-db"
 MONGODB_URI="mongodb://127.0.0.1:27017"
-JWT_SECRET="jwt-super-secret"
 NEXTAUTH_SECRET="some-super-secret"
 HOST="http://localhost:3000"
 NEXTAUTH_URL="${HOST}"
@@ -17,15 +16,24 @@ AWS_APP_SECRET_KEY=testsecretkey
 AWS_APP_DEFAULT_REGION=us-east-1
 AWS_APP_BUCKET=my-bucket
 AWS_APP_ENDPOINT=http://localhost:9000
-```
+SMTP_SERVER="localhost"
+SMTP_PORT="25"
+SMTP_USERNAME=""
+SMTP_PW=""
 
-Optionally, spin up the external resources (mongo database and minio for s3 services).  This will spin up the mongo server at `mongodb://127.0.0.1:27017` and the minio server at `http://localhost:9000` with admin dashboard at `http://localhost:9001`:
+```
+Optionally, spin up the required resources:
 
 ```bash
 npm run dev:services
 ```
 
-First, run the development server:
+This will start the following services:
+* MongoDB server at `mongodb://127.0.0.1:27017`
+* Minio (local AWS drop-in replacement) at `http://localhost:9000` with admin dashboard at `http://localhost:9001`
+* SMTP server at `http://localhost:25` and web interface at `http://localhost:5000`
+
+Once you have the services started or configured, run the development server:
 
 ```bash
 npm run dev
