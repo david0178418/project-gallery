@@ -81,12 +81,12 @@ function LoginForm(props: Props) {
 			<DialogTitle>
 				Login
 			</DialogTitle>
-			<DialogContent>
-				<Box
-					noValidate
-					autoComplete="off"
-					component="form"
-				>
+			<Box
+				noValidate
+				autoComplete="off"
+				component="form"
+			>
+				<DialogContent>
 					<TextField
 						autoFocus
 						fullWidth
@@ -98,25 +98,19 @@ function LoginForm(props: Props) {
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setUsernameOrEmail(e.target.value)}
 					/>
-				</Box>
-			</DialogContent>
-			<DialogActions>
-				<Box paddingRight={2}>
-					<Button
-						variant="outlined"
-						disabled={!isEmail}
-						onClick={handleEmailLogin}
-					>
+				</DialogContent>
+				<DialogActions>
+					<Box paddingRight={2}>
+						<Button
+							variant="outlined"
+							disabled={!isEmail}
+							onClick={handleEmailLogin}
+						>
 						Login With Email Link
-					</Button>
-				</Box>
-			</DialogActions>
-			<DialogContent>
-				<Box
-					noValidate
-					autoComplete="off"
-					component="form"
-				>
+						</Button>
+					</Box>
+				</DialogActions>
+				<DialogContent>
 					<TextField
 						fullWidth
 						label="Password"
@@ -126,8 +120,8 @@ function LoginForm(props: Props) {
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setPassword(e.target.value)}
 					/>
-				</Box>
-			</DialogContent>
+				</DialogContent>
+			</Box>
 			<DialogActions>
 				<Box paddingRight={2}>
 					<Link
