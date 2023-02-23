@@ -58,6 +58,6 @@ async function sendEmail(args: SendEmailArgs) {
 			},
 		};
 
-		console.error(`sendEmail:error, ${JSON.stringify(loggedError)}`);
+		console.log(`sendEmail:error: ${JSON.stringify(loggedError)}`);
 	}
 }
