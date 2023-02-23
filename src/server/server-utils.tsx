@@ -29,14 +29,12 @@ interface SendEmailArgs {
 
 export
 async function sendEmail(args: SendEmailArgs) {
-	console.log('sendEmail:start');
 	const transporter = createTransport({
 		host: SmtpServer,
 		port: SmtpPort,
 		auth,
 	});
 
-	console.log('sendEmail:col');
 	const col = await getCollection(DbCollections.SentEmails);
 
 	col.insertOne({
@@ -46,13 +44,10 @@ async function sendEmail(args: SendEmailArgs) {
 	});
 
 	try {
-		console.log('sendEmail:send');
 		await transporter.sendMail({
 			from: NoReplyEmailAddress,
 			...args,
 		});
-
-		console.log('sendEmail:sendDone');
 	} catch(e) {
 		const loggedError = {
 			error: e,
@@ -64,5 +59,4 @@ async function sendEmail(args: SendEmailArgs) {
 		};
 		console.log(`sendEmail:error: ${JSON.stringify(loggedError)}`);
 	}
-	console.log('sendEmail:exiting');
 }

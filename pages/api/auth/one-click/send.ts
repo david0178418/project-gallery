@@ -56,10 +56,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 			html: `
 				<a href="${oneClickUrl}" target="_blank">Click here to sign in to your ProjectGallery.Me account</a>.
 			`,
-		})
-			.then(() => console.log('send:sendEmail:success'))
-			.catch(() => console.log('send:sendEmail:fail'))
-			.finally(() => console.log('send:sendEmail:done'));
+		});
 	} else {
 		console.log(`OneClickAuthSSend: User with email does not exist: ${email}`);
 	}
