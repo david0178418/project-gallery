@@ -43,8 +43,21 @@ async function sendEmail(args: SendEmailArgs) {
 		...args,
 	});
 
-	await transporter.sendMail({
-		from: NoReplyEmailAddress,
-		...args,
-	});
+	try {
+		await transporter.sendMail({
+			from: NoReplyEmailAddress,
+			...args,
+		});
+	} catch(e) {
+		const loggedError = {
+			error: e,
+			transportProps: {
+				host: SmtpServer,
+				port: SmtpPort,
+				auth,
+			},
+		};
+
+		console.error(`sendEmail:error, ${JSON.stringify(loggedError)}`);
+	}
 }
