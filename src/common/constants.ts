@@ -2,6 +2,7 @@ import { urlJoin } from './utils';
 
 export const BaseUrl = process.env.HOST;
 export const IsDev = process.env.NODE_ENV !== 'production';
+export const NoReplyEmailAddress = process.env.NO_REPLY_EMAIL_ADDRESS || '';
 export const SmtpPort = +(process.env.SMTP_PORT || '25');
 export const SmtpPw = process.env.SMTP_PW;
 export const SmtpServer = process.env.SMTP_SERVER;
@@ -68,6 +69,8 @@ const DbCollections = {
 	UserProfiles: 'user-profiles',
 	Users: 'users',
 	UsersMeta: 'users-meta',
+	UserOneClickLinkKeys: 'user-one-click-link-keys',
+	SentEmails: 'sent-emails',
 } as const;
 
 export
@@ -85,9 +88,17 @@ const NotLoggedInErrMsg = {
 };
 
 export
+const AuthProviders = {
+	OneClick: 'one-click',
+	Creds: 'creds',
+} as const;
+
+export
 // TODO Does this still belong here?
 const Paths = {
 	Home: '/',
+	OneClickAuthSend: (email: string) => `/one-click-auth/send?email=${email}`,
+	OneClickAuthVerify: '/one-click-auth/verify',
 	Search: '/search',
 	Settings: '/settings',
 	Project: (projectId: string) => urlJoin('/project', projectId),

@@ -6,8 +6,10 @@ import type {
 
 import { compare } from 'bcryptjs';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { fetchUser, updateLastLogin } from '@server/queries';
-import { UserRoles } from '@common/constants';
+import {
+	fetchUser, getUserFromKey, updateLastLogin,
+} from '@server/queries';
+import { AuthProviders, UserRoles } from '@common/constants';
 import {
 	NextAuthOptions,
 	unstable_getServerSession,
@@ -28,6 +30,39 @@ const authOptions: NextAuthOptions = {
 	// https://next-auth.js.org/configuration/providers
 	providers: [
 		CredentialsProvider({
+			id: AuthProviders.OneClick,
+			name: 'Magic Link',
+			credentials: { key: { type: 'hidden' } },
+			async authorize(credentials) {
+				if(!credentials) {
+					return null;
+				}
+
+				const { key } = credentials;
+
+				try {
+					const user = await getUserFromKey(key);
+
+					if(!user?._id) {
+						return null;
+					}
+
+					updateLastLogin(user._id);
+
+					return {
+						id: user._id.toString(),
+						username: user.username,
+						email: user.email,
+						role: user.role || UserRoles.User,
+					};
+				} catch(e) {
+					console.error('Auth Error:', e);
+					return null;
+				}
+			},
+		}),
+		CredentialsProvider({
+			id: AuthProviders.Creds,
 			name: 'Username',
 			// The credentials is used to generate a suitable form on the sign in page.
 			// You can specify whatever fields you are expecting to be submitted.
@@ -78,7 +113,6 @@ const authOptions: NextAuthOptions = {
 					console.error('Auth Error:', e);
 					return null;
 				}
-
 			},
 		}),
 		// EmailProvider({
@@ -164,9 +198,6 @@ const authOptions: NextAuthOptions = {
 			const {
 				token,
 				user,
-				// account,
-				// profile,
-				// isNewUser,
 			} = args;
 
 			if(user) {

@@ -1,7 +1,11 @@
 
 import { createTransport } from 'nodemailer';
 import { Address } from 'nodemailer/lib/mailer';
+import { getCollection } from './mongodb';
+import { nowISOString } from '@common/utils';
 import {
+	DbCollections,
+	NoReplyEmailAddress,
 	SmtpPort,
 	SmtpPw,
 	SmtpServer,
@@ -16,7 +20,7 @@ const auth = (SmtpUsername) ?
 	undefined;
 
 interface SendEmailArgs {
-	from: string | Address;
+	from?: string | Address;
 	html: string;
 	subject: string;
 	text: string;
@@ -31,6 +35,16 @@ async function sendEmail(args: SendEmailArgs) {
 		auth,
 	});
 
-	// send mail with defined transport object
-	return await transporter.sendMail(args);
+	const col = await getCollection(DbCollections.SentEmails);
+
+	col.insertOne({
+		date: nowISOString(),
+		from: NoReplyEmailAddress,
+		...args,
+	});
+
+	await transporter.sendMail({
+		from: NoReplyEmailAddress,
+		...args,
+	});
 }

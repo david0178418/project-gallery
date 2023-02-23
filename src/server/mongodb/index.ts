@@ -12,6 +12,8 @@ import {
 	Db,
 	MongoClient,
 } from 'mongodb';
+import { DbUserOneClickLinkKey } from '@common/types/UserOneClickLinkKey';
+import { DbSentEmail } from '@common/types/SentEmail';
 
 // In development mode, use a global variable so that the value
 // is preserved across module reloads caused by HMR (Hot Module Replacement).
@@ -63,10 +65,12 @@ type CollectionType<T> =
 	T extends typeof DbCollections.Grams ? DbTextGram :
 	T extends typeof DbCollections.Journals ? DbJournal :
 	T extends typeof DbCollections.Projects ? DbProject :
+	T extends typeof DbCollections.SentEmails ? DbSentEmail :
 	T extends typeof DbCollections.UserGalleryOrder ? DbUserGalleryOrder :
 	T extends typeof DbCollections.Users ? DbUser :
 	T extends typeof DbCollections.UsersMeta ? DbUserMeta :
 	T extends typeof DbCollections.UserProfiles ? DbUserProfile :
+	T extends typeof DbCollections.UserOneClickLinkKeys ? DbUserOneClickLinkKey :
 	never;
 /* eslint-enable @typescript-eslint/indent */
 

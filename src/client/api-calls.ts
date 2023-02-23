@@ -8,13 +8,14 @@ import { WriteJournal } from '@common/types/Journal';
 import { WriteUserProfile } from '@common/types/UserProfile';
 import {
 	ApiUrl,
+	AuthProviders,
 	Direction,
 	FileUploadCategories,
 } from '@common/constants';
 
 export
 async function login(username: string, password: string) {
-	return signIn('credentials', {
+	return signIn(AuthProviders.Creds, {
 		username,
 		password,
 		redirect: false,

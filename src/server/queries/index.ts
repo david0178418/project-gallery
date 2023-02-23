@@ -7,12 +7,16 @@ import { DbCollections } from '@common/constants';
 import { DbJournal } from '@common/types/Journal';
 import { DbUserProfile } from '@common/types/UserProfile';
 import { DbUserGalleryOrder } from '@common/types/UserGalleryOrder';
-import { nowISOString } from '@common/utils';
+import { add } from 'date-fns';
+import {
+	makeId,
+	nowISOString,
+} from '@common/utils';
 
 export
 async function fetchUser(usernameOrEmail: string): Promise<DbUser | null> {
-	const usersCol = await getCollection(DbCollections.Users);
-	const result = await usersCol.aggregate<WithId<DbUser>>([
+	const col = await getCollection(DbCollections.Users);
+	const result = await col.aggregate<WithId<DbUser>>([
 		{
 			$match: {
 				$or: [
@@ -25,6 +29,47 @@ async function fetchUser(usernameOrEmail: string): Promise<DbUser | null> {
 	]).toArray();
 
 	return result[0] || null;
+}
+
+export
+async function createUserLoginKey(email: string) {
+	if(!await fetchUser(email)) {
+		return '';
+	}
+
+	const key = makeId(64);
+
+	const col = await getCollection(DbCollections.UserOneClickLinkKeys);
+
+	await col.updateOne(
+		{ email },
+		{
+			$set: {
+				key,
+				expirationDate: add(new Date(), { minutes: 3 }).toISOString(),
+			},
+			$setOnInsert: { email },
+		}, { upsert: true });
+
+	return key;
+}
+
+export
+async function getUserFromKey(key: string): Promise<DbUser | null> {
+	const col = await getCollection(DbCollections.UserOneClickLinkKeys);
+	const result = await col.findOne({ key });
+
+	if(!result) {
+		return null;
+	}
+
+	col.deleteOne({ _id: result._id });
+
+	if(result.expirationDate < nowISOString()) {
+		return null;
+	}
+
+	return fetchUser(result.email);
 }
 
 export

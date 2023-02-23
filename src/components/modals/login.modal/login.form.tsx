@@ -13,6 +13,7 @@ import {
 	DialogTitle,
 	TextField,
 } from '@mui/material';
+import { Paths } from '@common/constants';
 
 interface Props {
 	urlObj: UrlObject;
@@ -26,6 +27,7 @@ function LoginForm(props: Props) {
 	const [usernameOrEmail, setUsernameOrEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const valid = !!(password && usernameOrEmail);
+	const isEmail = usernameOrEmail.includes('@');
 
 	function handleKeyUp(key: string) {
 		if(key === Key.Enter) {
@@ -93,16 +95,28 @@ function LoginForm(props: Props) {
 				</Box>
 			</DialogContent>
 			<DialogActions>
-				<Link
-					replace
-					passHref
-					shallow
-					href={urlObj}
-				>
-					<Button color="error">
+				<Box paddingRight={2}>
+					<Link
+						replace
+						passHref
+						shallow
+						href={urlObj}
+					>
+						<Button color="error">
 						Cancel
-					</Button>
-				</Link>
+						</Button>
+					</Link>
+				</Box>
+				<Box paddingRight={2}>
+					<Link href={Paths.OneClickAuthSend(usernameOrEmail)}>
+						<Button
+							variant="outlined"
+							disabled={!isEmail}
+						>
+						Login With Email
+						</Button>
+					</Link>
+				</Box>
 				<Button
 					variant="outlined"
 					disabled={!valid}

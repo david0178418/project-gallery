@@ -67,7 +67,5 @@ async function updateProfile(userId: string, userProfile: WriteUserProfile) {
 	const col = await getCollection(DbCollections.UserProfiles);
 	const _id = new ObjectId(userId);
 
-	console.log(userId, userProfile);
-
 	await col.updateOne({ _id }, { $set: { ...userProfile } });
 }
