@@ -46,7 +46,7 @@ async function createUserLoginKey(email: string) {
 		{
 			$set: {
 				key,
-				expirationDate: add(new Date(), { minutes: 3 }).toISOString(),
+				expirationDate: add(new Date(), { minutes: 10 }).toISOString(),
 			},
 			$setOnInsert: { email },
 		}, { upsert: true });
