@@ -23,6 +23,11 @@ async function login(username: string, password: string) {
 }
 
 export
+async function sendLoginLink(email: string) {
+	return post('/api/auth/one-click/send', { email });
+}
+
+export
 function register(username: string, email: string, password: string) {
 	return apiPost<ApiResponse>('/user/register', {
 		username,

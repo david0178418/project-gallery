@@ -97,8 +97,7 @@ export
 // TODO Does this still belong here?
 const Paths = {
 	Home: '/',
-	OneClickAuthSend: (email: string) => `/one-click-auth/send?email=${email}`,
-	OneClickAuthVerify: '/one-click-auth/verify',
+	OneClickAuth: '/one-click-auth/',
 	Search: '/search',
 	Settings: '/settings',
 	Project: (projectId: string) => urlJoin('/project', projectId),

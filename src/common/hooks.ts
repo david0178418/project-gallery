@@ -6,6 +6,7 @@ import {
 	useRef,
 	useLayoutEffect,
 	useCallback,
+	EffectCallback,
 } from 'react';
 
 import { UserRoles } from '@common/constants';
@@ -78,6 +79,12 @@ function useDebounce<T>(value: T, delay: number) {
 }
 
 export
+// Source: https://usehooks-ts.com/react-hook/use-effect-once
+function useEffectOnce(effect: EffectCallback) {
+	useEffect(effect, []);
+}
+
+export
 function useDebouncedCallback<T>(value: T, delay: number, callback: () => void,) {
 	const debouncedValue = useDebounce(value, delay);
 
@@ -87,7 +94,7 @@ function useDebouncedCallback<T>(value: T, delay: number, callback: () => void,)
 }
 
 export
-// See: https://usehooks.com/useToggle/
+// Source: https://usehooks.com/useToggle/
 function useToggle(initialState = false) {
 	// Initialize the state
 	const [state, setState] = useState(initialState);
@@ -100,7 +107,7 @@ function useToggle(initialState = false) {
 }
 
 export
-// See: https://usehooks-ts.com/react-hook/use-isomorphic-layout-effect
+// Source: https://usehooks-ts.com/react-hook/use-isomorphic-layout-effect
 function useTimeout(callback: () => void, delay: number | null) {
 	const savedCallback = useRef(callback);
 

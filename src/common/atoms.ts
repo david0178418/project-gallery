@@ -37,3 +37,8 @@ export
 function usePushToastMsg() {
 	return useSetAtom(pushToastMsgAtom);
 }
+
+export
+function useSetLoading() {
+	return useSetAtom(loadingAtom);
+}

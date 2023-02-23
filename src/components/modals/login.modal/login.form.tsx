@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
-import { login } from '@client/api-calls';
-import { useSetAtom } from 'jotai';
-import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
+import { login, sendLoginLink } from '@client/api-calls';
+import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import Link from 'next/link';
 import { UrlObject } from 'url';
 import {
@@ -13,7 +12,7 @@ import {
 	DialogTitle,
 	TextField,
 } from '@mui/material';
-import { Paths } from '@common/constants';
+import { useRouter } from 'next/router';
 
 interface Props {
 	urlObj: UrlObject;
@@ -22,8 +21,9 @@ interface Props {
 export
 function LoginForm(props: Props) {
 	const { urlObj } = props;
-	const pushToastMsg = useSetAtom(pushToastMsgAtom);
-	const setLoading = useSetAtom(loadingAtom);
+	const { replace } = useRouter();
+	const pushToastMsg = usePushToastMsg();
+	const setLoading = useSetLoading();
 	const [usernameOrEmail, setUsernameOrEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const valid = !!(password && usernameOrEmail);
@@ -61,6 +61,21 @@ function LoginForm(props: Props) {
 		setPassword('');
 	}
 
+	async function handleEmailLogin() {
+		setLoading(true);
+
+		try {
+			await sendLoginLink(usernameOrEmail);
+			pushToastMsg(`A login link will be sent to "${usernameOrEmail}" if an account with this email exists.`);
+			replace(urlObj);
+		} catch(e) {
+			pushToastMsg('Something went wrong. Try again.');
+			console.log(e);
+		}
+
+		setLoading(false);
+	}
+
 	return (
 		<>
 			<DialogTitle>
@@ -83,6 +98,25 @@ function LoginForm(props: Props) {
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setUsernameOrEmail(e.target.value)}
 					/>
+				</Box>
+			</DialogContent>
+			<DialogActions>
+				<Box paddingRight={2}>
+					<Button
+						variant="outlined"
+						disabled={!isEmail}
+						onClick={handleEmailLogin}
+					>
+						Login With Email Link
+					</Button>
+				</Box>
+			</DialogActions>
+			<DialogContent>
+				<Box
+					noValidate
+					autoComplete="off"
+					component="form"
+				>
 					<TextField
 						fullWidth
 						label="Password"
@@ -107,22 +141,12 @@ function LoginForm(props: Props) {
 						</Button>
 					</Link>
 				</Box>
-				<Box paddingRight={2}>
-					<Link href={Paths.OneClickAuthSend(usernameOrEmail)}>
-						<Button
-							variant="outlined"
-							disabled={!isEmail}
-						>
-						Login With Email
-						</Button>
-					</Link>
-				</Box>
 				<Button
 					variant="outlined"
 					disabled={!valid}
 					onClick={handleLogin}
 				>
-					Login
+					Login with Password
 				</Button>
 			</DialogActions>
 		</>

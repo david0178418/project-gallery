@@ -48,6 +48,7 @@ function LoginModal() {
 			<Dialog
 				open={isOpen}
 				fullScreen={fullScreen}
+				fullWidth
 			>
 				{isRegister && (
 					<RegistrationForm urlObj={urlObj} />
