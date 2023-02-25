@@ -44,10 +44,11 @@ async function sendEmail(args: SendEmailArgs) {
 	});
 
 	try {
-		await transporter.sendMail({
+		const x = await transporter.sendMail({
 			from: NoReplyEmailAddress,
 			...args,
 		});
+		console.log(`sendEmail:success: ${JSON.stringify(x)}`);
 	} catch(e) {
 		const loggedError = {
 			error: e,

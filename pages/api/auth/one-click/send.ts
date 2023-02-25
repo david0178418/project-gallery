@@ -49,7 +49,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if(key) {
 		const oneClickUrl = `${FullVerifyUrl}?k=${key}`;
 
-		sendEmail({
+		await sendEmail({
 			subject: 'Your ProjectGallery.Me Login Link',
 			text: `Login Link: ${oneClickUrl}`,
 			to: [email],
