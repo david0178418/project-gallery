@@ -44,7 +44,7 @@ async function sendEmail(args: SendEmailArgs) {
 	});
 
 	try {
-		const x = await transporter.sendMail({
+		await transporter.sendMail({
 			from: NoReplyEmailAddress,
 			...args,
 		});
