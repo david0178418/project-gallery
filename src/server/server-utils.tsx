@@ -48,16 +48,7 @@ async function sendEmail(args: SendEmailArgs) {
 			from: NoReplyEmailAddress,
 			...args,
 		});
-		console.log(`sendEmail:success: ${JSON.stringify(x)}`);
 	} catch(e) {
-		const loggedError = {
-			error: e,
-			transportProps: {
-				host: SmtpServer,
-				port: SmtpPort,
-				auth,
-			},
-		};
-		console.log(`sendEmail:error: ${JSON.stringify(loggedError)}`);
+		console.log(`sendEmail:error: ${JSON.stringify(e)}`);
 	}
 }
