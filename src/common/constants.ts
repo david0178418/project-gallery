@@ -97,7 +97,7 @@ export
 // TODO Does this still belong here?
 const Paths = {
 	Favorites: '/favorites',
-	Home: '/',
+	Home: '/home',
 	OneClickAuth: '/one-click-auth/',
 	Search: '/search',
 	Settings: '/settings',

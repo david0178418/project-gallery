@@ -3,9 +3,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { ReactNode } from 'react';
 import { CreateDropdown } from './create-dropdown';
-import logoImage from './logo.png';
-import logoSmallImage from './logo-small.png';
-import Image from 'next/image';
+import Logo from './logo';
 import {
 	ModalActions,
 	Paths,
@@ -22,7 +20,6 @@ import {
 	FavoriteIcon,
 } from '@components/icons';
 import {
-	Box,
 	List,
 	ListItem,
 	ListItemButton,
@@ -75,43 +72,7 @@ function LeftRail() {
 
 	return (
 		<>
-			<Link passHref href={Paths.Home} legacyBehavior>
-				<Box
-					component="a"
-					sx={{ width: '100%' }}
-				>
-					<Box
-						sx={{
-							display: {
-								xs: 'none',
-								md: 'block',
-							},
-						}}
-					>
-						<Image
-							alt=""
-							style={{
-								maxWidth: '100%',
-								height: 'auto',
-							}}
-							src={logoImage} />
-					</Box>
-					<Box
-						sx={{
-							display: {
-								xs: 'block',
-								md: 'none',
-							},
-							paddingLeft: 1.5,
-						}}
-					>
-						<Image
-							alt=""
-							src={logoSmallImage}
-						/>
-					</Box>
-				</Box>
-			</Link>
+			<Logo />
 			<List>
 				<ListItem disablePadding>
 					<Link
