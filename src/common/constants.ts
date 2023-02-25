@@ -96,7 +96,7 @@ const AuthProviders = {
 export
 // TODO Does this still belong here?
 const Paths = {
-	Home: '/',
+	Home: '/home',
 	OneClickAuth: '/one-click-auth/',
 	Search: '/search',
 	Settings: '/settings',

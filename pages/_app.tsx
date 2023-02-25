@@ -8,7 +8,7 @@ import type { AppProps } from 'next/app';
 
 import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import { Session } from 'next-auth';
 import dynamic from 'next/dynamic';
 import { Layout } from '@components/layout';
@@ -16,22 +16,12 @@ import { Analytics } from '@vercel/analytics/react';
 import { DefaultSeo } from 'next-seo';
 import { AppName, BaseUrl } from '@common/constants';
 import { urlJoin } from '@common/utils';
+import theme from '@common/theme';
 
 interface Props {
 	session: Session | null;
 	initialState: any;
 }
-
-const theme = createTheme({
-	palette: {
-		primary: {
-			main: '#5271ff',
-			light: 'rgb(116, 141, 255)',
-			dark: 'rgb(57, 79, 178)',
-			contrastText: '#fff',
-		},
-	},
-});
 
 const CommonModals = dynamic(() => import('@common/common-stuff'), { ssr: false });
 const imageUrl = urlJoin(BaseUrl, '/logo-main.png');
