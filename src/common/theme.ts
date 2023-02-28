@@ -9,6 +9,7 @@ const theme = createTheme({
 			contrastText: '#fff',
 		},
 	},
+	typography: { allVariants: { color: '#2B3445' } },
 });
 
 export default theme;
