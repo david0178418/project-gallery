@@ -2,6 +2,14 @@
 
 import { LogoSmall } from '@common/images';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+import MainImage from './homepage-main-image.png';
+import {
+	CheckCircleIcon,
+	LoginIcon,
+	MenuIcon,
+} from '@components/icons';
 import {
 	AppBar,
 	Box,
@@ -18,24 +26,24 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import Link from 'next/link';
-import { useState } from 'react';
-import { LoginIcon, MenuIcon } from '@components/icons';
 
 export default
-function HomePage() {
+function LandingPage() {
 	return (
 		<>
 			<TopMenu />
 			<Container>
-				<Box textAlign="center" marginTop={15}>
+				<Box
+					textAlign="center"
+					marginTop={15}
+				>
 					<Typography
 						variant="h1"
 						fontWeight="bold"
 						fontSize={50}
 					>
 						<Box color="primary.main">
-							Your Project<br/>
+							Your Project<br />
 						</Box>
 						Your Story
 					</Typography>
@@ -43,18 +51,93 @@ function HomePage() {
 						container
 						direction="row"
 						justifyContent="center"
+						paddingTop={4}
 					>
-						<Grid item xs={5}>
-							<Box component="ul" textAlign="left" fontSize={16}>
-								<Box component="li">
-									Createyour own personal project portfolio
-								</Box>
-								<Box component="li">
-									Keep a journal
-								</Box>
-							</Box>
+						<Grid
+							item
+							xs={12}
+							sm={6}
+							lg={4}
+						>
+							<List dense>
+								{[
+									<>
+										<strong>Create</strong> your own personal project portfolio
+									</>,
+									<>
+										<strong>Focus</strong> on your work. Not how to present it.
+									</>,
+									<>
+										<strong>Document</strong> your progress  with a project journal
+									</>,
+									<>
+										<strong>Share</strong> your experience with the world
+									</>,
+									<>
+										<strong>Discover</strong> the work of other builders
+									</>,
+								].map((t, i) => (
+									<ListItem key={i}>
+										<ListItemIcon
+											sx={{
+												minWidth: {
+													xs: 'unset',
+													md: 56,
+												},
+												paddingRight: 1,
+												justifyContent: 'right',
+											}}
+										>
+											<CheckCircleIcon color="primary" />
+										</ListItemIcon>
+										<ListItemText>
+											{t}
+										</ListItemText>
+									</ListItem>
+								))}
+							</List>
+						</Grid>
+						<Grid>
+
 						</Grid>
 					</Grid>
+				</Box>
+				<Box
+					textAlign="center" paddingTop={4}
+				>
+					<Button
+						color="primary"
+						variant="contained"
+						size="large"
+						sx={{
+							borderRadius: 5,
+							width: {
+								xs: 1,
+								sm: 'unset',
+							},
+						}}
+					>
+						Create Your Gallery Now
+					</Button>
+				</Box>
+				<Box
+					textAlign="center"
+					paddingTop={6}
+					marginRight={10}
+				>
+					<Image
+						alt=""
+						priority
+						src={MainImage}
+						style={{
+							position: 'revert',
+							objectFit: 'contain',
+							height: 'revert',
+							width: '100%',
+							maxHeight: '100%',
+							maxWidth: 900,
+						}}
+					/>
 				</Box>
 			</Container>
 		</>
@@ -73,9 +156,15 @@ function TopMenu() {
 		>
 			<Container>
 				<Toolbar disableGutters>
-					<Box width="100%" display="flex">
+					<Box
+						width="100%"
+						display="flex"
+					>
 						<Link href="/" >
-							<Box display="flex" gap={1}>
+							<Box
+								display="flex"
+								gap={1}
+							>
 								<Image
 									alt=""
 									src={LogoSmall}
@@ -132,7 +221,7 @@ function TopMenu() {
 							},
 						}}
 					>
-						<Menu/>
+						<Menu />
 					</Box>
 				</Toolbar>
 			</Container>
@@ -146,7 +235,7 @@ function Menu() {
 	return (
 		<>
 			<IconButton onClick={() => setOpen(true)}>
-				<MenuIcon/>
+				<MenuIcon />
 			</IconButton>
 			<Drawer
 				anchor="left"
@@ -158,7 +247,7 @@ function Menu() {
 						<ListItem disablePadding>
 							<ListItemButton>
 								<ListItemIcon>
-									<LoginIcon/>
+									<LoginIcon />
 								</ListItemIcon>
 								<ListItemText>
 									Login
@@ -168,7 +257,7 @@ function Menu() {
 						<ListItem disablePadding>
 							<ListItemButton>
 								<ListItemIcon>
-									<LoginIcon/>
+									<LoginIcon />
 								</ListItemIcon>
 								<ListItemText>
 									Register

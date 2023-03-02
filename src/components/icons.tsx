@@ -9,6 +9,7 @@ export { default as AttachmentIcon } from '@mui/icons-material/AttachFile';
 export { default as BackIcon } from '@mui/icons-material/ArrowBack';
 export { default as BoostIcon } from '@mui/icons-material/TrendingUp';
 export { default as CancelIcon } from '@mui/icons-material/Cancel';
+export { default as CheckCircleIcon } from '@mui/icons-material/CheckCircleOutline';
 export { default as CloseIcon } from '@mui/icons-material/Close';
 export { default as CommentIcon } from '@mui/icons-material/ModeCommentOutlined';
 export { default as ConfirmIcon } from '@mui/icons-material/Check';

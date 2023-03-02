@@ -25,6 +25,8 @@ import {
 	SettingsIcon,
 	ProjectIcon,
 	JournalIcon,
+	FavoriteActiveIcon,
+	FavoriteIcon,
 } from '@components/icons';
 
 // TODO Figure out the weird link behavior
@@ -100,6 +102,18 @@ function BottomNav() {
 								Paths.UserGallery(user.username) === pathname ?
 									<ProfileActiveIcon /> :
 									<ProfileIcon />
+							}
+						/>,
+						<BottomNavigationAction
+							key="b"
+							label="Favorites"
+							LinkComponent={Link}
+							href={Paths.Favorites}
+							value={Paths.Favorites}
+							icon={
+								Paths.Favorites === pathname ?
+									<FavoriteActiveIcon /> :
+									<FavoriteIcon />
 							}
 						/>,
 						<BottomNavigationAction
