@@ -96,6 +96,7 @@ const AuthProviders = {
 export
 // TODO Does this still belong here?
 const Paths = {
+	Favorites: '/favorites',
 	Home: '/',
 	OneClickAuth: '/one-click-auth/',
 	Search: '/search',

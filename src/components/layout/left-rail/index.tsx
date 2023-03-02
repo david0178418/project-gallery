@@ -18,6 +18,8 @@ import {
 	ProfileIcon,
 	SettingsActiveIcon,
 	SettingsIcon,
+	FavoriteActiveIcon,
+	FavoriteIcon,
 } from '@components/icons';
 import {
 	Box,
@@ -173,6 +175,26 @@ function LeftRail() {
 											Paths.UserGallery(user.username) === asPath ?
 												<ProfileActiveIcon /> :
 												<ProfileIcon />
+										}
+									</RailButtonContent>
+								</ListItemButton>
+							</Link>
+						</ListItem>
+						<ListItem disablePadding>
+							<Link
+								shallow
+								passHref
+								legacyBehavior
+								href={Paths.Favorites}
+							>
+								<ListItemButton>
+									<RailButtonContent
+										label="Favorites"
+									>
+										{
+											Paths.Favorites === asPath ?
+												<FavoriteActiveIcon /> :
+												<FavoriteIcon />
 										}
 									</RailButtonContent>
 								</ListItemButton>
