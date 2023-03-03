@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 
 export default
-function HeroSection() {
+function Hero() {
 	return (
 		<Container>
 			<Box
