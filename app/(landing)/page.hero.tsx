@@ -1,8 +1,11 @@
 'use client';
 import Image from 'next/image';
 import MainImage from './homepage-main-image.png';
-import { SpecialCharacterCodes } from '@common/constants';
 import { CheckCircleIcon } from '@components/icons';
+import Link from 'next/link';
+import {
+	ModalActions, Paths, SpecialCharacterCodes,
+} from '@common/constants';
 import {
 	Box,
 	Button,
@@ -92,20 +95,25 @@ function Hero() {
 				textAlign="center"
 				marginTop={4}
 			>
-				<Button
-					color="primary"
-					variant="contained"
-					size="large"
-					sx={{
-						borderRadius: 5,
-						width: {
-							xs: 1,
-							sm: 'unset',
-						},
-					}}
-				>
-					Create Your{SpecialCharacterCodes.NBSP}<strong>Free</strong>{SpecialCharacterCodes.NBSP}Gallery
-				</Button>
+				<Link href={{
+					pathname: Paths.Home,
+					query: { a: ModalActions.LoginRegister },
+				}}>
+					<Button
+						color="primary"
+						variant="contained"
+						size="large"
+						sx={{
+							borderRadius: 5,
+							width: {
+								xs: 1,
+								sm: 'unset',
+							},
+						}}
+					>
+						Create Your{SpecialCharacterCodes.NBSP}<strong>Free</strong>{SpecialCharacterCodes.NBSP}Gallery
+					</Button>
+				</Link>
 			</Box>
 			<Box
 				textAlign="center"

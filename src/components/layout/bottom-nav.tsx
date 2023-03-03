@@ -117,7 +117,7 @@ function BottomNav() {
 							}
 						/>,
 						<BottomNavigationAction
-							key="b"
+							key="c"
 							label="Settings"
 							LinkComponent={Link}
 							href={Paths.Settings}

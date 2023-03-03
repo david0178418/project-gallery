@@ -25,6 +25,13 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
+import { ModalActions, Paths } from '@common/constants';
+import { UrlObject } from 'url';
+
+const LoginHref = {
+	pathname: Paths.Home,
+	query: { a: ModalActions.LoginRegister },
+} satisfies UrlObject;
 
 export default
 function TopMenuSection() {
@@ -44,7 +51,7 @@ function TopMenuSection() {
 						width="100%"
 						display="flex"
 					>
-						<Link href="/" >
+						<Link href={LoginHref}>
 							<Box
 								display="flex"
 								gap={1}
@@ -81,7 +88,7 @@ function TopMenuSection() {
 								Blog
 							</Button>
 						</Link>
-						<Link href="/">
+						<Link href={LoginHref}>
 							<Button
 								variant="outlined"
 								sx={{ marginRight: 1 }}
@@ -89,7 +96,7 @@ function TopMenuSection() {
 								Login
 							</Button>
 						</Link>
-						<Link href="/">
+						<Link href={LoginHref}>
 							<Button
 								variant="contained"
 							>

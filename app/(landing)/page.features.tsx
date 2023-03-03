@@ -7,9 +7,13 @@ import Img1 from './img1.png';
 import Img2 from './img2.png';
 import Img3 from './img3.png';
 import {
+	Box,
+	Button,
 	Paper,
 	Typography,
 } from '@mui/material';
+import Link from 'next/link';
+import { ModalActions, Paths } from '@common/constants';
 
 export default
 function Features() {
@@ -126,7 +130,7 @@ function Features() {
 
 			<Grid
 				container
-				marginTop={10}
+				marginTop={5}
 				direction={{
 					xs: 'column-reverse',
 					md: 'row',
@@ -179,6 +183,23 @@ function Features() {
 					</Typography>
 				</Grid>
 			</Grid>
+
+			<Box marginTop={15} marginBottom={30} textAlign="center">
+				<Link href={{
+					pathname: Paths.Home,
+					query: { a: ModalActions.LoginRegister },
+				}}>
+					<Button
+						variant="contained"
+						sx={{
+							borderRadius: 5,
+							fontSize: 30,
+						}}
+					>
+						Create your free project gallery
+					</Button>
+				</Link>
+			</Box>
 		</>
 	);
 }
