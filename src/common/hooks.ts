@@ -9,7 +9,7 @@ import {
 	EffectCallback,
 } from 'react';
 
-import { UserRoles } from '@common/constants';
+import { Paths, UserRoles } from '@common/constants';
 
 export
 function useIsLoggedIn() {
@@ -49,7 +49,7 @@ function useRefreshPage() {
 }
 
 export
-function useRouteBackDefault(fallback = '/') {
+function useRouteBackDefault(fallback = Paths.Home) {
 	const router = useRouter();
 
 	return () => {
