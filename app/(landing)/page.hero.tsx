@@ -86,9 +86,6 @@ function Hero() {
 							))}
 						</List>
 					</Grid>
-					<Grid>
-
-					</Grid>
 				</Grid>
 			</Box>
 			<Box
@@ -100,7 +97,6 @@ function Hero() {
 					query: { a: ModalActions.LoginRegister },
 				}}>
 					<Button
-						color="primary"
 						variant="contained"
 						size="large"
 						sx={{

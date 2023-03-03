@@ -6,14 +6,20 @@ import { ReactNode } from 'react';
 import Img1 from './img1.png';
 import Img2 from './img2.png';
 import Img3 from './img3.png';
+import Link from 'next/link';
+import {
+	ModalActions,
+	Paths,
+	SpecialCharacterCodes,
+} from '@common/constants';
 import {
 	Box,
 	Button,
 	Paper,
 	Typography,
 } from '@mui/material';
-import Link from 'next/link';
-import { ModalActions, Paths } from '@common/constants';
+
+const { NBSP: S } = SpecialCharacterCodes;
 
 export default
 function Features() {
@@ -184,19 +190,32 @@ function Features() {
 				</Grid>
 			</Grid>
 
-			<Box marginTop={15} marginBottom={30} textAlign="center">
+			<Box
+				marginBottom={30}
+				textAlign="center"
+				paddingX={2}
+				marginTop={{
+					xs: 10,
+					md: 15,
+				}}
+			>
 				<Link href={{
 					pathname: Paths.Home,
 					query: { a: ModalActions.LoginRegister },
 				}}>
 					<Button
 						variant="contained"
+						size="large"
 						sx={{
 							borderRadius: 5,
-							fontSize: 30,
+							fontSize: { md: 20 },
+							width: {
+								xs: 1,
+								sm: 'unset',
+							},
 						}}
 					>
-						Create your free project gallery
+						Create Your{S}<strong>Free</strong>{S}Gallery
 					</Button>
 				</Link>
 			</Box>
