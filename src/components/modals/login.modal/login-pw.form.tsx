@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
-import { login, sendLoginLink } from '@client/api-calls';
+import { login } from '@client/api-calls';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import Link from 'next/link';
 import { UrlObject } from 'url';
-import { useRouter } from 'next/router';
 import { CloseIcon } from '@components/icons';
 import { inRange } from '@common/utils';
 import { UsernameMaxLength, UsernameMinLength } from '@common/constants';
@@ -20,28 +19,23 @@ import {
 
 interface Props {
 	urlObj: UrlObject;
+	onToggle(): void;
 }
 
-export
-function LoginForm(props: Props) {
-	const { urlObj } = props;
-	const { replace } = useRouter();
+export default
+function LoginPwForm(props: Props) {
+	const {
+		urlObj, onToggle,
+	} = props;
 	const pushToastMsg = usePushToastMsg();
 	const setLoading = useSetLoading();
 	const [usernameOrEmail, setUsernameOrEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [loginEmail, setLoginEmail] = useState(false);
-	const isEmail = usernameOrEmail.includes('@');
 	const validUsernameLength = inRange(usernameOrEmail.length, UsernameMinLength, UsernameMaxLength, true);
 	const valid = !!(
-		(
-			loginEmail &&
-			isEmail
-		) || (
-			password &&
-			usernameOrEmail &&
-			validUsernameLength
-		)
+		password &&
+		usernameOrEmail &&
+		validUsernameLength
 	);
 
 	function handleKeyUp(key: string) {
@@ -50,13 +44,7 @@ function LoginForm(props: Props) {
 		}
 	}
 
-	function handleLogin() {
-		loginEmail ?
-			handleEmailLogin() :
-			handlePWLogin();
-	}
-
-	async function handlePWLogin() {
+	async function handleLogin() {
 		if(!valid) {
 			return;
 		}
@@ -80,21 +68,6 @@ function LoginForm(props: Props) {
 
 		setLoading(false);
 		setPassword('');
-	}
-
-	async function handleEmailLogin() {
-		setLoading(true);
-
-		try {
-			await sendLoginLink(usernameOrEmail);
-			pushToastMsg(`A login link will be sent to "${usernameOrEmail}" if an account with this email exists.`);
-			replace(urlObj);
-		} catch(e) {
-			pushToastMsg('Something went wrong. Try again.');
-			console.log(e);
-		}
-
-		setLoading(false);
 	}
 
 	return (
@@ -130,28 +103,26 @@ function LoginForm(props: Props) {
 						variant="standard"
 						placeholder="username"
 						type="text"
-						label={loginEmail ? 'Email' : 'Username or Email'}
+						label="Username or Email"
 						value={usernameOrEmail}
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setUsernameOrEmail(e.target.value)}
 					/>
-					{!loginEmail && (
-						<TextField
-							fullWidth
-							label="Password"
-							variant="standard"
-							type="password"
-							value={password}
-							onKeyUp={e => handleKeyUp(e.key)}
-							onChange={e => setPassword(e.target.value)}
-						/>
-					)}
+					<TextField
+						fullWidth
+						label="Password"
+						variant="standard"
+						type="password"
+						value={password}
+						onKeyUp={e => handleKeyUp(e.key)}
+						onChange={e => setPassword(e.target.value)}
+					/>
 				</DialogContent>
 			</Box>
 			<DialogActions>
 				<Box paddingRight={2}>
-					<Button color="secondary" onClick={() => setLoginEmail(!loginEmail)}>
-						Sign in with { loginEmail ? 'password' : 'email'}
+					<Button color="secondary" onClick={onToggle}>
+						Sign in with Email Link
 					</Button>
 				</Box>
 				<Button
@@ -159,7 +130,7 @@ function LoginForm(props: Props) {
 					disabled={!valid}
 					onClick={handleLogin}
 				>
-					{loginEmail ? 'Send email link' : 'Sign in'}
+					Sign in
 				</Button>
 			</DialogActions>
 		</>

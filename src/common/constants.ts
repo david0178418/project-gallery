@@ -77,6 +77,8 @@ export
 const ModalActions = {
 	CreateProject: 'create-project',
 	CreateJournal: 'create-journal',
+	Login: 'login',
+	Register: 'register',
 	LoginRegister: 'login-register',
 	Logout: 'logout',
 } as const;

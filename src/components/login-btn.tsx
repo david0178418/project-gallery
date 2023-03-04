@@ -43,7 +43,7 @@ function LoginBtn() {
 				href={{
 					pathname,
 					query: {
-						a: ModalActions.LoginRegister,
+						a: ModalActions.Login,
 						...query,
 					},
 				}}

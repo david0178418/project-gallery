@@ -31,7 +31,7 @@ function createWriteJournal(): WriteJournal {
 	};
 }
 
-export
+export default
 function CreateJournalModal() {
 	const [journal, setJournal] = useState(createWriteJournal);
 	const pushToastMsg = useSetAtom(pushToastMsgAtom);

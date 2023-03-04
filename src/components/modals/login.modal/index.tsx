@@ -2,8 +2,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ModalActions } from '@common/constants';
 import { useIsLoggedIn } from '@common/hooks';
-import { LoginForm } from './login.form';
-import { RegistrationForm } from './register.form';
+import LoginEmailForm from './login-email.form';
+import LoginPwForm from './login-pw.form';
+import Link from 'next/link';
 import {
 	Button,
 	Dialog,
@@ -12,36 +13,40 @@ import {
 	useTheme,
 } from '@mui/material';
 
-export
+export default
 function LoginModal() {
 	const isLoggedIn = useIsLoggedIn();
-	const router = useRouter();
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-	const [isRegister, setIsRegister] = useState(false);
+	const [isEmailLogin, setIsEmailLogin] = useState(false);
+	const {
+		pathname,
+		query,
+		replace,
+	} = useRouter();
 	const {
 		a: action,
 		...newQuery
-	} = router.query;
+	} = query;
 	const urlObj = {
-		pathname: router.pathname,
+		pathname,
 		query: newQuery,
 	};
-	const actionIsLoginRegister = action === ModalActions.LoginRegister;
-	const isOpen = actionIsLoginRegister && !isLoggedIn;
+	const actionIsLogin = action === ModalActions.Login;
+	const isOpen = actionIsLogin && !isLoggedIn;
 
 	useEffect(() => {
-		if(!actionIsLoginRegister) {
+		if(!actionIsLogin) {
 			return;
 		}
 
 		if(isLoggedIn) {
-			router.replace({
-				pathname: router.pathname,
+			replace({
+				pathname,
 				query: newQuery,
 			});
 		}
-	}, [actionIsLoginRegister, isLoggedIn]);
+	}, [actionIsLogin, isLoggedIn]);
 
 	return (
 		<>
@@ -50,23 +55,27 @@ function LoginModal() {
 				fullScreen={fullScreen}
 				fullWidth
 			>
-				{isRegister && (
-					<RegistrationForm urlObj={urlObj} />
+				{isEmailLogin && (
+					<LoginEmailForm urlObj={urlObj} onToggle={() => setIsEmailLogin(false)} />
 				)}
-				{!isRegister && (
-					<LoginForm urlObj={urlObj} />
+				{!isEmailLogin && (
+					<LoginPwForm urlObj={urlObj} onToggle={() => setIsEmailLogin(true)} />
 				)}
 				<DialogActions style={{ justifyContent: 'center' }}>
-					{isRegister && (
-						<Button size="small" onClick={() => setIsRegister(false)}>
-							Login with Existing Account
-						</Button>
-					)}
-					{!isRegister && (
-						<Button size="small" onClick={() => setIsRegister(true)}>
+					<Link
+						shallow
+						href={{
+							pathname,
+							query: {
+								...query,
+								a: ModalActions.Register,
+							},
+						}}
+					>
+						<Button size="small">
 							Create an Account
 						</Button>
-					)}
+					</Link>
 				</DialogActions>
 			</Dialog>
 		</>

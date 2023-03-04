@@ -15,7 +15,7 @@ import {
 	DialogTitle,
 } from '@mui/material';
 
-export
+export default
 function LogoutModal() {
 	const [, pustToastMsg] = useAtom(pushToastMsgAtom);
 	const isLoggedOut = useIsLoggedOut();

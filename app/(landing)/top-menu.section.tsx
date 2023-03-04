@@ -4,6 +4,7 @@ import { LogoSmall } from '@common/images';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { ModalActions, Paths } from '@common/constants';
 import {
 	BlogIcon,
 	LoginIcon,
@@ -25,13 +26,6 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import { ModalActions, Paths } from '@common/constants';
-import { UrlObject } from 'url';
-
-const LoginHref = {
-	pathname: Paths.Home,
-	query: { a: ModalActions.LoginRegister },
-} satisfies UrlObject;
 
 export default
 function TopMenuSection() {
@@ -51,7 +45,7 @@ function TopMenuSection() {
 						width="100%"
 						display="flex"
 					>
-						<Link href={LoginHref}>
+						<Link href="/">
 							<Box
 								display="flex"
 								gap={1}
@@ -88,7 +82,12 @@ function TopMenuSection() {
 								Blog
 							</Button>
 						</Link>
-						<Link href={LoginHref}>
+						<Link
+							href={{
+								pathname: Paths.Home,
+								query: { a: ModalActions.Login },
+							}}
+						>
 							<Button
 								variant="outlined"
 								sx={{ marginRight: 1 }}
@@ -96,7 +95,10 @@ function TopMenuSection() {
 								Login
 							</Button>
 						</Link>
-						<Link href={LoginHref}>
+						<Link href={{
+							pathname: Paths.Home,
+							query: { a: ModalActions.Register },
+						}}>
 							<Button
 								variant="contained"
 							>
@@ -132,12 +134,13 @@ function Menu() {
 				anchor="left"
 				open={open}
 				onClose={() => setOpen(false)}
+				sx={{ width: 250 }}
 			>
-				<Box width={250}>
+				<Box sx={{ width: 250 }}>
 					<List>
 						<ListItem disablePadding>
 							<Link href="https://projectgallery.me/project/63a490bfacb4e70acc9931bb/journals">
-								<ListItemButton>
+								<ListItemButton sx={{ width: 250 }}>
 									<ListItemIcon>
 										<BlogIcon />
 									</ListItemIcon>
@@ -148,24 +151,34 @@ function Menu() {
 							</Link>
 						</ListItem>
 						<ListItem disablePadding>
-							<ListItemButton>
-								<ListItemIcon>
-									<RegisterIcon />
-								</ListItemIcon>
-								<ListItemText>
+							<Link href={{
+								pathname: Paths.Home,
+								query: { a: ModalActions.Register },
+							}}>
+								<ListItemButton sx={{ width: 250 }}>
+									<ListItemIcon>
+										<RegisterIcon />
+									</ListItemIcon>
+									<ListItemText>
 									Register
-								</ListItemText>
-							</ListItemButton>
+									</ListItemText>
+								</ListItemButton>
+							</Link>
 						</ListItem>
 						<ListItem disablePadding>
-							<ListItemButton>
-								<ListItemIcon>
-									<LoginIcon />
-								</ListItemIcon>
-								<ListItemText>
+							<Link href={{
+								pathname: Paths.Home,
+								query: { a: ModalActions.Login },
+							}}>
+								<ListItemButton sx={{ width: 250 }}>
+									<ListItemIcon>
+										<LoginIcon />
+									</ListItemIcon>
+									<ListItemText>
 									Login
-								</ListItemText>
-							</ListItemButton>
+									</ListItemText>
+								</ListItemButton>
+							</Link>
 						</ListItem>
 					</List>
 				</Box>

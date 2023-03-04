@@ -201,7 +201,7 @@ function Features() {
 			>
 				<Link href={{
 					pathname: Paths.Home,
-					query: { a: ModalActions.LoginRegister },
+					query: { a: ModalActions.Register },
 				}}>
 					<Button
 						variant="contained"

@@ -38,7 +38,7 @@ function createWriteProject(): WriteProject {
 	};
 }
 
-export
+export default
 function CreateProjectModal() {
 	const [project, setProject] = useState(createWriteProject);
 	const pushToastMsg = useSetAtom(pushToastMsgAtom);

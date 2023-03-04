@@ -18,6 +18,7 @@ import {
 	SettingsIcon,
 	FavoriteActiveIcon,
 	FavoriteIcon,
+	RegisterIcon,
 } from '@components/icons';
 import {
 	List,
@@ -102,7 +103,7 @@ function LeftRail() {
 								href={{
 									pathname,
 									query: {
-										a: ModalActions.LoginRegister,
+										a: ModalActions.Login,
 										...query,
 									},
 								}}
@@ -110,9 +111,30 @@ function LeftRail() {
 								<ListItemButton>
 									<RailButtonContent
 										label="Login"
-										secondary="or register"
 									>
 										<LoginIcon/>
+									</RailButtonContent>
+								</ListItemButton>
+							</Link>
+						</ListItem>
+						<ListItem disablePadding>
+							<Link
+								shallow
+								passHref
+								legacyBehavior
+								href={{
+									pathname,
+									query: {
+										a: ModalActions.Register,
+										...query,
+									},
+								}}
+							>
+								<ListItemButton>
+									<RailButtonContent
+										label="Register"
+									>
+										<RegisterIcon />
 									</RailButtonContent>
 								</ListItemButton>
 							</Link>

@@ -5,7 +5,7 @@ import {
 	CircularProgress,
 } from '@mui/material';
 
-export
+export default
 function Loader() {
 	const loading = useAtomValue(loadingAtom);
 
