@@ -11,6 +11,7 @@ import {
 } from '@components/icons';
 import {
 	Avatar,
+	Box,
 	Card,
 	CardActions,
 	CardContent,
@@ -47,11 +48,12 @@ function JournalCard(props: Props) {
 	return (
 		<Card elevation={2}>
 			<CardHeader
-
 				title={
-					<Link href={journalUrl}>
-						{title}
-					</Link>
+					<Box sx={{ ':hover': { textDecoration: 'underline' } } }>
+						<Link href={journalUrl}>
+							{title}
+						</Link>
+					</Box>
 				}
 				subheader={(
 					<Link href={journalUrl}>
@@ -75,11 +77,13 @@ function JournalCard(props: Props) {
 			/>
 			<CardContent>
 				{project && (
-					<Link href={Paths.Project(project._id)}>
-						<Typography variant="subtitle2">
-							Project: {project.title}
-						</Typography>
-					</Link>
+					<Box sx={{ ':hover': { textDecoration: 'underline' } } }>
+						<Link href={Paths.Project(project._id)}>
+							<Typography variant="subtitle1">
+								Project: {project.title}
+							</Typography>
+						</Link>
+					</Box>
 				)}
 				{!project && (
 					<Typography variant="subtitle2">
