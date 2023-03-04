@@ -185,7 +185,7 @@ function Features() {
 					</Typography>
 					<Typography>
 						Add at-a-glance context to your project with custom category labels.
-						And take it a step further by linking off-site for the project itself or any other information that others would find interesting.
+						Take it a step further by linking off-site for the project itself or any other information that others would find interesting.
 					</Typography>
 				</Grid>
 			</Grid>
