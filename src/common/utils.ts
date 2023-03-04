@@ -45,8 +45,9 @@ function encodeBase64(obj: any) {
 }
 
 export
-function inRange(num: number, min: number, max: number) {
-	return (min < num && num < max);
+function inRange(num: number, min: number, max: number, inclusive = false) {
+	const offset = inclusive ? 1 : 0;
+	return ((min - offset) < num && num < (max + offset));
 }
 
 export

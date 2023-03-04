@@ -6,12 +6,14 @@ import { login, register } from '@client/api-calls';
 import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import Link from 'next/link';
+import { CloseIcon } from '@components/icons';
 import {
 	Box,
 	Button,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
+	IconButton,
 	TextField,
 } from '@mui/material';
 
@@ -74,6 +76,22 @@ function RegistrationForm(props: Props) {
 		<>
 			<DialogTitle>
 				Create Account
+
+				<Link
+					replace
+					shallow
+					href={urlObj}
+				>
+					<IconButton
+						sx={{
+							position: 'absolute',
+							right: 8,
+							top: 8,
+						}}
+					>
+						<CloseIcon />
+					</IconButton>
+				</Link>
 			</DialogTitle>
 			<DialogContent>
 				<Box
@@ -124,16 +142,6 @@ function RegistrationForm(props: Props) {
 				</Box>
 			</DialogContent>
 			<DialogActions>
-				<Link
-					replace
-					passHref
-					shallow
-					href={urlObj}
-				>
-					<Button color="error">
-						Cancel
-					</Button>
-				</Link>
 				<Button
 					variant="outlined"
 					disabled={!valid}

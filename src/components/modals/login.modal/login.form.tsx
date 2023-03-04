@@ -4,15 +4,19 @@ import { login, sendLoginLink } from '@client/api-calls';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import Link from 'next/link';
 import { UrlObject } from 'url';
+import { useRouter } from 'next/router';
+import { CloseIcon } from '@components/icons';
+import { inRange } from '@common/utils';
+import { UsernameMaxLength, UsernameMinLength } from '@common/constants';
 import {
 	Box,
 	Button,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
+	IconButton,
 	TextField,
 } from '@mui/material';
-import { useRouter } from 'next/router';
 
 interface Props {
 	urlObj: UrlObject;
@@ -26,8 +30,19 @@ function LoginForm(props: Props) {
 	const setLoading = useSetLoading();
 	const [usernameOrEmail, setUsernameOrEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const valid = !!(password && usernameOrEmail);
+	const [loginEmail, setLoginEmail] = useState(false);
 	const isEmail = usernameOrEmail.includes('@');
+	const validUsernameLength = inRange(usernameOrEmail.length, UsernameMinLength, UsernameMaxLength, true);
+	const valid = !!(
+		(
+			loginEmail &&
+			isEmail
+		) || (
+			password &&
+			usernameOrEmail &&
+			validUsernameLength
+		)
+	);
 
 	function handleKeyUp(key: string) {
 		if(key === Key.Enter) {
@@ -35,7 +50,13 @@ function LoginForm(props: Props) {
 		}
 	}
 
-	async function handleLogin() {
+	function handleLogin() {
+		loginEmail ?
+			handleEmailLogin() :
+			handlePWLogin();
+	}
+
+	async function handlePWLogin() {
 		if(!valid) {
 			return;
 		}
@@ -80,6 +101,22 @@ function LoginForm(props: Props) {
 		<>
 			<DialogTitle>
 				Login
+
+				<Link
+					replace
+					shallow
+					href={urlObj}
+				>
+					<IconButton
+						sx={{
+							position: 'absolute',
+							right: 8,
+							top: 8,
+						}}
+					>
+						<CloseIcon />
+					</IconButton>
+				</Link>
 			</DialogTitle>
 			<Box
 				noValidate
@@ -90,57 +127,39 @@ function LoginForm(props: Props) {
 					<TextField
 						autoFocus
 						fullWidth
-						label="Username or Email"
 						variant="standard"
 						placeholder="username"
 						type="text"
+						label={loginEmail ? 'Email' : 'Username or Email'}
 						value={usernameOrEmail}
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setUsernameOrEmail(e.target.value)}
 					/>
-				</DialogContent>
-				<DialogActions>
-					<Box paddingRight={2}>
-						<Button
-							variant="outlined"
-							disabled={!isEmail}
-							onClick={handleEmailLogin}
-						>
-						Login With Email Link
-						</Button>
-					</Box>
-				</DialogActions>
-				<DialogContent>
-					<TextField
-						fullWidth
-						label="Password"
-						variant="standard"
-						type="password"
-						value={password}
-						onKeyUp={e => handleKeyUp(e.key)}
-						onChange={e => setPassword(e.target.value)}
-					/>
+					{!loginEmail && (
+						<TextField
+							fullWidth
+							label="Password"
+							variant="standard"
+							type="password"
+							value={password}
+							onKeyUp={e => handleKeyUp(e.key)}
+							onChange={e => setPassword(e.target.value)}
+						/>
+					)}
 				</DialogContent>
 			</Box>
 			<DialogActions>
 				<Box paddingRight={2}>
-					<Link
-						replace
-						passHref
-						shallow
-						href={urlObj}
-					>
-						<Button color="error">
-						Cancel
-						</Button>
-					</Link>
+					<Button color="secondary" onClick={() => setLoginEmail(!loginEmail)}>
+						Sign in with { loginEmail ? 'password' : 'email'}
+					</Button>
 				</Box>
 				<Button
 					variant="outlined"
 					disabled={!valid}
 					onClick={handleLogin}
 				>
-					Login with Password
+					{loginEmail ? 'Send email link' : 'Sign in'}
 				</Button>
 			</DialogActions>
 		</>
