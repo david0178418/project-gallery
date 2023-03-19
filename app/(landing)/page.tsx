@@ -4,13 +4,14 @@ import Features from './page.features';
 import { AppName, BaseUrl } from '@common/constants';
 import { LogoMain } from '@common/images';
 import { Metadata } from 'next';
+import { urlJoin } from '@common/utils';
 
 export const metadata: Metadata = {
 	title: AppName,
 	twitter: {
 		creator: '@justdavidg',
 		card: 'summary_large_image',
-		images: [{ url: LogoMain.src }],
+		images: [{ url: urlJoin(BaseUrl, LogoMain.src) }],
 	},
 	openGraph: {
 		type: 'website',
