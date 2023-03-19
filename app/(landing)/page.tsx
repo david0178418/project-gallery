@@ -6,12 +6,14 @@ import { LogoMain } from '@common/images';
 import { Metadata } from 'next';
 import { urlJoin } from '@common/utils';
 
+const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
+
 export const metadata: Metadata = {
 	title: AppName,
 	twitter: {
 		creator: '@justdavidg',
 		card: 'summary_large_image',
-		images: [{ url: urlJoin(BaseUrl, LogoMain.src) }],
+		images: [{ url: SocialImageUrl }],
 	},
 	openGraph: {
 		type: 'website',
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
 		siteName: AppName,
 		title: AppName,
 		description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
-		images: [{ url: LogoMain.src }],
+		images: [{ url: SocialImageUrl }],
 	},
 	description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
 };
