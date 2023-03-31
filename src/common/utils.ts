@@ -1,25 +1,6 @@
-import { format, formatDistanceToNow } from 'date-fns';
-
-export
-function formatDate(dateStr: string | Date) {
-	return format(new Date(dateStr), 'p · PP');
-}
-
-const numFormatter = Intl.NumberFormat('en', { notation: 'compact' });
-
-export
-function formatCompactNumber(num: number) {
-	return numFormatter.format(num);
-}
-
 export
 function clamp(num: number, min: number, max: number) {
 	return Math.min(Math.max(num, min), max);
-}
-
-export
-function getTimeSinceDate(dateStr: string) {
-	return formatDistanceToNow(new Date(dateStr));
 }
 
 export
@@ -149,11 +130,6 @@ function keys<T extends Record<any, unknown>>(obj: T): Array<keyof T> {
 export
 function last<T>(arr: T[]): T | null {
 	return arr[arr.length - 1] || null;
-}
-
-export
-function localizedDateFormat(date: string) {
-	return format(new Date(date), 'PPP');
 }
 
 export

@@ -7,7 +7,7 @@ import { getServerSession } from '@server/auth-options';
 import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
 import { UiProject } from '@common/types/Project';
 import { MongoIdValidation } from '@server/validations';
-import { localizedDateFormat, urlJoin } from '@common/utils';
+import { urlJoin } from '@common/utils';
 import Link from 'next/link';
 import { ImagePreviews } from '@components/image-previews';
 import { useState } from 'react';
@@ -35,6 +35,7 @@ import {
 	Tabs,
 	Typography,
 } from '@mui/material';
+import { LocalizedDate } from '@components/localized-date';
 
 interface Props {
 	subPath: TabPath ;
@@ -185,10 +186,10 @@ function UserGallery(props: Props) {
 						{selectedTab === TabPaths.details.value && (
 							<>
 								<Typography variant="subtitle1" paddingTop={1} fontStyle="italic">
-								created: {localizedDateFormat(project.projectCreatedDate)}<br/>
+								created: <LocalizedDate date={project.projectCreatedDate} /><br/>
 								</Typography>
 								<Typography variant="subtitle1" fontStyle="italic">
-								last updated: {localizedDateFormat(project.projectLastUpdatedDate)}
+								last updated: <LocalizedDate date={project.projectLastUpdatedDate} />
 								</Typography>
 								<Box paddingTop={2} textAlign="center">
 									{/* eslint-disable-next-line @next/next/no-img-element */}

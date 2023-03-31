@@ -1,5 +1,4 @@
 import { red } from '@mui/material/colors';
-import { localizedDateFormat } from '@common/utils';
 import { UiProject } from '@common/types/Project';
 import { ParsedContent } from './parsed-content';
 import Link from 'next/link';
@@ -7,6 +6,7 @@ import { Paths } from '@common/constants';
 import { useUser } from '@common/hooks';
 import { ShareIconButton } from './common/share-button';
 import Label from './label';
+import { LocalizedDate } from './localized-date';
 import {
 	FavoriteIcon,
 	JournalIcon,
@@ -57,10 +57,10 @@ function ProjectCard(props: Props) {
 				title={title}
 				subheader={(
 					<>
-						{localizedDateFormat(projectCreatedDate)}<br/>
+						<LocalizedDate date={projectCreatedDate} /><br/>
 						{lastUpdatedDate && ( // TODO This conditional may no longer be needed
 							<>
-								updated: {localizedDateFormat(lastUpdatedDate)}
+								updated: <LocalizedDate date={(lastUpdatedDate)} />
 							</>
 						)}
 					</>

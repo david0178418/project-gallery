@@ -1,5 +1,4 @@
 import { red } from '@mui/material/colors';
-import { localizedDateFormat } from '@common/utils';
 import { UiJournal } from '@common/types/Journal';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
@@ -21,6 +20,7 @@ import {
 	Typography,
 } from '@mui/material';
 import { ShareIconButton } from './common/share-button';
+import { LocalizedDate } from './localized-date';
 
 interface Props {
 	journal: UiJournal;
@@ -57,7 +57,9 @@ function JournalCard(props: Props) {
 				}
 				subheader={(
 					<Link href={journalUrl}>
-						{publishedDate && localizedDateFormat(publishedDate)}
+						{publishedDate && (
+							<LocalizedDate date={publishedDate} />
+						)}
 					</Link>
 				)}
 				avatar={

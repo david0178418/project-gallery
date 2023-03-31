@@ -7,7 +7,6 @@ import { getServerSession } from '@server/auth-options';
 import { fetchJournal } from '@server/queries';
 import { dbJournalToUiJournal } from '@server/transforms';
 import { MongoIdValidation } from '@server/validations';
-import { localizedDateFormat, urlJoin } from '@common/utils';
 import Link from 'next/link';
 import { UiJournal } from '@common/types/Journal';
 import MarkdownContent from '@components/markdown-content';
@@ -25,6 +24,8 @@ import {
 	Link as MuiLink,
 	Typography,
 } from '@mui/material';
+import { LocalizedDate } from '@components/localized-date';
+import { urlJoin } from '@common/utils';
 
 interface Props {
 	journal: UiJournal | null;
@@ -136,13 +137,13 @@ function Journal(props: Props) {
 						<Typography variant="subtitle1" paddingTop={1} fontStyle="italic">
 							published: {
 								journal.publishedDate ?
-									localizedDateFormat(journal.publishedDate) :
+									<LocalizedDate date={journal.publishedDate} /> :
 									'Unpublished'
 							}<br/>
 						</Typography>
 						{journal.lastUpdatedDate && (
 							<Typography variant="subtitle1" fontStyle="italic">
-								last updated: {localizedDateFormat(journal.lastUpdatedDate)}
+								last updated: <LocalizedDate date={journal.lastUpdatedDate} />
 							</Typography>
 						)}
 						<Box paddingTop={2}>
