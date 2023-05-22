@@ -33,6 +33,9 @@
       "@pages/*": [
         "pages/*"
       ],
+      "@app/*": [
+        "src/app/*"
+      ],
       "@public/*": [
         "public/*"
       ],
@@ -43,7 +46,8 @@
         "src/styles/*"
       ],
       "@/*": [
-        "./*"
+        "./*",
+          "src/*",
       ]
     },
     "plugins": [
