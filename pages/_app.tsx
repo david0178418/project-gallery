@@ -1,8 +1,4 @@
 import '@styles/globals.css';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
 
 import type { AppProps } from 'next/app';
 
@@ -17,6 +13,13 @@ import { DefaultSeo } from 'next-seo';
 import { AppName, BaseUrl } from '@common/constants';
 import { urlJoin } from '@common/utils';
 import theme from '@common/theme';
+import { Roboto } from 'next/font/google';
+
+const font = Roboto({
+	weight: ['300', '400', '500', '700'],
+	subsets: ['latin'],
+	display: 'swap',
+});
 
 interface Props {
 	session: Session | null;
@@ -36,7 +39,7 @@ function App(props: AppProps<Props>) {
 	} = props;
 
 	return (
-		<>
+		<div className={font.className}>
 			<DefaultSeo
 				openGraph={{
 					type: 'website',
@@ -71,7 +74,7 @@ function App(props: AppProps<Props>) {
 				</SessionProvider>
 			</ThemeProvider>
 			<Analytics />
-		</>);
+		</div>);
 }
 
 export default App;
