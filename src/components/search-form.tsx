@@ -1,6 +1,8 @@
+'use client';
+
 import { AppName, Paths } from '@common/constants';
-import { InputAdornment, TextField } from '@mui/material';
-import { useRouter } from 'next/router';
+import { InputAdornment, TextField } from '@ui';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
 import { SearchIcon } from './icons';
@@ -29,10 +31,7 @@ function SearchForm(props: Props) {
 			queryParams.q = searchQueary;
 		}
 
-		push({
-			pathname: searchPath,
-			query: queryParams,
-		});
+		push(`${searchPath}?${searchQueary ? `q=${searchQueary}` : ''}`);
 	}
 
 	function handleKeyUp(key: string) {

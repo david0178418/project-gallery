@@ -14,17 +14,14 @@ import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import { journalSave } from '@client/api-calls';
 import { useState } from 'react';
-import {
-	AppName,
-	SpecialCharacterCodes,
-} from '@common/constants';
+import { AppName, SpecialCharacterCodes } from '@common/constants';
 import {
 	Box,
 	IconButton,
 	Typography,
 	useMediaQuery,
 	useTheme,
-} from '@mui/material';
+} from '@ui';
 
 interface Props {
 	journal: UiJournal | null;

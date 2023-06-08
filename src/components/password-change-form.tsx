@@ -8,7 +8,7 @@ import {
 	Grid,
 	TextField,
 	Typography,
-} from '@mui/material';
+} from '@ui';
 
 export
 function PasswordChangeForm() {

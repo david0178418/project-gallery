@@ -25,7 +25,7 @@ import {
 	ListItemText,
 	Toolbar,
 	Typography,
-} from '@mui/material';
+} from '@ui';
 
 export default
 function TopMenuSection() {
@@ -82,12 +82,7 @@ function TopMenuSection() {
 								Blog
 							</Button>
 						</Link>
-						<Link
-							href={{
-								pathname: Paths.Home,
-								query: { a: ModalActions.Login },
-							}}
-						>
+						<Link href={Paths.ModalLoginEmail}>
 							<Button
 								variant="outlined"
 								sx={{ marginRight: 1 }}
@@ -95,10 +90,7 @@ function TopMenuSection() {
 								Login
 							</Button>
 						</Link>
-						<Link href={{
-							pathname: Paths.Home,
-							query: { a: ModalActions.Register },
-						}}>
+						<Link href={Paths.ModalRegister}>
 							<Button
 								variant="contained"
 							>

@@ -3,7 +3,7 @@ import { useAtomValue } from 'jotai';
 import {
 	Backdrop,
 	CircularProgress,
-} from '@mui/material';
+} from '@ui';
 
 export default
 function Loader() {

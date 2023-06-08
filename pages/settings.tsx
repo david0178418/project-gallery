@@ -28,7 +28,7 @@ import {
 	Tab,
 	Tabs,
 	Typography,
-} from '@mui/material';
+} from '@ui';
 
 interface Props {
 	userProfile: UiUserProfile | null;

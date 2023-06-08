@@ -1,5 +1,5 @@
 import { CancelIcon } from '@components/icons';
-import { Button as MuiButton } from '@mui/material';
+import { Button as MuiButton } from '@ui';
 import { ComponentProps, forwardRef } from 'react';
 import { ConfirmIcon } from '@components/icons';
 

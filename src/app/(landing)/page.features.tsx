@@ -1,6 +1,4 @@
-'use client';
-
-import { default as Grid } from '@mui/material/Unstable_Grid2/Grid2';
+import { Unstable_Grid2 as Grid } from '@ui';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import Img1 from './img1.png';
@@ -17,7 +15,7 @@ import {
 	Button,
 	Paper,
 	Typography,
-} from '@mui/material';
+} from '@ui';
 
 const { NBSP: S } = SpecialCharacterCodes;
 

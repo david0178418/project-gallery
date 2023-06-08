@@ -1,3 +1,4 @@
+'use client';
 import { red } from '@mui/material/colors';
 import { UiProject } from '@common/types/Project';
 import { ParsedContent } from './parsed-content';
@@ -23,7 +24,7 @@ import {
 	IconButton,
 	Tooltip,
 	Typography,
-} from '@mui/material';
+} from '@ui';
 
 interface Props {
 	project: UiProject;

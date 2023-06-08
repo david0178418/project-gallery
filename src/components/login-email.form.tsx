@@ -2,32 +2,20 @@ import { useState } from 'react';
 import { Key } from 'ts-key-enum';
 import { sendLoginLink } from '@client/api-calls';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import { useRouter } from 'next/navigation';
+import { Paths } from '@common/constants';
 import Link from 'next/link';
-import { UrlObject } from 'url';
-import { useRouter } from 'next/router';
-import { CloseIcon } from '@components/icons';
 import {
 	Box,
 	Button,
 	DialogActions,
 	DialogContent,
-	DialogTitle,
-	IconButton,
 	TextField,
-} from '@mui/material';
-
-interface Props {
-	urlObj: UrlObject;
-	onToggle(): void;
-}
+} from '@ui';
 
 export default
-function LoginEmailForm(props: Props) {
-	const {
-		onToggle,
-		urlObj,
-	} = props;
-	const { replace } = useRouter();
+function LoginEmailForm() {
+	const { back } = useRouter();
 	const pushToastMsg = usePushToastMsg();
 	const setLoading = useSetLoading();
 	const [email, setEmail] = useState('');
@@ -45,7 +33,7 @@ function LoginEmailForm(props: Props) {
 		try {
 			await sendLoginLink(email);
 			pushToastMsg(`A login link will be sent to "${email}" if an account with this email exists.`);
-			replace(urlObj);
+			back();
 		} catch(e) {
 			pushToastMsg('Something went wrong. Try again.');
 			console.log(e);
@@ -56,25 +44,6 @@ function LoginEmailForm(props: Props) {
 
 	return (
 		<>
-			<DialogTitle>
-				Login
-
-				<Link
-					replace
-					shallow
-					href={urlObj}
-				>
-					<IconButton
-						sx={{
-							position: 'absolute',
-							right: 8,
-							top: 8,
-						}}
-					>
-						<CloseIcon />
-					</IconButton>
-				</Link>
-			</DialogTitle>
 			<Box
 				noValidate
 				autoComplete="off"
@@ -96,9 +65,11 @@ function LoginEmailForm(props: Props) {
 			</Box>
 			<DialogActions>
 				<Box paddingRight={2}>
-					<Button color="secondary" onClick={onToggle}>
-						Sign in with password
-					</Button>
+					<Link href={Paths.ModalLoginPw} replace>
+						<Button color="secondary">
+							Sign in with password
+						</Button>
+					</Link>
 				</Box>
 				<Button
 					variant="outlined"

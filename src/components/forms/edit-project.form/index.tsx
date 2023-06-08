@@ -33,7 +33,7 @@ import {
 	Tab,
 	Tabs,
 	TextField,
-} from '@mui/material';
+} from '@ui';
 import Label from '@components/label';
 
 function dateToDateSubstring(date: Date) {

@@ -1,12 +1,7 @@
-import Head from 'next/head';
-import { GetServerSideProps } from 'next';
 import { getServerSession } from '@server/auth-options';
-import { AppName } from '@common/constants';
 import { ScrollContent } from '@components/scroll-content';
 import ProjectCard from '@components/project-card';
 import { SearchForm } from '@components/search-form';
-import { UiProject } from '@common/types/Project';
-import { UiJournal } from '@common/types/Journal';
 import JournalsList from '@components/journals-list';
 import { fetchJournals, fetchProjects } from '@server/queries';
 import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
@@ -15,41 +10,16 @@ import {
 	Container,
 	Grid,
 	Typography,
-} from '@mui/material';
+} from '@ui';
 
-interface Props {
-	projects: UiProject[];
-	journals: UiJournal[];
-}
-
-export
-const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-	const session = await getServerSession(ctx.req, ctx.res);
+export default
+async function HomePage() {
+	const session = await getServerSession();
 	const projects = (await fetchProjects()).map(dbProjectToUiProject);
 	const journals = (await fetchJournals(session?.user.id)).map(dbJournalToUiJournal);
 
-	return {
-		props: {
-			session,
-			projects,
-			journals,
-		},
-	};
-};
-
-export default function Home(props: Props) {
-	const {
-		projects,
-		journals,
-	} = props;
-
 	return (
 		<>
-			<Head>
-				<title>{AppName}</title>
-				<meta name="description" content={AppName} />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
 			<ScrollContent
 				header={
 					<Box
@@ -82,7 +52,7 @@ export default function Home(props: Props) {
 			>
 				<Container>
 					<Typography variant="h6">
-					Projects
+						Projects
 					</Typography>
 					<Grid padding={1} container spacing={1} >
 						{projects.slice(0, 2).map(p => (
@@ -99,7 +69,7 @@ export default function Home(props: Props) {
 						))}
 					</Grid>
 					<Typography variant="h6">
-					Journal Posts
+						Journal Posts
 					</Typography>
 					<JournalsList journals={journals} />
 				</Container>

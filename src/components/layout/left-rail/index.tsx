@@ -1,13 +1,17 @@
+'use client';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { ReactNode } from 'react';
 import { CreateDropdown } from './create-dropdown';
 import Logo from './logo';
+import { RailButtonContent } from './rail-button-content';
+import { useUpdateQueryParam } from '@common/hooks';
+import { ModalActions, Paths } from '@common/constants';
 import {
-	ModalActions,
-	Paths,
-} from '@common/constants';
+	List,
+	ListItem,
+	ListItemButton,
+} from '@ui';
 import {
 	HomeActiveIcon,
 	LoginIcon,
@@ -20,56 +24,15 @@ import {
 	FavoriteIcon,
 	RegisterIcon,
 } from '@components/icons';
-import {
-	List,
-	ListItem,
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
-} from '@mui/material';
-
-interface Props {
-	label: string;
-	secondary?: string;
-	children: ReactNode;
-}
-
-function RailButtonContent(props: Props) {
-	const {
-		label,
-		secondary = '',
-		children,
-	} = props;
-	return (
-		<>
-			<ListItemIcon>
-				{children}
-			</ListItemIcon>
-			<ListItemText
-				primary={label}
-				secondary={secondary}
-				sx={{
-					display: {
-						xs: 'none',
-						md: 'inline',
-					},
-				}}
-			/>
-		</>
-	);
-}
 
 // TODO Implement better path matching for active icon
 export
 function LeftRail() {
-	const router = useRouter();
 	const { data } = useSession();
-	const {
-		pathname,
-		asPath,
-		query,
-	} = router;
+	const pathname = usePathname();
 	const user = data?.user;
+
+	const updateQueryParam = useUpdateQueryParam();
 
 	return (
 		<>
@@ -100,13 +63,7 @@ function LeftRail() {
 								shallow
 								passHref
 								legacyBehavior
-								href={{
-									pathname,
-									query: {
-										a: ModalActions.Login,
-										...query,
-									},
-								}}
+								href={updateQueryParam('a', ModalActions.Login)}
 							>
 								<ListItemButton>
 									<RailButtonContent
@@ -124,10 +81,7 @@ function LeftRail() {
 								legacyBehavior
 								href={{
 									pathname,
-									query: {
-										a: ModalActions.Register,
-										...query,
-									},
+									query: updateQueryParam('a', ModalActions.Register),
 								}}
 							>
 								<ListItemButton>
@@ -155,7 +109,7 @@ function LeftRail() {
 										label={user.username}
 									>
 										{
-											Paths.UserGallery(user.username) === asPath ?
+											Paths.UserGallery(user.username) === pathname ?
 												<ProfileActiveIcon /> :
 												<ProfileIcon />
 										}
@@ -175,7 +129,7 @@ function LeftRail() {
 										label="Favorites"
 									>
 										{
-											Paths.Favorites === asPath ?
+											Paths.Favorites === pathname ?
 												<FavoriteActiveIcon /> :
 												<FavoriteIcon />
 										}

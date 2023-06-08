@@ -23,7 +23,7 @@ import {
 	Typography,
 	useMediaQuery,
 	useTheme,
-} from '@mui/material';
+} from '@ui';
 
 function createWriteProject(): WriteProject {
 	return {

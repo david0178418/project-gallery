@@ -16,10 +16,8 @@ import { UiJournal } from '@common/types/Journal';
 import JournalsList from '@components/journals-list';
 import MarkdownContent from '@components/markdown-content';
 import LinksList from '@components/links-list';
-import {
-	fetchProject,
-	fetchProjectJournals,
-} from '@server/queries';
+import { LocalizedDate } from '@components/localized-date';
+import { fetchProject, fetchProjectJournals } from '@server/queries';
 import {
 	AppName,
 	BaseUrl,
@@ -34,8 +32,7 @@ import {
 	Tab,
 	Tabs,
 	Typography,
-} from '@mui/material';
-import { LocalizedDate } from '@components/localized-date';
+} from '@ui';
 
 interface Props {
 	subPath: TabPath ;

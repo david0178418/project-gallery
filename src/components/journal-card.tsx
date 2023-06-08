@@ -1,9 +1,12 @@
+'use client';
 import { red } from '@mui/material/colors';
 import { UiJournal } from '@common/types/Journal';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
 import { useUser } from '@common/hooks';
 import MarkdownContent from './markdown-content';
+import { ShareIconButton } from './common/share-button';
+import { LocalizedDate } from './localized-date';
 import {
 	FavoriteIcon,
 	EditIcon,
@@ -18,9 +21,7 @@ import {
 	IconButton,
 	Tooltip,
 	Typography,
-} from '@mui/material';
-import { ShareIconButton } from './common/share-button';
-import { LocalizedDate } from './localized-date';
+} from '@ui';
 
 interface Props {
 	journal: UiJournal;

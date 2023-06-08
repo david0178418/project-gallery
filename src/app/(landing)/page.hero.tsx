@@ -1,10 +1,11 @@
-'use client';
 import Image from 'next/image';
 import MainImage from './homepage-main-image.png';
 import { CheckCircleIcon } from '@components/icons';
 import Link from 'next/link';
 import {
-	ModalActions, Paths, SpecialCharacterCodes,
+	ModalActions,
+	Paths,
+	SpecialCharacterCodes,
 } from '@common/constants';
 import {
 	Box,
@@ -16,7 +17,7 @@ import {
 	ListItemIcon,
 	ListItemText,
 	Typography,
-} from '@mui/material';
+} from '@ui';
 
 export default
 function Hero() {

@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import { Link as MuiLink, Typography } from '@mui/material';
+import { Link as MuiLink, Typography } from '@ui';
 import { ComponentProps, forwardRef } from 'react';
 import Label from './label';
 

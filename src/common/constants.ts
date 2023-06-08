@@ -100,6 +100,9 @@ export
 const Paths = {
 	Favorites: '/favorites',
 	Home: '/home',
+	ModalLoginEmail: '/login/email',
+	ModalLoginPw: '/login/pw',
+	ModalRegister: '/register',
 	OneClickAuth: '/one-click-auth/',
 	Search: '/search',
 	Settings: '/settings',

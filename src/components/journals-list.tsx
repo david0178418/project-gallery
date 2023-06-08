@@ -1,6 +1,6 @@
 import { UiJournal } from '@common/types/Journal';
 import JournalCard from '@components/journal-card';
-import { Box } from '@mui/material';
+import { Box } from '@ui';
 
 interface Props {
 	journals: UiJournal[];

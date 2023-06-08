@@ -1,11 +1,15 @@
-import { forwardRef, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
+'use client';
+
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { useUpdateQueryParam } from '@common/hooks';
+import { ModalActions, Paths } from '@common/constants';
+import { forwardRef, useState } from 'react';
 import {
-	ModalActions,
-	Paths,
-} from '@common/constants';
+	usePathname,
+	useRouter,
+	useSearchParams,
+} from 'next/navigation';
 import {
 	BottomNavigation,
 	BottomNavigationAction,
@@ -13,7 +17,7 @@ import {
 	Paper,
 	SpeedDial,
 	SpeedDialAction,
-} from '@mui/material';
+} from '@ui';
 import {
 	SpeedDialIcon,
 	HomeActiveIcon,
@@ -34,11 +38,9 @@ import {
 export
 function BottomNav() {
 	const { data } = useSession();
-	const {
-		asPath,
-		pathname,
-		query,
-	} = useRouter();
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const pathname = usePathname()!;
+	const query = useSearchParams();
 	const user = data?.user;
 
 	return (
@@ -57,7 +59,7 @@ function BottomNav() {
 		>
 			<BottomNavigation
 				showLabels
-				value={asPath}
+				value={pathname}
 			>
 				<BottomNavigationAction
 					label="Home"
@@ -65,7 +67,7 @@ function BottomNav() {
 					href={Paths.Home}
 					value={Paths.Home}
 					icon={
-						Paths.Home === asPath ?
+						Paths.Home === pathname ?
 							<HomeActiveIcon /> :
 							<HomeIcon />
 					}
@@ -140,11 +142,10 @@ function BottomNav() {
 
 function CreateButton() {
 	const [open, setOpen] = useState(false);
-	const {
-		pathname,
-		query,
-		push,
-	} = useRouter();
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const pathname = usePathname()!;
+	const { push } = useRouter();
+	const createUpdatedUrl = useUpdateQueryParam();
 
 	// Is NextJS Url type exposed somewhere??
 	function handleRoute(url: Parameters<typeof push>[0]) {
@@ -170,15 +171,7 @@ function CreateButton() {
 				<SpeedDialAction
 					tooltipTitle="Project"
 					icon={<ProjectIcon/>}
-					onClick={() => handleRoute(
-						{
-							pathname,
-							query: {
-								a: ModalActions.CreateProject,
-								...query,
-							},
-						},
-					)}
+					onClick={() => handleRoute(`${pathname}?${createUpdatedUrl('a', ModalActions.CreateProject)}`)}
 				/>
 				<SpeedDialAction
 					tooltipTitle="Journal Post"

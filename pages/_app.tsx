@@ -4,9 +4,8 @@ import type { AppProps } from 'next/app';
 
 import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
-import { ThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@ui';
 import { Session } from 'next-auth';
-import dynamic from 'next/dynamic';
 import { Layout } from '@components/layout';
 import { Analytics } from '@vercel/analytics/react';
 import { DefaultSeo } from 'next-seo';
@@ -26,7 +25,7 @@ interface Props {
 	initialState: any;
 }
 
-const CommonModals = dynamic(() => import('@common/common-stuff'), { ssr: false });
+// const CommonModals = dynamic(() => import('@common/common-stuff'), { ssr: false });
 const imageUrl = urlJoin(BaseUrl, '/logo-main.png');
 
 function App(props: AppProps<Props>) {
@@ -70,7 +69,7 @@ function App(props: AppProps<Props>) {
 					<Layout>
 						<Component {...pageProps} />
 					</Layout>
-					<CommonModals />
+					{/* <CommonModals /> */}
 				</SessionProvider>
 			</ThemeProvider>
 			<Analytics />

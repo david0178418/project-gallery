@@ -1,5 +1,5 @@
 import { ModalActions } from '@common/constants';
-import { Button } from '@mui/material';
+import { Button } from '@ui';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';

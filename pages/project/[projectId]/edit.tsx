@@ -22,7 +22,7 @@ import {
 	Typography,
 	useMediaQuery,
 	useTheme,
-} from '@mui/material';
+} from '@ui';
 
 interface Props {
 	project: UiProject | null;

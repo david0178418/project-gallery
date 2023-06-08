@@ -1,5 +1,8 @@
+'use client';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { Paths, UserRoles } from '@common/constants';
+import { usePathname, useSearchParams } from 'next/navigation';
 import {
 	useEffect,
 	useState,
@@ -8,8 +11,6 @@ import {
 	useCallback,
 	EffectCallback,
 } from 'react';
-
-import { Paths, UserRoles } from '@common/constants';
 
 export
 function useIsLoggedIn() {
@@ -36,6 +37,32 @@ function useIsAdmin() {
 	const { data } = useSession();
 
 	return data?.user.role === UserRoles.Admin;
+}
+
+export
+function useQueryParam(key: string) {
+	const searchParams = useSearchParams();
+	const params = new URLSearchParams(searchParams?.toString());
+
+	return params.get(key);
+}
+
+export
+function useUpdateQueryParam() {
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+
+	const createUrl = useCallback(
+		(name: string, value: string) => {
+			const params = new URLSearchParams(searchParams?.toString());
+			params.set(name, value);
+
+			return `${pathname}?${params.toString()}`;
+		},
+		[searchParams],
+	);
+
+	return createUrl;
 }
 
 export

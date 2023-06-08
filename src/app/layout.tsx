@@ -1,11 +1,8 @@
-'use client';
-
 import '@styles/globals.css';
 
 import { Roboto } from 'next/font/google';
-import theme from '@common/theme';
-import { ThemeProvider } from '@mui/material';
 import { ReactNode } from 'react';
+import Providers from './providers';
 
 const font = Roboto({
 	weight: ['300', '400', '500', '700'],
@@ -14,16 +11,18 @@ const font = Roboto({
 });
 
 interface Props {
-	children: ReactNode
+	children: ReactNode;
+	modal: ReactNode;
 }
 
-export default function RootLayout({ children }: Props) {
+export default function RootLayout(props: Props) {
 	return (
 		<html lang="en" className={font.className}>
 			<body>
-				<ThemeProvider theme={theme}>
-					{children}
-				</ThemeProvider>
+				<Providers>
+					{props.children}
+					{props.modal}
+				</Providers>
 			</body>
 		</html>
 	);

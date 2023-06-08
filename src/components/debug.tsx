@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
 	Box,
 	Button,
-} from '@mui/material';
+} from '@ui';
 
 interface Props {
 	obj: any;

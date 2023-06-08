@@ -1,34 +1,22 @@
 import { ReactNode } from 'react';
 
-import Head from 'next/head';
 import { LeftRail } from './left-rail';
-import { AppName } from '@common/constants';
 import { BottomNav } from './bottom-nav';
 import {
 	Container,
 	Grid,
-} from '@mui/material';
+} from '@ui';
 
 interface Props {
-	title?: string;
 	children?: ReactNode;
 }
 
 export
 function Layout(props: Props) {
-	const {
-		title,
-		children,
-	} = props;
-	const renderdTitle = title ? `${title} - ${AppName}` : AppName;
+	const { children } = props;
 
 	return (
 		<>
-			<Head>
-				<title>{renderdTitle}</title>
-				<meta name="description" content={AppName} />
-			</Head>
-
 			<Container
 				sx={{
 					display: 'flex',

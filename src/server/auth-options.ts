@@ -12,7 +12,7 @@ import {
 import { AuthProviders, UserRoles } from '@common/constants';
 import {
 	NextAuthOptions,
-	unstable_getServerSession,
+	getServerSession as gss,
 } from 'next-auth';
 
 const { NEXTAUTH_SECRET } = process.env;
@@ -21,8 +21,9 @@ type Req = GetServerSidePropsContext['req'] | NextApiRequest;
 type Res = GetServerSidePropsContext['res'] | NextApiResponse;
 
 export
-async function getServerSession(req: Req, res: Res) {
-	return unstable_getServerSession(req, res, authOptions);
+async function getServerSession(req?: Req, res?: Res) {
+	console.log('getServerSession:', req, res);
+	return gss(authOptions);
 }
 
 export

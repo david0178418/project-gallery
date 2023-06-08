@@ -1,4 +1,4 @@
-import { createUser } from '@pages/api/v0/user/register';
+import { createUser } from '@/pages/api/v0/user/register';
 import { DbCollections } from '@common/constants';
 import { getDb, getCollection } from '.';
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Snackbar, IconButton } from '@mui/material';
+import { Snackbar, IconButton } from '@ui';
 import { CloseIcon } from '@components/icons';
 import { clearCurrentToastMsgAtom, toastMsgAtom } from '@common/atoms';
 import { DefaultToastMsgDelay } from '@common/constants';

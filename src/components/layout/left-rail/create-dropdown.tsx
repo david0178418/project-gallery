@@ -1,7 +1,9 @@
+'use client';
+
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { MouseEvent, useState } from 'react';
 import { ModalActions } from '@common/constants';
+import { useUpdateQueryParam } from '@common/hooks';
 import {
 	AddIcon,
 	ProjectIcon,
@@ -12,18 +14,13 @@ import {
 	ListItemIcon,
 	Menu,
 	MenuItem,
-} from '@mui/material';
+} from '@ui';
 
 export
 function CreateDropdown() {
-	const router = useRouter();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
-
-	const {
-		pathname,
-		query,
-	} = router;
+	const updateQueryParam = useUpdateQueryParam();
 
 	function handleEl(el: MouseEvent<HTMLElement>) {
 		setAnchorEl(el.currentTarget);
@@ -70,13 +67,7 @@ function CreateDropdown() {
 			>
 				<Link
 					shallow
-					href={{
-						pathname,
-						query: {
-							a: ModalActions.CreateProject,
-							...query,
-						},
-					}}
+					href={updateQueryParam('a', ModalActions.CreateProject)}
 				>
 					<MenuItem onClick={handleClose}>
 						<ListItemIcon>
@@ -87,13 +78,7 @@ function CreateDropdown() {
 				</Link>
 				<Link
 					shallow
-					href={{
-						pathname,
-						query: {
-							a: ModalActions.CreateJournal,
-							...query,
-						},
-					}}
+					href={updateQueryParam('a', ModalActions.CreateJournal)}
 				>
 					<MenuItem onClick={handleClose}>
 						<ListItemIcon>

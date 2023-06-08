@@ -1,16 +1,18 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import {
-	AppName, MaxSearchTermSize, Paths,
-} from '@common/constants';
 import { ScrollContent } from '@components/scroll-content';
 import { SearchForm } from '@components/search-form';
+import { getServerSession } from '@server/auth-options';
+import {
+	AppName,
+	MaxSearchTermSize,
+	Paths,
+} from '@common/constants';
 import {
 	Box,
 	Container,
 	Typography,
-} from '@mui/material';
-import { getServerSession } from '@server/auth-options';
+} from '@ui';
 
 interface Props {
 	searchTerm: string;

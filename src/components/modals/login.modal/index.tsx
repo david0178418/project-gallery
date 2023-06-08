@@ -11,7 +11,7 @@ import {
 	DialogActions,
 	useMediaQuery,
 	useTheme,
-} from '@mui/material';
+} from '@ui';
 
 export default
 function LoginModal() {

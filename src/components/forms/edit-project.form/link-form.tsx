@@ -6,7 +6,7 @@ import { MinLinkLabelSize, MaxLinkLabelSize } from '@common/constants';
 import {
 	Button,
 	Grid,
-} from '@mui/material';
+} from '@ui';
 
 type ProjectLink = UiProject['links'][number];
 

@@ -1,7 +1,7 @@
 import { usePushToastMsg } from '@common/atoms';
 import { urlJoin } from '@common/utils';
 import { ShareIcon } from '@components/icons';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip } from '@ui';
 import { forwardRef } from 'react';
 
 interface Props {

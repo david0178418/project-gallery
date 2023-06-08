@@ -23,7 +23,7 @@ import {
 	IconButton,
 	Link as MuiLink,
 	Typography,
-} from '@mui/material';
+} from '@ui';
 import { LocalizedDate } from '@components/localized-date';
 import { urlJoin } from '@common/utils';
 

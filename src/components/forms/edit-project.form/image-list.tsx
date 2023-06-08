@@ -3,7 +3,7 @@ import {
 	Box,
 	Grid,
 	IconButton,
-} from '@mui/material';
+} from '@ui';
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,

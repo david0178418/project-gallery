@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box } from '@ui';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Paths } from '@common/constants';

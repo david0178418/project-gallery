@@ -58,7 +58,7 @@ import {
 	Tab,
 	Tabs,
 	Typography,
-} from '@mui/material';
+} from '@ui';
 
 const TabPaths = {
 	projects: {

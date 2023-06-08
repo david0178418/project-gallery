@@ -24,7 +24,7 @@ import {
 	Select,
 	Tab,
 	Tabs,
-} from '@mui/material';
+} from '@ui';
 
 const MarkdownContent = dynamic(() => import('@components/markdown-content'));
 

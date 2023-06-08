@@ -1,11 +1,16 @@
-import { useRouter } from 'next/router';
+'use client';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { ModalActions } from '@common/constants';
 import { logout } from '@client/api-calls';
 import { useAtom } from 'jotai';
 import { pushToastMsgAtom } from '@common/atoms';
-import { useIsLoggedOut } from '@common/hooks';
+import {
+	useIsLoggedOut,
+	useQueryParam,
+	useUpdateQueryParam,
+} from '@common/hooks';
 import {
 	Button,
 	Dialog,
@@ -13,17 +18,15 @@ import {
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
-} from '@mui/material';
+} from '@ui';
 
 export default
 function LogoutModal() {
 	const [, pustToastMsg] = useAtom(pushToastMsgAtom);
+	const { replace } = useRouter();
 	const isLoggedOut = useIsLoggedOut();
-	const router = useRouter();
-	const {
-		a: action,
-		...newQuery
-	} = router.query;
+	const createUpdatedUrl = useUpdateQueryParam();
+	const action = useQueryParam('a');
 	const actionIsLogin = action === ModalActions.Logout;
 	const isOpen = actionIsLogin && !isLoggedOut;
 
@@ -33,10 +36,7 @@ function LogoutModal() {
 		}
 
 		if(isLoggedOut) {
-			router.replace({
-				pathname: router.pathname,
-				query: newQuery,
-			});
+			replace(createUpdatedUrl('a', ''));
 		}
 	}, [actionIsLogin, isLoggedOut]);
 
@@ -64,10 +64,7 @@ function LogoutModal() {
 					replace
 					passHref
 					shallow
-					href={{
-						pathname: router.pathname,
-						query: newQuery,
-					}}
+					href={createUpdatedUrl('a', '')}
 				>
 					<Button color="error">
 						Cancel
