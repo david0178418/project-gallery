@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 
 import { LeftRail } from './left-rail';
 import { BottomNav } from './bottom-nav';
+import { getServerSession } from '@server/auth-options';
 import {
 	Container,
 	Grid,
@@ -12,7 +13,8 @@ interface Props {
 }
 
 export
-function Layout(props: Props) {
+async function Layout(props: Props) {
+	const session = await getServerSession();
 	const { children } = props;
 
 	return (
@@ -46,7 +48,12 @@ function Layout(props: Props) {
 							},
 						}}
 					>
-						<LeftRail/>
+						<div>
+							{/** Wrapped in a random div due to this issue:
+							 * https://stackoverflow.com/questions/56347839/material-ui-v4-0-1-warning-expected-an-element-that-can-hold-a-ref
+							 */}
+							<LeftRail session={session} />
+						</div>
 					</Grid>
 					<Grid
 						item

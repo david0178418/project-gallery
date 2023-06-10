@@ -3,8 +3,8 @@ import { CreateDropdown } from './create-dropdown';
 import Logo from './logo';
 import { RailButtonContent } from './rail-button-content';
 import { Paths } from '@common/constants';
-import { getServerSession } from 'next-auth';
 import { LeftRailItem } from './left-rail-item';
+import { Session } from 'next-auth';
 import {
 	List,
 	ListItem,
@@ -23,13 +23,15 @@ import {
 	RegisterIcon,
 } from '@components/icons';
 
+interface Props {
+	session: Session | null;
+}
+
 // TODO Implement better path matching for active icon
 export
-async function LeftRail() {
-	const data = await getServerSession();
-	const user = data?.user;
-
-	console.log('user', user?.name, data);
+async function LeftRail(props: Props) {
+	const { session } = props;
+	const user = session?.user;
 
 	return (
 		<>
