@@ -7,6 +7,7 @@ const nextConfig = {
 		legacyBrowsers: false,
 		// Enabled in preperation of release of canary feature.
 		// serverComponents: true,
+		serverActions: true,
 	},
 };
 

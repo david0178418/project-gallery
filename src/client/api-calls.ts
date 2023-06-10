@@ -28,15 +28,6 @@ async function sendLoginLink(email: string) {
 }
 
 export
-function register(username: string, email: string, password: string) {
-	return apiPost<ApiResponse>('/user/register', {
-		username,
-		email,
-		password,
-	});
-}
-
-export
 function updatePassword(password: string) {
 	return apiPost<ApiResponse>('/user/pw', { password });
 }

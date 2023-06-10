@@ -1,3 +1,4 @@
+// 'use server';
 import { getServerSession } from '@server/auth-options';
 import { ScrollContent } from '@components/scroll-content';
 import ProjectCard from '@components/project-card';
@@ -15,6 +16,8 @@ import {
 export default
 async function HomePage() {
 	const session = await getServerSession();
+
+	// const session: any = null;
 	const projects = (await fetchProjects()).map(dbProjectToUiProject);
 	const journals = (await fetchJournals(session?.user.id)).map(dbJournalToUiJournal);
 

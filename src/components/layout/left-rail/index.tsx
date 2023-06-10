@@ -1,12 +1,10 @@
-'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import { CreateDropdown } from './create-dropdown';
 import Logo from './logo';
 import { RailButtonContent } from './rail-button-content';
-import { useUpdateQueryParam } from '@common/hooks';
-import { ModalActions, Paths } from '@common/constants';
+import { Paths } from '@common/constants';
+import { getServerSession } from 'next-auth';
+import { LeftRailItem } from './left-rail-item';
 import {
 	List,
 	ListItem,
@@ -27,35 +25,22 @@ import {
 
 // TODO Implement better path matching for active icon
 export
-function LeftRail() {
-	const { data } = useSession();
-	const pathname = usePathname();
+async function LeftRail() {
+	const data = await getServerSession();
 	const user = data?.user;
 
-	const updateQueryParam = useUpdateQueryParam();
+	console.log('user', user?.name, data);
 
 	return (
 		<>
 			<Logo />
 			<List>
-				<ListItem disablePadding>
-					<Link
-						shallow
-						passHref
-						legacyBehavior
-						href={Paths.Home}
-					>
-						<ListItemButton>
-							<RailButtonContent label="Home">
-								{
-									Paths.Home === pathname ?
-										<HomeActiveIcon /> :
-										<HomeIcon />
-								}
-							</RailButtonContent>
-						</ListItemButton>
-					</Link>
-				</ListItem>
+				<LeftRailItem
+					label="Home"
+					path={Paths.Home}
+					ActiveIcon={HomeActiveIcon}
+					InactiveIcon={HomeIcon}
+				/>
 				{!user && (
 					<>
 						<ListItem disablePadding>
@@ -63,7 +48,7 @@ function LeftRail() {
 								shallow
 								passHref
 								legacyBehavior
-								href={updateQueryParam('a', ModalActions.Login)}
+								href={Paths.ModalLoginEmail}
 							>
 								<ListItemButton>
 									<RailButtonContent
@@ -79,10 +64,7 @@ function LeftRail() {
 								shallow
 								passHref
 								legacyBehavior
-								href={{
-									pathname,
-									query: updateQueryParam('a', ModalActions.Register),
-								}}
+								href={Paths.ModalRegister}
 							>
 								<ListItemButton>
 									<RailButtonContent
@@ -97,66 +79,24 @@ function LeftRail() {
 				)}
 				{!!user && (
 					<>
-						<ListItem disablePadding>
-							<Link
-								shallow
-								passHref
-								legacyBehavior
-								href={Paths.UserGallery(user.username)}
-							>
-								<ListItemButton>
-									<RailButtonContent
-										label={user.username}
-									>
-										{
-											Paths.UserGallery(user.username) === pathname ?
-												<ProfileActiveIcon /> :
-												<ProfileIcon />
-										}
-									</RailButtonContent>
-								</ListItemButton>
-							</Link>
-						</ListItem>
-						<ListItem disablePadding>
-							<Link
-								shallow
-								passHref
-								legacyBehavior
-								href={Paths.Favorites}
-							>
-								<ListItemButton>
-									<RailButtonContent
-										label="Favorites"
-									>
-										{
-											Paths.Favorites === pathname ?
-												<FavoriteActiveIcon /> :
-												<FavoriteIcon />
-										}
-									</RailButtonContent>
-								</ListItemButton>
-							</Link>
-						</ListItem>
-						<ListItem disablePadding>
-							<Link
-								shallow
-								passHref
-								legacyBehavior
-								href={Paths.Settings}
-							>
-								<ListItemButton>
-									<RailButtonContent
-										label="Settings"
-									>
-										{
-											Paths.Settings === pathname ?
-												<SettingsActiveIcon /> :
-												<SettingsIcon />
-										}
-									</RailButtonContent>
-								</ListItemButton>
-							</Link>
-						</ListItem>
+						<LeftRailItem
+							label={user.username}
+							path={Paths.UserGallery(user.name || '')}
+							ActiveIcon={ProfileActiveIcon}
+							InactiveIcon={ProfileIcon}
+						/>
+						<LeftRailItem
+							label="Favorites"
+							path={Paths.Favorites}
+							ActiveIcon={FavoriteActiveIcon}
+							InactiveIcon={FavoriteIcon}
+						/>
+						<LeftRailItem
+							label="Settings"
+							path={Paths.Settings}
+							ActiveIcon={SettingsActiveIcon}
+							InactiveIcon={SettingsIcon}
+						/>
 						<CreateDropdown/>
 					</>
 				)}

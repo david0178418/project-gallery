@@ -1,29 +1,43 @@
-import type {
-	GetServerSidePropsContext,
-	NextApiRequest,
-	NextApiResponse,
-} from 'next';
-
 import { compare } from 'bcryptjs';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import {
-	fetchUser, getUserFromKey, updateLastLogin,
-} from '@server/queries';
 import { AuthProviders, UserRoles } from '@common/constants';
+import { cookies, headers } from 'next/headers';
+import {
+	fetchUser,
+	getUserFromKey,
+	updateLastLogin,
+} from '@server/queries';
 import {
 	NextAuthOptions,
-	getServerSession as gss,
+	getServerSession as originalGetServerSession,
 } from 'next-auth';
 
 const { NEXTAUTH_SECRET } = process.env;
 
-type Req = GetServerSidePropsContext['req'] | NextApiRequest;
-type Res = GetServerSidePropsContext['res'] | NextApiResponse;
-
 export
-async function getServerSession(req?: Req, res?: Res) {
-	console.log('getServerSession:', req, res);
-	return gss(authOptions);
+async function getServerSession() {
+	// Original code just wraps passing auth
+	// return originalGetServerSession(authOptions);
+
+	// Hack to get around `Invariant: Method expects to have requestAsyncStorage, none available`
+	// Found here:
+	// https://github.com/nextauthjs/next-auth/issues/7486#issuecomment-1543747325
+	const req = {
+		headers: Object.fromEntries(headers() as Headers),
+		cookies: Object.fromEntries(
+			cookies()
+				.getAll()
+				.map((c) => [c.name, c.value]),
+		),
+	};
+	const res = {
+		getHeader() {},
+		setCookie() {},
+		setHeader() {},
+	};
+
+	// @ts-ignore - The type used in next-auth for the req object doesn't match, but it still works
+	return originalGetServerSession(req, res, authOptions);
 }
 
 export

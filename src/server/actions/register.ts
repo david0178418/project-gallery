@@ -1,5 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
+'use server';
 import { getCollection } from '@server/mongodb';
 import { getServerSession } from '@server/auth-options';
 import { checkCredentialAvailability } from '@server/queries';
@@ -22,7 +21,6 @@ interface Schema {
 	username: string;
 }
 
-export
 const Validation: ZodType<Schema> = z.object({
 	email: EmailValidation,
 	username: UsernameValidation,
@@ -30,25 +28,26 @@ const Validation: ZodType<Schema> = z.object({
 });
 
 export default
-async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
-	const session = await getServerSession(req, res);
+async function Register(params: Schema) {
+	const session = await getServerSession();
 
 	if(session) {
-		return res.status(400).end();
+		return {
+			ok: false,
+			errors: ['Already logged in'],
+		};
 	}
 
-	const result = await Validation.safeParseAsync(req.body);
+	const result = await Validation.safeParseAsync(params);
 
 	if(!result.success) {
-		return res
-			.status(400)
-			.send({
-				ok: false,
-				errors: result
-					.error
-					.errors
-					.map(e => e.message),
-			});
+		return {
+			ok: false,
+			errors: result
+				.error
+				.errors
+				.map(e => e.message),
+		};
 	}
 
 	const {
@@ -70,10 +69,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
 			errors.push(`Email "${email}" is already used`);
 		}
 
-		return res.send({
+		return {
 			ok: false,
 			errors,
-		});
+		};
 	}
 
 	await createUser({
@@ -82,7 +81,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
 		password,
 	});
 
-	res.send({ ok: true });
+	return { ok: true };
 }
 
 export

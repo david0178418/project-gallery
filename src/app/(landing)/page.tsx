@@ -1,4 +1,4 @@
-import TopMenuSection from './top-menu.section';
+import TopBar from './page.top-bar';
 import Hero from './page.hero';
 import Features from './page.features';
 import { AppName, BaseUrl } from '@common/constants';
@@ -31,7 +31,7 @@ export default
 function LandingPage() {
 	return (
 		<>
-			<TopMenuSection />
+			<TopBar />
 			<Hero />
 			<Features />
 		</>

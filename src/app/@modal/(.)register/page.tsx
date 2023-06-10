@@ -1,13 +1,14 @@
 'use client';
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
-import { login, register } from '@client/api-calls';
+import { login } from '@client/api-calls';
 import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import Link from 'next/link';
 import { CloseIcon } from '@components/icons';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
+import Register from '@server/actions/register';
 import {
 	Box,
 	Button,
@@ -54,13 +55,18 @@ function RegistrationModal() {
 		setLoading(true);
 
 		try {
-			if(
-				await register(username, email, password) &&
-				await login(username, password)
-			) {
+			const result = await Register({
+				username,
+				email,
+				password,
+			});
+
+			if(result.ok && await login(username, password)) {
 				pushToastMsg(`Logged in as ${username}`);
 				setUsername('');
 				setEmail('');
+
+				redirect(Paths.Home);
 			}
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
