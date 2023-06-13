@@ -1,6 +1,6 @@
-import { createUser } from '@/pages/api/v0/user/register';
 import { DbCollections } from '@common/constants';
 import { getDb, getCollection } from '.';
+import { createUser } from '@server/actions/register';
 
 export
 async function setupDb() {

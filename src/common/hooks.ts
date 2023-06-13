@@ -1,8 +1,11 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { Paths, UserRoles } from '@common/constants';
-import { usePathname, useSearchParams } from 'next/navigation';
+import {
+	useRouter,
+	usePathname,
+	useSearchParams,
+} from 'next/navigation';
 import {
 	useEffect,
 	useState,
@@ -67,16 +70,14 @@ function useUpdateQueryParam() {
 
 export
 function useRefreshPage() {
-	const {
-		replace,
-		asPath,
-	} = useRouter();
+	const { replace } = useRouter();
+	const pathname = usePathname();
 
-	return () => replace(asPath);
+	return () => replace(pathname || Paths.Home);
 }
 
 export
-function useRouteBackDefault(fallback = Paths.Home) {
+function useRouteBackDefault(fallback: string = Paths.Home) {
 	const router = useRouter();
 
 	return () => {

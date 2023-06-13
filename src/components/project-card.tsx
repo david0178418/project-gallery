@@ -1,10 +1,8 @@
-'use client';
 import { red } from '@mui/material/colors';
-import { UiProject } from '@common/types/Project';
+import { DbProject } from '@common/types/Project';
 import { ParsedContent } from './parsed-content';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
-import { useUser } from '@common/hooks';
 import { ShareIconButton } from './common/share-button';
 import Label from './label';
 import { LocalizedDate } from './localized-date';
@@ -27,13 +25,14 @@ import {
 } from '@ui';
 
 interface Props {
-	project: UiProject;
+	project: DbProject;
+	isOwner?: boolean;
 }
 
 export default
 function ProjectCard(props: Props) {
-	const user = useUser();
 	const {
+		isOwner,
 		project: {
 			_id,
 			description,
@@ -43,14 +42,10 @@ function ProjectCard(props: Props) {
 			lastUpdatedDate,
 			title,
 			images,
-			owner: {
-				_id: ownerId,
-				username,
-			},
+			owner: { username },
 		},
 	} = props;
-	const isOwner = user?.id === ownerId;
-	const projectUrl = Paths.Project(_id);
+	const projectUrl = Paths.Project(_id.toString());
 
 	return (
 		<Card elevation={2}>
@@ -142,7 +137,7 @@ function ProjectCard(props: Props) {
 				{lastJournalEntry && (
 					<Link
 						shallow
-						href={Paths.Journal(lastJournalEntry._id)}
+						href={Paths.Journal(lastJournalEntry._id.toString())}
 					>
 						<Tooltip
 							arrow
@@ -159,7 +154,7 @@ function ProjectCard(props: Props) {
 				{isOwner && (
 					<Link
 						shallow
-						href={Paths.ProjectEdit(_id)}
+						href={Paths.ProjectEdit(_id.toString())}
 					>
 						<Tooltip
 							arrow

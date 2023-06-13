@@ -2,6 +2,19 @@
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
+	async rewrites() {
+		return {
+			beforeFiles: [],
+			afterFiles: [],
+			fallback: [
+				{
+					source: '/:path*',
+					destination: '/content/:path*',
+				},
+			],
+		};
+	},
+
 	experimental: {
 		appDir: true,
 		legacyBrowsers: false,

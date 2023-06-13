@@ -1,3 +1,4 @@
+'use client';
 import { usePushToastMsg } from '@common/atoms';
 import { urlJoin } from '@common/utils';
 import { ShareIcon } from '@components/icons';
