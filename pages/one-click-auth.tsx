@@ -13,7 +13,7 @@ interface Props {
 
 export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-	const session = await getServerSession(ctx.req, ctx.res);
+	const session = await getServerSession();
 	const key = ctx.query?.k;
 
 	if(session || !key || typeof key !== 'string') {

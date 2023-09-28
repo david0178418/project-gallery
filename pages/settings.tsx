@@ -2,7 +2,6 @@ import type { GetServerSideProps, NextPage } from 'next';
 
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { getServerSession } from '@server/auth-options';
 import { PasswordChangeForm } from '@components/password-change-form';
 import { UiUserProfile, WriteUserProfile } from '@common/types/UserProfile';
@@ -18,7 +17,6 @@ import { useSetAtom } from 'jotai';
 import {
 	MaxUserProfileBioLength,
 	MaxUserProfileShortBioLength,
-	ModalActions,
 	Paths,
 } from '@common/constants';
 import {
@@ -29,14 +27,15 @@ import {
 	Tabs,
 	Typography,
 } from '@ui';
+import LogoutButton from '@components/logout-button';
 
 interface Props {
 	userProfile: UiUserProfile | null;
 }
 
 export
-const getServerSideProps: GetServerSideProps = async (ctx) => {
-	const session = await getServerSession(ctx.req, ctx.res);
+const getServerSideProps: GetServerSideProps = async () => {
+	const session = await getServerSession();
 
 	if(!session) {
 		return {
@@ -58,7 +57,6 @@ const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 const ProfilePage: NextPage<Props> = (props) => {
-	const router = useRouter();
 	const session = useSession();
 	const [userProfile, setUserProfile] = useState(() => props.userProfile && uiUserProfileToWriteUserProfile(props.userProfile));
 	const [selectedTab, setSelectedTab] = useState(0);
@@ -80,10 +78,6 @@ const ProfilePage: NextPage<Props> = (props) => {
 
 		setLoading(false);
 	}, [userProfile]);
-	const {
-		pathname,
-		query,
-	} = router;
 
 	if(!(session.data?.user && userProfile)) {
 		return null;
@@ -115,21 +109,7 @@ const ProfilePage: NextPage<Props> = (props) => {
 							Email: <strong>{session.data?.user.email}</strong>
 						</Typography>
 						<Box paddingTop={2}>
-							<Link
-								shallow
-								passHref
-								href={{
-									pathname,
-									query: {
-										a: ModalActions.Logout,
-										...query,
-									},
-								}}
-							>
-								<Button>
-									Logout
-								</Button>
-							</Link>
+							<LogoutButton />
 						</Box>
 						<Box paddingY={2}>
 							<Link

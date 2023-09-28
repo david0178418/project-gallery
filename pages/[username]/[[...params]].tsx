@@ -93,7 +93,7 @@ interface Props {
 export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const result = await UsernameValidation.safeParseAsync(ctx.query.username);
-	const session = await getServerSession(ctx.req, ctx.res);
+	const session = await getServerSession();
 	const [rawSubPath] = ctx.params?.params || [];
 	const subPath = TabPaths[rawSubPath as TabPath]?.value || TabPaths.projects.value;
 

@@ -35,7 +35,7 @@ const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 		};
 	}
 
-	const session = await getServerSession(ctx.req, ctx.res);
+	const session = await getServerSession();
 
 	return {
 		props: {

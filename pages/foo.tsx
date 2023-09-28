@@ -23,8 +23,8 @@ interface Props {
 }
 
 export
-const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-	const session = await getServerSession(ctx.req, ctx.res);
+const getServerSideProps: GetServerSideProps<Props> = async () => {
+	const session = await getServerSession();
 	const projects = (await fetchProjects()).map(dbProjectToUiProject);
 	const journals = (await fetchJournals(session?.user.id)).map(dbJournalToUiJournal);
 

@@ -63,7 +63,7 @@ type TabPath = keyof typeof TabPaths;
 export
 const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
 	const result = await MongoIdValidation.safeParseAsync(ctx.query.projectId);
-	const session = await getServerSession(ctx.req, ctx.res);
+	const session = await getServerSession();
 	const [rawSubPath] = ctx.params?.params || [];
 	const subPath = TabPaths[rawSubPath as TabPath]?.value || TabPaths.details.value;
 
