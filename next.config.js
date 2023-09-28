@@ -14,14 +14,7 @@ const nextConfig = {
 			],
 		};
 	},
-
-	experimental: {
-		appDir: true,
-		legacyBrowsers: false,
-		// Enabled in preperation of release of canary feature.
-		// serverComponents: true,
-		serverActions: true,
-	},
+	experimental: { serverActions: true },
 };
 
 module.exports = nextConfig;
