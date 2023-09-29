@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
 import { sendLoginLink } from '@client/api-calls';
