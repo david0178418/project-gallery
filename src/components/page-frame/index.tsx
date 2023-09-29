@@ -1,6 +1,4 @@
-'use client';
 import { ReactNode } from 'react';
-import { useSelectedLayoutSegment } from 'next/navigation';
 import { Session } from 'next-auth';
 import { LeftRail } from './left-rail';
 import { BottomNav } from './bottom-nav';
@@ -13,11 +11,7 @@ interface Props {
 
 export
 function PageFrame(props: Props) {
-	const segment = useSelectedLayoutSegment();
-	const {
-		children,
-		session,
-	} = props;
+	const { children } = props;
 
 	return (
 		<Container
@@ -53,10 +47,7 @@ function PageFrame(props: Props) {
 						{/** Wrapped in a random div due to this issue:
 							 * https://stackoverflow.com/questions/56347839/material-ui-v4-0-1-warning-expected-an-element-that-can-hold-a-ref
 							 */}
-						<LeftRail
-							session={session}
-							segment={segment || ''}
-						/>
+						<LeftRail />
 					</div>
 				</Grid>
 				<Grid

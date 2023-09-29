@@ -15,7 +15,7 @@ interface Props {
 }
 
 export
-async function LeftRailItem(props: Props) {
+function LeftRailItem(props: Props) {
 	const {
 		label,
 		path,

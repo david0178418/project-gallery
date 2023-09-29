@@ -4,7 +4,7 @@ import Logo from './logo';
 import { RailButtonContent } from './rail-button-content';
 import { Paths } from '@common/constants';
 import { LeftRailItem } from './left-rail-item';
-import { Session } from 'next-auth';
+import { getServerSession } from '@server/auth-options';
 import {
 	List,
 	ListItem,
@@ -23,15 +23,10 @@ import {
 	RegisterIcon,
 } from '@components/icons';
 
-interface Props {
-	segment: string;
-	session: Session | null
-}
-
 // TODO Implement better path matching for active icon
 export
-async function LeftRail(props: Props) {
-	const { session } = props;
+async function LeftRail() {
+	const session = await getServerSession();
 	const user = session?.user;
 
 	return (
