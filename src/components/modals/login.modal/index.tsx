@@ -2,8 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ModalActions } from '@common/constants';
 import { useIsLoggedIn } from '@common/hooks';
-import LoginEmailForm from './login-email.form';
-import LoginPwForm from './login-pw.form';
+
 import Link from 'next/link';
 import {
 	Button,
@@ -12,13 +11,15 @@ import {
 	useMediaQuery,
 	useTheme,
 } from '@ui';
+import LoginEmailForm from '@components/login-email.form';
+import LoginPwForm from '@components/login-pw.form';
 
 export default
 function LoginModal() {
 	const isLoggedIn = useIsLoggedIn();
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-	const [isEmailLogin, setIsEmailLogin] = useState(false);
+	const [isEmailLogin] = useState(false);
 	const {
 		pathname,
 		query,
@@ -28,10 +29,10 @@ function LoginModal() {
 		a: action,
 		...newQuery
 	} = query;
-	const urlObj = {
-		pathname,
-		query: newQuery,
-	};
+	// const urlObj = {
+	// 	pathname,
+	// 	query: newQuery,
+	// };
 	const actionIsLogin = action === ModalActions.Login;
 	const isOpen = actionIsLogin && !isLoggedIn;
 
@@ -56,10 +57,14 @@ function LoginModal() {
 				fullWidth
 			>
 				{isEmailLogin && (
-					<LoginEmailForm urlObj={urlObj} onToggle={() => setIsEmailLogin(false)} />
+					<LoginEmailForm
+						// urlObj={urlObj} onToggle={() => setIsEmailLogin(false)}
+					/>
 				)}
 				{!isEmailLogin && (
-					<LoginPwForm urlObj={urlObj} onToggle={() => setIsEmailLogin(true)} />
+					<LoginPwForm
+						// urlObj={urlObj} onToggle={() => setIsEmailLogin(true)}
+					/>
 				)}
 				<DialogActions style={{ justifyContent: 'center' }}>
 					<Link
