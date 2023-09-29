@@ -3,13 +3,13 @@ import { GetServerSideProps } from 'next';
 import { getServerSession } from '@server/auth-options';
 import { AppName } from '@common/constants';
 import { ScrollContent } from '@components/scroll-content';
-import ProjectCard from '@components/project-card';
 import { SearchForm } from '@components/search-form';
 import { UiProject } from '@common/types/Project';
 import { UiJournal } from '@common/types/Journal';
 import JournalsList from '@components/journals-list';
 import { fetchJournals, fetchProjects } from '@server/queries';
 import { dbJournalToUiJournal, dbProjectToUiProject } from '@server/transforms';
+import ProjectsList from '@components/projects-list';
 import {
 	Box,
 	Container,
@@ -37,12 +37,7 @@ const getServerSideProps: GetServerSideProps<Props> = async () => {
 	};
 };
 
-export default function Home(props: Props) {
-	const {
-		projects,
-		journals,
-	} = props;
-
+export default function Home() {
 	return (
 		<>
 			<Head>
@@ -85,23 +80,12 @@ export default function Home(props: Props) {
 					Projects
 					</Typography>
 					<Grid padding={1} container spacing={1} >
-						{projects.slice(0, 2).map(p => (
-							<Grid
-								key={p._id}
-								item
-								xs={12}
-								md={6}
-							>
-								<ProjectCard
-									project={p}
-								/>
-							</Grid>
-						))}
+						<ProjectsList />
 					</Grid>
 					<Typography variant="h6">
 					Journal Posts
 					</Typography>
-					<JournalsList journals={journals} />
+					<JournalsList />
 				</Container>
 			</ScrollContent>
 		</>
