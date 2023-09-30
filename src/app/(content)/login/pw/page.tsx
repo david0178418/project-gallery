@@ -17,7 +17,7 @@ export default function LoginModal() {
 			<DialogActions style={{ justifyContent: 'center' }}>
 				<Link href={Paths.ModalRegister} replace >
 					<Button size="small">
-						Login Existing Account
+						Create an Account
 					</Button>
 				</Link>
 			</DialogActions>
