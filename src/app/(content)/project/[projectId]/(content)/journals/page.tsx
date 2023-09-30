@@ -1,8 +1,10 @@
 import { Box, Typography } from '@ui';
 import { MongoIdValidation } from '@server/validations';
 import JournalCard from '@components/journal-card';
-import { getServerSession } from '@server/auth-options';
-import { fetchJournals } from '@server/queries';
+import {
+	fetchProject,
+	fetchProjectJournals,
+} from '@server/queries';
 
 interface Props {
 	params: {
@@ -16,16 +18,19 @@ async function JournalsPage(props: Props) {
 
 	const result = await MongoIdValidation.safeParseAsync(projectId);
 
-	if(!result.success) {
+	const project = result.success ?
+		await fetchProject(projectId) :
+		null;
+
+	if(!project) {
 		return (
 			<Typography>
-				No journal posts yet
+				Invalid Project
 			</Typography>
 		);
 	}
 
-	const session = await getServerSession();
-	const journals = (await fetchJournals(session?.user.id));
+	const journals = (await fetchProjectJournals(project._id.toString()));
 
 	return (
 		<>
