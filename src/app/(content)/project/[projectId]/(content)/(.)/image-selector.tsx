@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default
-function Foo(props: Props) {
+function ImageSelector(props: Props) {
 	const { project } = props;
 	const [activeImage, setActiveImage] = useState(project.images[0]);
 
