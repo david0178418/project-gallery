@@ -18,15 +18,17 @@ async function DetailsPage(props: Props) {
 
 	const result = await MongoIdValidation.safeParseAsync(projectId);
 
-	if(!result.success) {
+	const project = result.success ?
+		await fetchProject(projectId) :
+		null;
+
+	if(!project) {
 		return (
 			<Typography>
-				No journal posts yet
+				Invalid Project
 			</Typography>
 		);
 	}
-
-	const project = await fetchProject(projectId);
 
 	return (
 		<>

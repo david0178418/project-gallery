@@ -51,26 +51,6 @@ import { ReactNode } from 'react';
 import ProjectTabs from './project-tabs';
 import { getServerSession } from '@server/auth-options';
 
-const TabPaths = {
-	details: {
-		label: 'Details',
-		value: 'details',
-		path: (projectId: string) => Paths.Project(projectId),
-	},
-	journals: {
-		label: 'Journal',
-		value: 'journals',
-		path: (projectId: string) => Paths.ProjectJournals(projectId),
-	},
-	links: {
-		label: 'Links',
-		value: 'links',
-		path: (projectId: string) => Paths.ProjectLinks(projectId),
-	},
-} as const;
-
-type TabPath = keyof typeof TabPaths;
-
 interface Props {
 	children: ReactNode;
 	params: {
@@ -83,42 +63,24 @@ export default
 async function Page(props: Props) {
 	const {
 		children,
-		params: {
-			projectId,
-			tab = [],
-		},
+		params: { projectId },
 	} = props;
 
 	const result = await MongoIdValidation.safeParseAsync(projectId);
-	const session = await getServerSession();
-	const [rawSubPath] = tab;
-	const subPath = TabPaths[rawSubPath as TabPath]?.value || TabPaths.details.value;
 
-	if(!result.success) {
-		return (
-			<>
-				{JSON.stringify({
-					session,
-					subPath,
-					project: null,
-					journals: subPath === 'journals' ?
-						[] :
-						null,
-				}, null, 4)}
-			</>
-		);
-	}
-
-	const project = await fetchProject(projectId);
+	const project = result.success ?
+		await fetchProject(projectId) :
+		null;
 
 	if(!project) {
 		return (
 			<Typography>
-				Project not found
+				Invalid Project
 			</Typography>
 		);
 	}
 
+	const session = await getServerSession();
 	const isOwner = project.owner._id.toString() === session?.user.id;
 
 	return (

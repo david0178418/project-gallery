@@ -7,7 +7,6 @@ import {
 	Tabs,
 } from '@ui';
 
-export
 const TabPaths = {
 	details: {
 		label: 'Details',
