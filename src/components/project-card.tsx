@@ -1,5 +1,5 @@
 import { red } from '@mui/material/colors';
-import { DbProject } from '@common/types/Project';
+import { DbProject, UiProject } from '@common/types/Project';
 import { ParsedContent } from './parsed-content';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
@@ -25,7 +25,7 @@ import {
 } from '@ui';
 
 interface Props {
-	project: DbProject;
+	project: DbProject | UiProject;
 	isOwner?: boolean;
 }
 
