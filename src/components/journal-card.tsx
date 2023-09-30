@@ -1,12 +1,11 @@
-'use client';
 import { red } from '@mui/material/colors';
-import { UiJournal } from '@common/types/Journal';
+import { DbJournal } from '@common/types/Journal';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
-import { useUser } from '@common/hooks';
 import MarkdownContent from './markdown-content';
 import { ShareIconButton } from './common/share-button';
 import { LocalizedDate } from './localized-date';
+import { getServerSession } from '@server/auth-options';
 import {
 	FavoriteIcon,
 	EditIcon,
@@ -24,12 +23,13 @@ import {
 } from '@ui';
 
 interface Props {
-	journal: UiJournal;
+	journal: DbJournal;
 }
 
 export default
-function JournalCard(props: Props) {
-	const user = useUser();
+async function JournalCard(props: Props) {
+	const session = await getServerSession();
+	const user = session?.user;
 	const {
 		journal: {
 			_id,
@@ -43,28 +43,29 @@ function JournalCard(props: Props) {
 			},
 		},
 	} = props;
-	const isOwner = user?.id === ownerId;
-	const journalUrl = Paths.Journal(_id);
+	const journaId = _id.toString();
+	const isOwner = user?.id.toString() === ownerId.toString();
+	const journalUrl = Paths.Journal(journaId);
 
 	return (
 		<Card elevation={2}>
 			<CardHeader
 				title={
 					<Box sx={{ ':hover': { textDecoration: 'underline' } } }>
-						<Link href={journalUrl}>
+						<Link prefetch={false} href={journalUrl}>
 							{title}
 						</Link>
 					</Box>
 				}
 				subheader={(
-					<Link href={journalUrl}>
+					<Link prefetch={false} href={journalUrl}>
 						{publishedDate && (
 							<LocalizedDate date={publishedDate} />
 						)}
 					</Link>
 				)}
 				avatar={
-					<Link href={Paths.UserGallery(username)}>
+					<Link prefetch={false} href={Paths.UserGallery(username)}>
 						<Tooltip
 							arrow
 							disableFocusListener
@@ -81,7 +82,7 @@ function JournalCard(props: Props) {
 			<CardContent>
 				{project && (
 					<Box sx={{ ':hover': { textDecoration: 'underline' } } }>
-						<Link href={Paths.Project(project._id)}>
+						<Link prefetch={false} href={Paths.Project(project._id.toString())}>
 							<Typography variant="subtitle1">
 								Project: {project.title}
 							</Typography>
@@ -126,13 +127,13 @@ function JournalCard(props: Props) {
 					title="Share"
 				>
 					<ShareIconButton
-						url={Paths.Journal(_id)}
+						url={Paths.Journal(journaId)}
 						label={title}
 						shareMsg="Check out this project journal post!"
 					/>
 				</Tooltip>
 				{isOwner && (
-					<Link href={Paths.JournalEdit(_id)}>
+					<Link prefetch={false} href={Paths.JournalEdit(journaId)}>
 						<Tooltip
 							arrow
 							disableFocusListener
