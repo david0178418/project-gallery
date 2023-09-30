@@ -38,17 +38,18 @@
 import { Paths, SpecialCharacterCodes } from '@common/constants';
 import { fetchProject } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
-import { getServerSession } from 'next-auth';
 import {
 	Box,
+	Fab,
 	IconButton,
 	Link,
 	Typography,
 } from '@ui';
 import { ScrollContent } from '@components/scroll-content';
-import { BackIcon } from '@components/icons';
+import { BackIcon, EditIcon } from '@components/icons';
 import { ReactNode } from 'react';
 import ProjectTabs from './project-tabs';
+import { getServerSession } from '@server/auth-options';
 
 const TabPaths = {
 	details: {
@@ -108,47 +109,68 @@ async function Page(props: Props) {
 		);
 	}
 
-	const id = result.data;
-	const project = await fetchProject(id);
+	const project = await fetchProject(projectId);
+
+	if(!project) {
+		return (
+			<Typography>
+				Project not found
+			</Typography>
+		);
+	}
+
+	const isOwner = project.owner._id.toString() === session?.user.id;
 
 	return (
-		<ScrollContent
-			header={
-				<Box sx={{
-					paddingTop: 1,
-					paddingBottom: 2,
-					paddingX: 1,
-				}}>
-					{project && (
-						<>
-							<Typography variant="h5" component="div" gutterBottom>
-								{/** TODO Capture direct links and send them to home page */}
-								<IconButton
-									color="primary"
+		<>
+			<ScrollContent
+				header={
+					<Box sx={{
+						paddingTop: 1,
+						paddingBottom: 2,
+						paddingX: 1,
+					}}>
+						<Typography variant="h5" component="div" gutterBottom>
+							{/** TODO Capture direct links and send them to home page */}
+							<IconButton
+								color="primary"
 								// onClick={routeBack}
-								>
-									<BackIcon />
-								</IconButton>{SpecialCharacterCodes.NBSP}
-								{project?.title || 'Not Found'}
-							</Typography>
-							<Typography variant="subtitle2">
-								<Link href={Paths.UserGallery(project.owner.username)}>
+							>
+								<BackIcon />
+							</IconButton>{SpecialCharacterCodes.NBSP}
+							{project?.title || 'Not Found'}
+						</Typography>
+						<Typography variant="subtitle2">
+							<Link href={Paths.UserGallery(project.owner.username)}>
 								By {project.owner.username}
-								</Link>
-							</Typography>
-							<Box sx={{
-								paddingTop: 2,
-								borderBottom: 1,
-								borderColor: 'divider',
-							}}>
-								<ProjectTabs projectId={project._id.toString()} />
-							</Box>
-						</>
-					)}
-				</Box>
-			}
-		>
-			{children}
-		</ScrollContent>
+							</Link>
+						</Typography>
+						<Box sx={{
+							paddingTop: 2,
+							borderBottom: 1,
+							borderColor: 'divider',
+						}}>
+							<ProjectTabs projectId={project._id.toString()} />
+						</Box>
+					</Box>
+				}
+			>
+				{children}
+			</ScrollContent>
+			{isOwner && (
+				<Link href={Paths.ProjectEdit(projectId)} >
+					<Fab
+						color="primary"
+						sx={{
+							position: 'absolute',
+							bottom: 64,
+							right: 16,
+						}}
+					>
+						<EditIcon />
+					</Fab>
+				</Link>
+			)}
+		</>
 	);
 }
