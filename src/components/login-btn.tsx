@@ -1,55 +1,23 @@
-import { ModalActions } from '@common/constants';
 import { Button } from '@ui';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import LogoutButton from './logout-button';
 
 export
 function LoginBtn() {
 	const { data: session } = useSession();
-	const router = useRouter();
-	const {
-		pathname,
-		query,
-	} = router;
 
 	if (session) {
 		return (
 			<>
 				Signed in as {session.user.username}
-				<Link
-					shallow
-					passHref
-					href={{
-						pathname,
-						query: {
-							a: ModalActions.Logout,
-							...query,
-						},
-					}}
-				>
-					<Button>
-						Logout
-					</Button>
-				</Link>
+				<LogoutButton />
 			</>
 		);
 	}
 	return (
-		<>
-			<Link
-				shallow
-				passHref
-				href={{
-					pathname,
-					query: {
-						a: ModalActions.Login,
-						...query,
-					},
-				}}
-			>
-				<Button>Login</Button>
-			</Link>
-		</>
+		<Link href="/login/email">
+			<Button>Login</Button>
+		</Link>
 	);
 }
