@@ -3,7 +3,7 @@ import MarkdownContent from '@components/markdown-content';
 import { fetchProject } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
 import { Typography } from '@ui';
-import Foo from './foo';
+import ImageSelector from './image-selector';
 import { dbProjectToUiProject } from '@server/transforms';
 
 interface Props {
@@ -38,7 +38,7 @@ async function DetailsPage(props: Props) {
 					<Typography variant="subtitle1" fontStyle="italic">
 									last updated: <LocalizedDate date={project.projectLastUpdatedDate} />
 					</Typography>
-					<Foo project={dbProjectToUiProject(project)} />
+					<ImageSelector project={dbProjectToUiProject(project)} />
 					<Typography paddingTop={2} component="div">
 						<MarkdownContent plaintext>
 							{project.description}
