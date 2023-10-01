@@ -121,7 +121,7 @@ function EditProjectForm(props: Props) {
 
 		try {
 			setLoading(true);
-			await saveProject({ project });
+			await saveProject(project);
 			routeBack();
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;

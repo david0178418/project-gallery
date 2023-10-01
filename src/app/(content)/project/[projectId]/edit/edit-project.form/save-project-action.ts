@@ -75,7 +75,7 @@ const Validator: ZodType<Schema> = z.object({
 });
 
 export default
-async function saveProject(params: Schema) {
+async function saveProject(project: WriteProject) {
 	const session = await getServerSession();
 
 	if(!session?.user) {
@@ -85,7 +85,7 @@ async function saveProject(params: Schema) {
 		};
 	}
 
-	const result = await Validator.safeParseAsync(params);
+	const result = await Validator.safeParseAsync({ project });
 
 	if(!result.success) {
 		return {
@@ -97,9 +97,7 @@ async function saveProject(params: Schema) {
 		};
 	}
 
-	const project = result.data.project;
-
-	await doSaveProject(session.user, project);
+	await doSaveProject(session.user, result.data.project);
 
 	return { ok: true };
 }
