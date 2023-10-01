@@ -102,6 +102,7 @@ const Paths = {
 	OneClickAuth: '/one-click-auth/',
 	Search: '/search',
 	Settings: '/settings',
+	SettingsUpdatePw: '/settings/update-pw',
 	Project: (projectId: string) => urlJoin('/project', projectId),
 	ProjectJournals: (projectId: string) => urlJoin(Paths.Project(projectId), '/journals'),
 	ProjectLinks: (projectId: string) => urlJoin(Paths.Project(projectId), '/links'),
