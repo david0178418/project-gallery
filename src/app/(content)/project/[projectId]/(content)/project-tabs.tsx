@@ -32,10 +32,13 @@ interface Props {
 export default
 function ProjectTabs(props: Props) {
 	const { projectId } = props;
-	const tab = useSelectedLayoutSegment();
+	const rawSegment = useSelectedLayoutSegment() || '';
+	const tab = rawSegment in TabPaths ?
+		rawSegment :
+		TabPaths.details.value;
 
 	return (
-		<Tabs value={tab || 'details'}>
+		<Tabs value={tab}>
 			{Object.values(TabPaths).map(t => (
 				<Tab
 					key={t.value}
