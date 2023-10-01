@@ -5,19 +5,13 @@ import ImageList from './image-list';
 import LinksList from '@components/links-list';
 import LinkForm, { linkIsValid } from './link-form';
 import LabelForm, { labelIsValid } from './label-form';
-import {
-	useCallback,
-	useState,
-} from 'react';
+import { useCallback, useState } from 'react';
+import { ProjectImage, WriteProject } from '@common/types/Project';
 import {
 	inRange,
 	moveItemLeft,
 	moveItemRight,
 } from '@common/utils';
-import {
-	ProjectImage,
-	WriteProject,
-} from '@common/types/Project';
 import {
 	MaxJournalProjectTitleLength,
 	MinJournalProjectTitleLength,
