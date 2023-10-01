@@ -7,6 +7,11 @@ import LinkForm, { linkIsValid } from './link-form';
 import LabelForm, { labelIsValid } from './label-form';
 import { useCallback, useState } from 'react';
 import { ProjectImage, WriteProject } from '@common/types/Project';
+import Label from '@components/label';
+import { CancelButton, ConfirmButton } from '@components/common/buttons';
+import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import saveProject from './save-project-action';
+import { useRouteBackDefault } from '@common/hooks';
 import {
 	inRange,
 	moveItemLeft,
@@ -29,11 +34,6 @@ import {
 	Tabs,
 	TextField,
 } from '@ui';
-import Label from '@components/label';
-import { CancelButton, ConfirmButton } from '@components/common/buttons';
-import { usePushToastMsg, useSetLoading } from '@common/atoms';
-import saveProject from './save-project-action';
-import { useRouteBackDefault } from '@common/hooks';
 
 function dateToDateSubstring(date: Date) {
 	return date.toISOString().substring(0, 10);
