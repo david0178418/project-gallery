@@ -35,18 +35,17 @@
 // 	Typography,
 // } from '@ui';
 
-import { Paths, SpecialCharacterCodes } from '@common/constants';
+import { Paths } from '@common/constants';
 import { fetchProject } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
 import {
 	Box,
 	Fab,
-	IconButton,
 	Link,
 	Typography,
 } from '@ui';
 import { ScrollContent } from '@components/scroll-content';
-import { BackIcon, EditIcon } from '@components/icons';
+import { EditIcon } from '@components/icons';
 import { ReactNode } from 'react';
 import ProjectTabs from './project-tabs';
 import { getServerSession } from '@server/auth-options';
