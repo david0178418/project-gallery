@@ -12,6 +12,7 @@ import {
 	makeId,
 	nowISOString,
 } from '@common/utils';
+import { getServerSession } from '@server/auth-options';
 
 export
 async function fetchUser(usernameOrEmail: string): Promise<DbUser | null> {
@@ -211,9 +212,12 @@ async function fetchUserGalleryOrder(userId: string): Promise<WithId<DbUserGalle
 }
 
 export
-async function fetchUserJournals(username: string, owner: boolean): Promise<Array<WithId<DbJournal>>> {
+async function fetchUserJournals(username: string): Promise<Array<WithId<DbJournal>>> {
+	const session = await getServerSession();
 	const col = await getCollection(DbCollections.Journals);
-	const ownerCondition = owner ?
+	const isOwner = session?.user.username === username;
+
+	const ownerCondition = isOwner ?
 		{} :
 		{ publishedDate: { $ne: null } };
 
