@@ -8,6 +8,8 @@ import {
 	Container,
 	Typography,
 } from '@ui';
+import { DbProject, WriteProject } from '@common/types/Project';
+import { pick } from '@common/utils';
 
 interface Props {
 	params: {
@@ -54,12 +56,26 @@ async function ProjectEditPage(props: Props) {
 		>
 			<Container>
 				<EditProjectForm
-					project={{
-						...project,
-						_id: project._id.toString(),
-					}}
+					project={uiProjectToWriteProject(project)}
 				/>
 			</Container>
 		</ScrollContent>
 	);
+}
+
+function uiProjectToWriteProject(project: DbProject): WriteProject {
+	return {
+		_id: project._id?.toString(),
+		...pick(
+			project,
+			'description',
+			'projectCreatedDate',
+			'projectLastUpdatedDate',
+			'labels',
+			'links',
+			'title',
+			'images',
+			'unlisted',
+		),
+	};
 }

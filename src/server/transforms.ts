@@ -10,7 +10,6 @@ import {
 import {
 	DbProject,
 	UiProject,
-	WriteProject,
 } from '@common/types/Project';
 import {
 	DbUserProfile,
@@ -44,22 +43,6 @@ function dbProjectToUiProject(dbProject: WithId<DbProject>): UiProject {
 	}
 
 	return uiProject;
-}
-
-export
-function uiProjectToWriteProject(project: UiProject): WriteProject {
-	return pick(
-		project,
-		'_id',
-		'description',
-		'projectCreatedDate',
-		'projectLastUpdatedDate',
-		'labels',
-		'links',
-		'title',
-		'images',
-		'unlisted',
-	);
 }
 
 export
