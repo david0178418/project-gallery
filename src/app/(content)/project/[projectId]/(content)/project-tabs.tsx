@@ -43,6 +43,7 @@ function ProjectTabs(props: Props) {
 				<Link
 					key={t.value}
 					href={t.path(projectId)}
+					replace
 					legacyBehavior
 					passHref
 					// @ts-ignore

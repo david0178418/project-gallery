@@ -50,6 +50,7 @@ import { BackIcon, EditIcon } from '@components/icons';
 import { ReactNode } from 'react';
 import ProjectTabs from './project-tabs';
 import { getServerSession } from '@server/auth-options';
+import BackButton from '@components/back-button';
 
 interface Props {
 	children: ReactNode;
@@ -94,12 +95,7 @@ async function Page(props: Props) {
 					}}>
 						<Typography variant="h5" component="div" gutterBottom>
 							{/** TODO Capture direct links and send them to home page */}
-							<IconButton
-								color="primary"
-								// onClick={routeBack}
-							>
-								<BackIcon />
-							</IconButton>{SpecialCharacterCodes.NBSP}
+							<BackButton />
 							{project?.title || 'Not Found'}
 						</Typography>
 						<Typography variant="subtitle2">
