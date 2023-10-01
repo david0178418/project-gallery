@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { LeftRail } from './page-frame/left-rail';
 import { BottomNav } from './page-frame/bottom-nav';
 import { Container, Grid } from '@ui';
+import CommonStuff from '@common/common-stuff';
 
 interface Props {
 	children?: ReactNode;
@@ -63,6 +64,7 @@ function ContentLayout(props: Props) {
 				</Grid>
 			</Grid>
 			<BottomNav/>
+			<CommonStuff/>
 		</Container>
 	);
 }
