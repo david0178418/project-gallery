@@ -5,7 +5,6 @@ import { get, post } from '@client/client-utils';
 import { urlJoin } from '@common/utils';
 import { UiProject, WriteProject } from '@common/types/Project';
 import { WriteJournal } from '@common/types/Journal';
-import { WriteUserProfile } from '@common/types/UserProfile';
 import {
 	ApiUrl,
 	AuthProviders,
@@ -25,16 +24,6 @@ async function login(username: string, password: string) {
 export
 async function sendLoginLink(email: string) {
 	return post('/api/auth/one-click/send', { email });
-}
-
-export
-function updatePassword(password: string) {
-	return apiPost<ApiResponse>('/user/pw', { password });
-}
-
-export
-function updateUserProfile(userProfile: WriteUserProfile) {
-	return apiPost<ApiResponse>('/user/profile', { userProfile });
 }
 
 export
