@@ -25,8 +25,6 @@ const TabPaths = {
 	},
 } as const;
 
-type TabPath = keyof typeof TabPaths;
-
 interface Props {
 	projectId: string;
 }
@@ -34,23 +32,18 @@ interface Props {
 export default
 function ProjectTabs(props: Props) {
 	const { projectId } = props;
-	const rawPath = useSelectedLayoutSegment();
-	const subPath = TabPaths[rawPath as TabPath]?.value || TabPaths.details.value;
+	const tab = useSelectedLayoutSegment();
 
 	return (
-		<Tabs value={subPath}>
+		<Tabs value={tab || 'details'}>
 			{Object.values(TabPaths).map(t => (
-				<Link
+				<Tab
 					key={t.value}
 					href={t.path(projectId)}
-					replace
-					legacyBehavior
-					passHref
-					// @ts-ignore
 					value={t.value}
-				>
-					<Tab label={t.label} value={t.value} />
-				</Link>
+					label={t.label}
+					component={Link}
+				/>
 			))}
 		</Tabs>
 	);
