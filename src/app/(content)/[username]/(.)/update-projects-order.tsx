@@ -29,7 +29,7 @@ const Validator: ZodType<Schema> = z.object({
 	]),
 });
 
-export
+export default
 async function updateProjectsOrder(params: Schema) {
 	const session = await getServerSession();
 

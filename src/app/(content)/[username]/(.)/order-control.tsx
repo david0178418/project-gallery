@@ -1,6 +1,6 @@
 'use client';
 import { Box, IconButton } from '@ui';
-import { updateProjectsOrder } from './actions';
+import updateProjectsOrder from './update-projects-order';
 import { Direction } from '@common/constants';
 import {
 	ArrowDownIcon,
