@@ -4,10 +4,12 @@ import { getServerSession } from '@server/auth-options';
 import { ObjectId } from 'mongodb';
 import { z, ZodType } from 'zod';
 import { WriteUserProfile } from '@common/types/UserProfile';
+import { revalidatePath } from 'next/cache';
 import {
 	DbCollections,
 	MaxUserProfileBioLength,
 	MaxUserProfileShortBioLength,
+	Paths,
 } from '@common/constants';
 
 const Validator: ZodType<WriteUserProfile> = z.object({
@@ -51,6 +53,9 @@ async function updateProfile(profile: WriteUserProfile) {
 		const _id = new ObjectId(session.user.id);
 
 		await col.updateOne({ _id }, { $set: { ...userProfile } });
+
+		revalidatePath(Paths.Settings);
+		revalidatePath(Paths.UserGallery(session.user.username));
 
 		return { ok: true };
 	} catch {
