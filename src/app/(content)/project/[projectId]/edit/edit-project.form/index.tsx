@@ -10,7 +10,7 @@ import { ProjectImage, WriteProject } from '@common/types/Project';
 import Label from '@components/label';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
-import saveProject from './save-project-action';
+import saveProjectAction from './save-project-action';
 import { useRouteBackDefault } from '@common/hooks';
 import {
 	inRange,
@@ -119,10 +119,16 @@ function EditProjectForm(props: Props) {
 			return;
 		}
 
+		setLoading(true);
+
 		try {
-			setLoading(true);
-			await saveProject(project);
-			routeBack();
+			const result = await saveProjectAction(project);
+
+			if(!result.ok) {
+				result.errors?.map(pushToastMsg);
+			} else {
+				routeBack();
+			}
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
 

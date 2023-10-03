@@ -7,6 +7,7 @@ import { WriteProject } from '@common/types/Project';
 import { User } from 'next-auth';
 import { IsoDateValidation, MongoIdValidation } from '@server/validations';
 import { nowISOString } from '@common/utils';
+import { revalidatePath } from 'next/cache';
 import {
 	DbCollections,
 	MaxJournalProjectTitleLength,
@@ -21,61 +22,56 @@ import {
 	MinLabelSize,
 	MaxLabelSize,
 	maxLabelCount,
+	Paths,
 } from '@common/constants';
 
-interface Schema {
-	project: WriteProject;
-}
-
-const Validator: ZodType<Schema> = z.object({
-	project: z.object({
-		_id: MongoIdValidation.optional(),
-		title: z
-			.string()
-			.min(MinJournalProjectTitleLength, { message: `Project title must be at least ${MinJournalProjectTitleLength} characters long.` })
-			.max(MaxJournalProjectTitleLength, { message: `Project title can be no more than ${MaxJournalProjectTitleLength} characters long.` }),
-		description: z
-			.string()
-			.min(MinProjectDescriptionLength, { message: `Project description must be at least ${MinProjectDescriptionLength} characters long.` })
-			.max(MaxProjectDescriptionLength, { message: `Project description can be no more than ${MaxProjectDescriptionLength} characters long.` }),
-		images: z.array(
-			z.object({
-				url: z
-					.string()
-					.min(MinImageUrlLength)
-					.max(MaxImageUrlLength),
-				description: z
-					.string()
-					.max(MaxImageDescriptionLength),
-			})
-		).min(1, { message: 'Projects must have at least one image' }),
-		unlisted: z.boolean(),
-		labels: z.array(
-			z.object({
-				label: z
-					.string()
-					.min(MinLabelSize)
-					.max(MaxLabelSize),
-			}),
-		).max(maxLabelCount),
-		links: z.array(
-			z.object({
-				label: z
-					.string()
-					.min(MinLinkLabelSize)
-					.max(MaxLinkLabelSize),
-				url: z
-					.string()
-					.url(),
-			}),
-		),
-		projectCreatedDate: IsoDateValidation,
-		projectLastUpdatedDate: IsoDateValidation,
-	}),
+const Validator: ZodType<WriteProject> = z.object({
+	_id: MongoIdValidation.optional(),
+	title: z
+		.string()
+		.min(MinJournalProjectTitleLength, { message: `Project title must be at least ${MinJournalProjectTitleLength} characters long.` })
+		.max(MaxJournalProjectTitleLength, { message: `Project title can be no more than ${MaxJournalProjectTitleLength} characters long.` }),
+	description: z
+		.string()
+		.min(MinProjectDescriptionLength, { message: `Project description must be at least ${MinProjectDescriptionLength} characters long.` })
+		.max(MaxProjectDescriptionLength, { message: `Project description can be no more than ${MaxProjectDescriptionLength} characters long.` }),
+	images: z.array(
+		z.object({
+			url: z
+				.string()
+				.min(MinImageUrlLength)
+				.max(MaxImageUrlLength),
+			description: z
+				.string()
+				.max(MaxImageDescriptionLength),
+		})
+	).min(1, { message: 'Projects must have at least one image' }),
+	unlisted: z.boolean().default(false),
+	labels: z.array(
+		z.object({
+			label: z
+				.string()
+				.min(MinLabelSize)
+				.max(MaxLabelSize),
+		}),
+	).max(maxLabelCount),
+	links: z.array(
+		z.object({
+			label: z
+				.string()
+				.min(MinLinkLabelSize)
+				.max(MaxLinkLabelSize),
+			url: z
+				.string()
+				.url(),
+		}),
+	),
+	projectCreatedDate: IsoDateValidation,
+	projectLastUpdatedDate: IsoDateValidation,
 });
 
 export default
-async function saveProject(project: WriteProject) {
+async function saveProjectAction(project: WriteProject) {
 	const session = await getServerSession();
 
 	if(!session?.user) {
@@ -84,8 +80,7 @@ async function saveProject(project: WriteProject) {
 			errors: ['Not logged in'],
 		};
 	}
-
-	const result = await Validator.safeParseAsync({ project });
+	const result = await Validator.safeParseAsync(project);
 
 	if(!result.success) {
 		return {
@@ -97,7 +92,7 @@ async function saveProject(project: WriteProject) {
 		};
 	}
 
-	await doSaveProject(session.user, result.data.project);
+	await doSaveProject(session.user, result.data);
 
 	return { ok: true };
 }
@@ -139,6 +134,8 @@ async function doSaveProject(user: User, project: WriteProject) {
 
 		await orderCol.updateOne({ _id: userIdObj }, { $push: { projectIdOrder: _id } });
 	}
+
+	revalidatePath(Paths.Project(_id.toString()));
 
 	return _id;
 }
