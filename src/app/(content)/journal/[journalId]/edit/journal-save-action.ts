@@ -1,5 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
+'use server';
 import { z, ZodType } from 'zod';
 import { getCollection } from '@server/mongodb';
 import { getServerSession } from '@server/auth-options';
@@ -9,17 +8,15 @@ import { User } from 'next-auth';
 import { WriteJournal } from '@common/types/Journal';
 import { nowISOString } from '@common/utils';
 import { DbProject } from '@common/types/Project';
+import { revalidatePath } from 'next/cache';
 import {
 	DbCollections,
 	MaxJournalProjectTitleLength,
 	MinJournalProjectTitleLength,
 	MinJournalPostLength,
 	MaxJournalPostLength,
+	Paths,
 } from '@common/constants';
-
-interface Schema {
-	journal: WriteJournal;
-}
 
 const publishedJournal = z.object({
 	_id: MongoIdValidation.optional(),
@@ -46,38 +43,40 @@ const savedJournal = z.object({
 		.max(MaxJournalPostLength, { message: `Journal post can be no more than ${MaxJournalPostLength} characters long.` }),
 });
 
-const schema: ZodType<Schema> = z.object({ journal: publishedJournal.or(savedJournal) });
+const Validator: ZodType<WriteJournal> = publishedJournal.or(savedJournal);
 
 export default
-async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const session = await getServerSession(req, res);
+async function journalSaveAction(journal: WriteJournal) {
+	const session = await getServerSession();
 
-	if(!session) {
-		return res.status(400).end();
+	if(!session?.user) {
+		return {
+			ok: false,
+			errors: ['Not logged in'],
+		};
 	}
 
-	const result = await schema.safeParseAsync(req.body);
+	const result = await Validator.safeParseAsync(journal);
 
 	if(!result.success) {
-		return res
-			.status(400)
-			.send({
-				ok: false,
-				errors: result
-					.error
-					.errors
-					.map(e => e.message),
-			});
+		return {
+			ok: false,
+			errors: result
+				.error
+				.errors
+				.map(e => e.message),
+		};
 	}
 
-	const { journal: post } = result.data;
+	const post = result.data;
 
 	try {
 		await createJournalPost(session.user, post);
 
-		res.send({ ok: true });
+		post._id && revalidatePath(Paths.Journal(post._id.toString()));
+		return { ok: true };
 	} catch {
-		res.status(500).send({ ok: false });
+		return { ok: false };
 	}
 }
 

@@ -3,8 +3,7 @@ import type { ApiResponse, Enum } from '@common/types';
 import { signIn, signOut } from 'next-auth/react';
 import { get, post } from '@client/client-utils';
 import { urlJoin } from '@common/utils';
-import { UiProject, WriteProject } from '@common/types/Project';
-import { WriteJournal } from '@common/types/Journal';
+import { WriteProject } from '@common/types/Project';
 import {
 	ApiUrl,
 	AuthProviders,
@@ -52,16 +51,6 @@ async function getNotificaitons(): Promise<Notification[]> {
 export
 function projectSave(project: WriteProject) {
 	return apiPost('/project', { project });
-}
-
-export
-function journalSave(journal: WriteJournal) {
-	return apiPost('/journal', { journal });
-}
-
-export
-function getProjects() {
-	return apiGet<ApiResponse<{projects: UiProject[]}>>('/projects');
 }
 
 export

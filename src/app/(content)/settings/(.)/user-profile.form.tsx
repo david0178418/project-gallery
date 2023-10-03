@@ -41,13 +41,10 @@ function UserProfileForm(props: Props) {
 			const response = await updateProfile(userProfile);
 			pushToastMsg('Profile updated!');
 
-			console.log(response);
-
 			if(!response.ok) {
 				response.errors?.map(pushToastMsg);
 			}
 		} catch {
-			console.log(2222, userProfile);
 			pushToastMsg('Something whent wrong');
 		}
 
