@@ -1,6 +1,6 @@
 import { urlJoin } from './utils';
 
-export const BaseUrl = process.env.HOST;
+export const BaseUrl = process.env.HOST || `http://localhost:${process.env.PORT}`;
 export const IsDev = process.env.NODE_ENV !== 'production';
 export const NoReplyEmailAddress = process.env.NO_REPLY_EMAIL_ADDRESS || '';
 export const SmtpPort = +(process.env.SMTP_PORT || '25');

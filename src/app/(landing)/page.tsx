@@ -9,6 +9,7 @@ import { urlJoin } from '@common/utils';
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 
 export const metadata: Metadata = {
+	metadataBase: new URL(BaseUrl),
 	title: AppName,
 	twitter: {
 		creator: '@justdavidg',
