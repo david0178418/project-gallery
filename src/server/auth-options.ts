@@ -2,15 +2,12 @@ import { compare } from 'bcryptjs';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { AuthProviders, UserRoles } from '@common/constants';
 import { cookies, headers } from 'next/headers';
+import { NextAuthOptions, getServerSession as originalGetServerSession } from 'next-auth';
 import {
 	fetchUser,
 	getUserFromKey,
 	updateLastLogin,
 } from '@server/queries';
-import {
-	NextAuthOptions,
-	getServerSession as originalGetServerSession,
-} from 'next-auth';
 
 const { NEXTAUTH_SECRET } = process.env;
 

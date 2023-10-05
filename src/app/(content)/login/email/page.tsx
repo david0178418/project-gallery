@@ -1,20 +1,20 @@
-import LoginEmailForm from '@components/login-email.form';
+import LoginEmailForm from './login-email.form';
 import { Paths } from '@common/constants';
+import Link from 'next/link';
 import {
 	Button,
 	DialogActions,
 	DialogTitle,
 } from '@ui';
-import Link from 'next/link';
 
-export default function LoginModal() {
+export default function LoginPage() {
 	return (
 		<>
 			<DialogTitle>
 				Login
 			</DialogTitle>
 			<LoginEmailForm />
-			<DialogActions style={{ justifyContent: 'center' }}>
+			<DialogActions sx={{ justifyContent: 'center' }}>
 				<Link replace href={Paths.ModalRegister} >
 					<Button size="small" >
 						Create an Account

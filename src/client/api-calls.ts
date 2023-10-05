@@ -21,11 +21,6 @@ async function login(username: string, password: string) {
 }
 
 export
-async function sendLoginLink(email: string) {
-	return post('/api/auth/one-click/send', { email });
-}
-
-export
 function updateProjectOrder(projectId: string, direction: Enum<typeof Direction>) {
 	return apiPost<ApiResponse>('/gallery/order', {
 		projectId,

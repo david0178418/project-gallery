@@ -1,4 +1,4 @@
-import LoginPwForm from '@components/login-pw.form';
+import LoginPwForm from './login-pw.form';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
 import {
@@ -14,7 +14,7 @@ export default function LoginModal() {
 				Login
 			</DialogTitle>
 			<LoginPwForm />
-			<DialogActions style={{ justifyContent: 'center' }}>
+			<DialogActions sx={{ justifyContent: 'center' }}>
 				<Link href={Paths.ModalRegister} replace >
 					<Button size="small">
 						Create an Account

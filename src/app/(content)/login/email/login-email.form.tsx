@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
-import { sendLoginLink } from '@client/api-calls';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Link from 'next/link';
+import oneClickSendAction from './one-click-send-action';
 import {
 	Box,
 	Button,
@@ -16,7 +16,7 @@ import {
 
 export default
 function LoginEmailForm() {
-	const { back } = useRouter();
+	const { replace } = useRouter();
 	const pushToastMsg = usePushToastMsg();
 	const setLoading = useSetLoading();
 	const [email, setEmail] = useState('');
@@ -32,9 +32,9 @@ function LoginEmailForm() {
 		setLoading(true);
 
 		try {
-			await sendLoginLink(email);
+			await oneClickSendAction(email);
 			pushToastMsg(`A login link will be sent to "${email}" if an account with this email exists.`);
-			back();
+			replace(Paths.Home);
 		} catch(e) {
 			pushToastMsg('Something went wrong. Try again.');
 			console.log(e);
@@ -55,7 +55,6 @@ function LoginEmailForm() {
 						autoFocus
 						fullWidth
 						variant="standard"
-						placeholder="username"
 						type="text"
 						label="Email"
 						value={email}

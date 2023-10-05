@@ -53,7 +53,7 @@ function pick<T extends Record<any, any>, K extends keyof T>(object: T, ...ks: K
 }
 
 export
-function exec(fn: () => any | Promise<any>) {
+function runFn(fn: () => any | Promise<any>) {
 	return fn();
 }
 
