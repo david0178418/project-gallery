@@ -6,7 +6,6 @@ import Img2 from './img2.png';
 import Img3 from './img3.png';
 import Link from 'next/link';
 import {
-	ModalActions,
 	Paths,
 	SpecialCharacterCodes,
 } from '@common/constants';
@@ -197,10 +196,7 @@ function Features() {
 					md: 15,
 				}}
 			>
-				<Link href={{
-					pathname: Paths.Home,
-					query: { a: ModalActions.Register },
-				}}>
+				<Link href={Paths.ModalRegister}>
 					<Button
 						variant="contained"
 						size="large"
