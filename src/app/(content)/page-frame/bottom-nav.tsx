@@ -5,11 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useUpdateQueryParam } from '@common/hooks';
 import { ModalActions, Paths } from '@common/constants';
 import { forwardRef, useState } from 'react';
-import {
-	usePathname,
-	useRouter,
-	useSearchParams,
-} from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
 	BottomNavigation,
 	BottomNavigationAction,
@@ -40,7 +36,6 @@ function BottomNav() {
 	const { data } = useSession();
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const pathname = usePathname()!;
-	const query = useSearchParams();
 	const user = data?.user;
 
 	return (
@@ -81,13 +76,7 @@ function BottomNav() {
 							<Link
 								ref={ref}
 								{...props}
-								href={{
-									pathname,
-									query: {
-										a: ModalActions.Login,
-										...query,
-									},
-								}}
+								href={Paths.ModalLoginEmail}
 							/>
 						))}
 					/>
