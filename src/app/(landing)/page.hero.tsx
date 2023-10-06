@@ -2,11 +2,7 @@ import Image from 'next/image';
 import MainImage from './homepage-main-image.png';
 import { CheckCircleIcon } from '@components/icons';
 import Link from 'next/link';
-import {
-	ModalActions,
-	Paths,
-	SpecialCharacterCodes,
-} from '@common/constants';
+import { Paths, SpecialCharacterCodes } from '@common/constants';
 import {
 	Box,
 	Button,
@@ -93,10 +89,7 @@ function Hero() {
 				textAlign="center"
 				marginTop={4}
 			>
-				<Link href={{
-					pathname: Paths.Home,
-					query: { a: ModalActions.Register },
-				}}>
+				<Link href={Paths.ModalRegister}>
 					<Button
 						variant="contained"
 						size="large"
