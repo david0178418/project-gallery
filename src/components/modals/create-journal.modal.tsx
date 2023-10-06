@@ -120,7 +120,7 @@ function CreateJournalModal() {
 						query: newQuery,
 					}}
 				>
-					<CancelButton fullWidth={fullScreen} />
+					<CancelButton />
 				</Link>
 				<ConfirmButton
 					onClick={() => handleSave()}

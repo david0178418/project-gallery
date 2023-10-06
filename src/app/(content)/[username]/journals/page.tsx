@@ -17,7 +17,7 @@ async function UserJournalsPage(props: Props) {
 		<>
 			{!journals.length && (
 				<Typography>
-				No journal posts yet
+					No journal posts yet
 				</Typography>
 			)}
 			{journals.map(j => (

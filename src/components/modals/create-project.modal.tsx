@@ -124,18 +124,7 @@ function CreateProjectModal() {
 				/>
 			</DialogContent>
 			<DialogActions sx={{ gap: 2 }}>
-				<Link
-					replace
-					shallow
-					passHref
-					legacyBehavior
-					href={{
-						pathname: router.pathname,
-						query: newQuery,
-					}}
-				>
-					<CancelButton fullWidth={fullScreen} />
-				</Link>
+				<CancelButton />
 				<ConfirmButton
 					onClick={handleSave}
 					fullWidth={fullScreen}
