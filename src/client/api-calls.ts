@@ -3,11 +3,9 @@ import type { ApiResponse, Enum } from '@common/types';
 import { signIn, signOut } from 'next-auth/react';
 import { get, post } from '@client/client-utils';
 import { urlJoin } from '@common/utils';
-import { WriteProject } from '@common/types/Project';
 import {
 	ApiUrl,
 	AuthProviders,
-	Direction,
 	FileUploadCategories,
 } from '@common/constants';
 
@@ -21,31 +19,8 @@ async function login(username: string, password: string) {
 }
 
 export
-function updateProjectOrder(projectId: string, direction: Enum<typeof Direction>) {
-	return apiPost<ApiResponse>('/gallery/order', {
-		projectId,
-		direction,
-	});
-}
-
-export
 async function logout() {
 	await signOut();
-}
-
-export
-async function getNotificaitons(): Promise<Notification[]> {
-	const result = await apiGet<ApiResponse<{notifications: Notification[]}>>('/user/notifications');
-
-	return result?.ok ?
-		result.data.notifications :
-		[];
-
-}
-
-export
-function projectSave(project: WriteProject) {
-	return apiPost('/project', { project });
 }
 
 export
@@ -53,6 +28,7 @@ async function dismissNotification(id: string): Promise<void> {
 	await apiGet('/user/notifications/dismiss', { id });
 }
 
+export
 function apiPost<T = any>(path: string, requestBody?: any) {
 	return post<T>(urlJoin(ApiUrl, path), requestBody);
 }
