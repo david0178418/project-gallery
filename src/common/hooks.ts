@@ -1,80 +1,13 @@
 'use client';
-import { useSession } from 'next-auth/react';
-import { Paths, UserRoles } from '@common/constants';
-import {
-	useRouter,
-	usePathname,
-	useSearchParams,
-} from 'next/navigation';
+import { Paths } from '@common/constants';
+import { useRouter } from 'next/navigation';
 import {
 	useEffect,
 	useState,
 	useRef,
 	useLayoutEffect,
-	useCallback,
 	EffectCallback,
 } from 'react';
-
-export
-function useIsLoggedIn() {
-	const { status } = useSession();
-
-	return status === 'authenticated';
-}
-
-export
-function useIsLoggedOut() {
-	const { status } = useSession();
-	return status === 'unauthenticated';
-}
-
-export
-function useUser() {
-	const session = useSession();
-
-	return session.data?.user || null;
-}
-
-export
-function useIsAdmin() {
-	const { data } = useSession();
-
-	return data?.user.role === UserRoles.Admin;
-}
-
-export
-function useQueryParam(key: string) {
-	const searchParams = useSearchParams();
-	const params = new URLSearchParams(searchParams?.toString());
-
-	return params.get(key);
-}
-
-export
-function useUpdateQueryParam() {
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
-
-	const createUrl = useCallback(
-		(name: string, value: string) => {
-			const params = new URLSearchParams(searchParams?.toString());
-			params.set(name, value);
-
-			return `${pathname}?${params.toString()}`;
-		},
-		[searchParams],
-	);
-
-	return createUrl;
-}
-
-export
-function useRefreshPage() {
-	const { replace } = useRouter();
-	const pathname = usePathname();
-
-	return () => replace(pathname || Paths.Home);
-}
 
 export
 function useRouteBackDefault(fallback: string = Paths.Home) {
@@ -119,19 +52,6 @@ function useDebouncedCallback<T>(value: T, delay: number, callback: () => void,)
 	useEffect(() => {
 		callback();
 	}, [debouncedValue]);
-}
-
-export
-// Source: https://usehooks.com/useToggle/
-function useToggle(initialState = false) {
-	// Initialize the state
-	const [state, setState] = useState(initialState);
-
-	// Define and memorize toggler function in case we pass down the component,
-	// This function change the boolean value to it's opposite value
-	const toggle = useCallback(() => setState(s => !s), []);
-
-	return [state, toggle];
 }
 
 export

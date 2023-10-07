@@ -2,10 +2,9 @@
 
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { useUpdateQueryParam } from '@common/hooks';
-import { ModalActions, Paths } from '@common/constants';
+import { Paths } from '@common/constants';
 import { forwardRef, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import {
 	BottomNavigation,
 	BottomNavigationAction,
@@ -131,16 +130,6 @@ function BottomNav() {
 
 function CreateButton() {
 	const [open, setOpen] = useState(false);
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	const pathname = usePathname()!;
-	const { push } = useRouter();
-	const createUpdatedUrl = useUpdateQueryParam();
-
-	// Is NextJS Url type exposed somewhere??
-	function handleRoute(url: Parameters<typeof push>[0]) {
-		push(url);
-		setOpen(false);
-	}
 
 	return (
 		<Box
@@ -157,16 +146,19 @@ function CreateButton() {
 				onOpen={() => setOpen(true)}
 				onClose={() => setOpen(false)}
 			>
-				<SpeedDialAction
-					tooltipTitle="Project"
-					icon={<ProjectIcon/>}
-					onClick={() => handleRoute(`${pathname}?${createUpdatedUrl('a', ModalActions.CreateProject)}`)}
-				/>
-				<SpeedDialAction
-					tooltipTitle="Journal Post"
-					icon={<JournalIcon/>}
-					onClick={() => setOpen(false)}
-				/>
+				<Link href={Paths.ProjectEdit()}>
+					<SpeedDialAction
+						tooltipTitle="Project"
+						icon={<ProjectIcon/>}
+					/>
+				</Link>
+				<Link href={Paths.JournalEdit()}>
+					<SpeedDialAction
+						tooltipTitle="Journal Post"
+						icon={<JournalIcon/>}
+						onClick={() => setOpen(false)}
+					/>
+				</Link>
 			</SpeedDial>
 		</Box>
 	);

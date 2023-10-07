@@ -2,8 +2,7 @@
 
 import Link from 'next/link';
 import { MouseEvent, useState } from 'react';
-import { ModalActions } from '@common/constants';
-import { useUpdateQueryParam } from '@common/hooks';
+import { Paths } from '@common/constants';
 import {
 	AddIcon,
 	ProjectIcon,
@@ -20,7 +19,6 @@ export
 function CreateDropdown() {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
-	const updateQueryParam = useUpdateQueryParam();
 
 	function handleEl(el: MouseEvent<HTMLElement>) {
 		setAnchorEl(el.currentTarget);
@@ -67,7 +65,7 @@ function CreateDropdown() {
 			>
 				<Link
 					shallow
-					href={updateQueryParam('a', ModalActions.CreateProject)}
+					href={Paths.ProjectEdit()}
 				>
 					<MenuItem onClick={handleClose}>
 						<ListItemIcon>
@@ -78,7 +76,7 @@ function CreateDropdown() {
 				</Link>
 				<Link
 					shallow
-					href={updateQueryParam('a', ModalActions.CreateJournal)}
+					href={Paths.JournalEdit()}
 				>
 					<MenuItem onClick={handleClose}>
 						<ListItemIcon>

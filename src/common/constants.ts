@@ -74,12 +74,6 @@ const DbCollections = {
 } as const;
 
 export
-const ModalActions = {
-	CreateProject: 'create-project',
-	CreateJournal: 'create-journal',
-} as const;
-
-export
 const NotLoggedInErrMsg = {
 	ok: false,
 	msg: 'Not logged in',
@@ -97,14 +91,14 @@ const Paths = {
 	Favorites: '/favorites',
 	Home: '/home',
 	Journal: (journalId: string) => urlJoin('/journal', journalId),
-	JournalEdit: (journalId: string) => urlJoin(Paths.Journal(journalId), 'edit'),
+	JournalEdit: (journalId = '') => urlJoin(Paths.Journal(journalId), 'edit'),
 	ModalLoginEmail: '/login/email',
 	ModalLoginPw: '/login/pw',
 	ModalRegister: '/register',
 	OneClickAuth: '/one-click-auth/',
 	Project: (projectId: string) => urlJoin('/project', projectId),
 	ProjectAbout: (projectId: string) => urlJoin(Paths.Project(projectId), '/about'),
-	ProjectEdit: (projectId: string) => urlJoin(Paths.Project(projectId), 'edit'),
+	ProjectEdit: (projectId = '') => urlJoin(Paths.Project(projectId), 'edit'),
 	ProjectJournals: (projectId: string) => urlJoin(Paths.Project(projectId), '/journals'),
 	ProjectLinks: (projectId: string) => urlJoin(Paths.Project(projectId), '/links'),
 	Search: '/search',
