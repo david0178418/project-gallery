@@ -7,12 +7,12 @@ import { DbCollections } from '@common/constants';
 import { DbJournal } from '@common/types/Journal';
 import { DbUserProfile } from '@common/types/UserProfile';
 import { DbUserGalleryOrder } from '@common/types/UserGalleryOrder';
-import { add } from 'date-fns';
+import add from 'date-fns/add';
+import { getServerSession } from '@server/auth-options';
 import {
 	makeId,
 	nowISOString,
 } from '@common/utils';
-import { getServerSession } from '@server/auth-options';
 
 export
 async function fetchUser(usernameOrEmail: string): Promise<DbUser | null> {
