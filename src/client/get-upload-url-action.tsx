@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+'use server';
 
 import S3 from 'aws-sdk/clients/s3';
 import { getServerSession } from '@server/auth-options';
@@ -12,12 +12,12 @@ const OneMB = 1_048_576;
 const FileSizeLimitBytes = 1 * OneMB;
 const ExpirationSeconds = 5;
 
-interface Schema {
+interface Params {
 	category: Enum<typeof FileUploadCategories>;
 	fileType: 'image%2Fpng' | 'image%2Fgif' | 'image%2Fsvg' | 'image%2Fjpeg'; // TODO clean this up
 }
 
-const schema: ZodType<Schema> = z.object({
+const Validator: ZodType<Params> = z.object({
 	category: z.union([
 		z.literal('profile'),
 		z.literal('posts'),
@@ -32,25 +32,26 @@ const schema: ZodType<Schema> = z.object({
 });
 
 export default
-async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const session = await getServerSession(req, res);
+async function getUploadUrlAction(params: Params) {
+	const session = await getServerSession();
 
 	if(!session) {
-		return res.status(400).end();
+		return {
+			ok: false,
+			error: ['Not logged in'],
+		} as const;
 	}
 
-	const result = await schema.safeParseAsync(req.query);
+	const result = await Validator.safeParseAsync(params);
 
 	if(!result.success) {
-		return res
-			.status(400)
-			.send({
-				ok: false,
-				errors: result
-					.error
-					.errors
-					.map(e => e.message),
-			});
+		return {
+			ok: false,
+			errors: result
+				.error
+				.errors
+				.map(e => e.message),
+		} as const;
 	}
 
 	const {
@@ -79,16 +80,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 			],
 		});
 
-		res.status(200).json({
+		return {
 			ok: true,
 			data,
-		});
+		} as const;
 	} catch(e) {
-		return res
-			.status(500)
-			.send({
-				ok: false,
-				e,
-			});
+		return {
+			ok: false,
+			e,
+		} as const;
 	}
 }

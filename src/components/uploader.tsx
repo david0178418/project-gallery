@@ -7,7 +7,7 @@ import { isTruthy } from '@common/utils';
 import { Enum } from '@common/types';
 import { FileUploadCategories, SpecialCharacterCodes } from '@common/constants';
 
-async function uploadPhoto (file: File, category: Enum<typeof FileUploadCategories>) {
+async function uploadPhoto(file: File, category: Enum<typeof FileUploadCategories>) {
 	const res = await postFile(file, category);
 
 	if (res.ok) {

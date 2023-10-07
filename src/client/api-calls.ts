@@ -3,6 +3,7 @@ import type { ApiResponse, Enum } from '@common/types';
 import { signIn, signOut } from 'next-auth/react';
 import { get, post } from '@client/client-utils';
 import { urlJoin } from '@common/utils';
+import getUploadUrlAction from './get-upload-url-action';
 import {
 	ApiUrl,
 	AuthProviders,
@@ -37,18 +38,12 @@ function apiGet<T = any>(path: string, params?: any, signal?: AbortSignal) {
 	return get<T>(urlJoin(ApiUrl, path), params, signal);
 }
 
-interface Foo {
-	url: string;
-	fields: any;
-}
-
 export
 async function postFile(file: File, category: Enum<typeof FileUploadCategories>): Promise<ApiResponse<{url: string}>> {
-	const fileName = encodeURIComponent(file.name);
-	const fileType = encodeURIComponent(file.type);
+	// TODO figure out how I want to handle bridging these types
+	const fileType: any = encodeURIComponent(file.type);
 
-	const res = await apiGet<ApiResponse<Foo>>('upload-url', {
-		file: fileName,
+	const res = await getUploadUrlAction({
 		category,
 		fileType,
 	});
