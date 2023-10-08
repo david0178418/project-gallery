@@ -146,19 +146,23 @@ function CreateButton() {
 				onOpen={() => setOpen(true)}
 				onClose={() => setOpen(false)}
 			>
-				<Link href={Paths.ProjectEdit()}>
-					<SpeedDialAction
-						tooltipTitle="Project"
-						icon={<ProjectIcon/>}
-					/>
-				</Link>
-				<Link href={Paths.JournalEdit()}>
-					<SpeedDialAction
-						tooltipTitle="Journal Post"
-						icon={<JournalIcon/>}
-						onClick={() => setOpen(false)}
-					/>
-				</Link>
+				<SpeedDialAction
+					tooltipTitle="Project"
+					icon={<ProjectIcon/>}
+					FabProps={{
+						component: Link,
+						href: Paths.ProjectEdit(),
+					}}
+				/>
+				<SpeedDialAction
+					tooltipTitle="Journal Post"
+					icon={<JournalIcon/>}
+					onClick={() => setOpen(false)}
+					FabProps={{
+						component: Link,
+						href: Paths.JournalEdit(),
+					}}
+				/>
 			</SpeedDial>
 		</Box>
 	);
