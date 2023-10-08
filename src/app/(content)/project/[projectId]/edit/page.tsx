@@ -3,13 +3,13 @@ import { ScrollContent } from '@components/scroll-content';
 import { fetchProject } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
 import EditProjectForm from './edit-project.form';
+import { DbProject, WriteProject } from '@common/types/Project';
+import { pick } from '@common/utils';
 import {
 	Box,
 	Container,
 	Typography,
 } from '@ui';
-import { DbProject, WriteProject } from '@common/types/Project';
-import { pick } from '@common/utils';
 
 interface Props {
 	params: {
