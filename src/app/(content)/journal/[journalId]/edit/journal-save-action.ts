@@ -144,5 +144,8 @@ async function createJournalPost(user: User, post: WriteJournal) {
 		{ upsert: true }
 	);
 
+	revalidatePath(Paths.Journal(_id.toString()));
+	revalidatePath(Paths.UserGalleryJournals(user.id));
+
 	return _id;
 }

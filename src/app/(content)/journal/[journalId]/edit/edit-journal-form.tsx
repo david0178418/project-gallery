@@ -80,6 +80,7 @@ function EditJournalForm(props: Props) {
 			if(!result.ok) {
 				result.errors?.map(pushToastMsg);
 			} else {
+				pushToastMsg(`"${journal.title}" ${publish ? 'published' : 'saved'}`);
 				routeBack();
 			}
 		} catch(e: any) {
