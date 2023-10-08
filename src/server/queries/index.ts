@@ -216,12 +216,11 @@ async function fetchUserJournals(username: string): Promise<Array<WithId<DbJourn
 	const session = await getServerSession();
 	const col = await getCollection(DbCollections.Journals);
 	const isOwner = session?.user.username === username;
-
 	const ownerCondition = isOwner ?
 		{} :
 		{ publishedDate: { $ne: null } };
 
-	return col.aggregate<WithId<DbJournal>>([
+	return await col.aggregate<WithId<DbJournal>>([
 		{ $sort: { publishedDate: -1 } },
 		{
 			$match: {
