@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default
-async function Journal(props: Props) {
+async function JournalEditPage(props: Props) {
 	const { params: { journalId } } = props;
 
 	const result = await MongoIdValidation.safeParseAsync(journalId);
