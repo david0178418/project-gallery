@@ -9,7 +9,7 @@ import { dbProjectToUiProject } from '@server/transforms';
 
 interface Props {
 	params: {
-		journalId: string;
+		journalId?: string;
 	};
 }
 
@@ -17,10 +17,9 @@ export default
 async function JournalEditPage(props: Props) {
 	const { params: { journalId } } = props;
 
-	const result = await MongoIdValidation.safeParseAsync(journalId);
-	const journal = result.success ?
-		await fetchJournal(journalId) :
-		null;
+	const journal = journalId ?
+		await validateAndFetchJournal(journalId) :
+		newWriteJournal();
 
 	if(!journal) {
 		return (
@@ -32,7 +31,7 @@ async function JournalEditPage(props: Props) {
 
 	const session = await getServerSession();
 
-	if(journal.owner._id.toString() !== session?.user.id) {
+	if(!session || ('owner' in journal && journal.owner._id.toString() !== session.user.id)) {
 		return (
 			<Typography>
 				Not allowed to edit.
@@ -44,17 +43,36 @@ async function JournalEditPage(props: Props) {
 
 	return (
 		<EditJournalForm
-			journal={uiJournalToWriteJournal(journal)}
 			projects={projects.map(dbProjectToUiProject)}
+			journal={
+				'owner' in journal ?
+					dbJournalToWriteJournal(journal) :
+					journal
+			}
 		/>
 	);
 }
 
-function uiJournalToWriteJournal(project: DbJournal): WriteJournal {
+function dbJournalToWriteJournal(project: DbJournal): WriteJournal {
 	return {
 		...pick(project, 'title', 'body'),
 		projectId: project.project?._id.toString(),
 		publish: !!project.publishedDate,
 		_id: project._id.toString(),
 	};
+}
+
+function newWriteJournal(): WriteJournal {
+	return {
+		title: '',
+		body: '',
+	};
+}
+
+async function validateAndFetchJournal(journalId: string): Promise<DbJournal | null> {
+	const result = await MongoIdValidation.safeParseAsync(journalId);
+
+	return result.success ?
+		await fetchJournal(journalId) :
+		null;
 }
