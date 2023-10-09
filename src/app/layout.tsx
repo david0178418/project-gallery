@@ -3,6 +3,32 @@ import '@styles/globals.css';
 import { Roboto } from 'next/font/google';
 import { ReactNode } from 'react';
 import Providers from './providers';
+import { AppName, BaseUrl } from '@common/constants';
+import { LogoMain } from '@common/images';
+import { urlJoin } from '@common/utils';
+import { Metadata } from 'next';
+
+const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
+
+export const metadata: Metadata = {
+	metadataBase: new URL(BaseUrl),
+	title: AppName,
+	twitter: {
+		creator: '@justdavidg',
+		card: 'summary_large_image',
+		images: [{ url: SocialImageUrl }],
+	},
+	openGraph: {
+		type: 'website',
+		locale: 'en_IE',
+		url: BaseUrl,
+		siteName: AppName,
+		title: AppName,
+		description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
+		images: [{ url: SocialImageUrl }],
+	},
+	description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
+};
 
 const font = Roboto({
 	weight: ['300', '400', '500', '700'],
