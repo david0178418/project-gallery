@@ -12,6 +12,7 @@ import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import saveProjectAction from './save-project-action';
 import { useRouteBackDefault } from '@common/hooks';
+import { SaveIcon } from '@components/icons';
 import {
 	inRange,
 	moveItemLeft,
@@ -127,6 +128,7 @@ function EditProjectForm(props: Props) {
 			if(!result.ok) {
 				result.errors?.map(pushToastMsg);
 			} else {
+				pushToastMsg(`"${project.title}" saved`);
 				routeBack();
 			}
 		} catch(e: any) {
@@ -270,6 +272,7 @@ function EditProjectForm(props: Props) {
 					<ConfirmButton
 						onClick={handleSave}
 						disabled={!(project && projectIsValid(project))}
+						endIcon={<SaveIcon/>}
 					/>
 				</Box>
 			</Box>
