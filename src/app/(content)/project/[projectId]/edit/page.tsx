@@ -4,7 +4,7 @@ import { fetchProject } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
 import EditProjectForm from './edit-project.form';
 import { DbProject, WriteProject } from '@common/types/Project';
-import { pick } from '@common/utils';
+import { nowISOString, pick } from '@common/utils';
 import {
 	Box,
 	Container,
@@ -20,14 +20,10 @@ interface Props {
 export default
 async function ProjectEditPage(props: Props) {
 	const { params: { projectId } } = props;
-	const result = await MongoIdValidation.safeParseAsync(projectId);
 
-	if(!result.success) {
-		return { props: { project: null } };
-	}
-
-	const id = result.data;
-	const project = await fetchProject(id);
+	const project = projectId ?
+		await validateAndFetchProject(projectId) :
+		newWriteProject();
 
 	if(!project) {
 		return (
@@ -56,14 +52,14 @@ async function ProjectEditPage(props: Props) {
 		>
 			<Container>
 				<EditProjectForm
-					project={uiProjectToWriteProject(project)}
+					project={'createdDate' in project ? dbProjectToWriteProject(project) : project}
 				/>
 			</Container>
 		</ScrollContent>
 	);
 }
 
-function uiProjectToWriteProject(project: DbProject): WriteProject {
+function dbProjectToWriteProject(project: DbProject): WriteProject {
 	return {
 		_id: project._id?.toString(),
 		...pick(
@@ -78,4 +74,25 @@ function uiProjectToWriteProject(project: DbProject): WriteProject {
 			'unlisted',
 		),
 	};
+}
+
+function newWriteProject(): WriteProject {
+	const nowStr = nowISOString();
+	return {
+		description: '',
+		title: '',
+		images: [],
+		projectCreatedDate: nowStr,
+		projectLastUpdatedDate: nowStr,
+		labels: [],
+		links: [],
+	};
+}
+
+async function validateAndFetchProject(projectId: string): Promise<DbProject | null> {
+	const result = await MongoIdValidation.safeParseAsync(projectId);
+
+	return result.success ?
+		await fetchProject(projectId) :
+		null;
 }

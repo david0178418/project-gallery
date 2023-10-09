@@ -136,6 +136,7 @@ async function doSaveProject(user: User, project: WriteProject) {
 	}
 
 	revalidatePath(Paths.Project(_id.toString()));
+	revalidatePath(Paths.UserGallery(user.username));
 
 	return _id;
 }
