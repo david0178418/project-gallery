@@ -220,7 +220,7 @@ async function fetchUserJournals(username: string): Promise<Array<WithId<DbJourn
 		{} :
 		{ publishedDate: { $ne: null } };
 
-	return await col.aggregate<WithId<DbJournal>>([
+	return col.aggregate<WithId<DbJournal>>([
 		{ $sort: { publishedDate: -1 } },
 		{
 			$match: {
