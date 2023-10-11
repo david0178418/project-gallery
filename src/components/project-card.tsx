@@ -122,18 +122,11 @@ function ProjectCard(props: Props) {
 						<FavoriteIcon />
 					</IconButton>
 				</Tooltip>
-				<Tooltip
-					arrow
-					disableFocusListener
-					disableTouchListener
-					title="Share"
-				>
-					<ShareIconButton
-						label={title}
-						url={projectUrl}
-						shareMsg="Check out this project!"
-					/>
-				</Tooltip>
+				<ShareIconButton
+					label={title}
+					url={projectUrl}
+					shareMsg="Check out this project!"
+				/>
 				{lastJournalEntry && (
 					<Link
 						shallow

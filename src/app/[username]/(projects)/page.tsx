@@ -92,7 +92,7 @@ async function UserProjectsPage(props: Props) {
 								item
 								key={p._id.toString()}
 								xs={12}
-								md={6}
+								md={4}
 								position="relative"
 								sx={{
 									'& .change-order-action': {
