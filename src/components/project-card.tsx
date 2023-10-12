@@ -3,7 +3,6 @@ import { ParsedContent } from './parsed-content';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
 import { ShareIconButton } from './common/share-button';
-import { LocalizedDate } from './localized-date';
 import {
 	FavoriteIcon,
 	JournalIcon,
@@ -32,9 +31,7 @@ function ProjectCard(props: Props) {
 		project: {
 			_id,
 			description,
-			projectCreatedDate,
 			lastJournalEntry,
-			// lastUpdatedDate,
 			title,
 			images,
 			owner: { username },
@@ -57,15 +54,9 @@ function ProjectCard(props: Props) {
 				<Typography variant="h6" component="div">
 					{title}
 				</Typography>
-				<Typography fontSize={12}>
-					{username}
+				<Typography fontSize={12} fontStyle="italic">
+					created by {username}
 				</Typography>
-				<LocalizedDate date={projectCreatedDate} /><br/>
-				{/* {lastUpdatedDate && (
-					<>
-					updated: <LocalizedDate date={(lastUpdatedDate)} />
-					</>
-				)} */}
 				<Typography
 					variant="body2"
 					color="text.secondary"
