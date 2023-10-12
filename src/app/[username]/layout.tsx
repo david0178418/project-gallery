@@ -1,7 +1,6 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import { SpecialCharacterCodes } from '@common/constants';
-import BackButton from '@components/back-button';
 import MarkdownContent from '@components/markdown-content';
 import UserProfileTabs from './user-profile-tabs';
 import { ReactNode } from 'react';
@@ -56,7 +55,6 @@ export default async function UserGalleryLayout(props: Props) {
 				paddingBottom: 2,
 			}}>
 				<Typography variant="h5" component="div" gutterBottom>
-					<BackButton />{SpecialCharacterCodes.NBSP}
 					{username}{SpecialCharacterCodes.RSQUO}s Gallery
 				</Typography>
 				{userProfile?.shortBio && (

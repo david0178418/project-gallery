@@ -24,12 +24,7 @@ function OrderControlBlock(props: Props) {
 	} = props;
 
 	return (
-		<Box
-			top={0}
-			position="absolute"
-			width="100%"
-			className="change-order-action"
-		>
+		<>
 			{!first && (
 				<Box>
 					<IconButton
@@ -38,9 +33,22 @@ function OrderControlBlock(props: Props) {
 							projectId,
 							direction: Direction.Left,
 						})}
+						sx={{
+							borderRadius: '0 5px 5px 0',
+							opacity: .1,
+							width: 35,
+							height: 100,
+							transition: 'opacity .25s',
+							backgroundColor: 'black',
+							':hover': {
+								opacity: .85,
+								backgroundColor: 'black',
+							},
+						}}
 					>
 						<Box
 							component={ArrowLeftIcon}
+							color="white"
 							display={{
 								xs: 'none',
 								sm: 'inline',
@@ -48,6 +56,7 @@ function OrderControlBlock(props: Props) {
 						/>
 						<Box
 							component={ArrowUpIcon}
+							color="white"
 							display={{
 								xs: 'inline',
 								sm: 'none',
@@ -64,9 +73,22 @@ function OrderControlBlock(props: Props) {
 							projectId,
 							direction: Direction.Right,
 						})}
+						sx={{
+							borderRadius: '5px 0 0 5px',
+							opacity: .1,
+							width: 35,
+							height: 100,
+							transition: 'opacity .25s',
+							backgroundColor: 'black',
+							':hover': {
+								opacity: .85,
+								backgroundColor: 'black',
+							},
+						}}
 					>
 						<Box
 							component={ArrowRightIcon}
+							color="white"
 							display={{
 								xs: 'none',
 								sm: 'inline',
@@ -74,6 +96,7 @@ function OrderControlBlock(props: Props) {
 						/>
 						<Box
 							component={ArrowDownIcon}
+							color="white"
 							display={{
 								xs: 'inline',
 								sm: 'none',
@@ -82,6 +105,6 @@ function OrderControlBlock(props: Props) {
 					</IconButton>
 				</Box>
 			)}
-		</Box>
+		</>
 	);
 }

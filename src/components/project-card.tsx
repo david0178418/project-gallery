@@ -1,10 +1,8 @@
-import { red } from '@mui/material/colors';
 import { DbProject, UiProject } from '@common/types/Project';
 import { ParsedContent } from './parsed-content';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
 import { ShareIconButton } from './common/share-button';
-import Label from './label';
 import { LocalizedDate } from './localized-date';
 import {
 	FavoriteIcon,
@@ -12,12 +10,10 @@ import {
 	EditIcon,
 } from '@components/icons';
 import {
-	Avatar,
 	Box,
 	Card,
 	CardActions,
 	CardContent,
-	CardHeader,
 	CardMedia,
 	IconButton,
 	Tooltip,
@@ -37,9 +33,8 @@ function ProjectCard(props: Props) {
 			_id,
 			description,
 			projectCreatedDate,
-			labels,
 			lastJournalEntry,
-			lastUpdatedDate,
+			// lastUpdatedDate,
 			title,
 			images,
 			owner: { username },
@@ -48,37 +43,7 @@ function ProjectCard(props: Props) {
 	const projectUrl = Paths.Project(_id.toString());
 
 	return (
-		<Card elevation={2}>
-			<CardHeader
-				title={title}
-				subheader={(
-					<>
-						<LocalizedDate date={projectCreatedDate} /><br/>
-						{lastUpdatedDate && ( // TODO This conditional may no longer be needed
-							<>
-								updated: <LocalizedDate date={(lastUpdatedDate)} />
-							</>
-						)}
-					</>
-				)}
-				avatar={
-					<Link
-						shallow
-						href={Paths.UserGallery(username)}
-					>
-						<Tooltip
-							arrow
-							disableFocusListener
-							disableTouchListener
-							title={username}
-						>
-							<Avatar sx={{ bgcolor: red[500] }}>
-								{username[0].toLocaleUpperCase()}
-							</Avatar>
-						</Tooltip>
-					</Link>
-				}
-			/>
+		<Card elevation={4}>
 			<Box>
 				<Link href={projectUrl}>
 					<CardMedia
@@ -89,10 +54,22 @@ function ProjectCard(props: Props) {
 				</Link>
 			</Box>
 			<CardContent>
+				<Typography variant="h6" component="div">
+					{title}
+				</Typography>
+				<Typography fontSize={12}>
+					{username}
+				</Typography>
+				<LocalizedDate date={projectCreatedDate} /><br/>
+				{/* {lastUpdatedDate && (
+					<>
+					updated: <LocalizedDate date={(lastUpdatedDate)} />
+					</>
+				)} */}
 				<Typography
 					variant="body2"
 					color="text.secondary"
-					height={80}
+					height={50}
 					overflow="hidden"
 					sx={{ maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}
 				>
@@ -100,16 +77,6 @@ function ProjectCard(props: Props) {
 						{description}
 					</ParsedContent>
 				</Typography>
-				{!!labels.length && (
-					<Box marginTop={2}>
-						{labels.map((l, i) => (
-							<Label
-								key={i}
-								label={l.label}
-							/>
-						))}
-					</Box>
-				)}
 			</CardContent>
 			<CardActions disableSpacing>
 				<Tooltip

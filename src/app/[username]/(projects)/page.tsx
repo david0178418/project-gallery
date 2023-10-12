@@ -85,7 +85,7 @@ async function UserProjectsPage(props: Props) {
 					<Grid
 						container
 						padding={1}
-						spacing={1}
+						spacing={2}
 					>
 						{filteredProjects.map((p, i) => (
 							<Grid
@@ -97,18 +97,25 @@ async function UserProjectsPage(props: Props) {
 								sx={{
 									'& .change-order-action': {
 										xs: { display: 'flex' },
-										sm: { display: 'none' },
+										// sm: { display: 'none' },
 									},
 									'&:hover .change-order-action': { display: 'flex' },
 								}}
 							>
 								<ProjectCard project={p} />
 								{isOwner && projects && !selectedLabels.length && (
-									<OrderControlBlock
-										first={i === 0}
-										last={i === projects.length - 1}
-										projectId={p._id.toString()}
-									/>
+									<Box
+										bottom="75px"
+										position="absolute"
+										width="calc(100% - 16px)"
+										className="change-order-action"
+									>
+										<OrderControlBlock
+											first={i === 0}
+											last={i === projects.length - 1}
+											projectId={p._id.toString()}
+										/>
+									</Box>
 								)}
 							</Grid>
 						))}
