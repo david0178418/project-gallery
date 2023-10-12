@@ -48,7 +48,7 @@ function OrderControlBlock(props: Props) {
 						size="large"
 						onClick={() => handleUpdateProjectOrder(Direction.Left)}
 						sx={{
-							borderRadius: '0 5px 5px 0',
+							borderRadius: '0 7px 7px 0',
 							opacity: .1,
 							width: 35,
 							height: 100,
@@ -85,7 +85,7 @@ function OrderControlBlock(props: Props) {
 						size="large"
 						onClick={() => handleUpdateProjectOrder(Direction.Right)}
 						sx={{
-							borderRadius: '5px 0 0 5px',
+							borderRadius: '7px 0 0 7px',
 							opacity: .1,
 							width: 35,
 							height: 100,
