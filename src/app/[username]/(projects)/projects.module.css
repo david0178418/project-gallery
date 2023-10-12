@@ -1,0 +1,17 @@
+.fadeInEl {
+	opacity: 0;
+	animation-name: fadeIn;
+	animation-duration: .5s;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(50px);
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}

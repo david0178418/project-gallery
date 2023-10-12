@@ -10,6 +10,7 @@ import { uniqueBy } from '@common/utils';
 import Link from 'next/link';
 import Label from '@components/label';
 import { Paths } from '@common/constants';
+import classes from './projects.module.css';
 
 interface Props {
 	params: {
@@ -103,21 +104,23 @@ async function UserProjectsPage(props: Props) {
 									'&:hover .change-order-action': { display: 'flex' },
 								}}
 							>
-								<ProjectCard project={p} />
-								{isOwner && projects && !selectedLabels.length && (
-									<Box
-										bottom="75px"
-										position="absolute"
-										width="calc(100% - 16px)"
-										className="change-order-action"
-									>
-										<OrderControlBlock
-											first={i === 0}
-											last={i === projects.length - 1}
-											projectId={p._id.toString()}
-										/>
-									</Box>
-								)}
+								<Box className={`${classes.fadeInEl}`} sx={{ animationDelay: `${i * 100}ms` }}>
+									<ProjectCard project={p} />
+									{isOwner && projects && !selectedLabels.length && (
+										<Box
+											bottom="75px"
+											position="absolute"
+											width="calc(100% - 16px)"
+											className="change-order-action"
+										>
+											<OrderControlBlock
+												first={i === 0}
+												last={i === projects.length - 1}
+												projectId={p._id.toString()}
+											/>
+										</Box>
+									)}
+								</Box>
 							</Grid>
 						))}
 					</Grid>
