@@ -4,6 +4,7 @@ import { SpecialCharacterCodes } from '@common/constants';
 import MarkdownContent from '@components/markdown-content';
 import UserProfileTabs from './user-profile-tabs';
 import { ReactNode } from 'react';
+import CommonStuff from '@app/(content)/common-stuff';
 import {
 	Box,
 	Container,
@@ -73,6 +74,7 @@ export default async function UserGalleryLayout(props: Props) {
 				</Box>
 			</Box>
 			{children}
+			<CommonStuff/>
 		</Container>
 	);
 }

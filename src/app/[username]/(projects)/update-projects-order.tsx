@@ -3,7 +3,6 @@ import { getCollection } from '@server/mongodb';
 import { getServerSession } from '@server/auth-options';
 import { ObjectId } from 'mongodb';
 import { z, ZodType } from 'zod';
-import { Enum } from '@common/types';
 import { MongoIdValidation } from '@server/validations';
 import { fetchUserGalleryOrder } from '@server/queries';
 import { moveItemLeft, moveItemRight } from '@common/utils';
@@ -11,10 +10,9 @@ import { revalidatePath } from 'next/cache';
 import {
 	DbCollections,
 	Direction,
+	DirectionEnum,
 	Paths,
 } from '@common/constants';
-
-type DirectionEnum = Enum<typeof Direction>;
 
 interface Schema {
 	projectId: string;

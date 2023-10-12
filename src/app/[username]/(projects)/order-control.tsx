@@ -1,7 +1,8 @@
 'use client';
 import { Box, IconButton } from '@ui';
 import updateProjectsOrder from './update-projects-order';
-import { Direction } from '@common/constants';
+import { Direction, DirectionEnum } from '@common/constants';
+import { useSetLoading } from '@common/atoms';
 import {
 	ArrowDownIcon,
 	ArrowLeftIcon,
@@ -22,6 +23,22 @@ function OrderControlBlock(props: Props) {
 		first,
 		projectId,
 	} = props;
+	const setLoading = useSetLoading();
+
+	async function handleUpdateProjectOrder(direction: DirectionEnum) {
+		setLoading(true);
+
+		try {
+			await updateProjectsOrder({
+				projectId,
+				direction,
+			});
+		} catch {
+			// do stuff
+		}
+
+		setLoading(false);
+	}
 
 	return (
 		<>
@@ -29,10 +46,7 @@ function OrderControlBlock(props: Props) {
 				<Box>
 					<IconButton
 						size="large"
-						onClick={() => updateProjectsOrder({
-							projectId,
-							direction: Direction.Left,
-						})}
+						onClick={() => handleUpdateProjectOrder(Direction.Left)}
 						sx={{
 							borderRadius: '0 5px 5px 0',
 							opacity: .1,
@@ -69,10 +83,7 @@ function OrderControlBlock(props: Props) {
 				<Box marginLeft="auto">
 					<IconButton
 						size="large"
-						onClick={() => updateProjectsOrder({
-							projectId,
-							direction: Direction.Right,
-						})}
+						onClick={() => handleUpdateProjectOrder(Direction.Right)}
 						sx={{
 							borderRadius: '5px 0 0 5px',
 							opacity: .1,

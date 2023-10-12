@@ -1,3 +1,4 @@
+import { Enum } from './types';
 import { urlJoin } from './utils';
 
 export const BaseUrl = process.env.HOST || `http://localhost:${process.env.PORT}`;
@@ -59,6 +60,9 @@ const Direction = {
 	Left: 'left',
 	Right: 'right',
 } as const;
+
+export
+type DirectionEnum = Enum<typeof Direction>;
 
 export
 const DbCollections = {
