@@ -1,6 +1,6 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
-import { SpecialCharacterCodes } from '@common/constants';
+import { Paths, SpecialCharacterCodes } from '@common/constants';
 import MarkdownContent from '@components/markdown-content';
 import UserProfileTabs from './user-profile-tabs';
 import { ReactNode } from 'react';
@@ -10,6 +10,8 @@ import {
 	Container,
 	Typography,
 } from '@ui';
+import Link from 'next/link';
+import { BackIcon } from '@components/icons';
 
 interface Props {
 	children: ReactNode;
@@ -58,6 +60,15 @@ export default async function UserGalleryLayout(props: Props) {
 				<Typography variant="h5" component="div" gutterBottom>
 					{username}{SpecialCharacterCodes.RSQUO}s Gallery
 				</Typography>
+
+				<Box display="flex" alignItems="center" color="primary.main">
+					<BackIcon fontSize="inherit"/>
+					<Link href={Paths.Home} >
+						<Typography color="inherit">
+							Back to ProjectGallery.me
+						</Typography>
+					</Link>
+				</Box>
 				{userProfile?.shortBio && (
 					<Box paddingX={2}>
 						<MarkdownContent>
