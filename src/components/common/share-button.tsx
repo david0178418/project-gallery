@@ -1,8 +1,8 @@
+'use client';
 import { usePushToastMsg } from '@common/atoms';
 import { urlJoin } from '@common/utils';
 import { ShareIcon } from '@components/icons';
-import { IconButton, Tooltip } from '@mui/material';
-import { forwardRef } from 'react';
+import { IconButton, Tooltip } from '@ui';
 
 interface Props {
 	label: string;
@@ -11,7 +11,9 @@ interface Props {
 }
 
 export
-const ShareIconButton = forwardRef((props: Props, ref) => {
+// TODO Was adding the tooltip an oversight?
+// const ShareIconButton = forwardRef((props: Props, ref) => {
+function ShareIconButton(props: Props) {
 	const pushToastMsg = usePushToastMsg();
 	const {
 		label,
@@ -24,13 +26,13 @@ const ShareIconButton = forwardRef((props: Props, ref) => {
 	}
 
 	return (
-		<Tooltip title={`Share '${label}'`} ref={ref}>
+		<Tooltip title={`Share '${label}'`}>
 			<IconButton size="small" onClick={handleShare}>
 				<ShareIcon fontSize="small" />
 			</IconButton>
 		</Tooltip>
 	);
-});
+}
 
 async function share(url: string, label: string, shareMsg: string) {
 	if(!navigator.share) {

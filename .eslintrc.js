@@ -50,7 +50,7 @@ module.exports = {
 		'space-infix-ops': [ERR, { int32Hint: true }],
 		indent: OFF,
 		quotes: [WARN, 'single'],
-		semi: ERR,
+		'@typescript-eslint/semi': ERR,
 		'@next/next/no-img-element': OFF,
 		'@typescript-eslint/ban-ts-comment': OFF,
 		'@typescript-eslint/explicit-module-boundary-types': OFF,

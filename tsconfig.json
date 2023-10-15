@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "ES2020",
+    "target": "ES2022",
     "lib": [
       "dom",
       "dom.iterable",
@@ -30,9 +30,6 @@
       "@components/*": [
         "src/components/*"
       ],
-      "@pages/*": [
-        "pages/*"
-      ],
       "@app/*": [
         "src/app/*"
       ],
@@ -47,7 +44,10 @@
       ],
       "@/*": [
         "./*",
-          "src/*",
+          "src/*"
+      ],
+      "@ui": [
+        "src/common/ui"
       ]
     },
     "plugins": [
@@ -60,7 +60,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/api/v0/user./registerts",
+    "pagesTEMP/api/v0/user./registerts",
     ".next/types/**/*.ts"
   ],
   "exclude": [

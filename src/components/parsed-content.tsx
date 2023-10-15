@@ -1,4 +1,4 @@
-import { Link as MuiLink } from '@mui/material';
+import { Link as MuiLink } from '@ui';
 import { Interweave } from 'interweave';
 import { polyfill } from 'interweave-ssr';
 import { UrlMatcher, UrlProps } from 'interweave-autolink';

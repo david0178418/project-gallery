@@ -1,6 +1,4 @@
-'use client';
-
-import { default as Grid } from '@mui/material/Unstable_Grid2/Grid2';
+import { Unstable_Grid2 as Grid } from '@ui';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import Img1 from './img1.png';
@@ -8,7 +6,6 @@ import Img2 from './img2.png';
 import Img3 from './img3.png';
 import Link from 'next/link';
 import {
-	ModalActions,
 	Paths,
 	SpecialCharacterCodes,
 } from '@common/constants';
@@ -17,7 +14,7 @@ import {
 	Button,
 	Paper,
 	Typography,
-} from '@mui/material';
+} from '@ui';
 
 const { NBSP: S } = SpecialCharacterCodes;
 
@@ -199,10 +196,7 @@ function Features() {
 					md: 15,
 				}}
 			>
-				<Link href={{
-					pathname: Paths.Home,
-					query: { a: ModalActions.Register },
-				}}>
+				<Link href={Paths.UserRegister}>
 					<Button
 						variant="contained"
 						size="large"

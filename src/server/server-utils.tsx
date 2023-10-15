@@ -48,6 +48,7 @@ async function sendEmail(args: SendEmailArgs) {
 			from: NoReplyEmailAddress,
 			...args,
 		});
+		console.log(`sendEmail:success:${JSON.stringify(args)}`);
 	} catch(e) {
 		console.log(`sendEmail:error: ${JSON.stringify(e)}`);
 	}

@@ -3,13 +3,10 @@ import type { ApiResponse, Enum } from '@common/types';
 import { signIn, signOut } from 'next-auth/react';
 import { get, post } from '@client/client-utils';
 import { urlJoin } from '@common/utils';
-import { UiProject, WriteProject } from '@common/types/Project';
-import { WriteJournal } from '@common/types/Journal';
-import { WriteUserProfile } from '@common/types/UserProfile';
+import getUploadUrlAction from './get-upload-url-action';
 import {
 	ApiUrl,
 	AuthProviders,
-	Direction,
 	FileUploadCategories,
 } from '@common/constants';
 
@@ -23,65 +20,8 @@ async function login(username: string, password: string) {
 }
 
 export
-async function sendLoginLink(email: string) {
-	return post('/api/auth/one-click/send', { email });
-}
-
-export
-function register(username: string, email: string, password: string) {
-	return apiPost<ApiResponse>('/user/register', {
-		username,
-		email,
-		password,
-	});
-}
-
-export
-function updatePassword(password: string) {
-	return apiPost<ApiResponse>('/user/pw', { password });
-}
-
-export
-function updateUserProfile(userProfile: WriteUserProfile) {
-	return apiPost<ApiResponse>('/user/profile', { userProfile });
-}
-
-export
-function updateProjectOrder(projectId: string, direction: Enum<typeof Direction>) {
-	return apiPost<ApiResponse>('/gallery/order', {
-		projectId,
-		direction,
-	});
-}
-
-export
 async function logout() {
 	await signOut();
-}
-
-export
-async function getNotificaitons(): Promise<Notification[]> {
-	const result = await apiGet<ApiResponse<{notifications: Notification[]}>>('/user/notifications');
-
-	return result?.ok ?
-		result.data.notifications :
-		[];
-
-}
-
-export
-function projectSave(project: WriteProject) {
-	return apiPost('/project', { project });
-}
-
-export
-function journalSave(journal: WriteJournal) {
-	return apiPost('/journal', { journal });
-}
-
-export
-function getProjects() {
-	return apiGet<ApiResponse<{projects: UiProject[]}>>('/projects');
 }
 
 export
@@ -89,6 +29,7 @@ async function dismissNotification(id: string): Promise<void> {
 	await apiGet('/user/notifications/dismiss', { id });
 }
 
+export
 function apiPost<T = any>(path: string, requestBody?: any) {
 	return post<T>(urlJoin(ApiUrl, path), requestBody);
 }
@@ -97,18 +38,12 @@ function apiGet<T = any>(path: string, params?: any, signal?: AbortSignal) {
 	return get<T>(urlJoin(ApiUrl, path), params, signal);
 }
 
-interface Foo {
-	url: string;
-	fields: any;
-}
-
 export
 async function postFile(file: File, category: Enum<typeof FileUploadCategories>): Promise<ApiResponse<{url: string}>> {
-	const fileName = encodeURIComponent(file.name);
-	const fileType = encodeURIComponent(file.type);
+	// TODO figure out how I want to handle bridging these types
+	const fileType: any = encodeURIComponent(file.type);
 
-	const res = await apiGet<ApiResponse<Foo>>('upload-url', {
-		file: fileName,
+	const res = await getUploadUrlAction({
 		category,
 		fileType,
 	});

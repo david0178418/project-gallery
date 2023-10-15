@@ -8,6 +8,7 @@ import { DbJournal } from '@common/types/Journal';
 import { DbUserProfile } from '@common/types/UserProfile';
 import { DbUserGalleryOrder } from '@common/types/UserGalleryOrder';
 import { add } from 'date-fns';
+import { getServerSession } from '@server/auth-options';
 import {
 	makeId,
 	nowISOString,
@@ -211,9 +212,11 @@ async function fetchUserGalleryOrder(userId: string): Promise<WithId<DbUserGalle
 }
 
 export
-async function fetchUserJournals(username: string, owner: boolean): Promise<Array<WithId<DbJournal>>> {
+async function fetchUserJournals(username: string): Promise<Array<WithId<DbJournal>>> {
+	const session = await getServerSession();
 	const col = await getCollection(DbCollections.Journals);
-	const ownerCondition = owner ?
+	const isOwner = session?.user.username === username;
+	const ownerCondition = isOwner ?
 		{} :
 		{ publishedDate: { $ne: null } };
 

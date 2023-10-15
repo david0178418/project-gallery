@@ -1,5 +1,5 @@
 import { ProjectImage } from '@common/types/Project';
-import { Grid } from '@mui/material';
+import { Grid } from '@ui';
 
 interface Props {
 	images: ProjectImage[];

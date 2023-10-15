@@ -8,7 +8,7 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
-} from '@mui/material';
+} from '@ui';
 
 interface Props {
 	links: UiProject['links'][number][];

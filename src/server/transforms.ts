@@ -1,22 +1,12 @@
 import { PasswordSaltLength } from '@common/constants';
-import { pick } from '@common/utils';
 import { hash } from 'bcryptjs';
 import { WithId } from 'mongodb';
+import { DbProject, 	UiProject } from '@common/types/Project';
+import { DbUserProfile, 	UiUserProfile } from '@common/types/UserProfile';
 import {
 	DbJournal,
 	UiJournal,
-	WriteJournal,
 } from '@common/types/Journal';
-import {
-	DbProject,
-	UiProject,
-	WriteProject,
-} from '@common/types/Project';
-import {
-	DbUserProfile,
-	UiUserProfile,
-	WriteUserProfile,
-} from '@common/types/UserProfile';
 
 export
 function passwordToHash(password: string) {
@@ -44,31 +34,6 @@ function dbProjectToUiProject(dbProject: WithId<DbProject>): UiProject {
 	}
 
 	return uiProject;
-}
-
-export
-function uiProjectToWriteProject(project: UiProject): WriteProject {
-	return pick(
-		project,
-		'_id',
-		'description',
-		'projectCreatedDate',
-		'projectLastUpdatedDate',
-		'labels',
-		'links',
-		'title',
-		'images',
-		'unlisted',
-	);
-}
-
-export
-function uiJournalToWriteJournal(project: UiJournal): WriteJournal {
-	return {
-		...pick(project, '_id', 'title', 'body'),
-		projectId: project.project?._id,
-		publish: !!project.publishedDate,
-	};
 }
 
 export
@@ -100,9 +65,4 @@ function dbUserProfileToUiUserProfile(userProfile: DbUserProfile): UiUserProfile
 		...userProfile,
 		_id: userProfile._id.toString(),
 	};
-}
-
-export
-function uiUserProfileToWriteUserProfile(userProfile: UiUserProfile): WriteUserProfile {
-	return pick(userProfile, 'shortBio', 'detailedBio');
 }

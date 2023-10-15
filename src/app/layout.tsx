@@ -1,11 +1,34 @@
-'use client';
-
 import '@styles/globals.css';
 
 import { Roboto } from 'next/font/google';
-import theme from '@common/theme';
-import { ThemeProvider } from '@mui/material';
 import { ReactNode } from 'react';
+import Providers from './providers';
+import { AppName, BaseUrl } from '@common/constants';
+import { LogoMain } from '@common/images';
+import { urlJoin } from '@common/utils';
+import { Metadata } from 'next';
+
+const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
+
+export const metadata: Metadata = {
+	metadataBase: new URL(BaseUrl),
+	title: AppName,
+	twitter: {
+		creator: '@justdavidg',
+		card: 'summary_large_image',
+		images: [{ url: SocialImageUrl }],
+	},
+	openGraph: {
+		type: 'website',
+		locale: 'en_IE',
+		url: BaseUrl,
+		siteName: AppName,
+		title: AppName,
+		description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
+		images: [{ url: SocialImageUrl }],
+	},
+	description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
+};
 
 const font = Roboto({
 	weight: ['300', '400', '500', '700'],
@@ -14,16 +37,18 @@ const font = Roboto({
 });
 
 interface Props {
-	children: ReactNode
+	children: ReactNode;
+	modal: ReactNode;
 }
 
-export default function RootLayout({ children }: Props) {
+export default function RootLayout(props: Props) {
 	return (
 		<html lang="en" className={font.className}>
 			<body>
-				<ThemeProvider theme={theme}>
-					{children}
-				</ThemeProvider>
+				<Providers>
+					{props.children}
+					{props.modal}
+				</Providers>
 			</body>
 		</html>
 	);

@@ -53,7 +53,7 @@ function pick<T extends Record<any, any>, K extends keyof T>(object: T, ...ks: K
 }
 
 export
-function exec(fn: () => any | Promise<any>) {
+function runFn(fn: () => any | Promise<any>) {
 	return fn();
 }
 
@@ -91,7 +91,6 @@ function random(min = 0, max = 100) {
 export
 function uuid() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-		// eslint-disable-next-line eqeqeq, no-mixed-operators
 		const r = Math.random() * 16|0, v = c == 'x' ? r : (r & 0x3 | 0x8);
 		return v.toString(16);
 	});

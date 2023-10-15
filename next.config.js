@@ -3,10 +3,14 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: {
-		appDir: true,
-		legacyBrowsers: false,
-		// Enabled in preperation of release of canary feature.
-		// serverComponents: true,
+		serverActions: true,
+		optimizePackageImports: [
+			'@mui/icons-material',
+			'@mui/material',
+			'@mui/styles',
+			'@mui/lab',
+			'date-fns',
+		],
 	},
 };
 

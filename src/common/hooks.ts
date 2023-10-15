@@ -1,55 +1,16 @@
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+'use client';
+import { Paths } from '@common/constants';
+import { useRouter } from 'next/navigation';
 import {
 	useEffect,
 	useState,
 	useRef,
 	useLayoutEffect,
-	useCallback,
 	EffectCallback,
 } from 'react';
 
-import { Paths, UserRoles } from '@common/constants';
-
 export
-function useIsLoggedIn() {
-	const { status } = useSession();
-
-	return status === 'authenticated';
-}
-
-export
-function useIsLoggedOut() {
-	const { status } = useSession();
-	return status === 'unauthenticated';
-}
-
-export
-function useUser() {
-	const session = useSession();
-
-	return session.data?.user || null;
-}
-
-export
-function useIsAdmin() {
-	const { data } = useSession();
-
-	return data?.user.role === UserRoles.Admin;
-}
-
-export
-function useRefreshPage() {
-	const {
-		replace,
-		asPath,
-	} = useRouter();
-
-	return () => replace(asPath);
-}
-
-export
-function useRouteBackDefault(fallback = Paths.Home) {
+function useRouteBackDefault(fallback: string = Paths.Home) {
 	const router = useRouter();
 
 	return () => {
@@ -91,19 +52,6 @@ function useDebouncedCallback<T>(value: T, delay: number, callback: () => void,)
 	useEffect(() => {
 		callback();
 	}, [debouncedValue]);
-}
-
-export
-// Source: https://usehooks.com/useToggle/
-function useToggle(initialState = false) {
-	// Initialize the state
-	const [state, setState] = useState(initialState);
-
-	// Define and memorize toggler function in case we pass down the component,
-	// This function change the boolean value to it's opposite value
-	const toggle = useCallback(() => setState(s => !s), []);
-
-	return [state, toggle];
 }
 
 export

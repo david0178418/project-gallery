@@ -1,3 +1,5 @@
+'use client';
+
 import { atom, useSetAtom } from 'jotai';
 import { ToastMesssage } from './types';
 

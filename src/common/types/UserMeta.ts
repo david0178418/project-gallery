@@ -11,4 +11,4 @@ interface DbUserMeta {
 export
 type UiUserMeta = Omit<DbUserMeta, 'userId'> & {
 	userId: string;
-}
+};

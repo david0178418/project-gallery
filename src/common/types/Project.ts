@@ -13,7 +13,7 @@ type DbProject = WithId<{
 	projectCreatedDate: string;
 	projectLastUpdatedDate: string;
 	title: string;
-	unlisted: boolean;
+	unlisted?: boolean;
 	images: Array<{
 		url: string;
 		description: string;

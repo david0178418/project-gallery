@@ -1,5 +1,5 @@
 import { useDropzone } from 'react-dropzone';
-import { Box } from '@mui/material';
+import { Box } from '@ui';
 import { postFile } from '@client/api-calls';
 import { useSetAtom } from 'jotai';
 import { loadingAtom } from '@common/atoms';
@@ -7,7 +7,7 @@ import { isTruthy } from '@common/utils';
 import { Enum } from '@common/types';
 import { FileUploadCategories, SpecialCharacterCodes } from '@common/constants';
 
-async function uploadPhoto (file: File, category: Enum<typeof FileUploadCategories>) {
+async function uploadPhoto(file: File, category: Enum<typeof FileUploadCategories>) {
 	const res = await postFile(file, category);
 
 	if (res.ok) {

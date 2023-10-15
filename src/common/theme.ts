@@ -1,4 +1,6 @@
-import { createTheme } from '@mui/material';
+'use client';
+
+import { createTheme } from '@ui';
 
 const theme = createTheme({
 	palette: {

@@ -1,4 +1,4 @@
-import { Box, Chip } from '@mui/material';
+import { Box, Chip } from '@ui';
 import { ComponentProps } from 'react';
 
 type Props = ComponentProps<typeof Chip>;

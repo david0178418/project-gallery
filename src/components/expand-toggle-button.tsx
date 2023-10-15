@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material';
+import { IconButton } from '@ui';
 import { ComponentProps } from 'react';
 import {
 	ExpandLessIcon,

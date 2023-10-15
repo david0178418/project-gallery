@@ -1,5 +1,5 @@
-import { Button } from '@mui/material';
-import { Menu } from '@mui/material';
+import { Button } from '@ui';
+import { Menu } from '@ui';
 import { MoreIcon } from '@components/icons';
 import {
 	ComponentProps,

@@ -1,6 +1,7 @@
+import { Enum } from './types';
 import { urlJoin } from './utils';
 
-export const BaseUrl = process.env.HOST;
+export const BaseUrl = process.env.HOST || `http://localhost:${process.env.PORT}`;
 export const IsDev = process.env.NODE_ENV !== 'production';
 export const NoReplyEmailAddress = process.env.NO_REPLY_EMAIL_ADDRESS || '';
 export const SmtpPort = +(process.env.SMTP_PORT || '25');
@@ -61,6 +62,9 @@ const Direction = {
 } as const;
 
 export
+type DirectionEnum = Enum<typeof Direction>;
+
+export
 const DbCollections = {
 	Grams: 'grams',
 	Journals: 'journals',
@@ -71,16 +75,6 @@ const DbCollections = {
 	UsersMeta: 'users-meta',
 	UserOneClickLinkKeys: 'user-one-click-link-keys',
 	SentEmails: 'sent-emails',
-} as const;
-
-export
-const ModalActions = {
-	CreateProject: 'create-project',
-	CreateJournal: 'create-journal',
-	Login: 'login',
-	Register: 'register',
-	LoginRegister: 'login-register',
-	Logout: 'logout',
 } as const;
 
 export
@@ -100,16 +94,20 @@ export
 const Paths = {
 	Favorites: '/favorites',
 	Home: '/home',
+	Journal: (journalId: string) => urlJoin('/journal', journalId),
+	JournalEdit: (journalId = '') => urlJoin(Paths.Journal(journalId), 'edit'),
+	UserLoginEmail: '/user/login/email',
+	UserLoginPw: '/user/login/pw',
+	UserRegister: '/user/register',
 	OneClickAuth: '/one-click-auth/',
-	Search: '/search',
-	Settings: '/settings',
 	Project: (projectId: string) => urlJoin('/project', projectId),
+	ProjectAbout: (projectId: string) => urlJoin(Paths.Project(projectId), '/about'),
+	ProjectEdit: (projectId = '') => urlJoin(Paths.Project(projectId), 'edit'),
 	ProjectJournals: (projectId: string) => urlJoin(Paths.Project(projectId), '/journals'),
 	ProjectLinks: (projectId: string) => urlJoin(Paths.Project(projectId), '/links'),
-	ProjectAbout: (projectId: string) => urlJoin(Paths.Project(projectId), '/about'),
-	ProjectEdit: (projectId: string) => urlJoin(Paths.Project(projectId), 'edit'),
-	Journal: (journalId: string) => urlJoin('/journal', journalId),
-	JournalEdit: (journalId: string) => urlJoin(Paths.Journal(journalId), 'edit'),
+	Search: '/search',
+	Settings: '/settings',
+	SettingsUpdatePw: '/settings/update-pw',
 	UserGallery: (username: string) => `/${username}`,
 	UserGalleryAbout: (username: string) => urlJoin(Paths.UserGallery(username), '/about'),
 	UserGalleryJournals: (username: string) => urlJoin(Paths.UserGallery(username), '/journals'),
