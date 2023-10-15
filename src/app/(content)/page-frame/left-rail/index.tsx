@@ -46,7 +46,7 @@ async function LeftRail() {
 								shallow
 								passHref
 								legacyBehavior
-								href={Paths.ModalLoginEmail}
+								href={Paths.UserLoginEmail}
 							>
 								<ListItemButton>
 									<RailButtonContent
@@ -62,7 +62,7 @@ async function LeftRail() {
 								shallow
 								passHref
 								legacyBehavior
-								href={Paths.ModalRegister}
+								href={Paths.UserRegister}
 							>
 								<ListItemButton>
 									<RailButtonContent

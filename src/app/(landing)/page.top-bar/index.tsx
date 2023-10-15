@@ -12,6 +12,7 @@ import {
 	Toolbar,
 	Typography,
 } from '@ui';
+import LogoutButton from '@components/logout-button';
 
 export default
 async function TopBar() {
@@ -72,7 +73,7 @@ async function TopBar() {
 						</Link>
 						{!user && (
 							<>
-								<Link href={Paths.ModalLoginEmail}>
+								<Link href={Paths.UserLoginEmail}>
 									<Button
 										variant="outlined"
 										sx={{ marginRight: 1 }}
@@ -80,7 +81,7 @@ async function TopBar() {
 										Login
 									</Button>
 								</Link>
-								<Link href={Paths.ModalRegister}>
+								<Link href={Paths.UserRegister}>
 									<Button variant="contained">
 										Register
 									</Button>
@@ -89,14 +90,9 @@ async function TopBar() {
 						)}
 						{user && (
 							<>
-								<Link href={'???'}>
-									<Button
-										variant="outlined"
-										sx={{ marginRight: 1 }}
-									>
-										Logout
-									</Button>
-								</Link>
+								<Box sx={{ marginRight: 1 }}>
+									<LogoutButton />
+								</Box>
 								<Link href={Paths.Home}>
 									<Button variant="contained">
 										{user.username}

@@ -5,6 +5,7 @@ import { login } from '@client/api-calls';
 import { inRange } from '@common/utils';
 import Link from 'next/link';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import { useRouter } from 'next/navigation';
 import {
 	Paths,
 	UsernameMaxLength,
@@ -22,6 +23,7 @@ export default
 function LoginPwForm() {
 	const pushToastMsg = usePushToastMsg();
 	const setLoading = useSetLoading();
+	const { refresh } = useRouter();
 	const [usernameOrEmail, setUsernameOrEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const validUsernameLength = inRange(usernameOrEmail.length, UsernameMinLength, UsernameMaxLength, true);
@@ -49,7 +51,7 @@ function LoginPwForm() {
 
 			if(results?.ok) {
 				pushToastMsg(`Logged in as ${usernameOrEmail}`);
-				setUsernameOrEmail('');
+				refresh();
 			} else {
 				pushToastMsg('Incorrect Login');
 			}
@@ -95,7 +97,7 @@ function LoginPwForm() {
 			</Box>
 			<DialogActions>
 				<Box paddingRight={2}>
-					<Link href={Paths.ModalLoginEmail} replace>
+					<Link href={Paths.UserLoginEmail} replace>
 						<Button color="secondary">
 							Sign in with Email Link
 						</Button>

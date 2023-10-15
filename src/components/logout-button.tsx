@@ -29,7 +29,7 @@ function LogoutButton() {
 
 	return (
 		<>
-			<Button onClick={() => setIsOpen(true)}>
+			<Button variant="outlined" onClick={() => setIsOpen(true)}>
 				Logout
 			</Button>
 			<Dialog open={isOpen}>

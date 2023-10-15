@@ -60,13 +60,13 @@ function TopBarDrawer(props: Props) {
 						{!user?.username && (
 							<>
 								<Item
-									href={Paths.ModalRegister}
+									href={Paths.UserRegister}
 									icon={<RegisterIcon/>}
 								>
 									Register
 								</Item>
 								<Item
-									href={Paths.ModalLoginEmail}
+									href={Paths.UserLoginEmail}
 									icon={<LoginIcon/>}
 								>
 									Login

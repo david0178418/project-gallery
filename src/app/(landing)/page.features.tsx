@@ -196,7 +196,7 @@ function Features() {
 					md: 15,
 				}}
 			>
-				<Link href={Paths.ModalRegister}>
+				<Link href={Paths.UserRegister}>
 					<Button
 						variant="contained"
 						size="large"

@@ -5,7 +5,7 @@ import { login } from '@client/api-calls';
 import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Register from '@server/actions/register';
 import {
@@ -22,6 +22,7 @@ function RegistrationModal() {
 	const pushToastMsg = useSetAtom(pushToastMsgAtom);
 	const setLoading = useSetAtom(loadingAtom);
 	const [username, setUsername] = useState('');
+	const { refresh } = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [repassword, setRepassword] = useState('');
@@ -58,7 +59,7 @@ function RegistrationModal() {
 				setUsername('');
 				setEmail('');
 
-				redirect(Paths.Home);
+				refresh();
 			}
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
@@ -138,7 +139,7 @@ function RegistrationModal() {
 				<Link
 					shallow
 					replace
-					href={Paths.ModalLoginEmail}
+					href={Paths.UserLoginEmail}
 				>
 					<Button size="small">
 						Login with Existing Account

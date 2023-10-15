@@ -65,7 +65,7 @@ function LoginEmailForm() {
 			</Box>
 			<DialogActions>
 				<Box paddingRight={2}>
-					<Link href={Paths.ModalLoginPw} replace>
+					<Link href={Paths.UserLoginPw} replace>
 						<Button color="secondary">
 							Sign in with password
 						</Button>

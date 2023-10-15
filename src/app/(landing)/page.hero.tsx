@@ -89,7 +89,7 @@ function Hero() {
 				textAlign="center"
 				marginTop={4}
 			>
-				<Link href={Paths.ModalRegister}>
+				<Link href={Paths.UserRegister}>
 					<Button
 						variant="contained"
 						size="large"

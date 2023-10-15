@@ -75,7 +75,7 @@ function BottomNav() {
 							<Link
 								ref={ref}
 								{...props}
-								href={Paths.ModalLoginEmail}
+								href={Paths.UserLoginEmail}
 							/>
 						))}
 					/>

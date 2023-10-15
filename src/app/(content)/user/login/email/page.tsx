@@ -1,22 +1,22 @@
-import LoginPwForm from './login-pw.form';
-import Link from 'next/link';
+import LoginEmailForm from './login-email-form';
 import { Paths } from '@common/constants';
+import Link from 'next/link';
 import {
 	Button,
 	DialogActions,
 	DialogTitle,
 } from '@ui';
 
-export default function LoginModal() {
+export default function LoginPage() {
 	return (
 		<>
 			<DialogTitle>
 				Login
 			</DialogTitle>
-			<LoginPwForm />
+			<LoginEmailForm />
 			<DialogActions sx={{ justifyContent: 'center' }}>
-				<Link href={Paths.ModalRegister} replace >
-					<Button size="small">
+				<Link replace href={Paths.UserRegister} >
+					<Button size="small" >
 						Create an Account
 					</Button>
 				</Link>
