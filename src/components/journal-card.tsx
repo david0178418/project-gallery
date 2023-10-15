@@ -120,18 +120,11 @@ async function JournalCard(props: Props) {
 						<FavoriteIcon />
 					</IconButton>
 				</Tooltip>
-				<Tooltip
-					arrow
-					disableFocusListener
-					disableTouchListener
-					title="Share"
-				>
-					<ShareIconButton
-						url={Paths.Journal(journaId)}
-						label={title}
-						shareMsg="Check out this project journal post!"
-					/>
-				</Tooltip>
+				<ShareIconButton
+					url={Paths.Journal(journaId)}
+					label={title}
+					shareMsg="Check out this project journal post!"
+				/>
 				{isOwner && (
 					<Link prefetch={false} href={Paths.JournalEdit(journaId)}>
 						<Tooltip

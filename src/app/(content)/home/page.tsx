@@ -69,7 +69,10 @@ async function HomePage() {
 						padding={1}
 						key={j._id.toString()}
 					>
-						<JournalCard journal={j} />
+						{/** adding extra "div" since BOX seems to be angry with an async child */}
+						<div>
+							<JournalCard journal={j} />
+						</div>
 					</Box>
 				))}
 			</ScrollContent>
