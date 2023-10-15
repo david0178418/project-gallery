@@ -61,14 +61,14 @@ export default async function UserGalleryLayout(props: Props) {
 					{username}{SpecialCharacterCodes.RSQUO}s Gallery
 				</Typography>
 
-				<Box display="flex" alignItems="center" color="primary.main">
-					<BackIcon fontSize="inherit"/>
-					<Link href={Paths.Home} >
+				<Link href={Paths.Home} >
+					<Box display="flex" alignItems="center" color="primary.main">
+						<BackIcon fontSize="inherit"/>
 						<Typography color="inherit">
 							Back to ProjectGallery.me
 						</Typography>
-					</Link>
-				</Box>
+					</Box>
+				</Link>
 				{userProfile?.shortBio && (
 					<Box paddingX={2}>
 						<MarkdownContent>
