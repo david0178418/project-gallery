@@ -39,7 +39,10 @@ async function JournalsPage(props: Props) {
 					padding={1}
 					key={j._id.toString()}
 				>
-					<JournalCard journal={j} />
+					{/** Box doesn't like async children, apparently. */}
+					<div>
+						<JournalCard journal={j} />
+					</div>
 				</Box>
 			))}
 			{!journals?.length && (

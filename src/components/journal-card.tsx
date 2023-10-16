@@ -44,7 +44,7 @@ async function JournalCard(props: Props) {
 		},
 	} = props;
 	const journaId = _id.toString();
-	const isOwner = user?.id.toString() === ownerId.toString();
+	const isOwner = user?.id === ownerId.toString();
 	const journalUrl = Paths.Journal(journaId);
 
 	return (
