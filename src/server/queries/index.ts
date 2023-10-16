@@ -9,13 +9,12 @@ import { DbUserProfile } from '@common/types/UserProfile';
 import { DbUserGalleryOrder } from '@common/types/UserGalleryOrder';
 import { add } from 'date-fns';
 import { getServerSession } from '@server/auth-options';
-import {
-	makeId,
-	nowISOString,
-} from '@common/utils';
+import { cache } from 'react';
+import { makeId, nowISOString } from '@common/utils';
 
 export
-async function fetchUser(usernameOrEmail: string): Promise<DbUser | null> {
+const fetchUser = cache(async (usernameOrEmail: string): Promise<DbUser | null> => {
+	console.log('fetchUser start');
 	const col = await getCollection(DbCollections.Users);
 	const result = await col.aggregate<WithId<DbUser>>([
 		{
@@ -30,10 +29,11 @@ async function fetchUser(usernameOrEmail: string): Promise<DbUser | null> {
 	]).toArray();
 
 	return result[0] || null;
-}
+});
 
 export
 async function createUserLoginKey(email: string) {
+	console.log('createUserLoginKey start');
 	if(!await fetchUser(email)) {
 		return '';
 	}
@@ -57,6 +57,7 @@ async function createUserLoginKey(email: string) {
 
 export
 async function getUserFromKey(key: string): Promise<DbUser | null> {
+	console.log('getUserFromKey start');
 	const col = await getCollection(DbCollections.UserOneClickLinkKeys);
 	const result = await col.findOne({ key });
 
@@ -75,6 +76,7 @@ async function getUserFromKey(key: string): Promise<DbUser | null> {
 
 export
 async function checkCredentialAvailability(username: string, email: string) {
+	console.log('checkCredentialAvailability start');
 	const usersCol = await getCollection(DbCollections.Users);
 	const results = await usersCol.aggregate<WithId<DbUser>>([
 		{
@@ -101,6 +103,7 @@ async function checkCredentialAvailability(username: string, email: string) {
 
 export
 async function fetchProjects(): Promise<Array<WithId<DbProject>>> {
+	console.log('fetchProjects start');
 	const col = await getCollection(DbCollections.Projects);
 	return col.aggregate<WithId<DbProject>>([
 		{ $match: { unlisted: { $ne: true } } },
@@ -111,6 +114,7 @@ async function fetchProjects(): Promise<Array<WithId<DbProject>>> {
 
 export
 async function fetchJournals(ownerId = ''): Promise<Array<WithId<DbJournal>>> {
+	console.log('fetchJournals start');
 	const col = await getCollection(DbCollections.Journals);
 	const publishedOrOwner = ownerId ?
 		{
@@ -128,6 +132,7 @@ async function fetchJournals(ownerId = ''): Promise<Array<WithId<DbJournal>>> {
 
 export
 async function fetchUserProfileByUsername(username: string): Promise<DbUserProfile | null> {
+	console.log('fetchUserProfileByUsername start');
 	const col = await getCollection(DbCollections.UserProfiles);
 
 	return col.findOne({ username: username.toLocaleLowerCase() });
@@ -135,6 +140,7 @@ async function fetchUserProfileByUsername(username: string): Promise<DbUserProfi
 
 export
 async function fetchProjectJournals(projectId: string, ownerId = ''): Promise<Array<WithId<DbJournal>>> {
+	console.log('fetchProjectJournals start');
 	const col = await getCollection(DbCollections.Journals);
 	const publishedOrOwner = ownerId ?
 		{
@@ -157,6 +163,7 @@ async function fetchProjectJournals(projectId: string, ownerId = ''): Promise<Ar
 
 export
 async function fetchProjectsByUser(userId: string): Promise<Array<WithId<DbProject>>> {
+	console.log('fetchProjectsByUser start');
 	const col = await getCollection(DbCollections.Projects);
 	return col.aggregate<WithId<DbProject>>([
 		{ $sort: { title: 1 } },
@@ -166,6 +173,7 @@ async function fetchProjectsByUser(userId: string): Promise<Array<WithId<DbProje
 
 export
 async function fetchProject(id: string): Promise<WithId<DbProject> | null> {
+	console.log('fetchProject start');
 	const col = await getCollection(DbCollections.Projects);
 
 	return col.findOne({ _id: new ObjectId(id) });
@@ -173,6 +181,7 @@ async function fetchProject(id: string): Promise<WithId<DbProject> | null> {
 
 export
 async function fetchJournal(id: string): Promise<WithId<DbJournal> | null> {
+	console.log('fetchJournal start');
 	const col = await getCollection(DbCollections.Journals);
 
 	return col.findOne({ _id: new ObjectId(id) });
@@ -182,6 +191,7 @@ const DocPlaceholder = 'docTemp';
 
 export
 async function fetchUserGallery(username: string): Promise<Array<WithId<DbProject>>> {
+	console.log('fetchUserGallery start');
 	const col = await getCollection(DbCollections.UserGalleryOrder);
 	return col.aggregate<WithId<DbProject>>([
 		{ $match: { usernameLower: username.toLocaleLowerCase() } },
@@ -201,18 +211,21 @@ async function fetchUserGallery(username: string): Promise<Array<WithId<DbProjec
 
 export
 async function fetchUserGalleryOrderByUsername(username: string): Promise<WithId<DbUserGalleryOrder> | null> {
+	console.log('fetchUserGalleryOrderByUsername start');
 	const col = await getCollection(DbCollections.UserGalleryOrder);
 	return col.findOne({ usernameLower: username });
 }
 
 export
 async function fetchUserGalleryOrder(userId: string): Promise<WithId<DbUserGalleryOrder> | null> {
+	console.log('fetchUserGalleryOrder start');
 	const col = await getCollection(DbCollections.UserGalleryOrder);
 	return col.findOne({ _id: new ObjectId(userId) });
 }
 
 export
 async function fetchUserJournals(username: string): Promise<Array<WithId<DbJournal>>> {
+	console.log('fetchUserJournals start');
 	const session = await getServerSession();
 	const col = await getCollection(DbCollections.Journals);
 	const isOwner = session?.user.username === username;
@@ -233,11 +246,12 @@ async function fetchUserJournals(username: string): Promise<Array<WithId<DbJourn
 }
 
 export
-async function updateLastLogin(id: ObjectId | string) {
+const updateLastLogin = cache(async (id: ObjectId | string) => {
+	console.log('updateLastLogin start', id);
 	const col = await getCollection(DbCollections.UsersMeta);
 
 	await col.updateOne(
 		{ _id: new ObjectId(id) },
 		{ $set: { lastLogin: nowISOString() } },
 	);
-}
+});
