@@ -57,7 +57,10 @@ async function HomePage() {
 							xs={12}
 							md={6}
 						>
-							<ProjectCard project={p} />
+							{/** div hack to get around mui async child issue */}
+							<div>
+								<ProjectCard project={p} />
+							</div>
 						</Grid>
 					))}
 				</Grid>

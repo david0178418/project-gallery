@@ -18,25 +18,26 @@ import {
 	Tooltip,
 	Typography,
 } from '@ui';
+import { getServerSession } from '@server/auth-options';
 
 interface Props {
 	project: DbProject | UiProject;
-	isOwner?: boolean;
 }
 
 export default
-function ProjectCard(props: Props) {
+async function ProjectCard(props: Props) {
 	const {
-		isOwner,
 		project: {
 			_id,
 			description,
 			lastJournalEntry,
 			title,
 			images,
-			owner: { username },
+			owner,
 		},
 	} = props;
+	const session = await getServerSession();
+	const isOwner = session?.user?.id === owner._id.toString();
 	const projectUrl = Paths.Project(_id.toString());
 
 	return (
@@ -55,7 +56,7 @@ function ProjectCard(props: Props) {
 					{title}
 				</Typography>
 				<Typography fontSize={12} fontStyle="italic">
-					created by {username}
+					created by {owner.username}
 				</Typography>
 				<Typography
 					variant="body2"

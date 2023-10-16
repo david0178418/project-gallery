@@ -105,21 +105,24 @@ async function UserProjectsPage(props: Props) {
 								}}
 							>
 								<Box className={`${classes.fadeInEl}`} sx={{ animationDelay: `${i * 100}ms` }}>
-									<ProjectCard project={p} />
-									{isOwner && projects && !selectedLabels.length && (
-										<Box
-											bottom="75px"
-											position="absolute"
-											width="calc(100% - 16px)"
-											className="change-order-action"
-										>
-											<OrderControlBlock
-												first={i === 0}
-												last={i === projects.length - 1}
-												projectId={p._id.toString()}
-											/>
-										</Box>
-									)}
+									{/** div hack for async component child */}
+									<div>
+										<ProjectCard project={p} />
+										{isOwner && projects && !selectedLabels.length && (
+											<Box
+												bottom="75px"
+												position="absolute"
+												width="calc(100% - 16px)"
+												className="change-order-action"
+											>
+												<OrderControlBlock
+													first={i === 0}
+													last={i === projects.length - 1}
+													projectId={p._id.toString()}
+												/>
+											</Box>
+										)}
+									</div>
 								</Box>
 							</Grid>
 						))}
