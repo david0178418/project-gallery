@@ -51,7 +51,7 @@ function Hero() {
 									<strong>Create</strong> your own personal project portfolio
 								</>,
 								<>
-									<strong>Focus</strong> on your work, ot how to present it
+									<strong>Focus</strong> on your work, not how to present it
 								</>,
 								<>
 									<strong>Document</strong> your progress  with a project journal
