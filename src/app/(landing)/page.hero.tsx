@@ -88,6 +88,9 @@ function Hero() {
 			<Box
 				textAlign="center"
 				marginTop={4}
+				display="flex"
+				flexDirection="column"
+				gap={3}
 			>
 				<Link href={Paths.UserRegister}>
 					<Button
@@ -102,6 +105,21 @@ function Hero() {
 						}}
 					>
 						Create Your{SpecialCharacterCodes.NBSP}<strong>Free</strong>{SpecialCharacterCodes.NBSP}Gallery
+					</Button>
+				</Link>
+				<Link href={Paths.Home}>
+					<Button
+						variant="outlined"
+						size="large"
+						sx={{
+							borderRadius: 5,
+							width: {
+								xs: 1,
+								sm: 'unset',
+							},
+						}}
+					>
+						Explore Project Gallery
 					</Button>
 				</Link>
 			</Box>
