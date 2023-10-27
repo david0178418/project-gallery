@@ -3,7 +3,7 @@ import type { DbProject } from '@common/types/Project';
 import { ObjectId, WithId } from 'mongodb';
 
 import { getCollection } from '@server/mongodb';
-import { DbCollections } from '@common/constants';
+import { DbCollections, ProfileActivity } from '@common/constants';
 import { DbJournal } from '@common/types/Journal';
 import { DbUserProfile } from '@common/types/UserProfile';
 import { DbUserGalleryOrder } from '@common/types/UserGalleryOrder';
@@ -255,3 +255,36 @@ const updateLastLogin = cache(async (id: ObjectId | string) => {
 		{ $set: { lastLogin: nowISOString() } },
 	);
 });
+
+interface UpdateProfileActivityArgs {
+	userId: ObjectId;
+	activityId: ObjectId;
+	type: ProfileActivity;
+	label: string;
+}
+
+export
+async function updateProfileActivity(args: UpdateProfileActivityArgs) {
+	const {
+		userId,
+		activityId,
+		type,
+		label,
+	} = args;
+	console.log('updateProfileActivity start', userId);
+	const col = await getCollection(DbCollections.UserProfiles);
+
+	await col.updateOne(
+		{ _id: new ObjectId(userId) },
+		{
+			$set: {
+				lastActivity: {
+					type,
+					date: new Date(),
+					id: activityId,
+					label,
+				},
+			},
+		},
+	);
+}

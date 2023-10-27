@@ -8,6 +8,7 @@ import { User } from 'next-auth';
 import { IsoDateValidation, MongoIdValidation } from '@server/validations';
 import { nowISOString } from '@common/utils';
 import { revalidatePath } from 'next/cache';
+import { updateProfileActivity } from '@server/queries';
 import {
 	DbCollections,
 	MaxJournalProjectTitleLength,
@@ -23,6 +24,7 @@ import {
 	MaxLabelSize,
 	maxLabelCount,
 	Paths,
+	ProfileActivity,
 } from '@common/constants';
 
 const Validator: ZodType<WriteProject> = z.object({
@@ -92,9 +94,9 @@ async function saveProjectAction(project: WriteProject) {
 		};
 	}
 
-	await doSaveProject(session.user, result.data);
+	const saveResult = await doSaveProject(session.user, result.data);
 
-	return { ok: true };
+	return { ok: !!saveResult };
 }
 
 async function doSaveProject(user: User, project: WriteProject) {
@@ -105,12 +107,13 @@ async function doSaveProject(user: User, project: WriteProject) {
 		_id: projId,
 		...updateProps
 	} = project;
+	const isCreate = !projId;
 
-	const _id = projId ?
-		new ObjectId(projId) :
-		new ObjectId();
+	const _id = isCreate ?
+		new ObjectId() :
+		new ObjectId(projId);
 
-	const result = await col.updateOne(
+	const resultProject = await col.findOneAndUpdate(
 		{ _id },
 		{
 			$set: {
@@ -129,11 +132,24 @@ async function doSaveProject(user: User, project: WriteProject) {
 		{ upsert: true }
 	);
 
-	if(result.upsertedCount) {
+	if(!resultProject) {
+		return null;
+	}
+
+	if(!isCreate) {
 		const orderCol = await getCollection(DbCollections.UserGalleryOrder);
 
 		await orderCol.updateOne({ _id: userIdObj }, { $push: { projectIdOrder: _id } });
 	}
+
+	updateProfileActivity({
+		userId: userIdObj,
+		activityId: _id,
+		label: resultProject.title,
+		type: isCreate ?
+			ProfileActivity.ProfileCreate :
+			ProfileActivity.ProfileUpdate,
+	});
 
 	revalidatePath(Paths.Project(_id.toString()));
 	revalidatePath(Paths.UserGallery(user.username));

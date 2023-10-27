@@ -7,6 +7,7 @@ import { ObjectId } from 'mongodb';
 import { z, ZodType } from 'zod';
 import {
 	DbCollections,
+	ProfileActivity,
 	UserRoles,
 } from '@common/constants';
 import {
@@ -131,6 +132,12 @@ async function createUser(args: Schema) {
 				shortBio: '',
 				detailedBio: '',
 				username,
+				lastActivity: {
+					date: new Date(),
+					type: ProfileActivity.ProfileCreate,
+					id: result.insertedId,
+					label: '',
+				},
 			}),
 	]);
 }

@@ -16,7 +16,9 @@ import {
 	MinJournalPostLength,
 	MaxJournalPostLength,
 	Paths,
+	ProfileActivity,
 } from '@common/constants';
+import { updateProfileActivity } from '@server/queries';
 
 const publishedJournal = z.object({
 	_id: MongoIdValidation.optional(),
@@ -90,9 +92,11 @@ async function createJournalPost(user: User, post: WriteJournal) {
 		publish,
 		...updateProps
 	} = post;
-	const _id = journalId ?
-		new ObjectId(journalId) :
-		new ObjectId();
+	const userIdObj = new ObjectId(user.id);
+	const isCreate = !!journalId;
+	const _id = isCreate ?
+		new ObjectId() :
+		new ObjectId(journalId);
 
 	if(projectId) {
 		const projectsCol = await getCollection(DbCollections.Projects);
@@ -120,7 +124,7 @@ async function createJournalPost(user: User, post: WriteJournal) {
 
 	const existingJournal = await col.findOne({ _id });
 
-	await col.updateOne(
+	const resultJournal = await col.findOneAndUpdate(
 		{ _id },
 		{
 			$set: {
@@ -136,13 +140,26 @@ async function createJournalPost(user: User, post: WriteJournal) {
 			$setOnInsert: {
 				_id,
 				owner: {
-					_id: new ObjectId(user.id),
+					_id: userIdObj,
 					username: user.username,
 				},
 			},
 		},
 		{ upsert: true }
 	);
+
+	if(!resultJournal) {
+		return null;
+	}
+
+	updateProfileActivity({
+		userId: userIdObj,
+		activityId: _id,
+		label: resultJournal.title,
+		type: isCreate ?
+			ProfileActivity.JournalCreate :
+			ProfileActivity.JournalUpdate,
+	});
 
 	revalidatePath(Paths.Journal(_id.toString()));
 	revalidatePath(Paths.UserGalleryJournals(user.id));

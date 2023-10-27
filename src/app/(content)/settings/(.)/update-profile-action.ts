@@ -10,6 +10,7 @@ import {
 	MaxUserProfileBioLength,
 	MaxUserProfileShortBioLength,
 	Paths,
+	ProfileActivity,
 } from '@common/constants';
 
 const Validator: ZodType<WriteUserProfile> = z.object({
@@ -52,7 +53,17 @@ async function updateProfile(profile: WriteUserProfile) {
 		const col = await getCollection(DbCollections.UserProfiles);
 		const _id = new ObjectId(session.user.id);
 
-		await col.updateOne({ _id }, { $set: { ...userProfile } });
+		await col.updateOne({ _id }, {
+			$set: {
+				...userProfile,
+				lastActivity: {
+					id: _id,
+					date: new Date(),
+					type: ProfileActivity.ProfileUpdate,
+					label: '',
+				},
+			},
+		});
 
 		revalidatePath(Paths.Settings);
 		revalidatePath(Paths.UserGallery(session.user.username));

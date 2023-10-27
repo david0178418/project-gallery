@@ -1,11 +1,20 @@
-import { WithId } from 'mongodb';
+import { ObjectId, WithId } from 'mongodb';
 import { WithStringId } from '@common/types';
+import { ProfileActivity } from '@common/constants';
+
+type ProfileActivityLog = {
+	date: Date;
+	id: ObjectId;
+	type: ProfileActivity;
+	label: string;
+};
 
 export
 type DbUserProfile = WithId<{
 	username: string;
 	shortBio: string
 	detailedBio: string;
+	lastActivity: ProfileActivityLog;
 }>;
 
 export

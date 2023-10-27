@@ -78,6 +78,18 @@ const DbCollections = {
 } as const;
 
 export
+const ProfileActivity = {
+	JournalCreate: 'journal-create',
+	JournalUpdate: 'journal-update',
+	ProfileCreate: 'profile-create',
+	ProfileUpdate: 'profile-update',
+	ProjectCreate: 'project-create',
+	ProjectUpdate: 'project-update',
+} as const;
+
+export type ProfileActivity = Enum<typeof ProfileActivity>;
+
+export
 const NotLoggedInErrMsg = {
 	ok: false,
 	msg: 'Not logged in',
