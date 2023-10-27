@@ -26,6 +26,8 @@ import {
 	JournalIcon,
 	FavoriteActiveIcon,
 	FavoriteIcon,
+	GalleriesActiveIcon,
+	GalleriesIcon,
 } from '@components/icons';
 
 // TODO Figure out the weird link behavior
@@ -64,6 +66,16 @@ function BottomNav() {
 						Paths.Home === pathname ?
 							<HomeActiveIcon /> :
 							<HomeIcon />
+					}
+				/>
+				<BottomNavigationAction
+					label="Galleries"
+					href={Paths.Galleries}
+					value={Paths.Galleries}
+					icon={
+						Paths.Home === pathname ?
+							<GalleriesActiveIcon /> :
+							<GalleriesIcon />
 					}
 				/>
 				{!user && (
