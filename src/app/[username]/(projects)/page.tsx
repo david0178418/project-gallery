@@ -112,7 +112,7 @@ async function UserProjectsPage(props: Props) {
 											<Box
 												bottom="75px"
 												position="absolute"
-												width="calc(100% - 16px)"
+												width="100%"
 												className="change-order-action"
 											>
 												<OrderControlBlock

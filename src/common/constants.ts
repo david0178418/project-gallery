@@ -105,6 +105,7 @@ export
 // TODO Does this still belong here?
 const Paths = {
 	Favorites: '/favorites',
+	Galleries: '/galleries',
 	Home: '/home',
 	Journal: (journalId: string) => urlJoin('/journal', journalId),
 	JournalEdit: (journalId = '') => urlJoin(Paths.Journal(journalId), 'edit'),

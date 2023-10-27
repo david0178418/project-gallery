@@ -60,7 +60,7 @@ async function updateProfile(profile: WriteUserProfile) {
 					id: _id,
 					date: new Date(),
 					type: ProfileActivity.ProfileUpdate,
-					label: '',
+					label: session.user.username,
 				},
 			},
 		});

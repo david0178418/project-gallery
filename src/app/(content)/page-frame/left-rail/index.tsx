@@ -21,6 +21,8 @@ import {
 	FavoriteActiveIcon,
 	FavoriteIcon,
 	RegisterIcon,
+	GalleriesActiveIcon,
+	GalleriesIcon,
 } from '@components/icons';
 
 // TODO Implement better path matching for active icon
@@ -38,6 +40,12 @@ async function LeftRail() {
 					path={Paths.Home}
 					ActiveIcon={HomeActiveIcon}
 					InactiveIcon={HomeIcon}
+				/>
+				<LeftRailItem
+					label="Galleries"
+					path={Paths.Galleries}
+					ActiveIcon={GalleriesActiveIcon}
+					InactiveIcon={GalleriesIcon}
 				/>
 				{!user && (
 					<>

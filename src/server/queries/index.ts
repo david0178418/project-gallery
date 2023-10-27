@@ -210,6 +210,16 @@ async function fetchUserGallery(username: string): Promise<Array<WithId<DbProjec
 }
 
 export
+async function fetchUserProfiles(): Promise<Array<WithId<DbUserProfile>>> {
+	console.log('fetchUserGalleries start');
+	const col = await getCollection(DbCollections.UserProfiles);
+	return col.aggregate<WithId<DbUserProfile>>([
+		// { $match: { 'lastActivity.type': { $ne: ProfileActivity.ProfileCreate } } },
+		{ $sort: { 'lastActivity.date': -1 } },
+	]).toArray();
+}
+
+export
 async function fetchUserGalleryOrderByUsername(username: string): Promise<WithId<DbUserGalleryOrder> | null> {
 	console.log('fetchUserGalleryOrderByUsername start');
 	const col = await getCollection(DbCollections.UserGalleryOrder);

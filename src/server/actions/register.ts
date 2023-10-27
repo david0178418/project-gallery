@@ -136,7 +136,7 @@ async function createUser(args: Schema) {
 					date: new Date(),
 					type: ProfileActivity.ProfileCreate,
 					id: result.insertedId,
-					label: '',
+					label: username,
 				},
 			}),
 	]);

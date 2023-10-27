@@ -148,7 +148,7 @@ async function doSaveProject(user: User, project: WriteProject) {
 		label: resultProject.title,
 		type: isCreate ?
 			ProfileActivity.ProfileCreate :
-			ProfileActivity.ProfileUpdate,
+			ProfileActivity.ProjectUpdate,
 	});
 
 	revalidatePath(Paths.Project(_id.toString()));

@@ -1,3 +1,4 @@
+
 'use client';
 export { default as AddIcon } from '@mui/icons-material/AddOutlined';
 export { default as ArrowDownIcon } from '@mui/icons-material/ExpandMore';
@@ -23,6 +24,8 @@ export { default as FaqActiveIcon } from '@mui/icons-material/Help';
 export { default as FaqIcon } from '@mui/icons-material/HelpOutline';
 export { default as FavoriteActiveIcon } from '@mui/icons-material/Favorite';
 export { default as FavoriteIcon } from '@mui/icons-material/FavoriteBorder';
+export { default as GalleriesActiveIcon } from '@mui/icons-material/Collections';
+export { default as GalleriesIcon } from '@mui/icons-material/CollectionsOutlined';
 export { default as HomeActiveIcon } from '@mui/icons-material/Home';
 export { default as HomeIcon } from '@mui/icons-material/HomeOutlined';
 export { default as InfoIcon } from '@mui/icons-material/Info';
