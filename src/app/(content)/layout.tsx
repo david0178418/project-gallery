@@ -9,10 +9,8 @@ interface Props {
 }
 
 export default
-function ContentLayout(props: Props, ...args: any[]) {
+function ContentLayout(props: Props) {
 	const { children } = props;
-
-	console.log('props', props.children);
 
 	return (
 		<Container
