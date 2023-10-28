@@ -9,8 +9,10 @@ interface Props {
 }
 
 export default
-function ContentLayout(props: Props) {
+function ContentLayout(props: Props, ...args: any[]) {
 	const { children } = props;
+
+	console.log('props', props.children);
 
 	return (
 		<Container
@@ -63,7 +65,10 @@ function ContentLayout(props: Props) {
 					{children}
 				</Grid>
 			</Grid>
-			<BottomNav/>
+			{/** div hack for async component child */}
+			<div>
+				<BottomNav/>
+			</div>
 			<CommonStuff/>
 		</Container>
 	);
