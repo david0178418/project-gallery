@@ -7,16 +7,19 @@ import MarkdownContent from '@components/markdown-content';
 import UserProfileTabs from './user-profile-tabs';
 import { ReactNode } from 'react';
 import CommonStuff from '@app/(content)/common-stuff';
-import { BackIcon } from '@components/icons';
+import { BackIcon, EditIcon } from '@components/icons';
 import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import {
 	Box,
 	Container,
+	Fab,
 	Typography,
 } from '@ui';
 import Link from 'next/link';
+import { getServerSession } from '@server/auth-options';
+import { ScrollContent } from '@components/scroll-content';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 
@@ -93,11 +96,11 @@ export default async function UserGalleryLayout(props: Props) {
 		);
 	}
 
-	const user = result.success ?
+	const profileUser = result.success ?
 		await fetchUser(result.data) :
 		null;
 
-	if(!user) {
+	if(!profileUser) {
 		return (
 			<>
 				User not found.
@@ -105,43 +108,72 @@ export default async function UserGalleryLayout(props: Props) {
 		);
 	}
 
-	const username = user.username;
+	const username = profileUser.username;
 	const userProfile = await fetchUserProfileByUsername(username);
 
-	return (
-		<Container>
-			<Box sx={{
-				paddingTop: 1,
-				paddingBottom: 2,
-			}}>
-				<Typography variant="h5" component="div" gutterBottom>
-					{username}{SpecialCharacterCodes.RSQUO}s Gallery
-				</Typography>
+	const session = await getServerSession();
+	const isOwner = session?.user.id === profileUser._id.toString();
 
-				<Link href={Paths.Home} >
-					<Box display="flex" alignItems="center" color="primary.main">
-						<BackIcon fontSize="inherit"/>
-						<Typography color="inherit">
-							Back to ProjectGallery.me
+	return (
+		<Container
+			sx={{
+				height: '100vh',
+				overflow: 'hidden',
+				position: 'relative',
+				padding: 1,
+			}}
+		>
+			<ScrollContent
+				header={
+					<Box sx={{
+						paddingTop: 1,
+						paddingBottom: 2,
+					}}>
+						<Typography variant="h5" component="div" gutterBottom>
+							{username}{SpecialCharacterCodes.RSQUO}s Gallery
 						</Typography>
+
+						<Link href={Paths.Home} >
+							<Box display="flex" alignItems="center" color="primary.main">
+								<BackIcon fontSize="inherit"/>
+								<Typography color="inherit">
+									Back to ProjectGallery.me
+								</Typography>
+							</Box>
+						</Link>
+						{userProfile?.shortBio && (
+							<Box paddingX={2}>
+								<MarkdownContent>
+									{userProfile.shortBio}
+								</MarkdownContent>
+							</Box>
+						)}
+						<Box sx={{
+							paddingY: 2,
+							borderBottom: 1,
+							borderColor: 'divider',
+						}}>
+							<UserProfileTabs username={username} />
+						</Box>
 					</Box>
-				</Link>
-				{userProfile?.shortBio && (
-					<Box paddingX={2}>
-						<MarkdownContent>
-							{userProfile.shortBio}
-						</MarkdownContent>
-					</Box>
+				}
+			>
+				{children}
+				{isOwner && (
+					<Link href={Paths.Settings} >
+						<Fab
+							color="primary"
+							sx={{
+								position: 'absolute',
+								bottom: 64,
+								right: 48,
+							}}
+						>
+							<EditIcon />
+						</Fab>
+					</Link>
 				)}
-				<Box sx={{
-					paddingY: 2,
-					borderBottom: 1,
-					borderColor: 'divider',
-				}}>
-					<UserProfileTabs username={username} />
-				</Box>
-			</Box>
-			{children}
+			</ScrollContent>
 			<CommonStuff/>
 		</Container>
 	);
