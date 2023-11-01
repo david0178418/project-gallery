@@ -131,12 +131,12 @@ async function fetchJournals(ownerId = ''): Promise<Array<WithId<DbJournal>>> {
 }
 
 export
-async function fetchUserProfileByUsername(username: string): Promise<DbUserProfile | null> {
+const fetchUserProfileByUsername = cache(async (username: string): Promise<DbUserProfile | null> => {
 	console.log('fetchUserProfileByUsername start');
 	const col = await getCollection(DbCollections.UserProfiles);
 
 	return col.findOne({ username: username.toLocaleLowerCase() });
-}
+});
 
 export
 async function fetchProjectJournals(projectId: string, ownerId = ''): Promise<Array<WithId<DbJournal>>> {
