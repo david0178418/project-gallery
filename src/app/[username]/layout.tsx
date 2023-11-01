@@ -1,17 +1,74 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
-import { Paths, SpecialCharacterCodes } from '@common/constants';
+import {
+	AppName, BaseUrl, Paths, SpecialCharacterCodes,
+} from '@common/constants';
 import MarkdownContent from '@components/markdown-content';
 import UserProfileTabs from './user-profile-tabs';
 import { ReactNode } from 'react';
 import CommonStuff from '@app/(content)/common-stuff';
+import { BackIcon } from '@components/icons';
+import { LogoMain } from '@common/images';
+import { urlJoin } from '@common/utils';
+import { Metadata } from 'next';
 import {
 	Box,
 	Container,
 	Typography,
 } from '@ui';
 import Link from 'next/link';
-import { BackIcon } from '@components/icons';
+
+const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
+
+interface Props {
+	params: {
+		username: string;
+	};
+}
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+	const { params: { username: routeUsername } } = props;
+
+	const result = await UsernameValidation.safeParseAsync(routeUsername);
+
+	if(!result.success) {
+		return {};
+	}
+
+	const user = result.success ?
+		await fetchUser(result.data) :
+		null;
+
+	if(!user) {
+		return {};
+	}
+
+	const username = user.username;
+	const userProfile = await fetchUserProfileByUsername(username);
+
+	if(!userProfile) {
+		return {};
+	}
+
+	const title = `${userProfile.username}'s Gallery`;
+	const description = userProfile.shortBio;
+	const url = urlJoin(BaseUrl, Paths.UserGallery(username));
+
+	return {
+		metadataBase: new URL(BaseUrl),
+		title,
+		description,
+		openGraph: {
+			type: 'website',
+			locale: 'en_IE',
+			url,
+			siteName: AppName,
+			title,
+			description,
+			images: [{ url: SocialImageUrl }],
+		},
+	};
+}
 
 interface Props {
 	children: ReactNode;
