@@ -220,6 +220,9 @@ function EditProjectForm(props: Props) {
 						{selectedTab === 1 && (
 							<>
 								<Uploader
+									border="3px dashed"
+									padding={1}
+									borderRadius={2}
 									category={FileUploadCategories.Posts}
 									onAdd={handleAddFiles}
 								/>

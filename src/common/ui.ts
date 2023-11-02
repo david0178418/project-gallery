@@ -6,6 +6,7 @@ export {
 	AppBar,
 	Avatar,
 	Backdrop,
+	Badge,
 	BottomNavigation,
 	BottomNavigationAction,
 	Box,

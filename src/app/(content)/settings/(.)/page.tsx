@@ -7,6 +7,7 @@ import LogoutButton from '@components/logout-button';
 import { redirect } from 'next/navigation';
 import { DbUserProfile, WriteUserProfile } from '@common/types/UserProfile';
 import { pick } from '@common/utils';
+import ProfilePhotoUploader from './profile-photo-uploader';
 import {
 	Box,
 	Button,
@@ -35,6 +36,12 @@ async function SettingsLayout() {
 
 	return (
 		<>
+			<Box padding={2}>
+				<ProfilePhotoUploader
+					avatarUrl={userProfile.avatar}
+					username={user.username}
+				/>
+			</Box>
 			<Typography>
 				Signed in as <strong>{user.username}</strong>
 			</Typography>

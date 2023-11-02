@@ -6,10 +6,8 @@ import MarkdownContent from './markdown-content';
 import { ShareIconButton } from './common/share-button';
 import { LocalizedDate } from './localized-date';
 import { getServerSession } from '@server/auth-options';
-import {
-	FavoriteIcon,
-	EditIcon,
-} from '@components/icons';
+import { fetchUserProfileByUsername } from '@server/queries';
+import { FavoriteIcon, EditIcon } from '@components/icons';
 import {
 	Avatar,
 	Box,
@@ -43,6 +41,7 @@ async function JournalCard(props: Props) {
 			},
 		},
 	} = props;
+	const profile = await fetchUserProfileByUsername(username);
 	const journaId = _id.toString();
 	const isOwner = user?.id === ownerId.toString();
 	const journalUrl = Paths.Journal(journaId);
@@ -72,7 +71,7 @@ async function JournalCard(props: Props) {
 							disableTouchListener
 							title={username}
 						>
-							<Avatar sx={{ bgcolor: red[500] }}>
+							<Avatar src={profile?.avatar} sx={{ bgcolor: red[500] }}>
 								{username[0].toLocaleUpperCase()}
 							</Avatar>
 						</Tooltip>

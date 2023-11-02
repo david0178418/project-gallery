@@ -11,6 +11,7 @@ type ProfileActivityLog = {
 
 export
 type DbUserProfile = WithId<{
+	avatar?: string;
 	username: string;
 	shortBio: string
 	detailedBio: string;
@@ -21,4 +22,4 @@ export
 type UiUserProfile = WithStringId<DbUserProfile>;
 
 export
-type WriteUserProfile = Pick<UiUserProfile, 'shortBio' | 'detailedBio'>;
+type WriteUserProfile = Pick<UiUserProfile, 'shortBio' | 'detailedBio' | 'avatar'>;

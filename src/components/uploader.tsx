@@ -6,6 +6,7 @@ import { loadingAtom } from '@common/atoms';
 import { isTruthy } from '@common/utils';
 import { Enum } from '@common/types';
 import { FileUploadCategories, SpecialCharacterCodes } from '@common/constants';
+import { ComponentProps } from 'react';
 
 async function uploadPhoto(file: File, category: Enum<typeof FileUploadCategories>) {
 	const res = await postFile(file, category);
@@ -17,7 +18,7 @@ async function uploadPhoto(file: File, category: Enum<typeof FileUploadCategorie
 	}
 }
 
-interface Props {
+interface Props extends ComponentProps<typeof Box> {
 	category: Enum<typeof FileUploadCategories>;
 	onAdd(files: string[]): void;
 }
@@ -28,6 +29,9 @@ function Uploader(props: Props) {
 	const {
 		category,
 		onAdd,
+		sx,
+		children,
+		...rest
 	} = props;
 
 	async function onDrop (acceptedFiles: File[]) {
@@ -54,18 +58,19 @@ function Uploader(props: Props) {
 	return (
 		<Box
 			{...getRootProps()}
-			border="3px dashed"
-			padding={1}
-			borderRadius={2}
+			{...rest}
 			borderColor={isDragActive ? 'Highlight' : 'InactiveBorder'}
-			sx={{ cursor: 'pointer' }}
+			sx={{
+				cursor: 'pointer',
+				...sx,
+			}}
 		>
 			<input {...getInputProps()} />
-			{
+			{children || (
 				isDragActive ?
 					<p>Drop the files here ...</p> :
 					<p>Drag n{SpecialCharacterCodes.RSQUO} drop some files here, or click to select files</p>
-			}
+			)}
 		</Box>
 	);
 }

@@ -24,6 +24,7 @@ export { default as FaqActiveIcon } from '@mui/icons-material/Help';
 export { default as FaqIcon } from '@mui/icons-material/HelpOutline';
 export { default as FavoriteActiveIcon } from '@mui/icons-material/Favorite';
 export { default as FavoriteIcon } from '@mui/icons-material/FavoriteBorder';
+export { default as FileUploadIcon } from '@mui/icons-material/FileUpload';
 export { default as GalleriesActiveIcon } from '@mui/icons-material/Collections';
 export { default as GalleriesIcon } from '@mui/icons-material/CollectionsOutlined';
 export { default as HomeActiveIcon } from '@mui/icons-material/Home';

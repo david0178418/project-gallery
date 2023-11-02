@@ -13,7 +13,11 @@ import {
 	ProfileActivity,
 } from '@common/constants';
 
-const Validator: ZodType<WriteUserProfile> = z.object({
+const Validator: ZodType<Partial<WriteUserProfile>> = z.object({
+	avatar: z
+		.string()
+		.trim()
+		.max(150),
 	shortBio: z
 		.string()
 		.trim()
@@ -22,10 +26,10 @@ const Validator: ZodType<WriteUserProfile> = z.object({
 		.string()
 		.trim()
 		.max(MaxUserProfileBioLength),
-});
+}).partial();
 
 export default
-async function updateProfile(profile: WriteUserProfile) {
+async function updateProfile(profile: Partial<WriteUserProfile>) {
 	const session = await getServerSession();
 
 	if(!session?.user) {
