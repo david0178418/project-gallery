@@ -1,8 +1,5 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
-import {
-	AppName, BaseUrl, Paths, SpecialCharacterCodes,
-} from '@common/constants';
 import MarkdownContent from '@components/markdown-content';
 import UserProfileTabs from './user-profile-tabs';
 import { ReactNode } from 'react';
@@ -11,16 +8,22 @@ import { BackIcon, EditIcon } from '@components/icons';
 import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
-import {
-	Box,
-	Container,
-	Fab,
-	Grid,
-	Typography,
-} from '@ui';
 import Link from 'next/link';
 import { getServerSession } from '@server/auth-options';
 import { ScrollContent } from '@components/scroll-content';
+import {
+	AppName,
+	BaseUrl,
+	Paths,
+	SpecialCharacterCodes,
+} from '@common/constants';
+import {
+	Avatar,
+	Box,
+	Container,
+	Fab,
+	Typography,
+} from '@ui';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 
@@ -134,35 +137,48 @@ export default async function UserGalleryLayout(props: Props) {
 						paddingTop: 1,
 						paddingBottom: 2,
 					}}>
-						<Grid container>
-							<Grid item xs={12} sm={10}>
-								<Typography variant="h5" component="div" gutterBottom>
-									{username}{SpecialCharacterCodes.RSQUO}s Gallery
-								</Typography>
-							</Grid>
-							<Grid item xs={12} sm={2}>
-								<Link href={Paths.Home} >
-									<Box
-										textAlign="right"
-										display="flex"
-										alignItems="center"
-										color="primary.main"
-										justifyContent="end"
-									>
-										<BackIcon fontSize="inherit"/>
-										<Typography color="inherit">
-											ProjectGallery.me
-										</Typography>
-									</Box>
-								</Link>
-							</Grid>
-						</Grid>
+						<Box textAlign="right">
+							<Link href={Paths.Home} >
+								<Box
+									textAlign="right"
+									display="flex"
+									alignItems="center"
+									color="primary.main"
+									justifyContent="end"
+								>
+									<BackIcon fontSize="inherit"/>
+									<Typography color="inherit">
+										ProjectGallery.me
+									</Typography>
+								</Box>
+							</Link>
+						</Box>
+						<Box sx={{
+							// center the avatar and text
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
+							{userProfile?.avatar && (
+								<Avatar
+									src={userProfile.avatar}
+									sx={{
+										width: 100,
+										height: 100,
+									}}
+								/>
+							)}
+							<Typography variant="h5" component="div">
+								{username}{SpecialCharacterCodes.RSQUO}s Gallery
+							</Typography>
+						</Box>
 						{userProfile?.shortBio && (
-							<Box paddingX={2}>
+							<Container maxWidth="sm">
 								<MarkdownContent>
 									{userProfile.shortBio}
 								</MarkdownContent>
-							</Box>
+							</Container>
 						)}
 						<UserProfileTabs username={username} />
 					</Box>
