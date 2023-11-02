@@ -1,18 +1,21 @@
 import { Paths } from '@common/constants';
-import { fetchProject } from '@server/queries';
+import { fetchProject, fetchUserProfileByUsername } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
-import {
-	Box,
-	Fab,
-	Link,
-	Typography,
-} from '@ui';
 import { ScrollContent } from '@components/scroll-content';
 import { EditIcon } from '@components/icons';
 import { ReactNode } from 'react';
 import ProjectTabs from './project-tabs';
 import { getServerSession } from '@server/auth-options';
 import BackButton from '@components/back-button';
+import { red } from '@mui/material/colors';
+import {
+	Avatar,
+	Box,
+	Fab,
+	Grid,
+	Link,
+	Typography,
+} from '@ui';
 
 interface Props {
 	children: ReactNode;
@@ -45,6 +48,7 @@ async function Page(props: Props) {
 
 	const session = await getServerSession();
 	const isOwner = project.owner._id.toString() === session?.user.id;
+	const profile = await fetchUserProfileByUsername(project.owner.username);
 
 	return (
 		<>
@@ -55,16 +59,39 @@ async function Page(props: Props) {
 						paddingBottom: 2,
 						paddingX: 1,
 					}}>
-						<Typography variant="h5" component="div" gutterBottom>
-							{/** TODO Capture direct links and send them to home page */}
-							<BackButton />
-							{project?.title || 'Not Found'}
-						</Typography>
-						<Typography variant="subtitle2">
-							<Link href={Paths.UserGallery(project.owner.username)}>
-								By {project.owner.username}
-							</Link>
-						</Typography>
+						<Grid container>
+							<Grid item xs={6}>
+								<Typography variant="h5" component="div" gutterBottom>
+									{/** TODO Capture direct links and send them to home page */}
+									<BackButton />
+								</Typography>
+							</Grid>
+							<Grid item xs={6} textAlign="right">
+								<Typography variant="subtitle2" display="inline-block">
+									<Link
+										sx={{ textDecoration: 'none' }}
+										href={Paths.UserGallery(project.owner.username)}
+									>
+										<Avatar src={profile?.avatar} sx={{ bgcolor: red[500] }}>
+											{project.owner.username[0].toLocaleUpperCase()}
+										</Avatar>
+									</Link>
+									<Link href={Paths.UserGallery(project.owner.username)}>
+											By {project.owner.username}
+									</Link>
+								</Typography>
+							</Grid>
+						</Grid>
+						<Box sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
+							<Typography variant="h5" component="div">
+								{project.title}
+							</Typography>
+						</Box>
 						<Box sx={{
 							paddingTop: 2,
 							borderBottom: 1,
