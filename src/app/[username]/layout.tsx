@@ -154,7 +154,6 @@ export default async function UserGalleryLayout(props: Props) {
 							</Link>
 						</Box>
 						<Box sx={{
-							// center the avatar and text
 							display: 'flex',
 							flexDirection: 'column',
 							alignItems: 'center',
