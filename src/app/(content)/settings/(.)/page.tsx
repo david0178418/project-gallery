@@ -8,6 +8,7 @@ import { redirect } from 'next/navigation';
 import { DbUserProfile, WriteUserProfile } from '@common/types/UserProfile';
 import { pick } from '@common/utils';
 import ProfilePhotoUploader from './profile-photo-uploader';
+import DeleteProfileButton from './delete-profile-button';
 import {
 	Box,
 	Button,
@@ -41,6 +42,11 @@ async function SettingsLayout() {
 					avatarUrl={userProfile.avatar}
 					username={user.username}
 				/>
+				{userProfile.avatar && (
+					<Box paddingTop={2}>
+						<DeleteProfileButton />
+					</Box>
+				)}
 			</Box>
 			<Typography>
 				Signed in as <strong>{user.username}</strong>

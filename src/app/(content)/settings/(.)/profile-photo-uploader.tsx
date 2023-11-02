@@ -2,10 +2,11 @@
 import { red } from '@mui/material/colors';
 import { FileUploadCategories } from '@common/constants';
 import { Uploader } from '@components/uploader';
-import { Avatar, Fab } from '@ui';
+import {
+	Avatar, Box, Fab,
+} from '@ui';
 import updateProfile from './update-profile-action';
-import { FileUploadIcon } from '@components/icons';
-import { Badge } from '@ui';
+import { AddAPhotoIcon } from '@components/icons';
 
 interface Props {
 	avatarUrl?: string;
@@ -23,18 +24,7 @@ function ProfilePhotoUploader(props: Props) {
 			category={FileUploadCategories.Profile}
 			onAdd={([url]) => url && updateProfile({ avatar: url })}
 		>
-			<Badge
-				overlap="circular"
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'right',
-				}}
-				badgeContent={
-					<Fab color="primary" size="small">
-						<FileUploadIcon/>
-					</Fab>
-				}
-			>
+			<Box position="relative" display="inline-block">
 				<Avatar
 					src={avatarUrl}
 					sx={{
@@ -46,7 +36,22 @@ function ProfilePhotoUploader(props: Props) {
 				>
 					{username[0].toLocaleUpperCase()}
 				</Avatar>
-			</Badge>
+				<Fab
+					size="small"
+					sx={{
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						transform: 'translate(-50%, -50%)',
+						backgroundColor: '#00000066',
+						color: 'white',
+						fontSize: 20,
+						':hover': { backgroundColor: '#00000099' },
+					}}
+				>
+					<AddAPhotoIcon fontSize="inherit" />
+				</Fab>
+			</Box>
 		</Uploader>
 	);
 }

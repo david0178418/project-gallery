@@ -1,6 +1,7 @@
 
 'use client';
 export { default as AddIcon } from '@mui/icons-material/AddOutlined';
+export { default as AddAPhotoIcon } from '@mui/icons-material/AddAPhotoOutlined';
 export { default as ArrowDownIcon } from '@mui/icons-material/ExpandMore';
 export { default as ArrowLeftCircleIcon } from '@mui/icons-material/ArrowCircleLeft';
 export { default as ArrowLeftIcon } from '@mui/icons-material/ChevronLeft';
