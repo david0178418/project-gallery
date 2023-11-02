@@ -13,9 +13,9 @@ import {
 	Box,
 	Fab,
 	Grid,
-	Link,
 	Typography,
 } from '@ui';
+import Link from 'next/link';
 
 interface Props {
 	children: ReactNode;
@@ -69,8 +69,8 @@ async function Page(props: Props) {
 							<Grid item xs={6} textAlign="right">
 								<Typography variant="subtitle2" display="inline-block">
 									<Link
-										sx={{ textDecoration: 'none' }}
 										href={Paths.UserGallery(project.owner.username)}
+										style={{ textDecoration: 'none' }}
 									>
 										<Avatar src={profile?.avatar} sx={{ bgcolor: red[500] }}>
 											{project.owner.username[0].toLocaleUpperCase()}

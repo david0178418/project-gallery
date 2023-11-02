@@ -1,18 +1,20 @@
 import { EditIcon } from '@components/icons';
 import { getServerSession } from '@server/auth-options';
-import { fetchJournal } from '@server/queries';
+import { fetchJournal, fetchUserProfileByUsername } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
-import Link from 'next/link';
 import MarkdownContent from '@components/markdown-content';
 import { LocalizedDate } from '@components/localized-date';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
+import { red } from '@mui/material/colors';
+import Link from 'next/link';
 import {
 	AppName,
 	BaseUrl,
 	Paths,
 } from '@common/constants';
 import {
+	Avatar,
 	Box,
 	Fab,
 	Link as MuiLink,
@@ -72,21 +74,30 @@ async function Journal(props: Props) {
 
 	const session = await getServerSession();
 	const isOwner = journal.owner._id.toString() === session?.user.id;
+	const profile = await fetchUserProfileByUsername(journal.owner.username);
 
 	return (
 		<>
 			<Typography variant="subtitle2">
-				<Link href={Paths.UserGallery(journal.owner.username)} passHref legacyBehavior>
+				<Link
+					href={Paths.UserGallery(journal.owner.username)}
+					style={{ textDecoration: 'none' }}
+				>
+					<Avatar src={profile?.avatar} sx={{ bgcolor: red[500] }}>
+						{journal.owner.username[0].toLocaleUpperCase()}
+					</Avatar>
+				</Link>
+				<Link passHref href={Paths.UserGallery(journal.owner.username)}>
 					<MuiLink>
 						By {journal.owner.username}
 					</MuiLink>
 				</Link>
 			</Typography>
 			{!!journal.project && (
-				<Link href={Paths.Project(journal.project._id.toString())} passHref legacyBehavior>
+				<Link passHref href={Paths.Project(journal.project._id.toString())}>
 					<MuiLink>
-						<Typography variant="subtitle2">
-									For Project: {journal.project.title}
+						<Typography variant="subtitle2" color="inherit">
+								For Project: {journal.project.title}
 						</Typography>
 					</MuiLink>
 				</Link>
