@@ -15,6 +15,7 @@ import {
 	Box,
 	Container,
 	Fab,
+	Grid,
 	Typography,
 } from '@ui';
 import Link from 'next/link';
@@ -120,7 +121,11 @@ export default async function UserGalleryLayout(props: Props) {
 				height: '100vh',
 				overflow: 'hidden',
 				position: 'relative',
-				padding: 1,
+				paddingX: {
+					xs: 0,
+					sm: 1,
+					lg: 2,
+				},
 			}}
 		>
 			<ScrollContent
@@ -129,18 +134,29 @@ export default async function UserGalleryLayout(props: Props) {
 						paddingTop: 1,
 						paddingBottom: 2,
 					}}>
-						<Typography variant="h5" component="div" gutterBottom>
-							{username}{SpecialCharacterCodes.RSQUO}s Gallery
-						</Typography>
-
-						<Link href={Paths.Home} >
-							<Box display="flex" alignItems="center" color="primary.main">
-								<BackIcon fontSize="inherit"/>
-								<Typography color="inherit">
-									Back to ProjectGallery.me
+						<Grid container>
+							<Grid item xs={12} sm={10}>
+								<Typography variant="h5" component="div" gutterBottom>
+									{username}{SpecialCharacterCodes.RSQUO}s Gallery
 								</Typography>
-							</Box>
-						</Link>
+							</Grid>
+							<Grid item xs={12} sm={2}>
+								<Link href={Paths.Home} >
+									<Box
+										textAlign="right"
+										display="flex"
+										alignItems="center"
+										color="primary.main"
+										justifyContent="end"
+									>
+										<BackIcon fontSize="inherit"/>
+										<Typography color="inherit">
+											ProjectGallery.me
+										</Typography>
+									</Box>
+								</Link>
+							</Grid>
+						</Grid>
 						{userProfile?.shortBio && (
 							<Box paddingX={2}>
 								<MarkdownContent>
@@ -148,32 +164,29 @@ export default async function UserGalleryLayout(props: Props) {
 								</MarkdownContent>
 							</Box>
 						)}
-						<Box sx={{
-							paddingY: 2,
-							borderBottom: 1,
-							borderColor: 'divider',
-						}}>
-							<UserProfileTabs username={username} />
-						</Box>
+						<UserProfileTabs username={username} />
 					</Box>
 				}
 			>
 				{children}
-				{isOwner && (
-					<Link href={Paths.Settings} >
-						<Fab
-							color="primary"
-							sx={{
-								position: 'absolute',
-								bottom: 64,
-								right: 48,
-							}}
-						>
-							<EditIcon />
-						</Fab>
-					</Link>
-				)}
 			</ScrollContent>
+			{isOwner && (
+				<Link href={Paths.Settings} >
+					<Fab
+						color="primary"
+						sx={{
+							position: 'absolute',
+							bottom: 64,
+							right: {
+								xs: 16,
+								md: 32,
+							},
+						}}
+					>
+						<EditIcon />
+					</Fab>
+				</Link>
+			)}
 			<CommonStuff/>
 		</Container>
 	);
