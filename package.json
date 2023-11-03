@@ -12,10 +12,7 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.14.11",
-    "@mui/material": "^5.14.11",
     "@types/bcryptjs": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
