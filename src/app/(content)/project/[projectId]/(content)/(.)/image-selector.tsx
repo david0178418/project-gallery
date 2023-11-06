@@ -1,8 +1,7 @@
 'use client';
 import { UiProject } from '@common/types/Project';
 import { ImagePreviews } from '@components/image-previews';
-import MarkdownContent from '@components/markdown-content';
-import { Box, Typography } from '@ui';
+import { Box } from '@ui';
 import { useState } from 'react';
 
 interface Props {
@@ -31,11 +30,6 @@ function ImageSelector(props: Props) {
 				images={project.images}
 				onClick={setActiveImage}
 			/>
-			<Typography paddingTop={2} component="div">
-				<MarkdownContent plaintext>
-					{project.description}
-				</MarkdownContent>
-			</Typography>
 		</>
 	);
 }
