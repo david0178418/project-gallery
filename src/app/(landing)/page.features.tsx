@@ -18,6 +18,8 @@ function Features() {
 				<div className="col-span-12 md:col-span-7 p-3 text-center md:text-right">
 					<ImageWrapper>
 						<Image
+							height={100}
+							width={100}
 							alt=""
 							src={Img1}
 							style={{
@@ -71,6 +73,8 @@ function Features() {
 				)}>
 					<ImageWrapper>
 						<Image
+							height={100}
+							width={100}
 							alt=""
 							src={Img2}
 							style={{
@@ -101,6 +105,8 @@ function Features() {
 				)}>
 					<ImageWrapper>
 						<Image
+							height={100}
+							width={100}
 							alt=""
 							src={Img3}
 							style={{

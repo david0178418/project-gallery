@@ -63,18 +63,11 @@ function OrderControlBlock(props: Props) {
 						onClick={() => handleUpdateProjectOrder(Direction.Right)}
 						className="rounded-l-2xl opacity-10 w-32 h-96 transition-opacity bg-black hover:opacity-80"
 					>
-						<div>
-							<Button
-								onClick={() => handleUpdateProjectOrder(Direction.Left)}
-								className="rounded-r-2xl opacity-10 w-[35px] h-96 transition-opacity bg-black hover:opacity-80"
-							>
-								<div className="text-white hidden sm:inline">
-									<ArrowRightIcon/>
-								</div>
-								<div className="text-white inline sm:hidden">
-									<ArrowDownIcon/>
-								</div>
-							</Button>
+						<div className="text-white hidden sm:inline">
+							<ArrowRightIcon/>
+						</div>
+						<div className="text-white inline sm:hidden">
+							<ArrowDownIcon/>
 						</div>
 					</Button>
 				</div>

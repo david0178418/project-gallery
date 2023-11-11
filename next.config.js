@@ -2,6 +2,7 @@
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
+	images: { domains: ['localhost'] },
 	experimental: {
 		optimizePackageImports: [
 			'@mui/icons-material',

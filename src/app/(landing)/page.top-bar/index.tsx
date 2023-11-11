@@ -27,6 +27,8 @@ async function TopBar() {
 						<Link href="/">
 							<div className="flex gap-1">
 								<Image
+									height={100}
+									width={100}
 									alt=""
 									src={LogoSmall}
 								/>

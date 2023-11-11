@@ -78,6 +78,8 @@ async function ProjectCard(props: Props) {
 			<div>
 				<Link href={projectUrl}>
 					<Image
+						height={100}
+						width={100}
 						src={images?.[0].url}
 						className="aspect-video"
 						alt=""

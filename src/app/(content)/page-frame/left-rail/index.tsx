@@ -47,9 +47,6 @@ async function LeftRail() {
 						<li className="flex justify-between gap-x-6 py-5">
 							<div className="flex min-w-0 gap-x-4">
 								<Link
-									shallow
-									passHref
-									legacyBehavior
 									href={Paths.UserLoginEmail}
 								>
 									<RailButtonContent

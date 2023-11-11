@@ -10,7 +10,6 @@ import {
 } from '@/components/icons';
 import {
 	DropdownMenu,
-	DropdownMenuTrigger,
 	DropdownMenuContent,
 	DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
@@ -20,19 +19,15 @@ function CreateDropdown() {
 	return (
 		<>
 			<DropdownMenu>
-				<DropdownMenuTrigger>
-					<Fab
-						className="bg-blue-500 inline-flex md:hidden"
-					>
+				<div>
+					<Fab className="bg-blue-500 inline-flex md:hidden">
 						<AddIcon/>
 					</Fab>
-					<Fab
-						className="bg-blue-500 w-full hidden md:inline-flex"
-					>
+					<Fab className="bg-blue-500 w-full hidden md:inline-flex">
 						<AddIcon sx={{ mr: 1 }} />
 						Create
 					</Fab>
-				</DropdownMenuTrigger>
+				</div>
 				<DropdownMenuContent>
 					<DropdownMenuItem>
 						<Link

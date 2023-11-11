@@ -61,6 +61,8 @@ function Hero() {
 			</div>
 			<div className="text-center mt-6 sm:mr-10">
 				<Image
+					height={100}
+					width={100}
 					alt=""
 					priority
 					src={MainImage}

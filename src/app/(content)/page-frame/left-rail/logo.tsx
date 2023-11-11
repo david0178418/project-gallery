@@ -20,6 +20,8 @@ function Logo(props: Props) {
 			<a className="w-full">
 				<div className="hidden md:block">
 					<Image
+						height={100}
+						width={100}
 						alt=""
 						style={{
 							maxWidth: '100%',
@@ -29,6 +31,8 @@ function Logo(props: Props) {
 				</div>
 				<div className="block md:hidden pl-2">
 					<Image
+						height={100}
+						width={100}
 						alt=""
 						src={inverted ? LogoSmallInvertedImage : LogoSmallInvertedImage}
 					/>
