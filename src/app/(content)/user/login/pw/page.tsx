@@ -1,26 +1,22 @@
 import LoginPwForm from './login-pw-form';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
-import {
-	Button,
-	DialogActions,
-	DialogTitle,
-} from '@ui';
+import { Button } from '@components/ui/button';
 
 export default function LoginModal() {
 	return (
 		<>
-			<DialogTitle>
+			<div className="strong">
 				Login
-			</DialogTitle>
+			</div>
 			<LoginPwForm />
-			<DialogActions sx={{ justifyContent: 'center' }}>
+			<div className="flex justify-center">
 				<Link href={Paths.UserRegister} replace >
-					<Button size="small">
+					<Button>
 						Create an Account
 					</Button>
 				</Link>
-			</DialogActions>
+			</div>
 		</>
 	);
 }

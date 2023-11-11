@@ -9,10 +9,7 @@ import MarkdownContent from '@components/markdown-content';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import { SaveIcon } from '@components/icons';
 import journalSaveAction from './journal-save-action';
-import {
-	useCallback,
-	useState,
-} from 'react';
+import { useCallback, useState } from 'react';
 import {
 	MaxJournalPostLength,
 	MaxJournalProjectTitleLength,
@@ -20,14 +17,18 @@ import {
 	MinJournalProjectTitleLength,
 } from '@common/constants';
 import {
-	Box,
-	FormControl,
-	InputLabel,
-	MenuItem,
 	Select,
-	Tab,
+	SelectTrigger,
+	SelectValue,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+} from '@components/ui/select';
+import {
 	Tabs,
-} from '@ui';
+	TabsList,
+	TabsTrigger,
+} from '@/components/ui/tabs';
 
 const GeneralPost = 'general-post';
 
@@ -95,60 +96,62 @@ function EditJournalForm(props: Props) {
 
 	return (
 		<>
-			<Box
-				noValidate
-				autoComplete="off"
-				component="form"
-			>
-				<FormControl margin="dense">
-					<InputLabel >Project</InputLabel>
-					<Select
-						label="Project"
-						value={projectId || GeneralPost}
-						onChange={e => handleSelectProjectId(e.target.value)}
-						sx={{ minWidth: 200 }}
-					>
-						<MenuItem value={GeneralPost}>
-							General Post
-						</MenuItem>
-						{projects.map(p => (
-							<MenuItem
-								key={p._id}
-								value={p._id}
-							>
-								{p.title}
-							</MenuItem>
-						))}
-					</Select>
-				</FormControl>
+			<form noValidate autoComplete="off">
+				<Select value={projectId || GeneralPost} onValueChange={handleSelectProjectId}>
+					<SelectTrigger className="w-[180px]">
+						<SelectValue>
+							{projectId || GeneralPost}
+						</SelectValue>
+					</SelectTrigger>
+					<SelectContent>
+						<SelectGroup>
+							{projects.map(p => (
+								<SelectItem
+									key={p._id}
+									value={p._id}
+								>
+									{p.title}
+								</SelectItem>
+							))}
+						</SelectGroup>
+					</SelectContent>
+				</Select>
 				<TextFieldLengthValidation
 					autoFocus
-					fullWidth
+					className="w-full"
 					label="Title"
-					variant="standard"
-					margin="normal"
 					type="text"
 					maxLength={MaxJournalProjectTitleLength}
 					minLength={MinJournalProjectTitleLength}
 					value={title}
 					onChange={e => handleChange({ title: e.target.value })}
 				/>
-				<Box paddingTop={2}>
+				<div className="pt=2">
 					<Tabs value={showPreview.toString()}>
-						<Tab value="false" label="Edit" onClick={() => setShowPreview(false) }/>
-						<Tab value="true" label="Preview" onClick={() => setShowPreview(true) }/>
+						<TabsList>
+							<TabsTrigger
+								value="false"
+								onClick={() => setShowPreview(false) }
+							>
+								Edit
+							</TabsTrigger>
+							<TabsTrigger
+								value="true"
+								onClick={() => setShowPreview(true) }
+							>
+								Preview
+							</TabsTrigger>
+						</TabsList>
 					</Tabs>
-				</Box>
+				</div>
 				{!showPreview && (
 					<TextFieldLengthValidation
-						fullWidth
 						multiline
-						margin="dense"
+						className="w-full min-h-10"
 						label="Post"
+						value={body}
 						maxLength={MaxJournalPostLength}
 						minLength={MinJournalPostLength}
-						minRows={3}
-						value={body}
 						onChange={e => handleChange({ body: e.target.value })}
 					/>
 				)}
@@ -157,56 +160,31 @@ function EditJournalForm(props: Props) {
 						{body}
 					</MarkdownContent>
 				)}
-			</Box>
-			<Box paddingTop={2} textAlign="right">
+			</form>
+			<div className="pt-2 text-right">
 				<CancelButton />
 				{!journal?.publish && (
-					<Box
-						sx={{
-							display: {
-								xs: 'block',
-								md: 'inline-block',
-							},
-							paddingLeft: { md: 2 },
-							paddingTop: {
-								xs: 2,
-								md: 0,
-							},
-							paddingBottom: 20,
-						}}
+					<div
+						className="block md:inline-block md:pl-2 pt-2 md:pt-0 pb-20"
 					>
 						<ConfirmButton
 							onClick={() => handleSave()}
 							disabled={!journalIsValid(journal)}
-							endIcon={<SaveIcon/>}
+							icon={<SaveIcon/>}
 						>
 							Save
 						</ConfirmButton>
-					</Box>
+					</div>
 				)}
-				<Box
-					sx={{
-						display: {
-							xs: 'block',
-							md: 'inline-block',
-						},
-						paddingLeft: { md: 2 },
-						paddingTop: {
-							xs: 2,
-							md: 0,
-						},
-						paddingBottom: 20,
-					}}
-				>
+				<div className="block md:inline-block md:pl-2 pt-2 md:pt-0 pb-20">
 					<ConfirmButton
 						onClick={() => handleSave(true)}
 						disabled={!journalIsPublishable(journal)}
-						variant="contained"
 					>
 						{journal?.publish ? 'Update' : 'Publish'}
 					</ConfirmButton>
-				</Box>
-			</Box>
+				</div>
+			</div>
 		</>
 	);
 }

@@ -1,7 +1,7 @@
 'use client';
 import { UiProject } from '@common/types/Project';
 import { ImagePreviews } from '@components/image-previews';
-import { Box } from '@ui';
+import MarkdownContent from '@components/markdown-content';
 import { useState } from 'react';
 
 interface Props {
@@ -15,21 +15,22 @@ function ImageSelector(props: Props) {
 
 	return (
 		<>
-			<Box paddingTop={2} textAlign="center">
+			<div className="pt-2 text-center">
 				{/* eslint-disable-next-line @next/next/no-img-element */}
 				<img
 					src={activeImage?.url}
-					style={{
-						maxWidth: '100%',
-						height: 400,
-						objectFit: 'contain',
-					}}
+					className="max-w-full h-[400px] object-contain"
 				/>
-			</Box>
+			</div>
 			<ImagePreviews
 				images={project.images}
 				onClick={setActiveImage}
 			/>
+			<div className="pt-2">
+				<MarkdownContent plaintext>
+					{project.description}
+				</MarkdownContent>
+			</div>
 		</>
 	);
 }

@@ -1,11 +1,8 @@
-import { IconButton } from '@ui';
 import { ComponentProps } from 'react';
-import {
-	ExpandLessIcon,
-	ExpandMoreIcon,
-} from './icons';
+import { Button } from './ui/button';
+import { ExpandLessIcon, ExpandMoreIcon } from './icons';
 
-interface Props extends ComponentProps<typeof IconButton> {
+interface Props extends ComponentProps<typeof Button> {
 	expanded?: boolean;
 	onClick(): void;
 }
@@ -18,12 +15,12 @@ function ExpandedToggleButton(props: Props) {
 	} = props;
 
 	return (
-		<IconButton {...passThroughProps}>
+		<Button {...passThroughProps}>
 			{
 				expanded ?
 					<ExpandLessIcon/> :
 					<ExpandMoreIcon/>
 			}
-		</IconButton>
+		</Button>
 	);
 }

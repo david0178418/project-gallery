@@ -1,7 +1,7 @@
-import { Link as MuiLink } from '@ui';
 import { Interweave } from 'interweave';
 import { polyfill } from 'interweave-ssr';
 import { UrlMatcher, UrlProps } from 'interweave-autolink';
+import Link from 'next/link';
 
 polyfill();
 
@@ -29,9 +29,9 @@ function Url(props: UrlProps) {
 	const { url } = props;
 
 	return (
-		<MuiLink href={url} target="__blank">
+		<Link href={url} target="__blank">
 			{url}
-		</MuiLink>
+		</Link>
 	);
 }
 

@@ -1,12 +1,9 @@
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { useState } from 'react';
-import { Button, Grid } from '@ui';
 import { UiProject } from '@common/types/Project';
+import { MaxLabelSize, MinLabelSize } from '@common/constants';
 import { inRange } from '@common/utils';
-import {
-	MaxLabelSize,
-	MinLabelSize,
-} from '@common/constants';
+import { Button } from '@/components/ui/button';
 
 type ProjectLabel = UiProject['labels'][number];
 
@@ -21,17 +18,16 @@ function LabelForm(props: Props) {
 
 	return (
 		<>
-			<Grid container columnGap={1}>
-				<Grid item>
+			<div className="container grid gap-1">
+				<div>
 					<TextFieldLengthValidation
-						fullWidth
-						margin="dense"
+						className="w-full"
 						label="Label"
 						value={label}
 						onChange={e => setLabel(e.target.value)}
 					/>
-				</Grid>
-			</Grid>
+				</div>
+			</div>
 			<Button
 				disabled={!labelIsValid({ label })}
 				onClick={() => onAdd(label)}

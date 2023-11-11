@@ -1,13 +1,12 @@
-import { TextField } from '@ui';
-import {
-	useEffect,
-	useState,
-} from 'react';
+import { Input } from '@/components/ui/input';
+import { useEffect, useState } from 'react';
+import TextField from './text-field';
 
-type Props = Parameters<typeof TextField>[0] & {
+type Props = Parameters<typeof Input>[0] & {
 	label: string;
-	minLength?: number;
 	maxLength?: number;
+	minLength?: number;
+	multiline?: boolean;
 	value: string;
 };
 
@@ -41,8 +40,6 @@ function TextFieldLengthValidation(props: Props) {
 
 	return (
 		<TextField
-			type="text"
-			variant="standard"
 			label={label}
 			error={!isValid}
 			value={value}

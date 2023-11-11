@@ -1,7 +1,6 @@
 import { getServerSession } from '@server/auth-options';
 import { fetchJournal, fetchProjectsByUser } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
-import { Typography } from '@ui';
 import { pick } from '@/common/utils';
 import EditJournalForm from './edit-journal-form';
 import { DbJournal, WriteJournal } from '@common/types/Journal';
@@ -23,9 +22,9 @@ async function JournalEditPage(props: Props) {
 
 	if(!journal) {
 		return (
-			<Typography>
+			<div>
 				Invalid Journal
-			</Typography>
+			</div>
 		);
 	}
 
@@ -33,9 +32,9 @@ async function JournalEditPage(props: Props) {
 
 	if(!session || ('owner' in journal && journal.owner._id.toString() !== session.user.id)) {
 		return (
-			<Typography>
+			<div>
 				Not allowed to edit.
-			</Typography>
+			</div>
 		);
 	}
 

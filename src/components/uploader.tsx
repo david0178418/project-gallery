@@ -1,12 +1,12 @@
+import { HTMLAttributes } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Box } from '@ui';
 import { postFile } from '@client/api-calls';
 import { useSetAtom } from 'jotai';
 import { loadingAtom } from '@common/atoms';
 import { isTruthy } from '@common/utils';
 import { Enum } from '@common/types';
+import { cn } from '@/lib/utils';
 import { FileUploadCategories, SpecialCharacterCodes } from '@common/constants';
-import { ComponentProps } from 'react';
 
 async function uploadPhoto(file: File, category: Enum<typeof FileUploadCategories>) {
 	const res = await postFile(file, category);
@@ -18,7 +18,7 @@ async function uploadPhoto(file: File, category: Enum<typeof FileUploadCategorie
 	}
 }
 
-interface Props extends ComponentProps<typeof Box> {
+interface Props extends HTMLAttributes<HTMLDivElement> {
 	category: Enum<typeof FileUploadCategories>;
 	onAdd(files: string[]): void;
 }
@@ -29,8 +29,8 @@ function Uploader(props: Props) {
 	const {
 		category,
 		onAdd,
-		sx,
 		children,
+		className,
 		...rest
 	} = props;
 
@@ -56,14 +56,13 @@ function Uploader(props: Props) {
 	});
 
 	return (
-		<Box
+		<div
 			{...getRootProps()}
 			{...rest}
-			borderColor={isDragActive ? 'Highlight' : 'InactiveBorder'}
-			sx={{
-				cursor: 'pointer',
-				...sx,
-			}}
+			className={cn(className, 'cursor-pointer', {
+				Highlight: isDragActive,
+				InactiveBorder: !isDragActive,
+			})}
 		>
 			<input {...getInputProps()} />
 			{children || (
@@ -71,6 +70,6 @@ function Uploader(props: Props) {
 					<p>Drop the files here ...</p> :
 					<p>Drag n{SpecialCharacterCodes.RSQUO} drop some files here, or click to select files</p>
 			)}
-		</Box>
+		</div>
 	);
 }

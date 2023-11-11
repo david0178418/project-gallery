@@ -1,4 +1,3 @@
-import { Box, Typography } from '@ui';
 import { MongoIdValidation } from '@server/validations';
 import JournalCard from '@components/journal-card';
 import {
@@ -24,9 +23,9 @@ async function JournalsPage(props: Props) {
 
 	if(!project) {
 		return (
-			<Typography>
+			<div>
 				Invalid Project
-			</Typography>
+			</div>
 		);
 	}
 
@@ -35,20 +34,17 @@ async function JournalsPage(props: Props) {
 	return (
 		<>
 			{journals.map(j => (
-				<Box
-					padding={1}
-					key={j._id.toString()}
-				>
+				<div className="p-1" key={j._id.toString()}>
 					{/** Box doesn't like async children, apparently. */}
 					<div>
 						<JournalCard journal={j} />
 					</div>
-				</Box>
+				</div>
 			))}
 			{!journals?.length && (
-				<Typography>
+				<div>
 					No journal posts yet
-				</Typography>
+				</div>
 			)}
 		</>
 	);

@@ -6,11 +6,6 @@ import { Paths } from '@common/constants';
 import { LeftRailItem } from './left-rail-item';
 import { getServerSession } from '@server/auth-options';
 import {
-	List,
-	ListItem,
-	ListItemButton,
-} from '@ui';
-import {
 	HomeActiveIcon,
 	LoginIcon,
 	HomeIcon,
@@ -34,7 +29,7 @@ async function LeftRail() {
 	return (
 		<>
 			<Logo />
-			<List>
+			<ul className="divide-y divide-gray-100">
 				<LeftRailItem
 					label="Home"
 					path={Paths.Home}
@@ -49,38 +44,38 @@ async function LeftRail() {
 				/>
 				{!user && (
 					<>
-						<ListItem disablePadding>
-							<Link
-								shallow
-								passHref
-								legacyBehavior
-								href={Paths.UserLoginEmail}
-							>
-								<ListItemButton>
+						<li className="flex justify-between gap-x-6 py-5">
+							<div className="flex min-w-0 gap-x-4">
+								<Link
+									shallow
+									passHref
+									legacyBehavior
+									href={Paths.UserLoginEmail}
+								>
 									<RailButtonContent
 										label="Login"
 									>
 										<LoginIcon/>
 									</RailButtonContent>
-								</ListItemButton>
-							</Link>
-						</ListItem>
-						<ListItem disablePadding>
-							<Link
-								shallow
-								passHref
-								legacyBehavior
-								href={Paths.UserRegister}
-							>
-								<ListItemButton>
+								</Link>
+							</div>
+						</li>
+						<li className="flex justify-between gap-x-6 py-5">
+							<div className="flex min-w-0 gap-x-4">
+								<Link
+									shallow
+									passHref
+									legacyBehavior
+									href={Paths.UserRegister}
+								>
 									<RailButtonContent
 										label="Register"
 									>
 										<RegisterIcon />
 									</RailButtonContent>
-								</ListItemButton>
-							</Link>
-						</ListItem>
+								</Link>
+							</div>
+						</li>
 					</>
 				)}
 				{!!user && (
@@ -106,7 +101,7 @@ async function LeftRail() {
 						<CreateDropdown/>
 					</>
 				)}
-			</List>
+			</ul>
 		</>
 	);
 }

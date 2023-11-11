@@ -1,11 +1,10 @@
 'use client';
 
 import { AppName, Paths } from '@common/constants';
-import { InputAdornment, TextField } from '@ui';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
-import { SearchIcon } from './icons';
+import TextField from './common/text-field';
 
 interface Props {
 	placeholder?: string;
@@ -42,18 +41,11 @@ function SearchForm(props: Props) {
 
 	return (
 		<TextField
-			fullWidth
+			className="w-full"
 			placeholder={placeholder}
 			value={searchQueary}
 			onKeyUp={e => handleKeyUp(e.key)}
 			onChange={e => setSearchQuery(e.target.value)}
-			InputProps={{
-				endAdornment: (
-					<InputAdornment position="end">
-						<SearchIcon />
-					</InputAdornment>
-				),
-			}}
 		/>
 	);
 }

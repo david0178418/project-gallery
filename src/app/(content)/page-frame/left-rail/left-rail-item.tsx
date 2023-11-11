@@ -2,10 +2,6 @@
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { RailButtonContent } from './rail-button-content';
-import {
-	ListItem,
-	ListItemButton,
-} from '@ui';
 
 interface Props {
 	label: string;
@@ -25,15 +21,15 @@ function LeftRailItem(props: Props) {
 	const pathname = useSelectedLayoutSegment();
 
 	return (
-		<ListItem disablePadding>
-			<Link
-				shallow
-				passHref
-				legacyBehavior
-				prefetch={false}
-				href={path}
-			>
-				<ListItemButton>
+		<li className="flex justify-between gap-x-6 py-5">
+			<div className="flex min-w-0 gap-x-4">
+				<Link
+					shallow
+					passHref
+					legacyBehavior
+					prefetch={false}
+					href={path}
+				>
 					<RailButtonContent label={label}>
 						{
 							path === `/${pathname}` ?
@@ -41,8 +37,8 @@ function LeftRailItem(props: Props) {
 								<InactiveIcon />
 						}
 					</RailButtonContent>
-				</ListItemButton>
-			</Link>
-		</ListItem>
+				</Link>
+			</div>
+		</li>
 	);
 }

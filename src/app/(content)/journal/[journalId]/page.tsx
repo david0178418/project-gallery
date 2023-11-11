@@ -6,20 +6,18 @@ import MarkdownContent from '@components/markdown-content';
 import { LocalizedDate } from '@components/localized-date';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
-import { red } from '@mui/material/colors';
 import Link from 'next/link';
+import Fab from '@/components/common/fab';
+import {
+	Avatar,
+	AvatarImage,
+	AvatarFallback,
+} from '@/components/ui/avatar';
 import {
 	AppName,
 	BaseUrl,
 	Paths,
 } from '@common/constants';
-import {
-	Avatar,
-	Box,
-	Fab,
-	Link as MuiLink,
-	Typography,
-} from '@ui';
 
 export
 async function generateMetadata(props: Props): Promise<Metadata> {
@@ -66,9 +64,9 @@ async function Journal(props: Props) {
 
 	if(!journal) {
 		return (
-			<Typography>
+			<div>
 				Invalid Journal
-			</Typography>
+			</div>
 		);
 	}
 
@@ -78,57 +76,49 @@ async function Journal(props: Props) {
 
 	return (
 		<>
-			<Typography variant="subtitle2">
+			<div className="text-sm">
 				<Link
 					href={Paths.UserGallery(journal.owner.username)}
 					style={{ textDecoration: 'none' }}
 				>
-					<Avatar src={profile?.avatar} sx={{ bgcolor: red[500] }}>
-						{journal.owner.username[0].toLocaleUpperCase()}
+					<Avatar className="bg-red-500">
+						<AvatarImage src={profile?.avatar} />
+						<AvatarFallback>
+							{journal.owner.username[0].toLocaleUpperCase()}
+						</AvatarFallback>
 					</Avatar>
 				</Link>
-				<Link passHref href={Paths.UserGallery(journal.owner.username)}>
-					<MuiLink>
-						By {journal.owner.username}
-					</MuiLink>
+				<Link href={Paths.UserGallery(journal.owner.username)}>
+					By {journal.owner.username}
 				</Link>
-			</Typography>
+			</div>
 			{!!journal.project && (
-				<Link passHref href={Paths.Project(journal.project._id.toString())}>
-					<MuiLink>
-						<Typography variant="subtitle2" color="inherit">
-								For Project: {journal.project.title}
-						</Typography>
-					</MuiLink>
+				<Link href={Paths.Project(journal.project._id.toString())}>
+					<div className="text-sm">
+						For Project: {journal.project.title}
+					</div>
 				</Link>
 			)}
-			<Typography variant="subtitle1" paddingTop={1} fontStyle="italic">
+			<div className="text-sm pt-1 italic">
 						published: {
 					journal.publishedDate ?
 						<LocalizedDate date={journal.publishedDate} /> :
 						'Unpublished'
 				}<br/>
-			</Typography>
+			</div>
 			{journal.lastUpdatedDate && (
-				<Typography variant="subtitle1" fontStyle="italic">
+				<div className="text-sm pt-1 italic">
 							last updated: <LocalizedDate date={journal.lastUpdatedDate} />
-				</Typography>
+				</div>
 			)}
-			<Box paddingTop={2}>
+			<div className="pt-2">
 				<MarkdownContent>
 					{journal.body}
 				</MarkdownContent>
-			</Box>
+			</div>
 			{isOwner && (
 				<Link href={Paths.JournalEdit(journalId)}>
-					<Fab
-						color="primary"
-						sx={{
-							position: 'absolute',
-							bottom: 64,
-							right: 16,
-						}}
-					>
+					<Fab className="bg-blue-500 absolute bottom-20 right-20">
 						<EditIcon />
 					</Fab>
 				</Link>

@@ -46,9 +46,6 @@
         "./*",
           "src/*"
       ],
-      "@ui": [
-        "src/common/ui"
-      ]
     },
     "plugins": [
       {

@@ -6,18 +6,13 @@ import { inRange } from '@common/utils';
 import Link from 'next/link';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import { useRouter } from 'next/navigation';
+import TextField from '@components/common/text-field';
+import { Button } from '@components/ui/button';
 import {
 	Paths,
 	UsernameMaxLength,
 	UsernameMinLength,
 } from '@common/constants';
-import {
-	Box,
-	Button,
-	DialogActions,
-	DialogContent,
-	TextField,
-} from '@ui';
 
 export default
 function LoginPwForm() {
@@ -67,16 +62,14 @@ function LoginPwForm() {
 
 	return (
 		<>
-			<Box
+			<form
 				noValidate
 				autoComplete="off"
-				component="form"
 			>
-				<DialogContent>
+				<div>
 					<TextField
 						autoFocus
-						fullWidth
-						variant="standard"
+						className="w-full"
 						placeholder="username"
 						type="text"
 						label="Username or Email"
@@ -85,32 +78,29 @@ function LoginPwForm() {
 						onChange={e => setUsernameOrEmail(e.target.value)}
 					/>
 					<TextField
-						fullWidth
+						className="w-full"
 						label="Password"
-						variant="standard"
 						type="password"
 						value={password}
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setPassword(e.target.value)}
 					/>
-				</DialogContent>
-			</Box>
-			<DialogActions>
-				<Box paddingRight={2}>
-					<Link href={Paths.UserLoginEmail} replace>
-						<Button color="secondary">
+				</div>
+			</form>
+			<div className="flex justify-end pr-2">
+				<Link href={Paths.UserLoginEmail} replace>
+					<Button color="secondary">
 							Sign in with Email Link
-						</Button>
-					</Link>
-				</Box>
+					</Button>
+				</Link>
 				<Button
-					variant="outlined"
+					variant="ghost"
 					disabled={!valid}
 					onClick={handleLogin}
 				>
 					Sign in
 				</Button>
-			</DialogActions>
+			</div>
 		</>
 	);
 }

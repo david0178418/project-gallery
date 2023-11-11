@@ -2,7 +2,8 @@
 import { usePushToastMsg } from '@common/atoms';
 import { urlJoin } from '@common/utils';
 import { ShareIcon } from '@components/icons';
-import { IconButton, Tooltip } from '@ui';
+import { Button } from '@components/ui/button';
+import Tooltip from './tooltip';
 
 interface Props {
 	label: string;
@@ -26,10 +27,10 @@ function ShareIconButton(props: Props) {
 	}
 
 	return (
-		<Tooltip title={`Share '${label}'`}>
-			<IconButton size="small" onClick={handleShare}>
+		<Tooltip label={`Share '${label}'`}>
+			<Button onClick={handleShare}>
 				<ShareIcon fontSize="small" />
-			</IconButton>
+			</Button>
 		</Tooltip>
 	);
 }

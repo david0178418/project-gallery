@@ -1,7 +1,6 @@
 import { ScrollContent } from '@components/scroll-content';
 import SettingsTabs from './settings-tabs';
 import { ReactNode } from 'react';
-import { Box } from '@ui';
 
 interface Props {
 	children: ReactNode;
@@ -12,12 +11,9 @@ function SettingsLayout(props: Props) {
 	return (
 		<ScrollContent
 			header={
-				<Box
-					borderBottom={1}
-					borderColor="divider"
-				>
+				<div className="border-b-2">
 					<SettingsTabs />
-				</Box>
+				</div>
 			}
 		>
 			{props.children}

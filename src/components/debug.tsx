@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-	Box,
-	Button,
-} from '@ui';
-
+import { Button } from './ui/button';
 interface Props {
 	obj: any;
 }
@@ -13,7 +9,7 @@ function Debug(props: Props) {
 	const[hidden, setHidden] = useState(true);
 
 	return (
-		<Box>
+		<div>
 			<Button onClick={() => setHidden(!hidden)}>
 				Debug
 			</Button>
@@ -22,6 +18,6 @@ function Debug(props: Props) {
 					{JSON.stringify(props.obj, null, 4)}
 				</pre>
 			)}
-		</Box>
+		</div>
 	);
 }

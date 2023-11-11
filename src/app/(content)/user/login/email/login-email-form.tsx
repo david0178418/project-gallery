@@ -6,13 +6,8 @@ import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Link from 'next/link';
 import oneClickSendAction from './one-click-send-action';
-import {
-	Box,
-	Button,
-	DialogActions,
-	DialogContent,
-	TextField,
-} from '@ui';
+import TextField from '@components/common/text-field';
+import { Button } from '@components/ui/button';
 
 export default
 function LoginEmailForm() {
@@ -45,40 +40,36 @@ function LoginEmailForm() {
 
 	return (
 		<>
-			<Box
+			<form
 				noValidate
 				autoComplete="off"
-				component="form"
 			>
-				<DialogContent>
+				<div>
 					<TextField
 						autoFocus
-						fullWidth
-						variant="standard"
+						className="w-full"
 						type="text"
 						label="Email"
 						value={email}
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setEmail(e.target.value)}
 					/>
-				</DialogContent>
-			</Box>
-			<DialogActions>
-				<Box paddingRight={2}>
-					<Link href={Paths.UserLoginPw} replace>
-						<Button color="secondary">
+				</div>
+			</form>
+			<div className="flex items-end pr-2">
+				<Link href={Paths.UserLoginPw} replace>
+					<Button color="secondary">
 							Sign in with password
-						</Button>
-					</Link>
-				</Box>
+					</Button>
+				</Link>
 				<Button
-					variant="outlined"
+					variant="ghost"
 					disabled={!valid}
 					onClick={handleLogin}
 				>
 					Send email link
 				</Button>
-			</DialogActions>
+			</div>
 		</>
 	);
 }

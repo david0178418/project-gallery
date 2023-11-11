@@ -1,6 +1,5 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import MarkdownContent from '@components/markdown-content';
-import { Typography } from '@mui/material';
 import { fetchUserProfileByUsername } from '@server/queries';
 
 interface Props {
@@ -20,9 +19,9 @@ async function UserAboutPage(props: Props) {
 
 	if(!userProfile) {
 		return (
-			<Typography>
+			<div>
 				Invalid User
-			</Typography>
+			</div>
 		);
 	}
 

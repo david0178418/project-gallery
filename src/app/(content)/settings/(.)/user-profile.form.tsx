@@ -54,27 +54,21 @@ function UserProfileForm(props: Props) {
 	return (
 		<>
 			<TextFieldLengthValidation
-				fullWidth
 				multiline
+				className="w-full"
 				autoComplete="off"
 				label="Bio summary"
-				variant="standard"
-				margin="normal"
 				type="text"
-				minRows={3}
 				maxLength={MaxUserProfileShortBioLength}
 				value={shortBio}
 				onChange={e => handleChange({ shortBio: e.target.value })}
 			/>
 			<TextFieldLengthValidation
-				fullWidth
 				multiline
+				className="w-full"
 				autoComplete="off"
 				label="Full Bio"
-				variant="standard"
-				margin="normal"
 				type="text"
-				minRows={6}
 				maxLength={MaxUserProfileBioLength}
 				value={detailedBio}
 				onChange={e => handleChange({ detailedBio: e.target.value })}

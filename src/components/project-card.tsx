@@ -3,22 +3,16 @@ import { ParsedContent } from './parsed-content';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
 import { ShareIconButton } from './common/share-button';
+import { getServerSession } from '@server/auth-options';
+import Tooltip from './common/tooltip';
+import { Button } from '@mui/material';
+import Image from 'next/image';
 import {
 	FavoriteIcon,
 	JournalIcon,
 	EditIcon,
 } from '@components/icons';
-import {
-	Box,
-	Card,
-	CardActions,
-	CardContent,
-	CardMedia,
-	IconButton,
-	Tooltip,
-	Typography,
-} from '@ui';
-import { getServerSession } from '@server/auth-options';
+import Card from './common/card';
 
 interface Props {
 	project: DbProject | UiProject;
@@ -41,86 +35,69 @@ async function ProjectCard(props: Props) {
 	const projectUrl = Paths.Project(_id.toString());
 
 	return (
-		<Card elevation={4}>
-			<Box>
+		<Card
+			footer={
+				<>
+					<Tooltip label="Favorite">
+						<Button>
+							<FavoriteIcon />
+						</Button>
+					</Tooltip>
+					<ShareIconButton
+						label={title}
+						url={projectUrl}
+						shareMsg="Check out this project!"
+					/>
+					{lastJournalEntry && (
+						<Link
+							shallow
+							href={Paths.Journal(lastJournalEntry._id.toString())}
+						>
+							<Tooltip label={lastJournalEntry.title}>
+								<Button>
+									<JournalIcon />
+								</Button>
+							</Tooltip>
+						</Link>
+					)}
+					{isOwner && (
+						<Link
+							shallow
+							href={Paths.ProjectEdit(_id.toString())}
+						>
+							<Tooltip label="Edit">
+								<Button>
+									<EditIcon />
+								</Button>
+							</Tooltip>
+						</Link>
+					)}
+				</>
+			}
+		>
+			<div>
 				<Link href={projectUrl}>
-					<CardMedia
-						component="img"
-						image={images?.[0].url}
-						sx={{ aspectRatio: '4 / 3' }}
+					<Image
+						src={images?.[0].url}
+						className="aspect-video"
+						alt=""
 					/>
 				</Link>
-			</Box>
-			<CardContent>
-				<Typography variant="h6" component="div">
-					{title}
-				</Typography>
-				<Typography fontSize={12} fontStyle="italic">
+			</div>
+			<div className="strong">
+				{title}
+			</div>
+			<div className="text-md italic">
 					created by {owner.username}
-				</Typography>
-				<Typography
-					variant="body2"
-					color="text.secondary"
-					height={50}
-					overflow="hidden"
-					sx={{ maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}
-				>
-					<ParsedContent>
-						{description}
-					</ParsedContent>
-				</Typography>
-			</CardContent>
-			<CardActions disableSpacing>
-				<Tooltip
-					arrow
-					disableFocusListener
-					disableTouchListener
-					title="Favorite"
-				>
-					<IconButton>
-						<FavoriteIcon />
-					</IconButton>
-				</Tooltip>
-				<ShareIconButton
-					label={title}
-					url={projectUrl}
-					shareMsg="Check out this project!"
-				/>
-				{lastJournalEntry && (
-					<Link
-						shallow
-						href={Paths.Journal(lastJournalEntry._id.toString())}
-					>
-						<Tooltip
-							arrow
-							disableFocusListener
-							disableTouchListener
-							title={lastJournalEntry.title}
-						>
-							<IconButton>
-								<JournalIcon />
-							</IconButton>
-						</Tooltip>
-					</Link>
-				)}
-				{isOwner && (
-					<Link
-						shallow
-						href={Paths.ProjectEdit(_id.toString())}
-					>
-						<Tooltip
-							arrow
-							disableFocusListener
-							disableTouchListener
-							title="Edit"
-						>
-							<IconButton>
-								<EditIcon />
-							</IconButton>
-						</Tooltip>
-					</Link>
-				)}
-			</CardActions>
+			</div>
+			<div
+				className="overflow-hidden h-52"
+				style={{ maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}
+			>
+				<ParsedContent>
+					{description}
+				</ParsedContent>
+			</div>
 		</Card>
 	);
 }

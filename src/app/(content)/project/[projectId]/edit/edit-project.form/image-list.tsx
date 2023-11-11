@@ -1,9 +1,5 @@
 import { ProjectImage } from '@common/types/Project';
-import {
-	Box,
-	Grid,
-	IconButton,
-} from '@ui';
+import { Button } from '@components/ui/button';
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
@@ -27,72 +23,39 @@ function ImageList(props: Props) {
 	} = props;
 
 	return (
-		<Grid
-			container
-			rowGap={4}
-			marginTop={2}
-			spacing={2}
-		>
+		<div className="grid grid-cols-12 gap-4">
 			{images.map((f, i) => (
-				<Grid
-					item
-					key={f.url}
-					xs={4}
-				>
-					<Box
-						width="100%"
-						position="relative"
-						border="1px solid"
-						overflow="hidden"
-						padding={1}
-						borderRadius={2}
-						sx={{
-							cursor: 'pointer',
-							'& .actions': { sm: { display: 'none' } },
-							'&:hover .actions': { display: 'block' },
-						}}
-					>
+				<div className="col-span-4" key={f.url}>
+					<div className="group w=full relative border-b overflow-hidden rounded-md cursor-pointer">
 						<img
 							src={f.url}
 							width="100%"
 							style={{ objectFit: 'contain' }}
 						/>
-						<Box className="actions">
+						<div className="hidden group-hover:block">
 							{!!i && (
-								<Box
-									position="absolute"
-									left={0}
-									bottom={0}
-								>
-									<IconButton onClick={() => onLeftClick(i)}>
+								<div className="absolute left-0 bottom-0">
+									<Button onClick={() => onLeftClick(i)}>
 										<ArrowLeftIcon/>
-									</IconButton>
-								</Box>
+									</Button>
+								</div>
 							)}
 							{i !== (images.length - 1) && (
-								<Box
-									position="absolute"
-									right={0}
-									bottom={0}
-								>
-									<IconButton onClick={() => onRightClick(i)}>
+								<div className="absolute left-0 bottom-0">
+									<Button onClick={() => onRightClick(i)}>
 										<ArrowRightIcon/>
-									</IconButton>
-								</Box>
+									</Button>
+								</div>
 							)}
-							<Box
-								position="absolute"
-								right={0}
-								top={0}
-							>
-								<IconButton onClick={() => onDelete(f)}>
-									<DeleteIcon />
-								</IconButton>
-							</Box>
-						</Box>
-					</Box>
-				</Grid>
+							<div className="absolute left-0 bottom-0">
+								<Button onClick={() => onDelete(f)}>
+									<DeleteIcon className="mr-2 h-4 w-4" />
+								</Button>
+							</div>
+						</div>
+					</div>
+				</div>
 			))}
-		</Grid>
+		</div>
 	);
 }

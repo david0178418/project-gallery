@@ -1,5 +1,4 @@
 import JournalCard from '@components/journal-card';
-import { Box, Typography } from '@ui';
 import { fetchUserJournals } from '@server/queries';
 
 interface Props {
@@ -16,20 +15,20 @@ async function UserJournalsPage(props: Props) {
 	return (
 		<>
 			{!journals.length && (
-				<Typography>
+				<div>
 					No journal posts yet
-				</Typography>
+				</div>
 			)}
 			{journals.map(j => (
-				<Box
-					padding={1}
+				<div
+					className="p-1"
 					key={j._id.toString()}
 				>
 					{/** Box doesn't like async children, apparently. */}
 					<div>
 						<JournalCard journal={j} />
 					</div>
-				</Box>
+				</div>
 			))}
 		</>
 	);

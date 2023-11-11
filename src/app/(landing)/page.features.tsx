@@ -1,20 +1,12 @@
-import { Unstable_Grid2 as Grid } from '@ui';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import Img1 from './img1.png';
 import Img2 from './img2.png';
 import Img3 from './img3.png';
 import Link from 'next/link';
-import {
-	Paths,
-	SpecialCharacterCodes,
-} from '@common/constants';
-import {
-	Box,
-	Button,
-	Paper,
-	Typography,
-} from '@ui';
+import { Paths, SpecialCharacterCodes } from '@common/constants';
+import { cn } from '@/lib/utils';
+import { Button } from '@components/ui/button';
 
 const { NBSP: S } = SpecialCharacterCodes;
 
@@ -22,24 +14,8 @@ export default
 function Features() {
 	return (
 		<>
-			<Grid
-				container
-				marginTop={10}
-				direction={{
-					xs: 'column-reverse',
-					md: 'row',
-				}}
-				sx={{ backgroundColor: '#5271ff11' }}
-			>
-				<Grid
-					xs={12}
-					md={7}
-					padding={3}
-					textAlign={{
-						xs: 'center',
-						md: 'right',
-					}}
-				>
+			<div className="grid mt-10 flex-col-reverse md:flex-col bg-[#5271ff11]">
+				<div className="col-span-12 md:col-span-7 p-3 text-center md:text-right">
 					<ImageWrapper>
 						<Image
 							alt=""
@@ -54,66 +30,45 @@ function Features() {
 							}}
 						/>
 					</ImageWrapper>
-				</Grid>
-				<Grid
-					xs={12}
-					md={4}
-					padding={5}
-					paddingBottom={{
-						xs: 0,
-						md: 5,
-					}}
-					textAlign={{
-						xs: 'center',
-						md: 'unset',
-					}}
-				>
-					<Typography variant="h4" gutterBottom>
+				</div>
+				<div className="col-span-12 md:col-span-4 p-5 pb-0 md:pb-5 text-center md:text-left">
+					<div className="font-bold mb-2">
 						Let Your Work Speak for Itself
-					</Typography>
-					<Typography>
+					</div>
+					<p>
 						No more struggling with how to present your projects - simply enter your work and let it do the talking.
 						Our platform puts the spotlight on your talent and creativity, allowing you to showcase your skills with ease.
-					</Typography>
-				</Grid>
-			</Grid>
+					</p>
+				</div>
+			</div>
 
-			<Grid
-				container
-				marginTop={5}
-			>
-				<Grid
-					mdOffset={1}
-					xs={12}
-					md={4}
-					padding={5}
-					paddingTop={{
-						xs: 0,
-						md: 5,
-					}}
-					textAlign={{
-						xs: 'center',
-						md: 'right',
-					}}
-				>
-					<Typography variant="h4" gutterBottom>
+			<div className="mt-5">
+				<div className={cn(
+					'col-start-2',
+					'col-span-12',
+					'md:col-span-4',
+					'p-5',
+					'pt-0',
+					'md:pt-5',
+					'text-center',
+					'md:text-right',
+				)}>
+					<div className="font-bold mb-2">
 						Document Your Journey
-					</Typography>
-					<Typography>
+					</div>
+					<p>
 						What challeges did you have to overcome?
 						How did you balance the choices you had when you made your decisions?
 						Capture and share these unique expriences in a project journal.
-					</Typography>
-				</Grid>
-				<Grid
-					xs={12}
-					md={5}
-					padding={3}
-					paddingTop={{
-						xs: 0,
-						md: 5,
-					}}
-				>
+					</p>
+				</div>
+				<div className={cn(
+					'col-span-12',
+					'md:col-span-5',
+					'p-3',
+					'pt-0',
+					'md:pt-5'
+				)}>
 					<ImageWrapper>
 						<Image
 							alt=""
@@ -128,27 +83,22 @@ function Features() {
 							}}
 						/>
 					</ImageWrapper>
-				</Grid>
-			</Grid>
+				</div>
+			</div>
 
-			<Grid
-				container
-				marginTop={5}
-				direction={{
-					xs: 'column-reverse',
-					md: 'row',
-				}}
-				sx={{ backgroundColor: '#5271ff11' }}
-			>
-				<Grid
-					xs={12}
-					md={7}
-					padding={3}
-					textAlign={{
-						xs: 'center',
-						md: 'right',
-					}}
-				>
+			<div className={cn(
+				'mt-5',
+				'flex-row-reverse',
+				'md:flex-row',
+				'bg-[#5271ff11]'
+			)}>
+				<div className={cn(
+					'col-span-12',
+					'col-span-7',
+					'p-3',
+					'text-center',
+					'md:text-right'
+				)}>
 					<ImageWrapper>
 						<Image
 							alt=""
@@ -163,56 +113,33 @@ function Features() {
 							}}
 						/>
 					</ImageWrapper>
-				</Grid>
-				<Grid
-					xs={12}
-					md={4}
-					padding={5}
-					paddingBottom={{
-						xs: 0,
-						md: 5,
-					}}
-					textAlign={{
-						xs: 'center',
-						md: 'unset',
-					}}
-				>
-					<Typography variant="h4" gutterBottom>
+				</div>
+				<div className={cn(
+					'col-span-12',
+					'md:col-span-4',
+					'p-4',
+					'pb-0',
+					'md:pb-5',
+					'text-center',
+					'md:text-left',
+				)}>
+					<div className="font-bold mb-2">
 						Links and Categories
-					</Typography>
-					<Typography>
+					</div>
+					<p>
 						Add at-a-glance context to your project with custom category labels.
 						Take it a step further by linking off-site for the project itself or any other information that others would find interesting.
-					</Typography>
-				</Grid>
-			</Grid>
+					</p>
+				</div>
+			</div>
 
-			<Box
-				marginBottom={30}
-				textAlign="center"
-				paddingX={2}
-				marginTop={{
-					xs: 10,
-					md: 15,
-				}}
-			>
+			<div className="flex mb-32 text-center mt-10 md:mt-15">
 				<Link href={Paths.UserRegister}>
-					<Button
-						variant="contained"
-						size="large"
-						sx={{
-							borderRadius: 5,
-							fontSize: { md: 20 },
-							width: {
-								xs: 1,
-								sm: 'unset',
-							},
-						}}
-					>
+					<Button className="rounded-md text-lg w-1">
 						Create Your{S}<strong>Free</strong>{S}Gallery
 					</Button>
 				</Link>
-			</Box>
+			</div>
 		</>
 	);
 }
@@ -224,11 +151,8 @@ interface ImageWrapperProps {
 function ImageWrapper(props: ImageWrapperProps) {
 	const { children } = props;
 	return (
-		<Paper elevation={5} sx={{
-			padding: 2,
-			display: 'inline-block',
-		}}>
+		<div className="p-2 inline-block shadow-lg">
 			{children}
-		</Paper>
+		</div>
 	);
 }

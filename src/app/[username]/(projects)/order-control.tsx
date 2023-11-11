@@ -1,8 +1,8 @@
 'use client';
-import { Box, IconButton } from '@ui';
 import updateProjectsOrder from './update-projects-order';
 import { Direction, DirectionEnum } from '@common/constants';
 import { useSetLoading } from '@common/atoms';
+import { Button } from '@components/ui/button';
 import {
 	ArrowDownIcon,
 	ArrowLeftIcon,
@@ -43,78 +43,41 @@ function OrderControlBlock(props: Props) {
 	return (
 		<>
 			{!first && (
-				<Box>
-					<IconButton
-						size="large"
+				<div>
+					<Button
 						onClick={() => handleUpdateProjectOrder(Direction.Left)}
-						sx={{
-							borderRadius: '0 7px 7px 0',
-							opacity: .1,
-							width: 35,
-							height: 100,
-							transition: 'opacity .25s',
-							backgroundColor: 'black',
-							':hover': {
-								opacity: .85,
-								backgroundColor: 'black',
-							},
-						}}
+						className="rounded-r-2xl opacity-10 w-[35px] h-96 transition-opacity bg-black hover:opacity-80"
 					>
-						<Box
-							component={ArrowLeftIcon}
-							color="white"
-							display={{
-								xs: 'none',
-								sm: 'inline',
-							}}
-						/>
-						<Box
-							component={ArrowUpIcon}
-							color="white"
-							display={{
-								xs: 'inline',
-								sm: 'none',
-							}}
-						/>
-					</IconButton>
-				</Box>
+						<div className="text-white hidden sm:inline">
+							<ArrowLeftIcon/>
+						</div>
+						<div className="text-white inline sm:hidden">
+							<ArrowUpIcon/>
+						</div>
+					</Button>
+				</div>
 			)}
 			{!last && (
-				<Box marginLeft="auto">
-					<IconButton
-						size="large"
+				<div className="ml-auto">
+					<Button
 						onClick={() => handleUpdateProjectOrder(Direction.Right)}
-						sx={{
-							borderRadius: '7px 0 0 7px',
-							opacity: .1,
-							width: 35,
-							height: 100,
-							transition: 'opacity .25s',
-							backgroundColor: 'black',
-							':hover': {
-								opacity: .85,
-								backgroundColor: 'black',
-							},
-						}}
+						className="rounded-l-2xl opacity-10 w-32 h-96 transition-opacity bg-black hover:opacity-80"
 					>
-						<Box
-							component={ArrowRightIcon}
-							color="white"
-							display={{
-								xs: 'none',
-								sm: 'inline',
-							}}
-						/>
-						<Box
-							component={ArrowDownIcon}
-							color="white"
-							display={{
-								xs: 'inline',
-								sm: 'none',
-							}}
-						/>
-					</IconButton>
-				</Box>
+						<div>
+							<Button
+								onClick={() => handleUpdateProjectOrder(Direction.Left)}
+								className="rounded-r-2xl opacity-10 w-[35px] h-96 transition-opacity bg-black hover:opacity-80"
+							>
+								<div className="text-white hidden sm:inline">
+									<ArrowRightIcon/>
+								</div>
+								<div className="text-white inline sm:hidden">
+									<ArrowDownIcon/>
+								</div>
+							</Button>
+						</div>
+					</Button>
+				</div>
 			)}
 		</>
 	);

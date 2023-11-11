@@ -5,11 +5,6 @@ import { MongoIdValidation } from '@server/validations';
 import EditProjectForm from './edit-project.form';
 import { DbProject, WriteProject } from '@common/types/Project';
 import { nowISOString, pick } from '@common/utils';
-import {
-	Box,
-	Container,
-	Typography,
-} from '@ui';
 
 interface Props {
 	params: {
@@ -27,9 +22,9 @@ async function ProjectEditPage(props: Props) {
 
 	if(!project) {
 		return (
-			<Typography>
+			<div>
 				Invalid Project
-			</Typography>
+			</div>
 		);
 	}
 
@@ -38,23 +33,20 @@ async function ProjectEditPage(props: Props) {
 	return (
 		<ScrollContent
 			header={
-				<Box sx={{
-					paddingTop: 1,
-					paddingBottom: 2,
-				}}>
-					<Typography variant="h5" component="div" gutterBottom>
+				<div className="pt-2 pb-2">
+					<div className="font-bold mb-2">
 						{/** TODO Capture direct links and send them to home page */}
 						<BackButton />
 						{title}
-					</Typography>
-				</Box>
+					</div>
+				</div>
 			}
 		>
-			<Container>
+			<div className="container">
 				<EditProjectForm
 					project={'createdDate' in project ? dbProjectToWriteProject(project) : project}
 				/>
-			</Container>
+			</div>
 		</ScrollContent>
 	);
 }

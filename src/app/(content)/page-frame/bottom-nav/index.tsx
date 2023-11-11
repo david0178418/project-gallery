@@ -1,13 +1,8 @@
-import Link from 'next/link';
 import { Paths } from '@common/constants';
 import { getServerSession } from '@server/auth-options';
 import CreateButton from './create-button';
 import BottomNavItem from './bottom-nav-item';
-import {
-	BottomNavigation,
-	BottomNavigationAction,
-	Paper,
-} from '@ui';
+import { cn } from '@/lib/utils';
 import {
 	HomeIcon,
 	LoginIcon,
@@ -23,25 +18,33 @@ import {
 } from '@components/icons';
 
 export
+// https://flowbite.com/docs/components/bottom-navigation/
 async function BottomNav() {
 	const session = await getServerSession();
 	const user = session?.user;
 
 	return (
-		<Paper
-			elevation={3}
-			sx={{
-				position: 'fixed',
-				bottom: 0,
-				left: 0,
-				right: 0,
-				display: {
-					xs: 'inline',
-					sm: 'none',
-				},
-			}}
-		>
-			<BottomNavigation>
+		<div className={cn(
+			'fixed',
+			'bottom-0',
+			'left-0',
+			'z-50',
+			'w-full',
+			'h-16',
+			'bg-white',
+			'border-t',
+			'border-gray-200',
+			'dark:bg-gray-700',
+			'dark:border-gray-600'
+		)}>
+			<div className={cn(
+				'grid',
+				'h-full',
+				'max-w-lg',
+				'grid-cols-4',
+				'mx-auto',
+				'font-medium',
+			)}>
 				<BottomNavItem
 					label="Home"
 					href={Paths.Home}
@@ -55,10 +58,9 @@ async function BottomNav() {
 					inactiveIcon={<GalleriesIcon />}
 				/>
 				{!user && (
-					<BottomNavigationAction
+					<BottomNavItem
 						label="Login"
 						href={Paths.UserLoginEmail}
-						LinkComponent={Link}
 						icon={<LoginIcon />}
 					/>
 				)}
@@ -87,10 +89,10 @@ async function BottomNav() {
 						/>,
 					]
 				)}
-			</BottomNavigation>
-			{!!user && (
-				<CreateButton/>
-			)}
-		</Paper>
+				{!!user && (
+					<CreateButton/>
+				)}
+			</div>
+		</div>
 	);
 }

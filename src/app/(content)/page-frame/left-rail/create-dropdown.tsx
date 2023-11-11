@@ -1,91 +1,59 @@
 'use client';
 
 import Link from 'next/link';
-import { MouseEvent, useState } from 'react';
 import { Paths } from '@common/constants';
+import Fab from '@/components/common/fab';
 import {
 	AddIcon,
 	ProjectIcon,
 	EditIcon,
-} from '@components/icons';
+} from '@/components/icons';
 import {
-	Fab,
-	ListItemIcon,
-	Menu,
-	MenuItem,
-} from '@ui';
+	DropdownMenu,
+	DropdownMenuTrigger,
+	DropdownMenuContent,
+	DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 
 export
 function CreateDropdown() {
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const open = Boolean(anchorEl);
-
-	function handleEl(el: MouseEvent<HTMLElement>) {
-		setAnchorEl(el.currentTarget);
-	}
-
-	function handleClose() {
-		setAnchorEl(null);
-	}
-
 	return (
 		<>
-			<Fab
-				color="primary"
-				sx={{
-					display: {
-						xs: 'inline-flex',
-						md: 'none',
-					},
-				}}
-				onClick={handleEl}
-			>
-				<AddIcon/>
-			</Fab>
-			<Fab
-				color="primary"
-				variant="extended"
-				sx={{
-					width: '100%',
-					display: {
-						xs: 'none',
-						md: 'inline-flex',
-					},
-				}}
-				onClick={handleEl}
-			>
-				<AddIcon sx={{ mr: 1 }} />
-				Create
-			</Fab>
-			<Menu
-				anchorEl={anchorEl}
-				open={open}
-				onClose={handleClose}
-				MenuListProps={{ 'aria-labelledby': 'basic-button' }}
-			>
-				<Link
-					shallow
-					href={Paths.ProjectEdit()}
-				>
-					<MenuItem onClick={handleClose}>
-						<ListItemIcon>
-							<ProjectIcon fontSize="small" />
-						</ListItemIcon>
-						Project
-					</MenuItem>
-				</Link>
-				<Link
-					shallow
-					href={Paths.JournalEdit()}
-				>
-					<MenuItem onClick={handleClose}>
-						<ListItemIcon>
-							<EditIcon fontSize="small" />
-						</ListItemIcon>
-						Journal Post
-					</MenuItem>
-				</Link>
-			</Menu>
+			<DropdownMenu>
+				<DropdownMenuTrigger>
+					<Fab
+						className="bg-blue-500 inline-flex md:hidden"
+					>
+						<AddIcon/>
+					</Fab>
+					<Fab
+						className="bg-blue-500 w-full hidden md:inline-flex"
+					>
+						<AddIcon sx={{ mr: 1 }} />
+						Create
+					</Fab>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					<DropdownMenuItem>
+						<Link
+							shallow
+							href={Paths.ProjectEdit()}
+						>
+							<ProjectIcon className="mr-2 h-4 w-4" />
+							<span>Project</span>
+						</Link>
+					</DropdownMenuItem>
+					<DropdownMenuItem>
+						<Link
+							shallow
+							href={Paths.JournalEdit()}
+						>
+							<EditIcon className="mr-2 h-4 w-4" />
+							<span>Journal Post</span>
+						</Link>
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
 		</>
 	);
 }

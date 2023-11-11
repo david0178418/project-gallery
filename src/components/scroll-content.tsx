@@ -1,4 +1,3 @@
-import { Box } from '@ui';
 import type { ReactNode } from 'react';
 
 interface Props {
@@ -13,19 +12,11 @@ function ScrollContent(props: Props) {
 		header,
 	} = props;
 	return (
-		<Box
-			display="flex"
-			flexDirection="column"
-			maxHeight="100%"
-		>
+		<div className="flex flex-col max-h-full">
 			{header}
-			<Box
-				overflow="hidden auto"
-				flex={1}
-				paddingBottom={25}
-			>
+			<div className="overflow-x-hidden overflow-y-auto flex-1 pb-24">
 				{children}
-			</Box>
-		</Box>
+			</div>
+		</div>
 	);
 }

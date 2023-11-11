@@ -1,8 +1,4 @@
 import type { ReactNode } from 'react';
-import {
-	ListItemIcon,
-	ListItemText,
-} from '@ui';
 
 interface Props {
 	label: string;
@@ -18,20 +14,12 @@ function RailButtonContent(props: Props) {
 		children,
 	} = props;
 	return (
-		<>
-			<ListItemIcon>
+		<li className="flex justify-between gap-x-6 py-5">
+			<div className="flex min-w-0 gap-x-4">
 				{children}
-			</ListItemIcon>
-			<ListItemText
-				primary={label}
-				secondary={secondary}
-				sx={{
-					display: {
-						xs: 'none',
-						md: 'inline',
-					},
-				}}
-			/>
-		</>
+				{label}
+				{secondary}
+			</div>
+		</li>
 	);
 }

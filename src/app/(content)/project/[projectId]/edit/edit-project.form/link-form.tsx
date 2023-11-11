@@ -3,10 +3,7 @@ import { inRange } from '@common/utils';
 import { useState } from 'react';
 import { UiProject } from '@common/types/Project';
 import { MinLinkLabelSize, MaxLinkLabelSize } from '@common/constants';
-import {
-	Button,
-	Grid,
-} from '@ui';
+import { Button } from '@components/ui/button';
 
 type ProjectLink = UiProject['links'][number];
 
@@ -27,26 +24,24 @@ function LinkForm(props: Props) {
 
 	return (
 		<>
-			<Grid container columnGap={1}>
-				<Grid item>
+			<div className="gap-1">
+				<div>
 					<TextFieldLengthValidation
-						fullWidth
-						margin="dense"
+						className="w-full"
 						label="Label"
 						value={label}
 						onChange={e => setLabel(e.target.value)}
 					/>
-				</Grid>
-				<Grid item>
+				</div>
+				<div>
 					<TextFieldLengthValidation
-						fullWidth
-						margin="dense"
+						className="w-full"
 						label="Url"
 						value={url}
 						onChange={e => setUrl(e.target.value)}
 					/>
-				</Grid>
-			</Grid>
+				</div>
+			</div>
 			<Button
 				disabled={!linkIsValid({
 					label,

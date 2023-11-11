@@ -11,19 +11,14 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerSession } from '@server/auth-options';
 import { ScrollContent } from '@components/scroll-content';
+import { Avatar, AvatarImage } from '@components/ui/avatar';
+import Fab from '@components/common/fab';
 import {
 	AppName,
 	BaseUrl,
 	Paths,
 	SpecialCharacterCodes,
 } from '@common/constants';
-import {
-	Avatar,
-	Box,
-	Container,
-	Fab,
-	Typography,
-} from '@ui';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 
@@ -119,68 +114,41 @@ export default async function UserGalleryLayout(props: Props) {
 	const isOwner = session?.user.id === profileUser._id.toString();
 
 	return (
-		<Container
-			sx={{
-				height: '100vh',
-				overflow: 'hidden',
-				position: 'relative',
-				paddingX: {
-					xs: 0,
-					sm: 1,
-					lg: 2,
-				},
-			}}
-		>
+		<div className="container h-screen overflow-hidden relative px-0 sm:px-1 lg:px-2">
 			<ScrollContent
 				header={
-					<Box sx={{
-						paddingTop: 1,
-						paddingBottom: 2,
-					}}>
-						<Box textAlign="right">
+					<div className="pt-1 pb-2">
+						<div className="text-right">
 							<Link href={Paths.Home} >
-								<Box
-									textAlign="right"
-									display="flex"
-									alignItems="center"
-									color="primary.main"
-									justifyContent="end"
-								>
+								<div className="text-right flex items-center text-blue-500 justify-end">
 									<BackIcon fontSize="inherit"/>
-									<Typography color="inherit">
+									<div>
 										ProjectGallery.me
-									</Typography>
-								</Box>
+									</div>
+								</div>
 							</Link>
-						</Box>
-						<Box sx={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-							justifyContent: 'center',
-						}}>
+						</div>
+						<div className="flex flex-col items-center justify-center">
 							{userProfile?.avatar && (
 								<Avatar
-									src={userProfile.avatar}
-									sx={{
-										width: 100,
-										height: 100,
-									}}
-								/>
+									className="w-96 h-96"
+								>
+									<AvatarImage src={userProfile.avatar} />
+								</Avatar>
 							)}
-							<Typography variant="h5" component="div">
+							<div className="font-bold">
 								{username}{SpecialCharacterCodes.RSQUO}s Gallery
-							</Typography>
-						</Box>
+							</div>
+						</div>
 						{userProfile?.shortBio && (
-							<Container maxWidth="sm">
+							<div className="container max-w-screen-sm" >
 								<MarkdownContent>
 									{userProfile.shortBio}
 								</MarkdownContent>
-							</Container>
+							</div>
 						)}
 						<UserProfileTabs username={username} />
-					</Box>
+					</div>
 				}
 			>
 				{children}
@@ -188,21 +156,20 @@ export default async function UserGalleryLayout(props: Props) {
 			{isOwner && (
 				<Link href={Paths.Settings} >
 					<Fab
-						color="primary"
-						sx={{
-							position: 'absolute',
-							bottom: 64,
-							right: {
-								xs: 16,
-								md: 32,
-							},
-						}}
+						// sx={{
+						// 	position: 'absolute',
+						// 	bottom: 64,
+						// 	right: {
+						// 		xs: 16,
+						// 		md: 32,
+						// 	},
+						// }}
 					>
 						<EditIcon />
 					</Fab>
 				</Link>
 			)}
 			<CommonStuff/>
-		</Container>
+		</div>
 	);
 }

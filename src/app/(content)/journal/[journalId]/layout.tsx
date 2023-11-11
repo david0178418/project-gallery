@@ -5,7 +5,6 @@ import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import BackButton from '@components/back-button';
 import { ReactNode } from 'react';
-import { Box, Typography } from '@ui';
 import {
 	AppName,
 	BaseUrl,
@@ -62,9 +61,9 @@ async function Journal(props: Props) {
 
 	if(!journal) {
 		return (
-			<Typography>
+			<div>
 				Invalid Journal
-			</Typography>
+			</div>
 		);
 	}
 
@@ -76,18 +75,15 @@ async function Journal(props: Props) {
 		<>
 			<ScrollContent
 				header={
-					<Box sx={{
-						paddingTop: 1,
-						paddingBottom: 2,
-					}}>
-						<Typography variant="h5" component="div" gutterBottom>
+					<div className="pt-1 pb-2">
+						<h5 className="mb-2">
 							{/** TODO Capture direct links and send them to home page */}
 							<BackButton
 								defaultHref={defaultBackPath}
 							/>{SpecialCharacterCodes.NBSP}
 							{journal.title || 'Not Found'}
-						</Typography>
-					</Box>
+						</h5>
+					</div>
 				}
 			>
 				{children}

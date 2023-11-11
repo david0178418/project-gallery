@@ -8,14 +8,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Register from '@server/actions/register';
-import {
-	Box,
-	Button,
-	DialogActions,
-	DialogContent,
-	DialogTitle,
-	TextField,
-} from '@ui';
+import TextField from '@components/common/text-field';
+import { Button } from '@components/ui/button';
 
 export default
 function RegistrationModal() {
@@ -75,20 +69,18 @@ function RegistrationModal() {
 
 	return (
 		<>
-			<DialogTitle>
+			<div className="font-bold">
 				Create Account
-			</DialogTitle>
-			<DialogContent>
-				<Box
+			</div>
+			<div>
+				<form
 					noValidate
 					autoComplete="off"
-					component="form"
 				>
 					<TextField
 						autoFocus
-						fullWidth
+						className="w-full"
 						label="Username"
-						variant="standard"
 						placeholder="username"
 						type="text"
 						value={username}
@@ -97,9 +89,8 @@ function RegistrationModal() {
 					/>
 					<TextField
 						autoFocus
-						fullWidth
+						className="w-full"
 						label="Email"
-						variant="standard"
 						placeholder="email"
 						type="email"
 						value={email}
@@ -107,45 +98,43 @@ function RegistrationModal() {
 						onChange={e => setEmail(e.target.value)}
 					/>
 					<TextField
-						fullWidth
+						className="w-full"
 						label="Password"
-						variant="standard"
 						type="password"
 						value={password}
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setPassword(e.target.value)}
 					/>
 					<TextField
-						fullWidth
+						className="w-full"
 						label="Re-enter Password"
-						variant="standard"
 						type="password"
 						value={repassword}
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setRepassword(e.target.value)}
 					/>
-				</Box>
-			</DialogContent>
-			<DialogActions>
+				</form>
+			</div>
+			<div className="flex justify-end">
 				<Button
-					variant="outlined"
+					variant="ghost"
 					disabled={!valid}
 					onClick={handleRegister}
 				>
 					Register
 				</Button>
-			</DialogActions>
-			<DialogActions style={{ justifyContent: 'center' }}>
+			</div>
+			<div className="flex justify-center">
 				<Link
 					shallow
 					replace
 					href={Paths.UserLoginEmail}
 				>
-					<Button size="small">
+					<Button>
 						Login with Existing Account
 					</Button>
 				</Link>
-			</DialogActions>
+			</div>
 		</>
 	);
 }

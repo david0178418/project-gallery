@@ -1,4 +1,3 @@
-import { red } from '@mui/material/colors';
 import { DbJournal } from '@common/types/Journal';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
@@ -8,17 +7,10 @@ import { LocalizedDate } from './localized-date';
 import { getServerSession } from '@server/auth-options';
 import { fetchUserProfileByUsername } from '@server/queries';
 import { FavoriteIcon, EditIcon } from '@components/icons';
-import {
-	Avatar,
-	Box,
-	Card,
-	CardActions,
-	CardContent,
-	CardHeader,
-	IconButton,
-	Tooltip,
-	Typography,
-} from '@ui';
+import Tooltip from './common/tooltip';
+import { Button } from './ui/button';
+import Card from './common/card';
+import Avatar from './common/avatar';
 
 interface Props {
 	journal: DbJournal;
@@ -47,98 +39,79 @@ async function JournalCard(props: Props) {
 	const journalUrl = Paths.Journal(journaId);
 
 	return (
-		<Card elevation={2}>
-			<CardHeader
-				title={
-					<Box sx={{ ':hover': { textDecoration: 'underline' } } }>
+		<Card
+			title={
+				<>
+
+					<Link prefetch={false} href={Paths.UserGallery(username)}>
+						<Tooltip label={username}>
+							<Avatar
+								src={profile?.avatar}
+								fallback={username[0].toLocaleUpperCase()}
+							/>
+						</Tooltip>
+					</Link>
+					<div className="hover:underline">
 						<Link prefetch={false} href={journalUrl}>
 							{title}
 						</Link>
-					</Box>
-				}
-				subheader={(
-					<Link prefetch={false} href={journalUrl}>
-						{publishedDate && (
-							<LocalizedDate date={publishedDate} />
-						)}
-					</Link>
-				)}
-				avatar={
-					<Link prefetch={false} href={Paths.UserGallery(username)}>
-						<Tooltip
-							arrow
-							disableFocusListener
-							disableTouchListener
-							title={username}
-						>
-							<Avatar src={profile?.avatar} sx={{ bgcolor: red[500] }}>
-								{username[0].toLocaleUpperCase()}
-							</Avatar>
-						</Tooltip>
-					</Link>
-				}
-			/>
-			<CardContent>
-				{project && (
-					<Box sx={{ ':hover': { textDecoration: 'underline' } } }>
-						<Link prefetch={false} href={Paths.Project(project._id.toString())}>
-							<Typography variant="subtitle1">
-								Project: {project.title}
-							</Typography>
+					</div>
+				</>
+			}
+			description={
+
+				<Link prefetch={false} href={journalUrl}>
+					{publishedDate && (
+						<LocalizedDate date={publishedDate} />
+					)}
+				</Link>
+			}
+			footer={
+				<>
+					<Tooltip label="Favorite">
+						<Button>
+							<FavoriteIcon />
+						</Button>
+					</Tooltip>
+					<ShareIconButton
+						url={Paths.Journal(journaId)}
+						label={title}
+						shareMsg="Check out this project journal post!"
+					/>
+					{isOwner && (
+						<Link prefetch={false} href={Paths.JournalEdit(journaId)}>
+							<Tooltip label="Edit">
+								<Button>
+									<EditIcon />
+								</Button>
+							</Tooltip>
 						</Link>
-					</Box>
-				)}
-				{!project && (
-					<Typography variant="subtitle2">
-						Personal Post
-					</Typography>
-				)}
-				<Typography
-					component="div"
-					variant="body2"
-					color="text.secondary"
-					sx={{
-						height: 55,
-						overflow: 'hidden',
-						maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
-					}}
-				>
-					<MarkdownContent plaintext>
-						{body}
-					</MarkdownContent>
-				</Typography>
-			</CardContent>
-			<CardActions disableSpacing>
-				<Tooltip
-					arrow
-					disableFocusListener
-					disableTouchListener
-					title="Favorite"
-				>
-					<IconButton>
-						<FavoriteIcon />
-					</IconButton>
-				</Tooltip>
-				<ShareIconButton
-					url={Paths.Journal(journaId)}
-					label={title}
-					shareMsg="Check out this project journal post!"
-				/>
-				{isOwner && (
-					<Link prefetch={false} href={Paths.JournalEdit(journaId)}>
-						<Tooltip
-							arrow
-							disableFocusListener
-							disableTouchListener
-							title="Edit"
-						>
-							<IconButton>
-								<EditIcon />
-							</IconButton>
-						</Tooltip>
+					)}
+				</>
+			}
+		>
+			{project && (
+				<div className="hover:underline">
+					<Link prefetch={false} href={Paths.Project(project._id.toString())}>
+						<div>
+								Project: {project.title}
+						</div>
 					</Link>
-				)}
-			</CardActions>
+				</div>
+			)}
+			{!project && (
+				<div>
+						Personal Post
+				</div>
+			)}
+			<div
+				className="font-bold h-56 overflow-hidden"
+				style={{ maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)' }}
+			>
+				<MarkdownContent plaintext>
+					{body}
+				</MarkdownContent>
+			</div>
 		</Card>
 	);
 }

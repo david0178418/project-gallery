@@ -29,6 +29,7 @@ interface Settings {
 export
 interface ToastMesssage {
 	message: ReactNode;
+	title?: ReactNode;
 	delay?: number;
 	onClose?(): void;
 }

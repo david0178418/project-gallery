@@ -5,11 +5,7 @@ import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import { ConfirmButton } from '@components/common/buttons';
 import updatePassword from './update-pw-action';
-import {
-	Grid,
-	TextField,
-	Typography,
-} from '@ui';
+import TextField from '@components/common/text-field';
 
 export default
 function UpdatePwPage() {
@@ -51,20 +47,16 @@ function UpdatePwPage() {
 
 	return (
 		<>
-			<Typography variant="h6">
+			<div className="font-bold">
 				Update Password
-			</Typography>
-			<Grid
-				container
-				rowSpacing={1}
-				columnSpacing={1}
-				columns={{ xs: 1 }}
+			</div>
+			<div className="grid grid-cols-1 row-sp gap-2"
+				// columns={{ xs: 1 }}
 			>
-				<Grid item xs={1}>
+				<div>
 					<TextField
 						autoComplete="off"
 						label="New Password"
-						variant="standard"
 						type="password"
 						value={pw}
 						error={!!error}
@@ -72,23 +64,22 @@ function UpdatePwPage() {
 						onBlur={() => setTouched(true)}
 						onChange={e => setPw(e.target.value)}
 					/>
-				</Grid>
-				<Grid item xs={1}>
+				</div>
+				<div>
 					<TextField
 						autoComplete="off"
 						label="Confirm Password"
-						variant="standard"
 						type="password"
 						value={pw2}
 						onChange={e => setPw2(e.target.value)}
 					/>
-				</Grid>
-				<Grid item xs={1}>
+				</div>
+				<div>
 					<ConfirmButton disabled={!canSave} onClick={handleUpdate}>
 						Save New Password
 					</ConfirmButton>
-				</Grid>
-			</Grid>
+				</div>
+			</div>
 		</>
 	);
 }

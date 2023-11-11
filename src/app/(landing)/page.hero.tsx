@@ -3,49 +3,22 @@ import MainImage from './homepage-main-image.png';
 import { CheckCircleIcon } from '@components/icons';
 import Link from 'next/link';
 import { Paths, SpecialCharacterCodes } from '@common/constants';
-import {
-	Box,
-	Button,
-	Container,
-	Grid,
-	List,
-	ListItem,
-	ListItemIcon,
-	ListItemText,
-	Typography,
-} from '@ui';
+import { Button } from '@components/ui/button';
 
 export default
 function Hero() {
 	return (
-		<Container>
-			<Box
-				textAlign="center"
-				marginTop={15}
-			>
-				<Typography
-					variant="h1"
-					fontWeight="bold"
-					fontSize={50}
-				>
-					<Box color="primary.main">
+		<div className="container">
+			<div className="text-center mt-15">
+				<div className="font-bold text-4xl">
+					<div>
 						Your Project<br />
-					</Box>
+					</div>
 					Your Story
-				</Typography>
-				<Grid
-					container
-					direction="row"
-					justifyContent="center"
-					marginTop={4}
-				>
-					<Grid
-						item
-						xs={12}
-						sm={6}
-						lg={4}
-					>
-						<List dense>
+				</div>
+				<div className="grid grid-cols-12 flex-row justify-center mt-4">
+					<div className="col-span-12 sm:col-span-6 lg:col-span-4">
+						<ul>
 							{[
 								<>
 									<strong>Create</strong> your own personal project portfolio
@@ -63,71 +36,30 @@ function Hero() {
 									<strong>Discover</strong> the work of other builders
 								</>,
 							].map((t, i) => (
-								<ListItem key={i}>
-									<ListItemIcon
-										sx={{
-											minWidth: {
-												xs: 'unset',
-												md: 56,
-											},
-											paddingRight: 1,
-											justifyContent: 'right',
-										}}
-									>
+								<li key={i}>
+									<div className="min-w-md-[56px] pr-1 justify-end">
 										<CheckCircleIcon color="primary" />
-									</ListItemIcon>
-									<ListItemText>
 										{t}
-									</ListItemText>
-								</ListItem>
+									</div>
+								</li>
 							))}
-						</List>
-					</Grid>
-				</Grid>
-			</Box>
-			<Box
-				textAlign="center"
-				marginTop={4}
-				display="flex"
-				flexDirection="column"
-				gap={3}
-			>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div className="text-center mt-4 flex flex-col gap-3">
 				<Link href={Paths.UserRegister}>
-					<Button
-						variant="contained"
-						size="large"
-						sx={{
-							borderRadius: 5,
-							width: {
-								xs: 1,
-								sm: 'unset',
-							},
-						}}
-					>
+					<Button className="rounded-lg w-1 sm:w-auto">
 						Create Your{SpecialCharacterCodes.NBSP}<strong>Free</strong>{SpecialCharacterCodes.NBSP}Gallery
 					</Button>
 				</Link>
 				<Link href={Paths.Home}>
-					<Button
-						variant="outlined"
-						size="large"
-						sx={{
-							borderRadius: 5,
-							width: {
-								xs: 1,
-								sm: 'unset',
-							},
-						}}
-					>
+					<Button className="rounded-lg w-1 sm:w-auto">
 						Explore Project Gallery
 					</Button>
 				</Link>
-			</Box>
-			<Box
-				textAlign="center"
-				marginTop={6}
-				sx={{ marginRight: { sm: 10 } }}
-			>
+			</div>
+			<div className="text-center mt-6 sm:mr-10">
 				<Image
 					alt=""
 					priority
@@ -141,7 +73,7 @@ function Hero() {
 						maxWidth: 900,
 					}}
 				/>
-			</Box>
-		</Container>
+			</div>
+		</div>
 	);
 }

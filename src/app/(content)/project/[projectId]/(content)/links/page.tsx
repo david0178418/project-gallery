@@ -1,7 +1,6 @@
 import LinksList from '@components/links-list';
 import { fetchProject } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
-import { Typography } from '@ui';
 
 interface Props {
 	params: {
@@ -17,9 +16,9 @@ async function LinksPage(props: Props) {
 
 	if(!result.success) {
 		return (
-			<Typography>
+			<div>
 				No journal posts yet
-			</Typography>
+			</div>
 		);
 	}
 
@@ -31,9 +30,9 @@ async function LinksPage(props: Props) {
 				<LinksList links={project.links} />
 			)}
 			{!project?.links.length && (
-				<Typography>
+				<div>
 					No links yet
-				</Typography>
+				</div>
 			)}
 		</>
 	);

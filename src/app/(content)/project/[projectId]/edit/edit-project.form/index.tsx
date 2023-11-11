@@ -13,6 +13,8 @@ import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import saveProjectAction from './save-project-action';
 import { useRouteBackDefault } from '@common/hooks';
 import { SaveIcon } from '@components/icons';
+import { Checkbox } from '@/components/ui/checkbox';
+import TextField from '@components/common/text-field';
 import {
 	inRange,
 	moveItemLeft,
@@ -27,14 +29,15 @@ import {
 	maxLabelCount,
 } from '@common/constants';
 import {
-	Box,
-	Checkbox,
-	FormControlLabel,
-	Grid,
-	Tab,
+	FormItem,
+	FormControl,
+	FormLabel,
+} from '@components/ui/form';
+import {
 	Tabs,
-	TextField,
-} from '@ui';
+	TabsList,
+	TabsTrigger,
+} from '@/components/ui/tabs';
 
 function dateToDateSubstring(date: Date) {
 	return date.toISOString().substring(0, 10);
@@ -62,7 +65,7 @@ function EditProjectForm(props: Props) {
 		links,
 		unlisted = false,
 	} = project;
-	const [selectedTab, setSelectedTab] = useState(0);
+	const [selectedTab, setSelectedTab] = useState('description');
 	const setLoading = useSetLoading();
 	const routeBack = useRouteBackDefault();
 	const pushToastMsg = usePushToastMsg();
@@ -143,16 +146,11 @@ function EditProjectForm(props: Props) {
 
 	return (
 		<>
-			<Box
-				noValidate
-				autoComplete="off"
-				component="form"
-			>
+			<form noValidate autoComplete="off">
 				<TextFieldLengthValidation
+					className="w-full"
 					autoFocus
-					fullWidth
 					label="Title"
-					variant="standard"
 					placeholder="Project title"
 					type="text"
 					maxLength={MaxJournalProjectTitleLength}
@@ -160,33 +158,29 @@ function EditProjectForm(props: Props) {
 					value={title}
 					onChange={e => handleChange({ title: e.target.value })}
 				/>
-				<Grid container>
-					<Grid item xs>
+				<div className="grid col-span-12">
+					<div>
 						<TextField
 							label="Created"
 							type="date"
-							variant="standard"
-							margin="dense"
 							value={dateToDateSubstring(new Date(projectCreatedDate))}
 							onChange={e => handleChange({ projectCreatedDate: dateInputStrToDate(e.target.value).toISOString() })}
 						/>
-					</Grid>
-					<Grid item xs>
+					</div>
+					<div>
 						<TextField
 							label="Last Updated"
 							type="date"
-							variant="standard"
-							margin="dense"
 							value={dateToDateSubstring(new Date(projectLastUpdatedDate))}
 							onChange={e => handleChange({ projectLastUpdatedDate: dateInputStrToDate(e.target.value).toISOString() })}
 						/>
-					</Grid>
-				</Grid>
-				<Box paddingTop={1}>
+					</div>
+				</div>
+				<div className="pt-1">
 					<LabelForm onAdd={handleAddLabel} />
-				</Box>
+				</div>
 				{!!labels.length && (
-					<Box paddingTop={1}>
+					<div className="pt-1">
 						{labels.map((l, i) => (
 							<Label
 								key={l.label}
@@ -194,35 +188,49 @@ function EditProjectForm(props: Props) {
 								onDelete={() => handleRemoveLabel(i)}
 							/>
 						))}
-					</Box>
+					</div>
 				)}
-				<Box paddingTop={1}>
-					<Tabs value={selectedTab} onChange={(e, val) => setSelectedTab(val)}>
-						<Tab label="Description" />
-						<Tab label="Images"/>
-						<Tab label="Links" />
+				<div className="pt-1">
+					{/** TODO Fix the tab nonsense */}
+					<Tabs value={selectedTab}>
+						<TabsList>
+							<TabsTrigger
+								value="description"
+								onClick={() => setSelectedTab('description') }
+							>
+								Description
+							</TabsTrigger>
+							<TabsTrigger
+								value="images"
+								onClick={() => setSelectedTab('images') }
+							>
+								Images
+							</TabsTrigger>
+							<TabsTrigger
+								value="links"
+								onClick={() => setSelectedTab('links') }
+							>
+								Links
+							</TabsTrigger>
+						</TabsList>
 					</Tabs>
-					<Box paddingTop={1}>
-						{selectedTab === 0 && (
+					<div className="pt-1">
+						{selectedTab === 'description' && (
 							<TextFieldLengthValidation
-								fullWidth
+								className="w-full"
 								multiline
-								margin="dense"
 								label="Description"
 								placeholder="General project description..."
 								maxLength={MaxProjectDescriptionLength}
 								minLength={MinProjectDescriptionLength}
-								minRows={3}
 								value={description}
 								onChange={e => handleChange({ description: e.target.value })}
 							/>
 						)}
-						{selectedTab === 1 && (
+						{selectedTab === 'images' && (
 							<>
 								<Uploader
-									border="3px dashed"
-									padding={1}
-									borderRadius={2}
+									className="border-4 border-dashed p-1 rounded-lg"
 									category={FileUploadCategories.Posts}
 									onAdd={handleAddFiles}
 								/>
@@ -234,51 +242,40 @@ function EditProjectForm(props: Props) {
 								/>
 							</>
 						)}
-						{selectedTab === 2 && (
+						{selectedTab === 'links' && (
 							<>
 								<LinkForm onAdd={handleAddLink}/>
-								<Box paddingTop={1}>
+								<div className="pt-1">
 									<LinksList onRemove={handleRemoveLink} links={links} />
-								</Box>
+								</div>
 							</>
 						)}
-					</Box>
-				</Box>
-				<Box paddingTop={1}>
-					<FormControlLabel
-						label="Unlisted"
-						control={
+					</div>
+				</div>
+				<div className="pt-1">
+					<FormItem>
+						<FormControl>
 							<Checkbox
 								checked={unlisted}
-								onChange={(e, checked) => handleChange({ unlisted: checked })}
+								onCheckedChange={(checked) => handleChange({ unlisted: !!checked })}
 							/>
-						}
-					/>
-				</Box>
-			</Box>
-			<Box paddingTop={2} textAlign="right">
+						</FormControl>
+						<FormLabel className="text-sm font-normal">
+							Unlisted
+						</FormLabel>
+					</FormItem>
+				</div>
+			</form>
+			<div className="pt-2 text-right">
 				<CancelButton />
-				<Box
-					sx={{
-						display: {
-							xs: 'block',
-							md: 'inline-block',
-						},
-						paddingLeft: { md: 2 },
-						paddingTop: {
-							xs: 2,
-							md: 0,
-						},
-						paddingBottom: 20,
-					}}
-				>
+				<div className="block md:inline-block md:pl-2 pt-2 md:pt-0 pb-20">
 					<ConfirmButton
 						onClick={handleSave}
 						disabled={!(project && projectIsValid(project))}
-						endIcon={<SaveIcon/>}
+						icon={<SaveIcon/>}
 					/>
-				</Box>
-			</Box>
+				</div>
+			</div>
 		</>
 	);
 }

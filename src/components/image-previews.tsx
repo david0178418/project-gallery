@@ -1,5 +1,4 @@
 import { ProjectImage } from '@common/types/Project';
-import { Grid } from '@ui';
 
 interface Props {
 	images: ProjectImage[];
@@ -14,18 +13,9 @@ function ImagePreviews(props: Props) {
 	} = props;
 
 	return (
-		<Grid
-			rowGap={4}
-			marginTop={2}
-			container
-		>
+		<div className="grid grid-cols-12 gap-4 mt-2">
 			{images.map(f => (
-				<Grid
-					key={f.url}
-					item
-					xs={4}
-					md={2}
-				>
+				<div key={f.url} className="col-span-4 md:col-span-2">
 					<img
 						src={f.url}
 						onClick={() => onClick(f)}
@@ -36,8 +26,8 @@ function ImagePreviews(props: Props) {
 							objectFit: 'contain',
 						}}
 					/>
-				</Grid>
+				</div>
 			))}
-		</Grid>
+		</div>
 	);
 }

@@ -2,7 +2,7 @@ import { Paths, ProfileActivity } from '@common/constants';
 import { LocalizedDate } from '@components/localized-date';
 import { ScrollContent } from '@components/scroll-content';
 import { fetchUserProfiles } from '@server/queries';
-import { Box, Typography } from '@ui';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
 const ProfileActivityLabels = {
@@ -45,26 +45,29 @@ async function GalleriesPage() {
 	return (
 		<ScrollContent>
 			{galleries.map(gallery => (
-				<Box
+				<div
 					key={gallery._id.toString()}
-					paddingY={2}
-					sx={{ ':not(:last-child)': { borderBottom: '1px solid lightgray' } }}
+					className={cn(
+						'py-2',
+						'[&:not(:last-child)]:border-b-1',
+						'border-gray-500',
+					)}
 				>
-					<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+					<div className="text-lg mb-2">
 						<Link href={Paths.UserGallery(gallery.username)}>
 							{`${gallery.username}'s gallery`}
 						</Link>
-					</Typography>
-					<Typography variant="h5" component="div">
+					</div>
+					<div>
 						{ProfileActivityLabels[gallery.lastActivity.type](
 							gallery.lastActivity.id.toString(),
 							gallery.lastActivity.label,
 						)}
-					</Typography>
-					<Box paddingTop={1}>
+					</div>
+					<div className="pt-1">
 						<LocalizedDate includeTime date={gallery.lastActivity.date} />
-					</Box>
-				</Box>
+					</div>
+				</div>
 			))}
 		</ScrollContent>
 	);

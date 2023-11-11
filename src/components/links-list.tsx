@@ -1,14 +1,7 @@
 
 import { DeleteIcon } from '@components/icons';
 import { UiProject } from '@common/types/Project';
-import {
-	IconButton,
-	Link as MuiLink,
-	List,
-	ListItem,
-	ListItemIcon,
-	ListItemText,
-} from '@ui';
+import { Button } from './ui/button';
 
 interface Props {
 	links: UiProject['links'][number][];
@@ -23,23 +16,23 @@ function LinksList(props: Props) {
 	} = props;
 
 	return (
-		<List>
+		<ul className="divide-y divide-gray-100">
 			{links.map((l, i) => (
-				<ListItem key={i}>
+				<li className="flex justify-between gap-x-6 py-5" key={i}>
 					{onRemove && (
-						<ListItemIcon>
-							<IconButton onClick={() => onRemove(i)}>
+						<div className="h-12 w-12 flex-none rounded-full bg-gray-50">
+							<Button onClick={() => onRemove(i)}>
 								<DeleteIcon />
-							</IconButton>
-						</ListItemIcon>
+							</Button>
+						</div>
 					)}
-					<ListItemText>
-						<MuiLink href={l.url} target="_blank">
+					<div className="min-w-0 flex-auto">
+						<a href={l.url} target="_blank">
 							{l.label}
-						</MuiLink>
-					</ListItemText>
-				</ListItem>
+						</a>
+					</div>
+				</li>
 			))}
-		</List>
+		</ul>
 	);
 }

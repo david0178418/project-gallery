@@ -7,15 +7,13 @@ import { ReactNode } from 'react';
 import ProjectTabs from './project-tabs';
 import { getServerSession } from '@server/auth-options';
 import BackButton from '@components/back-button';
-import { red } from '@mui/material/colors';
+import Link from 'next/link';
+import Fab from '@components/common/fab';
 import {
 	Avatar,
-	Box,
-	Fab,
-	Grid,
-	Typography,
-} from '@ui';
-import Link from 'next/link';
+	AvatarFallback,
+	AvatarImage,
+} from '@components/ui/avatar';
 
 interface Props {
 	children: ReactNode;
@@ -40,9 +38,9 @@ async function Page(props: Props) {
 
 	if(!project) {
 		return (
-			<Typography>
+			<div>
 				Invalid Project
-			</Typography>
+			</div>
 		);
 	}
 
@@ -54,52 +52,42 @@ async function Page(props: Props) {
 		<>
 			<ScrollContent
 				header={
-					<Box sx={{
-						paddingTop: 1,
-						paddingBottom: 2,
-						paddingX: 1,
-					}}>
-						<Grid container>
-							<Grid item xs={6}>
-								<Typography variant="h5" component="div" gutterBottom>
+					<div className="pt-1 pb-2 px-1">
+						<div className="grid">
+							<div className="col-span-6">
+								<div>
 									{/** TODO Capture direct links and send them to home page */}
 									<BackButton />
-								</Typography>
-							</Grid>
-							<Grid item xs={6} textAlign="right">
-								<Typography variant="subtitle2" display="inline-block">
+								</div>
+							</div>
+							<div className="col-span-6 text-right">
+								<div className="text-sm inline-block">
 									<Link
 										href={Paths.UserGallery(project.owner.username)}
 										style={{ textDecoration: 'none' }}
 									>
-										<Avatar src={profile?.avatar} sx={{ bgcolor: red[500] }}>
-											{project.owner.username[0].toLocaleUpperCase()}
+										<Avatar className="bg-red-500">
+											<AvatarImage src={profile?.avatar}/>
+											<AvatarFallback>
+												{project.owner.username[0].toLocaleUpperCase()}
+											</AvatarFallback>
 										</Avatar>
 									</Link>
 									<Link href={Paths.UserGallery(project.owner.username)}>
 											By {project.owner.username}
 									</Link>
-								</Typography>
-							</Grid>
-						</Grid>
-						<Box sx={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-							justifyContent: 'center',
-						}}>
-							<Typography variant="h5" component="div">
+								</div>
+							</div>
+						</div>
+						<div className="flex flex-col items-center justify-center">
+							<div className="font-bold">
 								{project.title}
-							</Typography>
-						</Box>
-						<Box sx={{
-							paddingTop: 2,
-							borderBottom: 1,
-							borderColor: 'divider',
-						}}>
+							</div>
+						</div>
+						<div className="pt-2 border-b border-current">
 							<ProjectTabs projectId={project._id.toString()} />
-						</Box>
-					</Box>
+						</div>
+					</div>
 				}
 			>
 				{children}
@@ -107,12 +95,11 @@ async function Page(props: Props) {
 			{isOwner && (
 				<Link href={Paths.ProjectEdit(projectId)} >
 					<Fab
-						color="primary"
-						sx={{
-							position: 'absolute',
-							bottom: 64,
-							right: 16,
-						}}
+						// sx={{
+						// 	position: 'absolute',
+						// 	bottom: 64,
+						// 	right: 16,
+						// }}
 					>
 						<EditIcon />
 					</Fab>

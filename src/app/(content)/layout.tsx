@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import { LeftRail } from './page-frame/left-rail';
 import { BottomNav } from './page-frame/bottom-nav';
-import { Container, Grid } from '@ui';
 import CommonStuff from './common-stuff';
+import { cn } from '@/lib/utils';
 
 interface Props {
 	children?: ReactNode;
@@ -13,34 +13,32 @@ function ContentLayout(props: Props) {
 	const { children } = props;
 
 	return (
-		<Container
-			sx={{
-				display: 'flex',
-				height: '100vh',
-				overflow: 'hidden',
-				paddingX: {
-					xs: 0,
-					sm: 1,
-					lg: 2,
-				},
-			}}
+		<div
+			className={cn(
+				'container',
+				'flex',
+				'h-screen',
+				'overflow-hidden',
+				'xs:px-0',
+				'sm:px-1',
+				'lg:px-2',
+			)}
 		>
-			<Grid
-				container
-				columns={16}
-				spacing={2}
-				marginY={0}
+			<div
+				className={cn(
+					'container',
+					'grid-cols-16',
+					'my-0',
+					'gap-0',
+				)}
 			>
-				<Grid
-					item
-					sm={2}
-					md={4}
-					sx={{
-						display: {
-							xs: 'none',
-							sm: 'block',
-						},
-					}}
+				<div
+					className={cn(
+						'col-span-2',
+						'sm:col-span-4',
+						'sm:hidden',
+						'md:block',
+					)}
 				>
 					<div>
 						{/** Wrapped in a random div due to this issue:
@@ -48,26 +46,26 @@ function ContentLayout(props: Props) {
 							 */}
 						<LeftRail />
 					</div>
-				</Grid>
-				<Grid
-					item
-					xs={16}
-					sm={14}
-					md={12}
-					style={{
-						maxHeight: '100%',
-						overflow: 'hidden',
-						position: 'relative',
-					}}
+				</div>
+				<div
+					className={cn(
+						'col-span-16',
+						'sm:col-span-14',
+						'md:col-span-12',
+						'overflow-y-auto',
+						'h-full',
+						'overflow-hidden',
+						'relative',
+					)}
 				>
 					{children}
-				</Grid>
-			</Grid>
+				</div>
+			</div>
 			{/** div hack for async component child */}
 			<div>
 				<BottomNav/>
 			</div>
 			<CommonStuff/>
-		</Container>
+		</div>
 	);
 }

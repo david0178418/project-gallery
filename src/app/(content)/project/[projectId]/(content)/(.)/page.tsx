@@ -2,7 +2,6 @@ import { LocalizedDate } from '@components/localized-date';
 import MarkdownContent from '@components/markdown-content';
 import { fetchProject } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
-import { Typography } from '@ui';
 import ImageSelector from './image-selector';
 import { dbProjectToUiProject } from '@server/transforms';
 
@@ -24,9 +23,9 @@ async function DetailsPage(props: Props) {
 
 	if(!project) {
 		return (
-			<Typography>
+			<div>
 				Invalid Project
-			</Typography>
+			</div>
 		);
 	}
 
@@ -34,18 +33,18 @@ async function DetailsPage(props: Props) {
 		<>
 			{!!project && (
 				<>
-					<Typography variant="subtitle1" paddingTop={1} fontStyle="italic">
+					<div className="pt-1 italic">
 									created: <LocalizedDate date={project.projectCreatedDate} /><br/>
-					</Typography>
-					<Typography variant="subtitle1" fontStyle="italic">
+					</div>
+					<div className="italic">
 									last updated: <LocalizedDate date={project.projectLastUpdatedDate} />
-					</Typography>
+					</div>
 					<ImageSelector project={dbProjectToUiProject(project)} />
-					<Typography paddingTop={2} component="div">
+					<div className="pt-2">
 						<MarkdownContent plaintext>
 							{project.description}
 						</MarkdownContent>
-					</Typography>
+					</div>
 				</>
 			)}
 			{!project && (

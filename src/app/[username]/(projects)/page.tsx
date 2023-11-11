@@ -1,7 +1,4 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
-import {
-	Box, Grid, Typography,
-} from '@ui';
 import { fetchUser, fetchUserGallery } from '@server/queries';
 import ProjectCard from '@components/project-card';
 import { getServerSession } from '@server/auth-options';
@@ -60,17 +57,10 @@ async function UserProjectsPage(props: Props) {
 			{!!projects.length && (
 				<>
 					{!!uniqueLabels.length && (
-						<Box
-							paddingBottom={2}
-							borderBottom={1}
-							borderColor="divider"
-						>
-							<Typography sx={{
-								opacity: .6,
-								fontWeight: 'bold',
-							}}>
+						<div className="pb-2 border-b-2">
+							<div className="opacity-60 font-bold">
 								Filter labels
-							</Typography>
+							</div>
 							{uniqueLabels.map(l => (
 								<LinkLabel
 									key={l.label}
@@ -81,58 +71,45 @@ async function UserProjectsPage(props: Props) {
 								/>
 							))}
 
-						</Box>
+						</div>
 					)}
-					<Grid
-						container
-						padding={1}
-						spacing={2}
-					>
+					<div className="grid grid-cols-12 p-1 gap-2">
 						{filteredProjects.map((p, i) => (
-							<Grid
-								item
+							<div
 								key={p._id.toString()}
-								xs={12}
-								sm={6}
-								md={4}
-								position="relative"
-								sx={{
-									'& .change-order-action': {
-										xs: { display: 'flex' },
-										// sm: { display: 'none' },
-									},
-									'&:hover .change-order-action': { display: 'flex' },
-								}}
+								className="group col-span-12 sm:col-span-6 md:col-span-4 relative"
+								// sx={{
+								// 	'& .change-order-action': {
+								// 		xs: { display: 'flex' },
+								// 		// sm: { display: 'none' },
+								// 	},
+								// 	'&:hover .change-order-action': { display: 'flex' },
+								// }}
 							>
-								<Box className={`${classes.fadeInEl}`} sx={{ animationDelay: `${i * 100}ms` }}>
+								<div className={`${classes.fadeInEl}`} style={{ animationDelay: `${i * 100}ms` }}>
 									{/** div hack for async component child */}
 									<div>
 										<ProjectCard project={p} />
 										{isOwner && projects && !selectedLabels.length && (
-											<Box
-												bottom="75px"
-												position="absolute"
-												width="100%"
-												className="change-order-action"
-											>
+											<div className="absolute w-full bottom-72 flex sm:hidden group-hover:flex">
 												<OrderControlBlock
 													first={i === 0}
 													last={i === projects.length - 1}
 													projectId={p._id.toString()}
 												/>
-											</Box>
+											</div>
 										)}
 									</div>
-								</Box>
-							</Grid>
+								</div>
+							</div>
 						))}
-					</Grid>
+					</div>
 				</>
 			)}
 			{!projects.length && (
-				<Typography>
+				<div>
 					No projects yet
-				</Typography>
+				</div>
 			)}
 		</>
 	);
@@ -167,11 +144,11 @@ function LinkLabel(props: LinkLabelProps) {
 		>
 			<Label
 				label={label}
-				color={
-					selected ?
-						'secondary' :
-						'default'
-				}
+				// color={
+				// 	selected ?
+				// 		'secondary' :
+				// 		'default'
+				// }
 			/>
 		</Link>
 	);

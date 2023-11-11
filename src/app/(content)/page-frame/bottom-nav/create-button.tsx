@@ -1,30 +1,21 @@
 'use client';
-import Link from 'next/link';
-import { Paths } from '@common/constants';
-import { useState } from 'react';
-import {
-	Box,
-	SpeedDial,
-	SpeedDialAction,
-} from '@ui';
-import {
-	SpeedDialIcon,
-	ProjectIcon,
-	JournalIcon,
-} from '@components/icons';
+// import Link from 'next/link';
+// import { Paths } from '@common/constants';
+// import { useState } from 'react';
+// import {
+// 	SpeedDialIcon,
+// 	ProjectIcon,
+// 	JournalIcon,
+// } from '@components/icons';
 
 export default
 function CreateButton() {
-	const [open, setOpen] = useState(false);
+	// const [open, setOpen] = useState(false);
 
 	return (
-		<Box
-			sx={{
-				position: 'absolute',
-				bottom: 64,
-				right: 16,
-			}}>
-			<SpeedDial
+		<div className="absolute bottom-20 right-10">
+			{/** Get Speed dial.  Maybe this...? https://flowbite.com/docs/components/speed-dial/ */}
+			{/* <SpeedDial
 				ariaLabel=""
 				icon={<SpeedDialIcon />}
 				direction="up"
@@ -49,7 +40,7 @@ function CreateButton() {
 						href: Paths.JournalEdit(),
 					}}
 				/>
-			</SpeedDial>
-		</Box>
+			</SpeedDial> */}
+		</div>
 	);
 }

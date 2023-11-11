@@ -2,8 +2,8 @@
 
 import { Paths } from '@common/constants';
 import { useRouteBackDefault } from '@common/hooks';
-import { IconButton } from '@ui';
 import { BackIcon } from './icons';
+import { Button } from './ui/button';
 
 interface Props {
 	defaultHref?: string;
@@ -16,8 +16,8 @@ function BackButton(props: Props) {
 	const routeBack = useRouteBackDefault(defaultHref);
 
 	return (
-		<IconButton color="primary" onClick={routeBack}>
+		<Button color="primary" onClick={routeBack}>
 			<BackIcon />
-		</IconButton>
+		</Button>
 	);
 }

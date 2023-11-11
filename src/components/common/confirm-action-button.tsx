@@ -1,13 +1,14 @@
 'use client';
 import { useState } from 'react';
+import { Button } from '@components/ui/button';
 import {
-	Button,
 	Dialog,
-	DialogActions,
 	DialogContent,
-	DialogContentText,
+	DialogDescription,
+	DialogFooter,
+	DialogOverlay,
 	DialogTitle,
-} from '@ui';
+} from '@components/ui/dialog';
 
 interface Props {
 	label: string;
@@ -32,29 +33,32 @@ function ConfirmActionButton(props: Props) {
 	return (
 		<>
 			<Button
-				variant="outlined"
+				variant="ghost"
 				color="error"
 				onClick={() => setIsOpen(true)}
 			>
 				{label}
 			</Button>
 			<Dialog open={isOpen}>
-				<DialogTitle>
-					{label}
-				</DialogTitle>
+				<DialogOverlay />
 				<DialogContent>
-					<DialogContentText>
-						{confirmationMsg}
-					</DialogContentText>
-				</DialogContent>
-				<DialogActions>
-					<Button color="error" onClick={() => setIsOpen(false)}>
-						Cancel
-					</Button>
-					<Button onClick={(handleConfirm)}>
+					<DialogTitle>
 						{label}
-					</Button>
-				</DialogActions>
+					</DialogTitle>
+					<DialogContent>
+						<DialogDescription>
+							{confirmationMsg}
+						</DialogDescription>
+					</DialogContent>
+					<DialogFooter>
+						<Button color="error" onClick={() => setIsOpen(false)}>
+							Cancel
+						</Button>
+						<Button onClick={(handleConfirm)}>
+							{label}
+						</Button>
+					</DialogFooter>
+				</DialogContent>
 			</Dialog>
 		</>
 	);

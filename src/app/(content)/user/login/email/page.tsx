@@ -1,26 +1,22 @@
 import LoginEmailForm from './login-email-form';
 import { Paths } from '@common/constants';
 import Link from 'next/link';
-import {
-	Button,
-	DialogActions,
-	DialogTitle,
-} from '@ui';
+import { Button } from '@components/ui/button';
 
 export default function LoginPage() {
 	return (
 		<>
-			<DialogTitle>
+			<div className="font-bold">
 				Login
-			</DialogTitle>
+			</div>
 			<LoginEmailForm />
-			<DialogActions sx={{ justifyContent: 'center' }}>
+			<div className="justify-center">
 				<Link replace href={Paths.UserRegister} >
-					<Button size="small" >
+					<Button>
 						Create an Account
 					</Button>
 				</Link>
-			</DialogActions>
+			</div>
 		</>
 	);
 }

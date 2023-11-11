@@ -3,9 +3,10 @@ import { Paths } from '@common/constants';
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import {
-	Tab,
 	Tabs,
-} from '@ui';
+	TabsList,
+	TabsTrigger,
+} from '@/components/ui/tabs';
 
 const TabPaths = {
 	details: {
@@ -40,13 +41,13 @@ function ProjectTabs(props: Props) {
 	return (
 		<Tabs value={tab}>
 			{Object.values(TabPaths).map(t => (
-				<Tab
-					key={t.value}
-					href={t.path(projectId)}
-					value={t.value}
-					label={t.label}
-					component={Link}
-				/>
+				<TabsList key={t.value}>
+					<TabsTrigger value={t.value}>
+						<Link href={t.path(projectId)}>
+							{t.value}
+						</Link>
+					</TabsTrigger>
+				</TabsList>
 			))}
 		</Tabs>
 	);

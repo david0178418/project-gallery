@@ -5,6 +5,7 @@ import { ReactNode, useState } from 'react';
 import { Paths } from '@common/constants';
 import { User } from 'next-auth';
 import { Logout } from '@mui/icons-material';
+import { cn } from '@/lib/utils';
 import {
 	BlogIcon,
 	HomeIcon,
@@ -12,16 +13,7 @@ import {
 	MenuIcon,
 	RegisterIcon,
 } from '@components/icons';
-import {
-	Box,
-	Drawer,
-	IconButton,
-	List,
-	ListItem,
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
-} from '@ui';
+import { Button } from '@components/ui/button';
 
 interface Props {
 	user: User | null;
@@ -34,29 +26,40 @@ function TopBarDrawer(props: Props) {
 
 	return (
 		<>
-			<IconButton onClick={() => setOpen(true)}>
+			<Button onClick={() => setOpen(true)}>
 				<MenuIcon />
-			</IconButton>
-			<Drawer
-				anchor="left"
-				open={open}
-				onClose={() => setOpen(false)}
-				sx={{ width: 250 }}
+			</Button>
+			<div
+				className={cn(
+					'fixed',
+					'top-0',
+					'left-0',
+					'z-40',
+					'h-screen',
+					'p-4',
+					'overflow-y-auto',
+					'transition-transform',
+					'bg-white',
+					'w-80',
+					'dark:bg-gray-800',
+					{ '-translate-x-full': !open }
+				)}
+				// onClose={() => setOpen(false)}
 			>
-				<Box sx={{ width: 250 }}>
-					<List>
-						<ListItem disablePadding>
+				<div className="w-[250px]">
+					<ul>
+						<li>
 							<Link href="https://projectgallery.me/project/63a490bfacb4e70acc9931bb/journals">
-								<ListItemButton sx={{ width: 250 }}>
-									<ListItemIcon>
+								<div>
+									<div>
 										<BlogIcon />
-									</ListItemIcon>
-									<ListItemText>
+									</div>
+									<div>
 										Blog
-									</ListItemText>
-								</ListItemButton>
+									</div>
+								</div>
 							</Link>
-						</ListItem>
+						</li>
 						{!user?.username && (
 							<>
 								<Item
@@ -89,9 +92,9 @@ function TopBarDrawer(props: Props) {
 								</Item>
 							</>
 						)}
-					</List>
-				</Box>
-			</Drawer>
+					</ul>
+				</div>
+			</div>
 		</>
 	);
 }
@@ -109,17 +112,15 @@ function Item(props: ItemProps) {
 		icon,
 	} = props;
 	return (
-		<ListItem disablePadding>
+		<ul>
 			<Link href={href}>
-				<ListItemButton sx={{ width: 250 }}>
-					<ListItemIcon>
-						{icon}
-					</ListItemIcon>
-					<ListItemText>
+				<li className="w-[250px]">
+					{icon}
+					<div>
 						{children}
-					</ListItemText>
-				</ListItemButton>
+					</div>
+				</li>
 			</Link>
-		</ListItem>
+		</ul>
 	);
 }

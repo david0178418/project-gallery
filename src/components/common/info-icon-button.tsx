@@ -1,25 +1,19 @@
-import type { TooltipProps } from '@mui/material/Tooltip';
-
 import { InfoIcon } from '@components/icons';
-import { IconButton, Tooltip } from '@ui';
-import { forwardRef } from 'react';
+import { Button } from '@components/ui/button';
+import Tooltip from './tooltip';
 
 interface Props {
 	label: string;
-	placement?: TooltipProps['placement'];
 }
 
-export
-const ShareIconButton = forwardRef((props: Props, ref) => {
-	const {
-		label,
-		placement = 'bottom',
-	} = props;
+export default
+function ShareIconButton(props: Props,) {
+	const { label } = props;
 	return (
-		<Tooltip title={label} placement={placement} ref={ref}>
-			<IconButton size="small">
+		<Tooltip label={label} >
+			<Button>
 				<InfoIcon fontSize="small" />
-			</IconButton>
+			</Button>
 		</Tooltip>
 	);
-});
+}

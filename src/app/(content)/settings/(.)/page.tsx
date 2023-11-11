@@ -9,11 +9,7 @@ import { DbUserProfile, WriteUserProfile } from '@common/types/UserProfile';
 import { pick } from '@common/utils';
 import ProfilePhotoUploader from './profile-photo-uploader';
 import DeleteProfileButton from './delete-profile-button';
-import {
-	Box,
-	Button,
-	Typography,
-} from '@ui';
+import { Button } from '@components/ui/button';
 
 export default
 async function SettingsLayout() {
@@ -27,9 +23,9 @@ async function SettingsLayout() {
 
 	if(!userProfile) {
 		return (
-			<Typography>
+			<div>
 				There was an issue loading your user info.
-			</Typography>
+			</div>
 		);
 	}
 
@@ -37,27 +33,27 @@ async function SettingsLayout() {
 
 	return (
 		<>
-			<Box padding={2}>
+			<div className="p-2">
 				<ProfilePhotoUploader
 					avatarUrl={userProfile.avatar}
 					username={user.username}
 				/>
 				{userProfile.avatar && (
-					<Box paddingTop={2}>
+					<div className="pt-2">
 						<DeleteProfileButton />
-					</Box>
+					</div>
 				)}
-			</Box>
-			<Typography>
+			</div>
+			<div>
 				Signed in as <strong>{user.username}</strong>
-			</Typography>
-			<Typography>
+			</div>
+			<div>
 				Email: <strong>{user.email}</strong>
-			</Typography>
-			<Box paddingTop={2}>
+			</div>
+			<div className="pt-2">
 				<LogoutButton />
-			</Box>
-			<Box paddingY={2}>
+			</div>
+			<div className="py-2">
 				<Link
 					shallow
 					passHref
@@ -67,7 +63,7 @@ async function SettingsLayout() {
 						My Gallery
 					</Button>
 				</Link>
-			</Box>
+			</div>
 			<UserProfileForm userProfile={dbUserProfileToWriteUserProfile(userProfile)} />
 		</>
 	);

@@ -3,11 +3,7 @@ import { SearchForm } from '@components/search-form';
 import { fetchJournals, fetchProjects } from '@server/queries';
 import JournalCard from '@components/journal-card';
 import ProjectCard from '@components/project-card';
-import {
-	Box,
-	Grid,
-	Typography,
-} from '@ui';
+import { cn } from '@/lib/utils';
 
 export default
 async function HomePage() {
@@ -18,65 +14,54 @@ async function HomePage() {
 		<>
 			<ScrollContent
 				header={
-					<Box
-						sx={{
-							paddingTop: 1,
-							paddingBottom: 1,
-						}}
-					>
-						<Box
-							paddingBottom={1}
-							sx={{
-								paddingLeft: {
-									xs: 2,
-									sm: 10,
-									md: 15,
-									lg: 20,
-								},
-								paddingRight: {
-									xs: 2,
-									sm: 10,
-									md: 15,
-									lg: 20,
-								},
-							}}
+					<div className="pt-1 pb-1">
+						<div
+							className={cn(
+								'pb-1',
+								'pl-2',
+								'sm:pl-10',
+								'md:pl-15',
+								'lg:pl-20',
+								'pr-2',
+								'sm:pr-10',
+								'md:pr-15',
+								'lg:pr-20',
+							)}
 						>
 							<SearchForm />
-						</Box>
-					</Box>
+						</div>
+					</div>
 				}
 			>
-				<Typography variant="h6">
-						Projects
-				</Typography>
-				<Grid padding={1} container spacing={1} >
+				<div className="text-lg">
+					Projects
+				</div>
+				<div className="p-1 grid grid-cols-12 gap-1">
 					{projects.slice(0, 2).map(p => (
-						<Grid
+						<div
 							key={p._id.toString()}
-							item
-							xs={12}
-							md={6}
+							className="col-span-12 md:col-span-6"
 						>
 							{/** div hack to get around mui async child issue */}
 							<div>
 								<ProjectCard project={p} />
 							</div>
-						</Grid>
+						</div>
 					))}
-				</Grid>
-				<Typography variant="h6">
+				</div>
+				<div className="text-lg">
 					Journal Posts
-				</Typography>
+				</div>
 				{journals.map(j => (
-					<Box
-						padding={1}
+					<div
 						key={j._id.toString()}
+						className="p-1"
 					>
 						{/** adding extra "div" since BOX seems to be angry with an async child */}
 						<div>
 							<JournalCard journal={j} />
 						</div>
-					</Box>
+					</div>
 				))}
 			</ScrollContent>
 		</>

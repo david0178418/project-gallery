@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Snackbar, IconButton } from '@ui';
-import { CloseIcon } from '@components/icons';
 import { clearCurrentToastMsgAtom, toastMsgAtom } from '@common/atoms';
 import { DefaultToastMsgDelay } from '@common/constants';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
-	useAtomValue,
-	useSetAtom,
-} from 'jotai';
+	Toast as ShadCnToast,
+	ToastTitle,
+	ToastClose,
+	ToastDescription,
+} from '@/components/ui/toast';
 
 export default
 function Toast() {
@@ -16,6 +17,7 @@ function Toast() {
 	const {
 		delay = DefaultToastMsgDelay,
 		message = '',
+		title = '',
 		onClose = () => {},
 	} = toastMsg || {};
 
@@ -29,21 +31,27 @@ function Toast() {
 	}
 
 	return (
-		<Snackbar
-			open={isOpen}
-			autoHideDuration={delay}
-			onClose={handleClose}
-			TransitionProps={{ onExited: clearMsg }}
-			message={message}
-			action={
-				<IconButton
-					size="small"
-					color="inherit"
-					onClick={handleClose}
-				>
-					<CloseIcon fontSize="small" />
-				</IconButton>
-			}
-		/>
+		<>
+			<ShadCnToast
+				open={isOpen}
+				duration={delay}
+				onOpenChange={newOpenState => !newOpenState && clearMsg()}
+			>
+				<div className="grid gap-1">
+					{title && (
+						<ToastTitle>
+							{title}
+						</ToastTitle>
+					)}
+					{message && (
+						<ToastDescription>
+							{message}
+						</ToastDescription>
+					)}
+				</div>
+				{message}
+				<ToastClose onClick={handleClose} />
+			</ShadCnToast>
+		</>
 	);
 }

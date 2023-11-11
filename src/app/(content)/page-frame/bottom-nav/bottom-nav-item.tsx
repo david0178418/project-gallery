@@ -1,37 +1,57 @@
 'use client';
-import { BottomNavigationAction } from '@ui';
+import { ReactNode } from 'react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { useSelectedLayoutSegment } from 'next/navigation';
 
-interface Props {
+type Props = {
 	label: string;
 	href: string;
-	activeIcon: any;
-	inactiveIcon: any;
-}
+} & ({
+	activeIcon: ReactNode;
+	inactiveIcon: ReactNode;
+} | {
+	icon: ReactNode;
+});
 
 export default
 function BottomNavItem(props: Props) {
 	const {
 		label,
 		href,
-		activeIcon,
-		inactiveIcon,
 	} = props;
 	const pathname = useSelectedLayoutSegment();
 
 	return (
-		<BottomNavigationAction
-			showLabel
-			label={label}
+		<Link
 			href={href}
-			value={href}
-			LinkComponent={Link}
-			icon={
+			className={cn(
+
+				'inline-flex',
+				'flex-col',
+				'items-center',
+				'justify-center',
+				'px-5',
+				'hover:bg-gray-50',
+				'dark:hover:bg-gray-800',
+				'group',
+			)}
+		>
+			{'icon' in props && props.icon}
+			{!('icon' in props) && (
 				href === `/${pathname}` ?
-					activeIcon :
-					inactiveIcon
-			}
-		/>
+					props.activeIcon :
+					props.inactiveIcon
+			)}
+			<span className={cn(
+				'text-sm',
+				'text-gray-500',
+				'dark:text-gray-400',
+				'group-hover:text-blue-600',
+				'dark:group-hover:text-blue-500',
+			)}>
+				{label}
+			</span>
+		</Link>
 	);
 }
