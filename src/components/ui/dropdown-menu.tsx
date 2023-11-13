@@ -2,11 +2,13 @@
 
 import * as React from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import {
-	Check, ChevronRight, Circle,
-} from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import {
+	ConfirmIcon,
+	PositiveBulletIcon,
+	SubMenuIcon,
+} from '@components/icons';
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
@@ -26,7 +28,10 @@ React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
 	inset?: boolean
 }
 >(({
-	className, inset, children, ...props
+	className,
+	inset,
+	children,
+	...props
 }, ref) => (
 	<DropdownMenuPrimitive.SubTrigger
 		ref={ref}
@@ -38,7 +43,7 @@ React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
 		{...props}
 	>
 		{children}
-		<ChevronRight className="ml-auto h-4 w-4" />
+		<SubMenuIcon className="ml-auto h-4 w-4" />
 	</DropdownMenuPrimitive.SubTrigger>
 ));
 DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;
@@ -117,7 +122,7 @@ React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
 	>
 		<span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
 			<DropdownMenuPrimitive.ItemIndicator>
-				<Check className="h-4 w-4" />
+				<ConfirmIcon className="h-4 w-4" />
 			</DropdownMenuPrimitive.ItemIndicator>
 		</span>
 		{children}
@@ -142,7 +147,7 @@ React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
 	>
 		<span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
 			<DropdownMenuPrimitive.ItemIndicator>
-				<Circle className="h-2 w-2 fill-current" />
+				<PositiveBulletIcon className="h-2 w-2 fill-current" />
 			</DropdownMenuPrimitive.ItemIndicator>
 		</span>
 		{children}

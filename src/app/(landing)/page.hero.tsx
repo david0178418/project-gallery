@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import MainImage from './homepage-main-image.png';
-import { CheckCircleIcon } from '@components/icons';
+import { PositiveBulletIcon } from '@components/icons';
 import Link from 'next/link';
 import { Paths, SpecialCharacterCodes } from '@common/constants';
 import { Button } from '@components/ui/button';
@@ -38,7 +38,7 @@ function Hero() {
 							].map((t, i) => (
 								<li key={i}>
 									<div className="min-w-md-[56px] pr-1 justify-end">
-										<CheckCircleIcon color="primary" />
+										<PositiveBulletIcon color="primary" />
 										{t}
 									</div>
 								</li>

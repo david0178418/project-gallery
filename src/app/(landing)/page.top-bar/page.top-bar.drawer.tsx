@@ -4,16 +4,16 @@ import Link from 'next/link';
 import { ReactNode, useState } from 'react';
 import { Paths } from '@common/constants';
 import { User } from 'next-auth';
-import { Logout } from '@mui/icons-material';
 import { cn } from '@/lib/utils';
+import { Button } from '@components/ui/button';
 import {
 	BlogIcon,
 	HomeIcon,
 	LoginIcon,
+	LogoutIcon,
 	MenuIcon,
 	RegisterIcon,
 } from '@components/icons';
-import { Button } from '@components/ui/button';
 
 interface Props {
 	user: User | null;
@@ -86,7 +86,7 @@ function TopBarDrawer(props: Props) {
 								</Item>
 								<Item
 									href={'???'}
-									icon={<Logout/>}
+									icon={<LogoutIcon/>}
 								>
 									Sign out
 								</Item>

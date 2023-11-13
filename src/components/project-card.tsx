@@ -5,7 +5,6 @@ import { Paths } from '@common/constants';
 import { ShareIconButton } from './common/share-button';
 import { getServerSession } from '@server/auth-options';
 import Tooltip from './common/tooltip';
-import { Button } from '@mui/material';
 import Image from 'next/image';
 import {
 	FavoriteIcon,
@@ -13,6 +12,7 @@ import {
 	EditIcon,
 } from '@components/icons';
 import Card from './common/card';
+import { Button } from './ui/button';
 
 interface Props {
 	project: DbProject | UiProject;

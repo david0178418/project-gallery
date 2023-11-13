@@ -1,4 +1,4 @@
-import { LogoSmall } from '@common/images';
+import { LogoSmallImage } from '@common/images';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
@@ -30,7 +30,7 @@ async function TopBar() {
 									height={100}
 									width={100}
 									alt=""
-									src={LogoSmall}
+									src={LogoSmallImage}
 								/>
 								<div className="text-xl font-bold hidden sm:inline">
 									ProjectGallery.me

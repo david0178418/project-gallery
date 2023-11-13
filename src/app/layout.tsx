@@ -1,16 +1,16 @@
 import '@styles/globals.css';
 
-import { Roboto } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 import Providers from './providers';
 import { AppName, BaseUrl } from '@common/constants';
-import { LogoMain } from '@common/images';
+import { LogoMainImage } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 
-const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
+const SocialImageUrl = urlJoin(BaseUrl, LogoMainImage.src);
 
 export const metadata: Metadata = {
 	metadataBase: new URL(BaseUrl),
@@ -32,11 +32,7 @@ export const metadata: Metadata = {
 	description: 'Your work, your story - Share it with the world on ProjectGallery.me!',
 };
 
-const font = Roboto({
-	weight: ['300', '400', '500', '700'],
-	subsets: ['latin'],
-	display: 'swap',
-});
+const font = Inter({ subsets: ['latin'] });
 
 interface Props {
 	children: ReactNode;

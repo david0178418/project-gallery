@@ -5,7 +5,7 @@ import UserProfileTabs from './user-profile-tabs';
 import { ReactNode } from 'react';
 import CommonStuff from '@app/(content)/common-stuff';
 import { BackIcon, EditIcon } from '@components/icons';
-import { LogoMain } from '@common/images';
+import { LogoMainImage } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -20,7 +20,7 @@ import {
 	SpecialCharacterCodes,
 } from '@common/constants';
 
-const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
+const SocialImageUrl = urlJoin(BaseUrl, LogoMainImage.src);
 
 interface Props {
 	params: {

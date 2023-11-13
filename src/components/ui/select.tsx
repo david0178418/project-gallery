@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { Check, ChevronDown } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import { ConfirmIcon, ExpandMoreIcon } from '@components/icons';
 
 const Select = SelectPrimitive.Root;
 
@@ -28,7 +28,7 @@ React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 	>
 		{children}
 		<SelectPrimitive.Icon asChild>
-			<ChevronDown className="h-4 w-4 opacity-50" />
+			<ExpandMoreIcon className="h-4 w-4 opacity-50" />
 		</SelectPrimitive.Icon>
 	</SelectPrimitive.Trigger>
 ));
@@ -96,7 +96,7 @@ React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
 	>
 		<span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
 			<SelectPrimitive.ItemIndicator>
-				<Check className="h-4 w-4" />
+				<ConfirmIcon className="h-4 w-4" />
 			</SelectPrimitive.ItemIndicator>
 		</span>
 
