@@ -36,7 +36,6 @@ const font = Inter({ subsets: ['latin'] });
 
 interface Props {
 	children: ReactNode;
-	modal: ReactNode;
 }
 
 export default function RootLayout(props: Props) {
@@ -45,7 +44,6 @@ export default function RootLayout(props: Props) {
 			<body>
 				<Providers>
 					{props.children}
-					{props.modal}
 				</Providers>
 				<Analytics />
 				<SpeedInsights/>

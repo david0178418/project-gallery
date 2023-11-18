@@ -4,14 +4,12 @@ import MarkdownContent from '@components/markdown-content';
 import UserProfileTabs from './user-profile-tabs';
 import { ReactNode } from 'react';
 import CommonStuff from '@app/(content)/common-stuff';
-import { BackIcon, EditIcon } from '@components/icons';
+import { EditIcon } from '@components/icons';
 import { LogoMainImage } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerSession } from '@server/auth-options';
-import { ScrollContent } from '@components/scroll-content';
-import { Avatar, AvatarImage } from '@components/ui/avatar';
 import Fab from '@components/common/fab';
 import {
 	AppName,
@@ -19,6 +17,7 @@ import {
 	Paths,
 	SpecialCharacterCodes,
 } from '@common/constants';
+import Avatar from '@components/common/avatar';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMainImage.src);
 
@@ -114,45 +113,32 @@ export default async function UserGalleryLayout(props: Props) {
 	const isOwner = session?.user.id === profileUser._id.toString();
 
 	return (
-		<div className="container h-screen overflow-hidden relative px-0 sm:px-1 lg:px-2">
-			<ScrollContent
-				header={
-					<div className="pt-1 pb-2">
-						<div className="text-right">
-							<Link href={Paths.Home} >
-								<div className="text-right flex items-center text-blue-500 justify-end">
-									<BackIcon fontSize="inherit"/>
-									<div>
-										ProjectGallery.me
-									</div>
-								</div>
-							</Link>
-						</div>
-						<div className="flex flex-col items-center justify-center">
-							{userProfile?.avatar && (
-								<Avatar
-									className="w-96 h-96"
-								>
-									<AvatarImage src={userProfile.avatar} />
-								</Avatar>
-							)}
-							<div className="font-bold">
-								{username}{SpecialCharacterCodes.RSQUO}s Gallery
-							</div>
-						</div>
-						{userProfile?.shortBio && (
-							<div className="container max-w-screen-sm" >
-								<MarkdownContent>
-									{userProfile.shortBio}
-								</MarkdownContent>
-							</div>
-						)}
-						<UserProfileTabs username={username} />
+		<div className="container relative px-0 sm:px-1 lg:px-2">
+			<div className="pt-1 pb-2">
+				<div className="flex flex-col items-center justify-center">
+					{userProfile?.avatar && (
+						<Avatar
+							className="w-64 h-64"
+							src={userProfile.avatar}
+							fallback={userProfile.username.at(0) || ''}
+						/>
+					)}
+					<div className="font-bold">
+						{username}{SpecialCharacterCodes.RSQUO}s Gallery
 					</div>
-				}
-			>
-				{children}
-			</ScrollContent>
+				</div>
+				{userProfile?.shortBio && (
+					<div className="container max-w-screen-sm" >
+						<MarkdownContent>
+							{userProfile.shortBio}
+						</MarkdownContent>
+					</div>
+				)}
+				<div className="text-center">
+					<UserProfileTabs username={username} />
+				</div>
+			</div>
+			{children}
 			{isOwner && (
 				<Link href={Paths.Settings} >
 					<Fab

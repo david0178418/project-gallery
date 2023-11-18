@@ -41,15 +41,18 @@ export default function UserProfileTabs(props: Props) {
 	return (
 		<>
 			<Tabs value={tab}>
-				{Object.values(TabPaths).map(t => (
-					<TabsList key={t.value}>
-						<TabsTrigger value={t.value}>
-							<Link href={t.path(username)}>
+				<TabsList className="grid w-full grid-cols-3">
+					{Object.values(TabPaths).map(t => (
+						<TabsTrigger
+							key={t.value}
+							value={t.value}
+						>
+							<Link href={t.path(username)} className="text-lg">
 								{t.value}
 							</Link>
 						</TabsTrigger>
-					</TabsList>
-				))}
+					))}
+				</TabsList>
 			</Tabs>
 		</>
 	);

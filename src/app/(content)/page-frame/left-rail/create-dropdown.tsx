@@ -24,7 +24,7 @@ function CreateDropdown() {
 						<AddIcon/>
 					</Fab>
 					<Fab className="bg-blue-500 w-full hidden md:inline-flex">
-						<AddIcon sx={{ mr: 1 }} />
+						<AddIcon className="mr-1" />
 						Create
 					</Fab>
 				</div>
