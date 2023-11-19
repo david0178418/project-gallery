@@ -1,14 +1,14 @@
 
+import { ReactNode } from 'react';
 import {
 	Avatar as ShadCnAvatar,
 	AvatarFallback,
 	AvatarImage,
 } from '@/components/ui/avatar';
-import { cn } from '@/src/lib/utils';
 
 interface Props {
 	src?: string;
-	fallback: string;
+	fallback?: ReactNode;
 	className?: string;
 }
 
@@ -20,11 +20,13 @@ export default function Avatar(props: Props) {
 	} = props;
 
 	return (
-		<ShadCnAvatar className={cn('bg-red-500', className)}>
+		<ShadCnAvatar className={className}>
 			<AvatarImage className="object-cover" src={src} />
-			<AvatarFallback>
-				{fallback}
-			</AvatarFallback>
+			{fallback && (
+				<AvatarFallback>
+					{fallback}
+				</AvatarFallback>
+			)}
 		</ShadCnAvatar>
 	);
 }

@@ -120,7 +120,6 @@ export default async function UserGalleryLayout(props: Props) {
 						<Avatar
 							className="w-64 h-64"
 							src={userProfile.avatar}
-							fallback={userProfile.username.at(0) || ''}
 						/>
 					)}
 					<div className="font-bold">
