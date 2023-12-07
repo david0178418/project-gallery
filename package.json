@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:inspect": "NODE_OPTIONS='--inspect' next dev",
-    "dev:services": "docker-compose up",
+    "dev:services": "docker-compose up --abort-on-container-exit",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
