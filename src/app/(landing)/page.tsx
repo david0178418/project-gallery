@@ -7,7 +7,9 @@ function LandingPage() {
 	return (
 		<>
 			<TopBar />
-			<Hero />
+			<div className="mt-40">
+				<Hero />
+			</div>
 			<Features />
 		</>
 	);
