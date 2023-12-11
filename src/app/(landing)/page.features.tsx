@@ -14,26 +14,8 @@ export default
 function Features() {
 	return (
 		<>
-			<div className="grid mt-10 flex-col-reverse md:flex-col bg-[#5271ff11]">
-				<div className="col-span-12 md:col-span-7 p-3 text-center md:text-right">
-					<ImageWrapper>
-						<Image
-							height={100}
-							width={100}
-							alt=""
-							src={Img1}
-							style={{
-								position: 'revert',
-								objectFit: 'contain',
-								height: 'revert',
-								width: '100%',
-								maxHeight: '100%',
-								maxWidth: 600,
-							}}
-						/>
-					</ImageWrapper>
-				</div>
-				<div className="col-span-12 md:col-span-4 p-5 pb-0 md:pb-5 text-center md:text-left">
+			<div className="grid grid-cols-12 mt-10 bg-[#5271ff11]">
+				<div className="col-span-12 md:col-span-4 p-5 pb-0 md:pb-5 text-center md:text-left md:order-2">
 					<div className="font-bold mb-2">
 						Let Your Work Speak for Itself
 					</div>
@@ -42,13 +24,27 @@ function Features() {
 						Our platform puts the spotlight on your talent and creativity, allowing you to showcase your skills with ease.
 					</p>
 				</div>
+				<div className="col-span-12 md:col-span-7 p-3 text-center md:text-right md:order-1">
+					<ImageWrapper>
+						<Image
+							alt=""
+							className="object-contain h-full w-full"
+							src={Img1}
+							style={{
+								position: 'revert',
+								height: 'revert',
+								maxWidth: 600,
+							}}
+						/>
+					</ImageWrapper>
+				</div>
 			</div>
 
-			<div className="mt-5">
+			<div className="grid grid-cols-12 mt-5">
 				<div className={cn(
-					'col-start-2',
 					'col-span-12',
 					'md:col-span-4',
+					'md:col-start-2',
 					'p-5',
 					'pt-0',
 					'md:pt-5',
@@ -73,16 +69,12 @@ function Features() {
 				)}>
 					<ImageWrapper>
 						<Image
-							height={100}
-							width={100}
 							alt=""
 							src={Img2}
+							className="object-contain h-full w-full"
 							style={{
 								position: 'revert',
-								objectFit: 'contain',
 								height: 'revert',
-								width: '100%',
-								maxHeight: '100%',
 								maxWidth: 600,
 							}}
 						/>
@@ -91,35 +83,11 @@ function Features() {
 			</div>
 
 			<div className={cn(
+				'grid',
+				'grid-cols-12',
 				'mt-5',
-				'flex-row-reverse',
-				'md:flex-row',
 				'bg-[#5271ff11]'
 			)}>
-				<div className={cn(
-					'col-span-12',
-					'col-span-7',
-					'p-3',
-					'text-center',
-					'md:text-right'
-				)}>
-					<ImageWrapper>
-						<Image
-							height={100}
-							width={100}
-							alt=""
-							src={Img3}
-							style={{
-								position: 'revert',
-								objectFit: 'contain',
-								height: 'revert',
-								width: '100%',
-								maxHeight: '100%',
-								maxWidth: 600,
-							}}
-						/>
-					</ImageWrapper>
-				</div>
 				<div className={cn(
 					'col-span-12',
 					'md:col-span-4',
@@ -128,6 +96,7 @@ function Features() {
 					'md:pb-5',
 					'text-center',
 					'md:text-left',
+					' md:order-2',
 				)}>
 					<div className="font-bold mb-2">
 						Links and Categories
@@ -137,11 +106,32 @@ function Features() {
 						Take it a step further by linking off-site for the project itself or any other information that others would find interesting.
 					</p>
 				</div>
+				<div className={cn(
+					'col-span-12',
+					'col-span-7',
+					'p-3',
+					'text-center',
+					'md:text-right',
+					' md:order-1',
+				)}>
+					<ImageWrapper>
+						<Image
+							alt=""
+							src={Img3}
+							className="object-contain h-full w-full"
+							style={{
+								position: 'revert',
+								height: 'revert',
+								maxWidth: 600,
+							}}
+						/>
+					</ImageWrapper>
+				</div>
 			</div>
 
-			<div className="flex mb-32 text-center mt-10 md:mt-15">
+			<div className="text-center max-w-md mx-auto mt-10 md:mt-15">
 				<Link href={Paths.UserRegister}>
-					<Button className="rounded-md text-lg w-1">
+					<Button className="rounded-full w-full box-content p-2 text-xl font-normal">
 						Create Your{S}<strong>Free</strong>{S}Gallery
 					</Button>
 				</Link>

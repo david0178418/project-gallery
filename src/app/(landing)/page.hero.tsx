@@ -66,6 +66,8 @@ function Hero() {
 					alt=""
 					priority
 					src={MainImage}
+					height={MainImage.height}
+					width={MainImage.width}
 					className="object-contain inline w-full max-h-full max-w-4xl mr-20 "
 					style={{
 						position: 'revert',
