@@ -129,7 +129,7 @@ function Features() {
 				</div>
 			</div>
 
-			<div className="text-center max-w-md mx-auto mt-10 md:mt-15">
+			<div className="text-center max-w-md mx-auto mt-10 md:mt-15 mb-20 px-1">
 				<Link href={Paths.UserRegister}>
 					<Button className="rounded-full w-full box-content p-2 text-xl font-normal">
 						Create Your{S}<strong>Free</strong>{S}Gallery

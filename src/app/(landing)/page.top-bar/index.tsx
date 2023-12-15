@@ -14,7 +14,7 @@ async function TopBar() {
 	const session = await getServerSession();
 	const user = session?.user || null;
 	return (
-		<div className="fixed shadow top-0 left-0 w-full bg-white bg-opacity-75 z-10">
+		<div className="fixed shadow top-0 left-0 w-full bg-white bg-opacity-90 z-10">
 			<div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between h-16 border-b">
 				{/** set toolbar https://tailwindui.com/components/application-ui/navigation/navbars */}
 				<div className="w-full h-full flex">
