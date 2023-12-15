@@ -54,7 +54,7 @@ async function TopBar() {
 					{user && (
 						<>
 							<div className="mr-1">
-								<LogoutButton />
+								<LogoutButton size="sm" />
 							</div>
 							<Link href={Paths.Home}>
 								<Button size="sm">

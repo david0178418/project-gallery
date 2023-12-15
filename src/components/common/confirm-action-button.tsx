@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { ComponentProps, useState } from 'react';
 import { Button } from '@components/ui/button';
 import {
 	Dialog,
@@ -10,7 +10,7 @@ import {
 	DialogTitle,
 } from '@components/ui/dialog';
 
-interface Props {
+interface Props extends Pick<ComponentProps<typeof Button>, 'variant' | 'size'> {
 	label: string;
 	confirmationMsg: string;
 	onConfirm: () => void;
@@ -20,6 +20,8 @@ export default
 function ConfirmActionButton(props: Props) {
 	const [isOpen, setIsOpen] = useState(false);
 	const {
+		variant = 'ghost',
+		size,
 		label,
 		onConfirm,
 		confirmationMsg,
@@ -33,8 +35,8 @@ function ConfirmActionButton(props: Props) {
 	return (
 		<>
 			<Button
-				variant="ghost"
-				color="error"
+				variant={variant}
+				size={size}
 				onClick={() => setIsOpen(true)}
 			>
 				{label}
