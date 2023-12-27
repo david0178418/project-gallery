@@ -8,6 +8,7 @@ import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 
@@ -50,6 +51,7 @@ export default function RootLayout(props: Props) {
 					{props.children}
 					{props.modal}
 				</Providers>
+				<Analytics />
 				<SpeedInsights/>
 			</body>
 		</html>
