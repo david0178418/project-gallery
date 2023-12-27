@@ -9,6 +9,7 @@ import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
+import { Toaster } from '@/components/ui/sonner';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMainImage.src);
 
@@ -47,6 +48,7 @@ export default function RootLayout(props: Props) {
 				</Providers>
 				<Analytics />
 				<SpeedInsights/>
+				<Toaster/>
 			</body>
 		</html>
 	);
