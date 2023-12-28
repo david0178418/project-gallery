@@ -25,7 +25,7 @@ function TextField(props: Props) {
 	const id = label?.toLowerCase();
 
 	return (
-		<div className="grid w-full max-w-sm items-center gap-1.5">
+		<div className="grid pt-1 pb-3 w-full max-w-sm items-center gap-1.5">
 			{label && (
 				<Label htmlFor={id}>{label}</Label>
 			)}
