@@ -68,7 +68,7 @@ function RegistrationModal() {
 
 	return (
 		<>
-			<div className="font-bold">
+			<div className="font-bold text-lg">
 				Create Account
 			</div>
 			<div>
@@ -114,22 +114,18 @@ function RegistrationModal() {
 					/>
 				</form>
 			</div>
-			<div className="flex justify-end">
+			<div className="pt-3 grid gap-1 text-center">
 				<Button
-					variant="ghost"
+					className="w-full"
 					disabled={!valid}
 					onClick={handleRegister}
 				>
 					Register
 				</Button>
 			</div>
-			<div className="flex justify-center">
-				<Link
-					shallow
-					replace
-					href={Paths.UserLoginEmail}
-				>
-					<Button>
+			<div className="text-center">
+				<Link href={Paths.UserLoginEmail} replace >
+					<Button variant="link">
 						Login with Existing Account
 					</Button>
 				</Link>
