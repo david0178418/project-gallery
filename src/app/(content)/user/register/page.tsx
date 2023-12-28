@@ -3,17 +3,17 @@ import { useState } from 'react';
 import { Key } from 'ts-key-enum';
 import { login } from '@client/api-calls';
 import { useSetAtom } from 'jotai';
-import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
+import { loadingAtom } from '@common/atoms';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Register from '@server/actions/register';
 import TextField from '@components/common/text-field';
 import { Button } from '@components/ui/button';
+import { toast } from 'sonner';
 
 export default
 function RegistrationModal() {
-	const pushToastMsg = useSetAtom(pushToastMsgAtom);
 	const setLoading = useSetAtom(loadingAtom);
 	const [username, setUsername] = useState('');
 	const { refresh } = useRouter();
@@ -49,7 +49,7 @@ function RegistrationModal() {
 			});
 
 			if(result.ok && await login(username, password)) {
-				pushToastMsg(`Logged in as ${username}`);
+				toast(`Logged in as ${username}`);
 				setUsername('');
 				setEmail('');
 
@@ -58,7 +58,7 @@ function RegistrationModal() {
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
 
-			errors.map(pushToastMsg);
+			errors.map((msg: string) => toast(msg));
 			console.log(e);
 		}
 

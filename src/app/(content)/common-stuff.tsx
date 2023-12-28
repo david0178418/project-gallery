@@ -1,12 +1,12 @@
 'use client';
 import Loader from '@components/loader';
-import Toast from '@components/toast';
+import { Toaster } from 'sonner';
 
 export default
 function CommonStuff() {
 	return (
 		<>
-			<Toast />
+			<Toaster />
 			<Loader />
 		</>
 	);

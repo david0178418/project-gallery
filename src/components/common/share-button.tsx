@@ -1,9 +1,9 @@
 'use client';
-import { usePushToastMsg } from '@common/atoms';
 import { urlJoin } from '@common/utils';
 import { ShareIcon } from '@components/icons';
 import { Button } from '@components/ui/button';
 import Tooltip from './tooltip';
+import { toast } from 'sonner';
 
 interface Props {
 	label: string;
@@ -15,7 +15,6 @@ export
 // TODO Was adding the tooltip an oversight?
 // const ShareIconButton = forwardRef((props: Props, ref) => {
 function ShareIconButton(props: Props) {
-	const pushToastMsg = usePushToastMsg();
 	const {
 		label,
 		url,
@@ -23,7 +22,7 @@ function ShareIconButton(props: Props) {
 	} = props;
 
 	async function handleShare() {
-		pushToastMsg(await share(url, label, shareMsg));
+		toast(await share(url, label, shareMsg));
 	}
 
 	return (

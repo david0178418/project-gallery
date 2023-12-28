@@ -4,8 +4,9 @@ import { TextFieldLengthValidation } from '@components/common/text-field-length-
 import { useCallback, useState } from 'react';
 import { MaxUserProfileBioLength, MaxUserProfileShortBioLength } from '@common/constants';
 import { ConfirmButton } from '@components/common/buttons';
-import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import { useSetLoading } from '@common/atoms';
 import updateProfile from './update-profile-action';
+import { toast } from 'sonner';
 
 interface Props {
 	userProfile: WriteUserProfile;
@@ -15,7 +16,6 @@ export default
 function UserProfileForm(props: Props) {
 	const { userProfile: rawUserProfile } = props;
 	const setLoading = useSetLoading();
-	const pushToastMsg = usePushToastMsg();
 	const [userProfile, setUserProfile] = useState(rawUserProfile);
 
 	const {
@@ -39,13 +39,13 @@ function UserProfileForm(props: Props) {
 
 		try {
 			const response = await updateProfile(userProfile);
-			pushToastMsg('Profile updated!');
+			toast('Profile updated!');
 
 			if(!response.ok) {
-				response.errors?.map(pushToastMsg);
+				response.errors?.map(msg => toast(msg));
 			}
 		} catch {
-			pushToastMsg('Something whent wrong');
+			toast('Something whent wrong');
 		}
 
 		setLoading(false);

@@ -26,14 +26,6 @@ interface Settings {
 	foo: 'bar';
 }
 
-export
-interface ToastMesssage {
-	message: ReactNode;
-	title?: ReactNode;
-	delay?: number;
-	onClose?(): void;
-}
-
 declare module 'next-auth' {
 	interface User {
 		id: string;

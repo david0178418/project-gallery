@@ -9,7 +9,7 @@ import { useCallback, useState } from 'react';
 import { ProjectImage, WriteProject } from '@common/types/Project';
 import Label from '@components/label';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
-import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import { useSetLoading } from '@common/atoms';
 import saveProjectAction from './save-project-action';
 import { useRouteBackDefault } from '@common/hooks';
 import { SaveIcon } from '@components/icons';
@@ -29,15 +29,11 @@ import {
 	maxLabelCount,
 } from '@common/constants';
 import {
-	FormItem,
-	FormControl,
-	FormLabel,
-} from '@components/ui/form';
-import {
 	Tabs,
 	TabsList,
 	TabsTrigger,
 } from '@/components/ui/tabs';
+import { toast } from 'sonner';
 
 function dateToDateSubstring(date: Date) {
 	return date.toISOString().substring(0, 10);
@@ -68,7 +64,6 @@ function EditProjectForm(props: Props) {
 	const [selectedTab, setSelectedTab] = useState('description');
 	const setLoading = useSetLoading();
 	const routeBack = useRouteBackDefault();
-	const pushToastMsg = usePushToastMsg();
 	const handleChange = useCallback((projectUpdates: Partial<WriteProject>) => {
 		setProject({
 			...project,
@@ -129,15 +124,15 @@ function EditProjectForm(props: Props) {
 			const result = await saveProjectAction(project);
 
 			if(!result.ok) {
-				result.errors?.map(pushToastMsg);
+				result.errors?.map(msg => toast(msg));
 			} else {
-				pushToastMsg(`"${project.title}" saved`);
+				toast(`"${project.title}" saved`);
 				routeBack();
 			}
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
 
-			errors.map(pushToastMsg);
+			errors.map((msg: string) => toast(msg));
 			console.log(e);
 		}
 
@@ -252,18 +247,18 @@ function EditProjectForm(props: Props) {
 						)}
 					</div>
 				</div>
-				<div className="pt-1">
-					<FormItem>
-						<FormControl>
-							<Checkbox
-								checked={unlisted}
-								onCheckedChange={(checked) => handleChange({ unlisted: !!checked })}
-							/>
-						</FormControl>
-						<FormLabel className="text-sm font-normal">
-							Unlisted
-						</FormLabel>
-					</FormItem>
+				<div className="pt-1 flex items-center space-x-2">
+					<Checkbox
+						id="unlisted"
+						checked={unlisted}
+						onCheckedChange={(checked) => handleChange({ unlisted: !!checked })}
+					/>
+					<label
+						htmlFor="unlisted"
+						className="text-sm font-medium cursor-pointer leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+					>
+						Unlisted
+					</label>
 				</div>
 			</form>
 			<div className="pt-2 text-right">

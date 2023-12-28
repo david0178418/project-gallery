@@ -2,14 +2,14 @@
 import { useState } from 'react';
 import { PasswordMaxLength, PasswordMinLength } from '@common/constants';
 import { useSetAtom } from 'jotai';
-import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
+import { loadingAtom } from '@common/atoms';
 import { ConfirmButton } from '@components/common/buttons';
 import updatePassword from './update-pw-action';
 import TextField from '@components/common/text-field';
+import { toast } from 'sonner';
 
 export default
 function UpdatePwPage() {
-	const pustToastMsg = useSetAtom(pushToastMsgAtom);
 	const setLoading = useSetAtom(loadingAtom);
 	const [touched, setTouched] = useState(false);
 	const [pw, setPw] = useState('');
@@ -34,11 +34,11 @@ function UpdatePwPage() {
 		try {
 			setLoading(true);
 			await updatePassword(pw);
-			pustToastMsg('Password updated!');
+			toast('Password updated!');
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
 
-			errors.map(pustToastMsg);
+			errors.map((msg: string) => toast(msg));
 			console.log(e);
 		}
 

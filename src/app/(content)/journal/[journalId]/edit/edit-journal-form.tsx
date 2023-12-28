@@ -6,7 +6,7 @@ import { WriteJournal } from '@common/types/Journal';
 import { useRouteBackDefault } from '@common/hooks';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import MarkdownContent from '@components/markdown-content';
-import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import { useSetLoading } from '@common/atoms';
 import { SaveIcon } from '@components/icons';
 import journalSaveAction from './journal-save-action';
 import { useCallback, useState } from 'react';
@@ -29,6 +29,7 @@ import {
 	TabsList,
 	TabsTrigger,
 } from '@/components/ui/tabs';
+import { toast } from 'sonner';
 
 const GeneralPost = 'general-post';
 
@@ -50,7 +51,6 @@ function EditJournalForm(props: Props) {
 		projectId,
 	} = journal;
 	const setLoading = useSetLoading();
-	const pushToastMsg = usePushToastMsg();
 	const routeBack = useRouteBackDefault();
 	const [showPreview, setShowPreview] = useState(false);
 
@@ -79,15 +79,15 @@ function EditJournalForm(props: Props) {
 			});
 
 			if(!result.ok) {
-				result.errors?.map(pushToastMsg);
+				result.errors?.map(msg => toast(msg));
 			} else {
-				pushToastMsg(`"${journal.title}" ${publish ? 'published' : 'saved'}`);
+				toast(`"${journal.title}" ${publish ? 'published' : 'saved'}`);
 				routeBack();
 			}
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
 
-			errors.map(pushToastMsg);
+			errors.map((msg: string) => toast(msg));
 			console.log(e);
 		}
 

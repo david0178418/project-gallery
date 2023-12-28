@@ -1,18 +1,18 @@
 'use client';
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
-import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import { useSetLoading } from '@common/atoms';
 import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Link from 'next/link';
 import oneClickSendAction from './one-click-send-action';
 import TextField from '@components/common/text-field';
 import { Button } from '@components/ui/button';
+import { toast } from 'sonner';
 
 export default
 function LoginEmailForm() {
 	const { replace } = useRouter();
-	const pushToastMsg = usePushToastMsg();
 	const setLoading = useSetLoading();
 	const [email, setEmail] = useState('');
 	const valid = email.includes('@');
@@ -28,10 +28,10 @@ function LoginEmailForm() {
 
 		try {
 			await oneClickSendAction(email);
-			pushToastMsg(`A login link will be sent to "${email}" if an account with this email exists.`);
+			toast(`A login link will be sent to "${email}" if an account with this email exists.`);
 			replace(Paths.Home);
 		} catch(e) {
-			pushToastMsg('Something went wrong. Try again.');
+			toast('Something went wrong. Try again.');
 			console.log(e);
 		}
 

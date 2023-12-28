@@ -1,21 +1,20 @@
 'use client';
 import { logout } from '@client/api-calls';
-import { usePushToastMsg } from '@common/atoms';
 import ConfirmActionButton from './common/confirm-action-button';
 import { ComponentProps } from 'react';
+import { toast } from 'sonner';
 
 type Props = Pick<ComponentProps<typeof ConfirmActionButton>, 'size'>;
 
 export default
 function LogoutButton(props: Props) {
 	const { size } = props;
-	const pustToastMsg = usePushToastMsg();
 
 	async function handleLogout() {
 		try {
 			await logout();
 		} catch(e) {
-			pustToastMsg('Something went wrong. Try again.');
+			toast('Something went wrong. Try again.');
 			console.log(e);
 		}
 	}

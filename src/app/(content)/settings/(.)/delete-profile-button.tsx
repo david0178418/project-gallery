@@ -2,18 +2,16 @@
 
 import ConfirmActionButton from '@components/common/confirm-action-button';
 import updateProfile from './update-profile-action';
-import { usePushToastMsg } from '@common/atoms';
+import { toast } from 'sonner';
 
 export default
 function DeleteProfileButton() {
-	const pustToastMsg = usePushToastMsg();
-
 	async function handleDelete() {
 		try {
 			await updateProfile({ avatar: '' });
-			pustToastMsg('Profile deleted.');
+			toast('Profile deleted.');
 		} catch(e) {
-			pustToastMsg('Something went wrong. Try again.');
+			toast('Something went wrong. Try again.');
 			console.log(e);
 		}
 	}

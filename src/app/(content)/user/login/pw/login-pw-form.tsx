@@ -4,7 +4,7 @@ import { Key } from 'ts-key-enum';
 import { login } from '@client/api-calls';
 import { inRange } from '@common/utils';
 import Link from 'next/link';
-import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import { useSetLoading } from '@common/atoms';
 import { useRouter } from 'next/navigation';
 import TextField from '@components/common/text-field';
 import { Button } from '@components/ui/button';
@@ -13,10 +13,10 @@ import {
 	UsernameMaxLength,
 	UsernameMinLength,
 } from '@common/constants';
+import { toast } from 'sonner';
 
 export default
 function LoginPwForm() {
-	const pushToastMsg = usePushToastMsg();
 	const setLoading = useSetLoading();
 	const { refresh } = useRouter();
 	const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -45,14 +45,14 @@ function LoginPwForm() {
 			const results = await login(usernameOrEmail, password);
 
 			if(results?.ok) {
-				pushToastMsg(`Logged in as ${usernameOrEmail}`);
+				toast(`Logged in as ${usernameOrEmail}`);
 				refresh();
 			} else {
-				pushToastMsg('Incorrect Login');
+				toast('Incorrect Login');
 			}
 
 		} catch(e) {
-			pushToastMsg('Something went wrong. Try again.');
+			toast('Something went wrong. Try again.');
 			console.log(e);
 		}
 
