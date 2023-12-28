@@ -25,7 +25,7 @@ function TextField(props: Props) {
 	const id = label?.toLowerCase();
 
 	return (
-		<div className="grid grid-cols-12 w-full max-w-sm items-center gap-1.5">
+		<div className="grid w-full max-w-sm items-center gap-1.5">
 			{label && (
 				<Label htmlFor={id}>{label}</Label>
 			)}
@@ -37,7 +37,7 @@ function TextField(props: Props) {
 				{...rest}
 			/>
 			{helperText && (
-				<div className={cn({ 'text-pink': error })}>
+				<div className={cn('text-sm italic', { 'text-pink': error })}>
 					{helperText}
 				</div>
 			)}
