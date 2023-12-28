@@ -9,7 +9,6 @@ import { useCallback, useState } from 'react';
 import { ProjectImage, WriteProject } from '@common/types/Project';
 import Label from '@components/label';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
-import { useSetLoading } from '@common/atoms';
 import saveProjectAction from './save-project-action';
 import { useRouteBackDefault } from '@common/hooks';
 import { SaveIcon } from '@components/icons';
@@ -34,6 +33,7 @@ import {
 	TabsTrigger,
 } from '@/components/ui/tabs';
 import { toast } from 'sonner';
+import { useSetLoading } from '@components/loader';
 
 function dateToDateSubstring(date: Date) {
 	return date.toISOString().substring(0, 10);

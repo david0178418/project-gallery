@@ -4,16 +4,16 @@ import { Key } from 'ts-key-enum';
 import { login } from '@client/api-calls';
 import { inRange } from '@common/utils';
 import Link from 'next/link';
-import { useSetLoading } from '@common/atoms';
 import { useRouter } from 'next/navigation';
 import TextField from '@components/common/text-field';
 import { Button } from '@components/ui/button';
+import { toast } from 'sonner';
+import { useSetLoading } from '@components/loader';
 import {
 	Paths,
 	UsernameMaxLength,
 	UsernameMinLength,
 } from '@common/constants';
-import { toast } from 'sonner';
 
 export default
 function LoginPwForm() {

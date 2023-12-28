@@ -1,12 +1,11 @@
 import { HTMLAttributes } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { postFile } from '@client/api-calls';
-import { useSetAtom } from 'jotai';
-import { loadingAtom } from '@common/atoms';
 import { isTruthy } from '@common/utils';
 import { Enum } from '@common/types';
 import { cn } from '@/lib/utils';
 import { FileUploadCategories, SpecialCharacterCodes } from '@common/constants';
+import { useSetLoading } from './loader';
 
 async function uploadPhoto(file: File, category: Enum<typeof FileUploadCategories>) {
 	const res = await postFile(file, category);
@@ -25,7 +24,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 export
 function Uploader(props: Props) {
-	const setLoading = useSetAtom(loadingAtom);
+	const setLoading = useSetLoading();
 	const {
 		category,
 		onAdd,

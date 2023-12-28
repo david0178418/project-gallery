@@ -1,16 +1,15 @@
 'use client';
 import { useState } from 'react';
 import { PasswordMaxLength, PasswordMinLength } from '@common/constants';
-import { useSetAtom } from 'jotai';
-import { loadingAtom } from '@common/atoms';
 import { ConfirmButton } from '@components/common/buttons';
 import updatePassword from './update-pw-action';
 import TextField from '@components/common/text-field';
 import { toast } from 'sonner';
+import { useSetLoading } from '@components/loader';
 
 export default
 function UpdatePwPage() {
-	const setLoading = useSetAtom(loadingAtom);
+	const setLoading = useSetLoading();
 	const [touched, setTouched] = useState(false);
 	const [pw, setPw] = useState('');
 	const [pw2, setPw2] = useState('');

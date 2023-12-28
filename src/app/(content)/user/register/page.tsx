@@ -2,8 +2,6 @@
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
 import { login } from '@client/api-calls';
-import { useSetAtom } from 'jotai';
-import { loadingAtom } from '@common/atoms';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
@@ -11,10 +9,11 @@ import Register from '@server/actions/register';
 import TextField from '@components/common/text-field';
 import { Button } from '@components/ui/button';
 import { toast } from 'sonner';
+import { useSetLoading } from '@components/loader';
 
 export default
 function RegistrationModal() {
-	const setLoading = useSetAtom(loadingAtom);
+	const setLoading = useSetLoading();
 	const [username, setUsername] = useState('');
 	const { refresh } = useRouter();
 	const [email, setEmail] = useState('');

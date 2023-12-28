@@ -6,10 +6,11 @@ import { WriteJournal } from '@common/types/Journal';
 import { useRouteBackDefault } from '@common/hooks';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import MarkdownContent from '@components/markdown-content';
-import { useSetLoading } from '@common/atoms';
 import { SaveIcon } from '@components/icons';
 import journalSaveAction from './journal-save-action';
 import { useCallback, useState } from 'react';
+import { toast } from 'sonner';
+import { useSetLoading } from '@components/loader';
 import {
 	MaxJournalPostLength,
 	MaxJournalProjectTitleLength,
@@ -29,7 +30,6 @@ import {
 	TabsList,
 	TabsTrigger,
 } from '@/components/ui/tabs';
-import { toast } from 'sonner';
 
 const GeneralPost = 'general-post';
 

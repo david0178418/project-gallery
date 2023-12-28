@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
-import { useSetLoading } from '@common/atoms';
 import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Link from 'next/link';
@@ -9,6 +8,7 @@ import oneClickSendAction from './one-click-send-action';
 import TextField from '@components/common/text-field';
 import { Button } from '@components/ui/button';
 import { toast } from 'sonner';
+import { useSetLoading } from '@components/loader';
 
 export default
 function LoginEmailForm() {

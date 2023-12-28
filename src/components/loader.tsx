@@ -1,11 +1,51 @@
 'use client';
-import { loadingAtom } from '@common/atoms';
-import { useAtomValue } from 'jotai';
 import { cn } from '@/lib/utils';
+import {
+	Dispatch,
+	ReactNode,
+	SetStateAction,
+	createContext,
+	useContext,
+	useState,
+} from 'react';
+
+// Did try and derive this from `useState<boolean>`, but kept getting an
+// incompatibility with `SetStateAction<boolean>` and `SetStateAction<boolean | undefined>`
+type BooleanUseStatePair = [boolean, Dispatch<SetStateAction<boolean>>];
+const LoadingContext = createContext<BooleanUseStatePair>([false, () => false]);
+
+interface Props {
+	children: ReactNode;
+}
+
+export
+function LoadingContextProvider(props: Props) {
+	const [loading, setLoading] = useState(false);
+
+	return (
+		<LoadingContext.Provider value={[loading, setLoading]}>
+			{props.children}
+		</LoadingContext.Provider>
+	);
+}
+
+export
+function useSetLoading() {
+	const [, setLoading] = useContext(LoadingContext);
+
+	return setLoading;
+}
+
+export
+function useLoadingValue() {
+	const [loading] = useContext(LoadingContext);
+
+	return loading;
+}
 
 export default
 function Loader() {
-	const loading = useAtomValue(loadingAtom);
+	const loading = useLoadingValue();
 
 	return (
 		<div className={cn(

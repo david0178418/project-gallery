@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 import { SessionProvider } from 'next-auth/react';
+import { LoadingContextProvider } from '@components/loader';
 
 interface Props {
 	children: ReactNode
@@ -10,7 +11,9 @@ interface Props {
 export default function Providers({ children }: Props) {
 	return (
 		<SessionProvider>
-			{children}
+			<LoadingContextProvider>
+				{children}
+			</LoadingContextProvider>
 		</SessionProvider>
 	);
 }

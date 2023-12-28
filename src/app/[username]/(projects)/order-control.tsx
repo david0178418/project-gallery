@@ -1,8 +1,8 @@
 'use client';
 import updateProjectsOrder from './update-projects-order';
 import { Direction, DirectionEnum } from '@common/constants';
-import { useSetLoading } from '@common/atoms';
 import { Button } from '@components/ui/button';
+import { useSetLoading } from '@components/loader';
 import {
 	ArrowDownIcon,
 	ArrowLeftIcon,

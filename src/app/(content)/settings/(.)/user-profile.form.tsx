@@ -4,9 +4,9 @@ import { TextFieldLengthValidation } from '@components/common/text-field-length-
 import { useCallback, useState } from 'react';
 import { MaxUserProfileBioLength, MaxUserProfileShortBioLength } from '@common/constants';
 import { ConfirmButton } from '@components/common/buttons';
-import { useSetLoading } from '@common/atoms';
 import updateProfile from './update-profile-action';
 import { toast } from 'sonner';
+import { useSetLoading } from '@components/loader';
 
 interface Props {
 	userProfile: WriteUserProfile;
