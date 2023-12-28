@@ -26,7 +26,7 @@ async function TopBar() {
 								className="w-full h-full flex"
 							/>
 							<div className="text-xl font-bold hidden sm:inline">
-									ProjectGallery.me
+								ProjectGallery.me
 							</div>
 						</div>
 					</Link>
