@@ -6,13 +6,13 @@ import { ShareIconButton } from './common/share-button';
 import { getServerSession } from '@server/auth-options';
 import Tooltip from './common/tooltip';
 import Image from 'next/image';
+import Card from './common/card';
+import { Button } from './ui/button';
 import {
 	FavoriteIcon,
 	JournalIcon,
 	EditIcon,
 } from '@components/icons';
-import Card from './common/card';
-import { Button } from './ui/button';
 
 interface Props {
 	project: DbProject | UiProject;
