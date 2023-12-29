@@ -12,7 +12,6 @@ interface Props {
 
 export default
 async function Layout(props: Props) {
-
 	const session = await getServerSession();
 
 	if(session) {
