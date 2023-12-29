@@ -27,8 +27,8 @@ function ShareIconButton(props: Props) {
 
 	return (
 		<Tooltip label={`Share '${label}'`}>
-			<Button onClick={handleShare}>
-				<ShareIcon fontSize="small" />
+			<Button onClick={handleShare} variant="ghost" size="icon">
+				<ShareIcon className="h-4 w-4" />
 			</Button>
 		</Tooltip>
 	);

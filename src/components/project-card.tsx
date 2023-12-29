@@ -5,7 +5,6 @@ import { Paths } from '@common/constants';
 import { ShareIconButton } from './common/share-button';
 import { getServerSession } from '@server/auth-options';
 import Tooltip from './common/tooltip';
-import Image from 'next/image';
 import Card from './common/card';
 import { Button } from './ui/button';
 import {
@@ -37,10 +36,10 @@ async function ProjectCard(props: Props) {
 	return (
 		<Card
 			footer={
-				<>
+				<div className="flex gap-3">
 					<Tooltip label="Favorite">
-						<Button>
-							<FavoriteIcon />
+						<Button variant="ghost" size="icon">
+							<FavoriteIcon className="h-4 w-4" />
 						</Button>
 					</Tooltip>
 					<ShareIconButton
@@ -54,8 +53,8 @@ async function ProjectCard(props: Props) {
 							href={Paths.Journal(lastJournalEntry._id.toString())}
 						>
 							<Tooltip label={lastJournalEntry.title}>
-								<Button>
-									<JournalIcon />
+								<Button variant="ghost" size="icon">
+									<JournalIcon className="h-4 w-4" />
 								</Button>
 							</Tooltip>
 						</Link>
@@ -66,20 +65,18 @@ async function ProjectCard(props: Props) {
 							href={Paths.ProjectEdit(_id.toString())}
 						>
 							<Tooltip label="Edit">
-								<Button>
-									<EditIcon />
+								<Button variant="ghost" size="icon">
+									<EditIcon className="h-4 w-4" />
 								</Button>
 							</Tooltip>
 						</Link>
 					)}
-				</>
+				</div>
 			}
 		>
 			<div>
 				<Link href={projectUrl}>
-					<Image
-						height={100}
-						width={100}
+					<img
 						src={images?.[0].url}
 						className="aspect-video"
 						alt=""
