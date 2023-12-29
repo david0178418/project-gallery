@@ -86,21 +86,21 @@ function LoginPwForm() {
 						onChange={e => setPassword(e.target.value)}
 					/>
 				</div>
-				<div className="pt-3 grid gap-1 text-center">
-					<Button
-						className="w-full"
-						disabled={!valid}
-						onClick={handleLogin}
-					>
-						Sign in
-					</Button>
-					<Link href={Paths.UserLoginEmail} replace>
-						<Button variant="link">
-							Sign in with Email Link
-						</Button>
-					</Link>
-				</div>
 			</form>
+			<div className="pt-3 grid gap-1 text-center">
+				<Button
+					className="w-full"
+					disabled={!valid}
+					onClick={handleLogin}
+				>
+						Sign in
+				</Button>
+				<Link href={Paths.UserLoginEmail} replace>
+					<Button variant="link">
+							Sign in with Email Link
+					</Button>
+				</Link>
+			</div>
 		</>
 	);
 }
