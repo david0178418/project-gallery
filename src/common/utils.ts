@@ -1,3 +1,12 @@
+import { createHash } from 'crypto';
+
+export
+function sha256sum(str: string) {
+	return createHash('sha256')
+		.update(str)
+		.digest('hex');
+}
+
 export
 function clamp(num: number, min: number, max: number) {
 	return Math.min(Math.max(num, min), max);
