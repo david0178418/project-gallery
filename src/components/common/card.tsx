@@ -44,7 +44,7 @@ function Card(props: Props) {
 				{children}
 			</CardContent>
 			{footer && (
-				<CardFooter>
+				<CardFooter className="flex gap-3">
 					{footer}
 				</CardFooter>
 			)}

@@ -69,8 +69,8 @@ async function JournalCard(props: Props) {
 			footer={
 				<>
 					<Tooltip label="Favorite">
-						<Button>
-							<FavoriteIcon />
+						<Button variant="ghost" size="icon">
+							<FavoriteIcon className="h-4 w-4" />
 						</Button>
 					</Tooltip>
 					<ShareIconButton
@@ -81,8 +81,8 @@ async function JournalCard(props: Props) {
 					{isOwner && (
 						<Link prefetch={false} href={Paths.JournalEdit(journaId)}>
 							<Tooltip label="Edit">
-								<Button>
-									<EditIcon />
+								<Button variant="ghost" size="icon">
+									<EditIcon className="h-4 w-4" />
 								</Button>
 							</Tooltip>
 						</Link>

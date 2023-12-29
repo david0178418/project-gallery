@@ -36,7 +36,7 @@ async function ProjectCard(props: Props) {
 	return (
 		<Card
 			footer={
-				<div className="flex gap-3">
+				<>
 					<Tooltip label="Favorite">
 						<Button variant="ghost" size="icon">
 							<FavoriteIcon className="h-4 w-4" />
@@ -71,7 +71,7 @@ async function ProjectCard(props: Props) {
 							</Tooltip>
 						</Link>
 					)}
-				</div>
+				</>
 			}
 		>
 			<div>
