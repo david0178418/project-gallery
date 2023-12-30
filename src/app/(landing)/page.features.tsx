@@ -5,10 +5,7 @@ import Img1 from './img1.png';
 import Img2 from './img2.png';
 import Img3 from './img3.png';
 import Link from 'next/link';
-import {
-	Paths,
-	SpecialCharacterCodes,
-} from '@common/constants';
+import { Paths, SpecialCharacterCodes } from '@common/constants';
 import {
 	Box,
 	Button,

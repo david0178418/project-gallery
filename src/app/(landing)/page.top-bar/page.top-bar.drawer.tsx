@@ -24,7 +24,7 @@ import {
 } from '@ui';
 
 interface Props {
-	user: User | null;
+	user?: User | null;
 }
 
 export default
