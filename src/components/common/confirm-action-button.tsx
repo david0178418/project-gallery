@@ -1,13 +1,13 @@
 'use client';
-import { ComponentProps, useState } from 'react';
+import { ComponentProps } from 'react';
 import { Button } from '@components/ui/button';
 import {
 	Dialog,
+	DialogClose,
 	DialogContent,
-	DialogDescription,
 	DialogFooter,
-	DialogOverlay,
 	DialogTitle,
+	DialogTrigger,
 } from '@components/ui/dialog';
 
 interface Props extends Pick<ComponentProps<typeof Button>, 'variant' | 'size'> {
@@ -18,7 +18,6 @@ interface Props extends Pick<ComponentProps<typeof Button>, 'variant' | 'size'> 
 
 export default
 function ConfirmActionButton(props: Props) {
-	const [isOpen, setIsOpen] = useState(false);
 	const {
 		variant = 'ghost',
 		size,
@@ -29,39 +28,38 @@ function ConfirmActionButton(props: Props) {
 
 	async function handleConfirm() {
 		await onConfirm();
-		setIsOpen(false);
 	}
 
 	return (
-		<>
-			<Button
-				variant={variant}
-				size={size}
-				onClick={() => setIsOpen(true)}
-			>
-				{label}
-			</Button>
-			<Dialog open={isOpen}>
-				<DialogOverlay />
-				<DialogContent>
-					<DialogTitle>
-						{label}
-					</DialogTitle>
-					<DialogContent>
-						<DialogDescription>
-							{confirmationMsg}
-						</DialogDescription>
-					</DialogContent>
-					<DialogFooter>
-						<Button color="error" onClick={() => setIsOpen(false)}>
+		<Dialog>
+			<DialogTrigger asChild>
+				<Button
+					variant={variant}
+					size={size}
+				>
+					{label}
+				</Button>
+			</DialogTrigger>
+			<DialogContent>
+				<DialogTitle>
+					{label}
+				</DialogTitle>
+				<p>
+					{confirmationMsg}
+				</p>
+				<DialogFooter>
+					<DialogClose asChild>
+						<Button variant="ghost">
 							Cancel
 						</Button>
-						<Button onClick={(handleConfirm)}>
+					</DialogClose>
+					<DialogClose asChild>
+						<Button onClick={handleConfirm}>
 							{label}
 						</Button>
-					</DialogFooter>
-				</DialogContent>
-			</Dialog>
-		</>
+					</DialogClose>
+				</DialogFooter>
+			</DialogContent>
+		</Dialog>
 	);
 }

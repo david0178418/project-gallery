@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 import { LogoSmallImage } from '@common/images';
 import Link from 'next/link';
-import CommonStuff from '@app/(content)/common-stuff';
 
 interface Props {
 	children: ReactNode;
@@ -45,7 +44,6 @@ async function Layout(props: Props) {
 					{props.children}
 				</div>
 			</div>
-			<CommonStuff />
 		</>
 	);
 }

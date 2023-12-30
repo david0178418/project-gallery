@@ -41,7 +41,7 @@ async function TopBar() {
 						<>
 							<Link href={Paths.UserLoginEmail}>
 								<Button variant="outline" size="sm" className="mr-1" >
-										Login
+									Login
 								</Button>
 							</Link>
 							<Link href={Paths.UserRegister}>
