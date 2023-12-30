@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import LeftRail from './page-frame/left-rail';
 // import { BottomNav } from './page-frame/bottom-nav';
-import CommonStuff from './common-stuff';
 import TopNav from './page-frame/top-nav';
 // import { cn } from '@/lib/utils';
 
@@ -22,7 +21,6 @@ function ContentLayout(props: Props) {
 				{children}
 			</main>
 			{/* <BottomNav/> */}
-			<CommonStuff/>
 		</div>
 	);
 }

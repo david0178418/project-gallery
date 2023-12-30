@@ -18,7 +18,7 @@ import {
 export default
 function LoginPwForm() {
 	const setLoading = useSetLoading();
-	const { refresh } = useRouter();
+	const { replace } = useRouter();
 	const [usernameOrEmail, setUsernameOrEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const validUsernameLength = inRange(usernameOrEmail.length, UsernameMinLength, UsernameMaxLength, true);
@@ -46,7 +46,7 @@ function LoginPwForm() {
 
 			if(results?.ok) {
 				toast(`Logged in as ${usernameOrEmail}`);
-				refresh();
+				replace(Paths.Home);
 			} else {
 				toast('Incorrect Login');
 			}

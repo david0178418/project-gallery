@@ -3,7 +3,6 @@ import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import MarkdownContent from '@components/markdown-content';
 import UserProfileTabs from './user-profile-tabs';
 import { ReactNode } from 'react';
-import CommonStuff from '@app/(content)/common-stuff';
 import { EditIcon } from '@components/icons';
 import { LogoMainImage } from '@common/images';
 import { urlJoin } from '@common/utils';
@@ -11,13 +10,13 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerSession } from '@server/auth-options';
 import Fab from '@components/common/fab';
+import Avatar from '@components/common/avatar';
 import {
 	AppName,
 	BaseUrl,
 	Paths,
 	SpecialCharacterCodes,
 } from '@common/constants';
-import Avatar from '@components/common/avatar';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMainImage.src);
 
@@ -154,7 +153,6 @@ export default async function UserGalleryLayout(props: Props) {
 					</Fab>
 				</Link>
 			)}
-			<CommonStuff/>
 		</div>
 	);
 }
