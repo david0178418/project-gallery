@@ -1,3 +1,4 @@
+'use client';
 import { loadingAtom } from '@common/atoms';
 import { useAtomValue } from 'jotai';
 import {

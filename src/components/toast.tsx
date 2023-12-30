@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from 'react';
 import { Snackbar, IconButton } from '@ui';
 import { CloseIcon } from '@components/icons';
