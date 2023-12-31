@@ -1,12 +1,66 @@
-import { Paths } from '@common/constants';
-import { fetchUserProfileByUsername } from '@server/queries';
+import {
+	AppName, BaseUrl, Paths,
+} from '@common/constants';
+import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import { Box } from '@ui';
 import ProfileButton from './profile-button';
 import ProfileShareButton from './profile-share-button';
+import { ReactNode } from 'react';
+import { LogoMain } from '@common/images';
+import { urlJoin } from '@common/utils';
+import { UsernameValidation } from '@common/types/UserCredentials';
+import { Metadata } from 'next';
 
+const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 interface Props {
+	children: ReactNode;
 	params: {
 		username: string;
+		profilePage: string;
+	};
+}
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+	const { params: { username: routeUsername } } = props;
+
+	const result = await UsernameValidation.safeParseAsync(routeUsername);
+
+	if(!result.success) {
+		return {};
+	}
+
+	const user = result.success ?
+		await fetchUser(result.data) :
+		null;
+
+	if(!user) {
+		return {};
+	}
+
+	const username = user.username;
+	const userProfile = await fetchUserProfileByUsername(username);
+
+	if(!userProfile) {
+		return {};
+	}
+
+	const title = `${username}'s Gallery`;
+	const description = userProfile.shortBio;
+	const url = urlJoin(BaseUrl, Paths.UserGallery(username));
+
+	return {
+		metadataBase: new URL(BaseUrl),
+		title,
+		description,
+		openGraph: {
+			type: 'website',
+			locale: 'en_US',
+			url,
+			siteName: AppName,
+			title,
+			description,
+			images: [{ url: SocialImageUrl }],
+		},
 	};
 }
 

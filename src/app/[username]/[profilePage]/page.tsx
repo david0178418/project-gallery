@@ -4,9 +4,7 @@ import { ReactNode } from 'react';
 import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
-import UserProjectsPage from './(projects)';
-import UserAboutPage from './about';
-import UserJournalsPage from './journals';
+import { ProfilePages } from './profile-pages';
 import {
 	AppName,
 	BaseUrl,
@@ -22,21 +20,6 @@ interface Props {
 		profilePage: string;
 	};
 }
-
-const ProfilePages = {
-	projects: {
-		label: 'Projects',
-		Component: UserProjectsPage,
-	},
-	about: {
-		label: 'About',
-		Component: UserAboutPage,
-	},
-	journals: {
-		label: 'Posts',
-		Component: UserJournalsPage,
-	},
-};
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
 	const {
