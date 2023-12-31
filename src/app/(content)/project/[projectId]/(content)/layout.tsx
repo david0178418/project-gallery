@@ -54,11 +54,11 @@ async function Page(props: Props) {
 		<>
 			<ScrollContent
 				header={
-					<Box sx={{
-						paddingTop: 1,
-						paddingBottom: 2,
-						paddingX: 1,
-					}}>
+					<Box
+						paddingTop={1}
+						paddingBottom={2}
+						paddingX={1}
+					>
 						<Grid container>
 							<Grid item xs={6}>
 								<Typography variant="h5" component="div" gutterBottom>
@@ -72,7 +72,10 @@ async function Page(props: Props) {
 										href={Paths.UserGallery(project.owner.username)}
 										style={{ textDecoration: 'none' }}
 									>
-										<Avatar src={profile?.avatar} sx={{ bgcolor: red[500] }}>
+										<Avatar
+											src={profile?.avatar}
+											sx={{ bgcolor: red[500] }}
+										>
 											{project.owner.username[0].toLocaleUpperCase()}
 										</Avatar>
 									</Link>
