@@ -2,7 +2,6 @@ import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import MarkdownContent from '@components/markdown-content';
 import { ReactNode } from 'react';
-import CommonStuff from '@app/(content)/common-stuff';
 import { EditIcon } from '@components/icons';
 import Link from 'next/link';
 import { getServerSession } from '@server/auth-options';
@@ -13,7 +12,6 @@ import {
 import {
 	Avatar,
 	Box,
-	Button,
 	Container,
 	Fab,
 	Typography,
@@ -110,15 +108,6 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 					</Fab>
 				</Link>
 			)}
-
-			<Box textAlign="center" paddingTop={5} paddingX={2} paddingBottom={15}>
-				<Link href={Paths.Home}>
-					<Button variant="outlined" size="small">
-						Explore ProjectGallery.me
-					</Button>
-				</Link>
-			</Box>
-			<CommonStuff/>
 		</Container>
 	);
 }
