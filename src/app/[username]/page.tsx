@@ -5,7 +5,6 @@ import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import { Box } from '@ui';
 import ProfileButton from './profile-button';
 import ProfileShareButton from './profile-share-button';
-import { ReactNode } from 'react';
 import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { UsernameValidation } from '@common/types/UserCredentials';
@@ -13,7 +12,6 @@ import { Metadata } from 'next';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 interface Props {
-	children: ReactNode;
 	params: {
 		username: string;
 		profilePage: string;

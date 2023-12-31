@@ -1,6 +1,5 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
-import { ReactNode } from 'react';
 import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
@@ -14,7 +13,6 @@ import {
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 
 interface Props {
-	children: ReactNode;
 	params: {
 		username: string;
 		profilePage: string;

@@ -132,6 +132,7 @@ async function createUser(args: Schema) {
 				shortBio: '',
 				detailedBio: '',
 				username,
+				links: [],
 				lastActivity: {
 					date: new Date(),
 					type: ProfileActivity.ProfileCreate,
