@@ -1,16 +1,14 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import MarkdownContent from '@components/markdown-content';
-import UserProfileTabs from './user-profile-tabs';
 import { ReactNode } from 'react';
 import CommonStuff from '@app/(content)/common-stuff';
-import { BackIcon, EditIcon } from '@components/icons';
+import { EditIcon } from '@components/icons';
 import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerSession } from '@server/auth-options';
-import { ScrollContent } from '@components/scroll-content';
 import {
 	AppName,
 	BaseUrl,
@@ -20,6 +18,7 @@ import {
 import {
 	Avatar,
 	Box,
+	Button,
 	Container,
 	Fab,
 	Typography,
@@ -28,6 +27,7 @@ import {
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 
 interface Props {
+	children: ReactNode;
 	params: {
 		username: string;
 	};
@@ -57,7 +57,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 		return {};
 	}
 
-	const title = `${userProfile.username}'s Gallery`;
+	const title = `${username}'s Gallery`;
 	const description = userProfile.shortBio;
 	const url = urlJoin(BaseUrl, Paths.UserGallery(username));
 
@@ -67,7 +67,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 		description,
 		openGraph: {
 			type: 'website',
-			locale: 'en_IE',
+			locale: 'en_US',
 			url,
 			siteName: AppName,
 			title,
@@ -75,13 +75,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 			images: [{ url: SocialImageUrl }],
 		},
 	};
-}
-
-interface Props {
-	children: ReactNode;
-	params: {
-		username: string;
-	}
 }
 
 export default async function UserGalleryLayout(props: Props) {
@@ -119,72 +112,41 @@ export default async function UserGalleryLayout(props: Props) {
 	const isOwner = session?.user.id === profileUser._id.toString();
 
 	return (
-		<Container
-			sx={{
-				height: '100vh',
-				overflow: 'hidden',
-				position: 'relative',
-				paddingX: {
-					xs: 0,
-					sm: 1,
-					lg: 2,
-				},
-			}}
-		>
-			<ScrollContent
-				header={
-					<Box sx={{
-						paddingTop: 1,
-						paddingBottom: 2,
-					}}>
-						<Box textAlign="right">
-							<Link href={Paths.Home} >
-								<Box
-									textAlign="right"
-									display="flex"
-									alignItems="center"
-									color="primary.main"
-									justifyContent="end"
-								>
-									<BackIcon fontSize="inherit"/>
-									<Typography color="inherit">
-										ProjectGallery.me
-									</Typography>
-								</Box>
-							</Link>
-						</Box>
-						<Box sx={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-							justifyContent: 'center',
-						}}>
-							{userProfile?.avatar && (
-								<Avatar
-									src={userProfile.avatar}
-									sx={{
-										width: 100,
-										height: 100,
-									}}
-								/>
-							)}
-							<Typography variant="h5" component="div">
-								{username}{SpecialCharacterCodes.RSQUO}s Gallery
-							</Typography>
-						</Box>
-						{userProfile?.shortBio && (
-							<Container maxWidth="sm">
-								<MarkdownContent>
-									{userProfile.shortBio}
-								</MarkdownContent>
-							</Container>
-						)}
-						<UserProfileTabs username={username} />
-					</Box>
-				}
-			>
-				{children}
-			</ScrollContent>
+		<Container>
+			<Box paddingTop={1} paddingBottom={2} >
+				<Box
+					display="flex"
+					flexDirection="column"
+					alignItems="center"
+					justifyContent="center"
+				>
+					{userProfile?.avatar && (
+						<Avatar
+							src={userProfile.avatar}
+							sx={{
+								width: 100,
+								height: 100,
+							}}
+						/>
+					)}
+					<Typography variant="h5" component="div">
+						{username}{SpecialCharacterCodes.RSQUO}s Gallery
+					</Typography>
+				</Box>
+				{userProfile?.shortBio && (
+					<Container maxWidth="sm">
+						<MarkdownContent>
+							{userProfile.shortBio}
+						</MarkdownContent>
+					</Container>
+				)}
+			</Box>
+			<Box paddingX={2} paddingY={1}>
+				{/** div hack for async component child */}
+				<div>
+					{children}
+				</div>
+			</Box>
 			{isOwner && (
 				<Link href={Paths.Settings} >
 					<Fab
@@ -201,6 +163,16 @@ export default async function UserGalleryLayout(props: Props) {
 						<EditIcon />
 					</Fab>
 				</Link>
+			)}
+
+			{!session && (
+				<Box textAlign="center" paddingTop={5} paddingX={2} paddingBottom={15}>
+					<Link href={Paths.Home}>
+						<Button variant="outlined" size="small">
+							Explore ProjectGallery.me
+						</Button>
+					</Link>
+				</Box>
 			)}
 			<CommonStuff/>
 		</Container>

@@ -4,14 +4,12 @@ import { Typography } from '@mui/material';
 import { fetchUserProfileByUsername } from '@server/queries';
 
 interface Props {
-	params: {
-		username: string;
-	};
+	username: string;
 }
 
 export default
 async function UserAboutPage(props: Props) {
-	const { params: { username } } = props;
+	const { username } = props;
 	const result = await UsernameValidation.safeParseAsync(username);
 
 	const userProfile = result.success ?

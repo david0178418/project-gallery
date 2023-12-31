@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 	},
 	openGraph: {
 		type: 'website',
-		locale: 'en_IE',
+		locale: 'en_US',
 		url: BaseUrl,
 		siteName: AppName,
 		title: AppName,

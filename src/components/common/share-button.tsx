@@ -34,6 +34,7 @@ function ShareIconButton(props: Props) {
 	);
 }
 
+export
 async function share(url: string, label: string, shareMsg: string) {
 	if(!navigator.share) {
 		await navigator.clipboard.writeText(urlJoin(location.origin, url));

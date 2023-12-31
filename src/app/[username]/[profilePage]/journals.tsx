@@ -3,14 +3,12 @@ import { Box, Typography } from '@ui';
 import { fetchUserJournals } from '@server/queries';
 
 interface Props {
-	params: {
-		username: string;
-	};
+	username: string;
 }
 
 export default
 async function UserJournalsPage(props: Props) {
-	const { params: { username } } = props;
+	const { username } = props;
 	const journals = await fetchUserJournals(username);
 
 	return (

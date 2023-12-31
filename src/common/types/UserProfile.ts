@@ -16,10 +16,14 @@ type DbUserProfile = WithId<{
 	shortBio: string
 	detailedBio: string;
 	lastActivity: ProfileActivityLog;
+	links: Array<{
+		label: string;
+		url: string;
+	}>;
 }>;
 
 export
 type UiUserProfile = WithStringId<DbUserProfile>;
 
 export
-type WriteUserProfile = Pick<UiUserProfile, 'shortBio' | 'detailedBio' | 'avatar'>;
+type WriteUserProfile = Pick<UiUserProfile, 'shortBio' | 'detailedBio' | 'avatar' | 'links'>;
