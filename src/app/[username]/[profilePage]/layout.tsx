@@ -39,7 +39,7 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 					{page.label}
 				</Typography>
 				<ProfileButton href={Paths.UserGallery(username)}>
-					Back
+					Home
 				</ProfileButton>
 			</Box>
 			<Box paddingY={1}>
