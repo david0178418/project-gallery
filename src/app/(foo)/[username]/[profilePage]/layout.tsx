@@ -1,7 +1,5 @@
 import { ReactNode } from 'react';
 import { Box, Typography } from '@ui';
-import ProfileButton from '../profile-button';
-import { Paths } from '@common/constants';
 import { ProfilePages } from './profile-pages';
 
 interface Props {
@@ -15,10 +13,7 @@ interface Props {
 export default async function UserGalleryProfilePageLayout(props: Props) {
 	const {
 		children,
-		params: {
-			profilePage,
-			username,
-		},
+		params: { profilePage },
 	} = props;
 
 	const page = ProfilePages[profilePage as keyof typeof ProfilePages];
@@ -29,7 +24,7 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 
 	return (
 		<>
-			<Box textAlign="center">
+			<Box paddingY={1} textAlign="center">
 				<Typography
 					fontWeight="bold"
 					component="h3"
@@ -38,11 +33,6 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 				>
 					{page.label}
 				</Typography>
-				<ProfileButton href={Paths.UserGallery(username)}>
-					Home
-				</ProfileButton>
-			</Box>
-			<Box paddingY={1}>
 				{children}
 			</Box>
 		</>

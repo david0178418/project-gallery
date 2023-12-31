@@ -5,13 +5,13 @@ import { Box } from '@ui';
 import { useState } from 'react';
 
 interface Props {
-	project: UiProject;
+	images: UiProject['images'];
 }
 
 export default
 function ImageSelector(props: Props) {
-	const { project } = props;
-	const [activeImage, setActiveImage] = useState(project.images[0]);
+	const { images } = props;
+	const [activeImage, setActiveImage] = useState(images[0]);
 
 	return (
 		<>
@@ -27,7 +27,7 @@ function ImageSelector(props: Props) {
 				/>
 			</Box>
 			<ImagePreviews
-				images={project.images}
+				images={images}
 				onClick={setActiveImage}
 			/>
 		</>

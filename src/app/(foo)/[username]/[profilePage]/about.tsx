@@ -1,6 +1,8 @@
+import { Paths } from '@common/constants';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import MarkdownContent from '@components/markdown-content';
-import { Typography } from '@mui/material';
+import { ProfileLinkButton } from '@components/profile-button';
+import { Box, Typography } from '@ui';
 import { fetchUserProfileByUsername } from '@server/queries';
 
 interface Props {
@@ -25,8 +27,15 @@ async function UserAboutPage(props: Props) {
 	}
 
 	return (
-		<MarkdownContent>
-			{userProfile.detailedBio}
-		</MarkdownContent>
+		<>
+			<MarkdownContent>
+				{userProfile.detailedBio}
+			</MarkdownContent>
+			<Box paddingTop={4}>
+				<ProfileLinkButton href={Paths.UserGallery(username)}>
+						Gallery Home
+				</ProfileLinkButton>
+			</Box>
+		</>
 	);
 }

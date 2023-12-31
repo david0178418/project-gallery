@@ -91,10 +91,7 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 				)}
 			</Box>
 			<Box paddingX={2} paddingY={1}>
-				{/** div hack for async component child */}
-				<div>
-					{children}
-				</div>
+				{children}
 			</Box>
 			{isOwner && (
 				<Link href={Paths.Settings} >
@@ -114,15 +111,13 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 				</Link>
 			)}
 
-			{!session && (
-				<Box textAlign="center" paddingTop={5} paddingX={2} paddingBottom={15}>
-					<Link href={Paths.Home}>
-						<Button variant="outlined" size="small">
-							Explore ProjectGallery.me
-						</Button>
-					</Link>
-				</Box>
-			)}
+			<Box textAlign="center" paddingTop={5} paddingX={2} paddingBottom={15}>
+				<Link href={Paths.Home}>
+					<Button variant="outlined" size="small">
+						Explore ProjectGallery.me
+					</Button>
+				</Link>
+			</Box>
 			<CommonStuff/>
 		</Container>
 	);

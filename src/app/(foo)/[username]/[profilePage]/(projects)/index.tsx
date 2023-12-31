@@ -1,8 +1,8 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserGallery } from '@server/queries';
 import { Box, Typography } from '@ui';
-import ProfileButton from '@app/[username]/profile-button';
 import { Paths } from '@common/constants';
+import { ProfileLinkButton } from '@components/profile-button';
 
 interface Props {
 	username: string;
@@ -30,15 +30,18 @@ async function UserProjectsPage(props: Props) {
 
 	return (
 		<Box textAlign="center">
+			<ProfileLinkButton href={Paths.UserGallery(username)}>
+				Gallery Home
+			</ProfileLinkButton>
 			{!!projects.length && (
 				<>
 					{projects.map((p) => (
-						<ProfileButton
+						<ProfileLinkButton
 							key={p._id.toString()}
 							href={Paths.Project(p._id.toString())}
 						>
 							{p.title}
-						</ProfileButton>
+						</ProfileLinkButton>
 					))}
 				</>
 			)}

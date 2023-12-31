@@ -1,14 +1,16 @@
-import {
-	AppName, BaseUrl, Paths,
-} from '@common/constants';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import { Box } from '@ui';
-import ProfileButton from './profile-button';
-import ProfileShareButton from './profile-share-button';
+import { ProfileLinkButton } from '@components/profile-button';
+import ProfileShareButton from '@components/profile-share-button';
 import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { Metadata } from 'next';
+import {
+	AppName,
+	BaseUrl,
+	Paths,
+} from '@common/constants';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 interface Props {
@@ -79,23 +81,27 @@ async function GalleryPage(props: Props) {
 
 	return (
 		<Box textAlign="center">
-			<ProfileButton href={Paths.UserGalleryProjects(userProfile.username)}>
+			<ProfileLinkButton href={Paths.UserGalleryProjects(userProfile.username)}>
 				Projects
-			</ProfileButton>
-			<ProfileButton href={Paths.UserGalleryJournals(userProfile.username)}>
+			</ProfileLinkButton>
+			<ProfileLinkButton href={Paths.UserGalleryJournals(userProfile.username)}>
 				Posts
-			</ProfileButton>
+			</ProfileLinkButton>
 			{!!userProfile.detailedBio && (
-				<ProfileButton href={Paths.UserGalleryAbout(userProfile.username)}>
+				<ProfileLinkButton href={Paths.UserGalleryAbout(userProfile.username)}>
 					About
-				</ProfileButton>
+				</ProfileLinkButton>
 			)}
 			{userProfile.links.map((l, i) => (
-				<ProfileButton key={i} href={l.url} target="_blank">
+				<ProfileLinkButton key={i} href={l.url} target="_blank">
 					{l.label}
-				</ProfileButton>
+				</ProfileLinkButton>
 			))}
-			<ProfileShareButton username={username} />
+			<ProfileShareButton shareObj={{
+				url: Paths.UserGallery(username),
+				label: `${username}'s Project Gallery`,
+				shareMsg: `Check out ${username}'s Project Gallery`,
+			}}/>
 		</Box>
 	);
 }

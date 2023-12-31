@@ -18,6 +18,7 @@ function ImagePreviews(props: Props) {
 			rowGap={4}
 			marginTop={2}
 			container
+			justifyContent="center"
 		>
 			{images.map(f => (
 				<Grid
