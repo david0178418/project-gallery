@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 import UserProjectsPage from './(projects)';
 import UserAboutPage from './about';
 import UserJournalsPage from './journals';
-import { Box } from '@ui';
+import { Box, Typography } from '@ui';
 import ProfileButton from '../profile-button';
 import {
 	AppName,
@@ -112,11 +112,19 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 	return (
 		<>
 			<Box textAlign="center">
+				<Typography
+					fontWeight="bold"
+					component="h3"
+					fontSize={24}
+					paddingBottom={3}
+				>
+					{page.label}
+				</Typography>
 				<ProfileButton href={Paths.UserGallery(username)}>
-					Home
+					Back
 				</ProfileButton>
 			</Box>
-			<Box paddingX={2} paddingY={1}>
+			<Box paddingY={1}>
 				{/** div hack for async component child */}
 				<div>
 					<page.Component username={username} />

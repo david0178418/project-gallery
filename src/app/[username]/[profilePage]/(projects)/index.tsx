@@ -1,14 +1,8 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserGallery } from '@server/queries';
-import ProjectCard from '@components/project-card';
-import { getServerSession } from '@server/auth-options';
-import OrderControlBlock from './order-control';
-import classes from './projects.module.css';
-import {
-	Box,
-	Grid,
-	Typography,
-} from '@ui';
+import { Box, Typography } from '@ui';
+import ProfileButton from '@app/[username]/profile-button';
+import { Paths } from '@common/constants';
 
 interface Props {
 	username: string;
@@ -32,58 +26,20 @@ async function UserProjectsPage(props: Props) {
 		);
 	}
 
-	const session = await getServerSession();
 	const projects = await fetchUserGallery(username);
-	const isOwner = !!username && (username === session?.user.username);
 
 	return (
-		<>
+		<Box textAlign="center">
 			{!!projects.length && (
 				<>
-					<Grid
-						container
-						padding={1}
-						spacing={2}
-					>
-						{projects.map((p, i) => (
-							<Grid
-								item
-								key={p._id.toString()}
-								xs={12}
-								sm={6}
-								md={4}
-								position="relative"
-								sx={{
-									'& .change-order-action': {
-										xs: { display: 'flex' },
-										// sm: { display: 'none' },
-									},
-									'&:hover .change-order-action': { display: 'flex' },
-								}}
-							>
-								<Box className={`${classes.fadeInEl}`} sx={{ animationDelay: `${i * 100}ms` }}>
-									{/** div hack for async component child */}
-									<div>
-										<ProjectCard project={p} />
-										{isOwner && projects && (
-											<Box
-												bottom="75px"
-												position="absolute"
-												width="100%"
-												className="change-order-action"
-											>
-												<OrderControlBlock
-													first={i === 0}
-													last={i === projects.length - 1}
-													projectId={p._id.toString()}
-												/>
-											</Box>
-										)}
-									</div>
-								</Box>
-							</Grid>
-						))}
-					</Grid>
+					{projects.map((p) => (
+						<ProfileButton
+							key={p._id.toString()}
+							href={Paths.Project(p._id.toString())}
+						>
+							{p.title}
+						</ProfileButton>
+					))}
 				</>
 			)}
 			{!projects.length && (
@@ -91,6 +47,6 @@ async function UserProjectsPage(props: Props) {
 					No projects yet
 				</Typography>
 			)}
-		</>
+		</Box>
 	);
 }

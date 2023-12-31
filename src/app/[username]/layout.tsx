@@ -4,14 +4,9 @@ import MarkdownContent from '@components/markdown-content';
 import { ReactNode } from 'react';
 import CommonStuff from '@app/(content)/common-stuff';
 import { EditIcon } from '@components/icons';
-import { LogoMain } from '@common/images';
-import { urlJoin } from '@common/utils';
-import { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerSession } from '@server/auth-options';
 import {
-	AppName,
-	BaseUrl,
 	Paths,
 	SpecialCharacterCodes,
 } from '@common/constants';
@@ -24,8 +19,6 @@ import {
 	Typography,
 } from '@ui';
 
-const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
-
 interface Props {
 	children: ReactNode;
 	params: {
@@ -33,51 +26,7 @@ interface Props {
 	};
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-	const { params: { username: routeUsername } } = props;
-
-	const result = await UsernameValidation.safeParseAsync(routeUsername);
-
-	if(!result.success) {
-		return {};
-	}
-
-	const user = result.success ?
-		await fetchUser(result.data) :
-		null;
-
-	if(!user) {
-		return {};
-	}
-
-	const username = user.username;
-	const userProfile = await fetchUserProfileByUsername(username);
-
-	if(!userProfile) {
-		return {};
-	}
-
-	const title = `${username}'s Gallery`;
-	const description = userProfile.shortBio;
-	const url = urlJoin(BaseUrl, Paths.UserGallery(username));
-
-	return {
-		metadataBase: new URL(BaseUrl),
-		title,
-		description,
-		openGraph: {
-			type: 'website',
-			locale: 'en_US',
-			url,
-			siteName: AppName,
-			title,
-			description,
-			images: [{ url: SocialImageUrl }],
-		},
-	};
-}
-
-export default async function UserGalleryLayout(props: Props) {
+export default async function UserGalleryProfilePageLayout(props: Props) {
 	const {
 		children,
 		params: { username: routeUsername },

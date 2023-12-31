@@ -1,10 +1,11 @@
 'use client';
 import { Box, Button } from '@ui';
-import { ReactNode } from 'react';
+import { HTMLAttributeAnchorTarget, ReactNode } from 'react';
 
 interface Props {
 	children: ReactNode;
 	href?: string;
+	target?: HTMLAttributeAnchorTarget;
 	onClick? (): void;
 }
 

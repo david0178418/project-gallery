@@ -39,7 +39,7 @@ async function GalleryPage(props: Props) {
 				</ProfileButton>
 			)}
 			{userProfile.links.map((l, i) => (
-				<ProfileButton key={i} href={l.url}>
+				<ProfileButton key={i} href={l.url} target="_blank">
 					{l.label}
 				</ProfileButton>
 			))}
