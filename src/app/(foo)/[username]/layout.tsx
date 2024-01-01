@@ -96,7 +96,7 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 					<Fab
 						color="primary"
 						sx={{
-							position: 'absolute',
+							position: 'fixed',
 							bottom: 64,
 							right: {
 								xs: 16,

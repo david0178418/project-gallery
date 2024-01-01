@@ -124,7 +124,7 @@ async function Journal(props: Props) {
 					<Fab
 						color="primary"
 						sx={{
-							position: 'absolute',
+							position: 'fixed',
 							bottom: 64,
 							right: 16,
 						}}
