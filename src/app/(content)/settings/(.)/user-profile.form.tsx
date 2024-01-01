@@ -76,6 +76,9 @@ function UserProfileForm(props: Props) {
 					onRemove={linkIndex => {
 						handleChange({ links: userProfile.links.filter((l, i) => i !== linkIndex) });
 					}}
+					onUpdate={updatedLinks => {
+						handleChange({ links: updatedLinks });
+					}}
 				/>
 			</Box>
 			<TextFieldLengthValidation

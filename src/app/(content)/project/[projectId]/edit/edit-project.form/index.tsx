@@ -238,7 +238,13 @@ function EditProjectForm(props: Props) {
 							<>
 								<LinkForm onAdd={handleAddLink}/>
 								<Box paddingTop={1}>
-									<LinksList onRemove={handleRemoveLink} links={links} />
+									<LinksList
+										links={links}
+										onRemove={handleRemoveLink}
+										onUpdate={updatedLinks => {
+											handleChange({ links: updatedLinks });
+										}}
+									/>
 								</Box>
 							</>
 						)}

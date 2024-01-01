@@ -1,6 +1,6 @@
 
-import { DeleteIcon } from '@components/icons';
-import { UiProject } from '@common/types/Project';
+import { CustomLink } from '@common/types/CustomLink';
+import { moveItemLeft, moveItemRight } from '@common/utils';
 import {
 	IconButton,
 	Link as MuiLink,
@@ -9,10 +9,16 @@ import {
 	ListItemIcon,
 	ListItemText,
 } from '@ui';
+import {
+	ArrowDownIcon,
+	ArrowUpIcon,
+	DeleteIcon,
+} from '@components/icons';
 
 interface Props {
-	links: UiProject['links'][number][];
-	onRemove?(linkIndex: number): void;
+	links: CustomLink[];
+	onRemove(linkIndex: number): void;
+	onUpdate(newList: CustomLink[]): void
 }
 
 export default
@@ -20,16 +26,32 @@ function LinksList(props: Props) {
 	const {
 		links,
 		onRemove,
+		onUpdate,
 	} = props;
+
+	function handleMoveleft(index: number) {
+		onUpdate(moveItemLeft(links, index));
+	}
+
+	function handleMoveRight(index: number) {
+		onUpdate(moveItemRight(links, index));
+	}
 
 	return (
 		<List>
 			{links.map((l, i) => (
 				<ListItem key={i}>
-					{onRemove && (
+					{i !== 0 && (
 						<ListItemIcon>
-							<IconButton onClick={() => onRemove(i)}>
-								<DeleteIcon />
+							<IconButton onClick={() => handleMoveleft(i)}>
+								<ArrowUpIcon />
+							</IconButton>
+						</ListItemIcon>
+					)}
+					{(i !== (links.length - 1)) && (
+						<ListItemIcon>
+							<IconButton onClick={() => handleMoveRight(i)}>
+								<ArrowDownIcon />
 							</IconButton>
 						</ListItemIcon>
 					)}
@@ -38,6 +60,11 @@ function LinksList(props: Props) {
 							{l.label}
 						</MuiLink>
 					</ListItemText>
+					<ListItemIcon>
+						<IconButton onClick={() => onRemove(i)}>
+							<DeleteIcon />
+						</IconButton>
+					</ListItemIcon>
 				</ListItem>
 			))}
 		</List>
