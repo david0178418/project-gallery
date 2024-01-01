@@ -3,28 +3,27 @@ import { TextFieldLengthValidation } from '@components/common/text-field-length-
 import { Uploader } from '@components/uploader';
 import ImageList from './image-list';
 import LinksList from '@components/links-list';
-import LinkForm, { linkIsValid } from './link-form';
-import LabelForm, { labelIsValid } from './label-form';
+import LinkForm from './link-form';
+import LabelForm from './label-form';
 import { useCallback, useState } from 'react';
-import { ProjectImage, WriteProject } from '@common/types/Project';
 import Label from '@components/label';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import saveProjectAction from './save-project-action';
 import { useRouteBackDefault } from '@common/hooks';
 import { SaveIcon } from '@components/icons';
+import { moveItemLeft, moveItemRight } from '@common/utils';
 import {
-	inRange,
-	moveItemLeft,
-	moveItemRight,
-} from '@common/utils';
+	ProjectImage,
+	WriteProject,
+	WriteProjectValidator,
+} from '@common/types/Project';
 import {
 	MaxJournalProjectTitleLength,
 	MinJournalProjectTitleLength,
 	FileUploadCategories,
 	MinProjectDescriptionLength,
 	MaxProjectDescriptionLength,
-	maxLabelCount,
 } from '@common/constants';
 import {
 	Box,
@@ -72,6 +71,7 @@ function EditProjectForm(props: Props) {
 			...projectUpdates,
 		});
 	}, [project]);
+	const validationResult = WriteProjectValidator.safeParse(project);
 
 	const handleAddLabel = useCallback((label: string) => {
 		handleChange({
@@ -274,30 +274,13 @@ function EditProjectForm(props: Props) {
 				>
 					<ConfirmButton
 						onClick={handleSave}
-						disabled={!(project && projectIsValid(project))}
+						disabled={!validationResult.success}
 						endIcon={<SaveIcon/>}
 					/>
 				</Box>
 			</Box>
 		</>
 	);
-}
-
-function projectIsValid(project: WriteProject) {
-	const {
-		description,
-		images,
-		labels,
-		links,
-		title,
-	} = project;
-
-	return !!images.length &&
-		links.every(linkIsValid) &&
-		(labels.length <= maxLabelCount) &&
-		labels.every(labelIsValid) &&
-		inRange(title.length, MinJournalProjectTitleLength, MaxJournalProjectTitleLength) &&
-		inRange(description.length, MinProjectDescriptionLength, MaxProjectDescriptionLength);
 }
 
 type Label = WriteProject['labels'][number];

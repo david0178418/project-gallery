@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb';
 import { z, ZodType } from 'zod';
 import { WriteUserProfile } from '@common/types/UserProfile';
 import { revalidatePath } from 'next/cache';
+import { CustomLinkValidator } from '@common/types/CustomLink';
 import {
 	DbCollections,
 	MaxUserProfileBioLength,
@@ -26,6 +27,7 @@ const Validator: ZodType<Partial<WriteUserProfile>> = z.object({
 		.string()
 		.trim()
 		.max(MaxUserProfileBioLength),
+	links: z.array(CustomLinkValidator),
 }).partial();
 
 export default

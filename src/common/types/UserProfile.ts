@@ -1,6 +1,7 @@
 import { ObjectId, WithId } from 'mongodb';
 import { WithStringId } from '@common/types';
 import { ProfileActivity } from '@common/constants';
+import { CustomLink } from './CustomLink';
 
 type ProfileActivityLog = {
 	date: Date;
@@ -16,10 +17,7 @@ type DbUserProfile = WithId<{
 	shortBio: string
 	detailedBio: string;
 	lastActivity: ProfileActivityLog;
-	links: Array<{
-		label: string;
-		url: string;
-	}>;
+	links: CustomLink[];
 }>;
 
 export
