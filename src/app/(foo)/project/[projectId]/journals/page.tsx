@@ -42,7 +42,7 @@ async function ProjectPage(props: Props) {
 	return (
 		<Box textAlign="center">
 			{!journals.length && (
-				<Typography>
+				<Typography paddingBottom={3}>
 					No journal posts yet
 				</Typography>
 			)}

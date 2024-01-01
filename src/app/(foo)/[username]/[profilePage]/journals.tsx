@@ -16,7 +16,7 @@ async function UserJournalsPage(props: Props) {
 	return (
 		<>
 			{!journals.length && (
-				<Typography>
+				<Typography paddingBottom={3}>
 					No journal posts yet
 				</Typography>
 			)}
