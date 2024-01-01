@@ -37,7 +37,11 @@ function ProfileLinkButton(props: ProfileLinkButtonProps) {
 
 	return (
 		<Box marginBottom={3} color="black">
-			<Link href={href} target={target}>
+			<Link
+				prefetch={false}
+				href={href}
+				target={target}
+			>
 				<Btn {...btnProps} />
 			</Link>
 		</Box>

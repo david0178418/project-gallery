@@ -33,7 +33,7 @@ async function UserAboutPage(props: Props) {
 			</MarkdownContent>
 			<Box paddingTop={4}>
 				<ProfileLinkButton href={Paths.UserGallery(username)}>
-						Gallery Home
+					Gallery Home
 				</ProfileLinkButton>
 			</Box>
 		</>
