@@ -73,6 +73,7 @@ function Btn(props: BtnProps) {
 			sx={{
 				maxWidth: 600,
 				fontSize: 20,
+				paddingX: 8,
 			}}
 			startIcon={
 				<Icon sx={{
