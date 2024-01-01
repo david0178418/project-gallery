@@ -5,6 +5,7 @@ import MarkdownContent from '@components/markdown-content';
 import { ProfileLinkButton } from '@components/profile-button';
 import ProfileShareButton from '@components/profile-share-button';
 import { Paths, SpecialCharacterCodes } from '@common/constants';
+import { JournalIcon, ProfileIcon } from '@components/icons';
 
 interface Props {
 	params: {
@@ -50,15 +51,25 @@ async function ProjectPage(props: Props) {
 				</Box>
 			)}
 			<Box textAlign="center">
-				<ProfileLinkButton href={Paths.ProjectJournals(projectId)}>
+				<ProfileLinkButton
+					icon={JournalIcon}
+					href={Paths.ProjectJournals(projectId)}
+				>
 					Project Posts
 				</ProfileLinkButton>
 				{project.links.map((l, i) => (
-					<ProfileLinkButton key={i} href={l.url} target="_blank">
+					<ProfileLinkButton
+						key={i}
+						href={l.url}
+						target="_blank"
+					>
 						{l.label}
 					</ProfileLinkButton>
 				))}
-				<ProfileLinkButton href={Paths.UserGallery(project.owner.username)}>
+				<ProfileLinkButton
+					icon={ProfileIcon}
+					href={Paths.UserGallery(project.owner.username)}
+				>
 					{project.owner.username}{SpecialCharacterCodes.RSQUO}s Gallery
 				</ProfileLinkButton>
 				<ProfileShareButton shareObj={{

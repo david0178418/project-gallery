@@ -11,6 +11,11 @@ import {
 	BaseUrl,
 	Paths,
 } from '@common/constants';
+import {
+	JournalIcon,
+	ProfileIcon,
+	ProjectIcon,
+} from '@components/icons';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 interface Props {
@@ -81,14 +86,23 @@ async function GalleryPage(props: Props) {
 
 	return (
 		<Box textAlign="center">
-			<ProfileLinkButton href={Paths.UserGalleryProjects(userProfile.username)}>
+			<ProfileLinkButton
+				icon={ProjectIcon}
+				href={Paths.UserGalleryProjects(userProfile.username)}
+			>
 				Projects
 			</ProfileLinkButton>
-			<ProfileLinkButton href={Paths.UserGalleryJournals(userProfile.username)}>
+			<ProfileLinkButton
+				icon={JournalIcon}
+				href={Paths.UserGalleryJournals(userProfile.username)}
+			>
 				Posts
 			</ProfileLinkButton>
 			{!!userProfile.detailedBio && (
-				<ProfileLinkButton href={Paths.UserGalleryAbout(userProfile.username)}>
+				<ProfileLinkButton
+					icon={ProfileIcon}
+					href={Paths.UserGalleryAbout(userProfile.username)}
+				>
 					About
 				</ProfileLinkButton>
 			)}

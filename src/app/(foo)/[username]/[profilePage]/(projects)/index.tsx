@@ -1,8 +1,9 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserGallery } from '@server/queries';
 import { Box, Typography } from '@ui';
-import { Paths } from '@common/constants';
+import { Paths, SpecialCharacterCodes } from '@common/constants';
 import { ProfileLinkButton } from '@components/profile-button';
+import { ProfileIcon, ProjectIcon } from '@components/icons';
 
 interface Props {
 	username: string;
@@ -30,13 +31,17 @@ async function UserProjectsPage(props: Props) {
 
 	return (
 		<Box textAlign="center">
-			<ProfileLinkButton href={Paths.UserGallery(username)}>
-				Gallery Home
+			<ProfileLinkButton
+				icon={ProfileIcon}
+				href={Paths.UserGallery(username)}
+			>
+				{username}{SpecialCharacterCodes.RSQUO}s Gallery
 			</ProfileLinkButton>
 			{!!projects.length && (
 				<>
 					{projects.map((p) => (
 						<ProfileLinkButton
+							icon={ProjectIcon}
 							key={p._id.toString()}
 							href={Paths.Project(p._id.toString())}
 						>

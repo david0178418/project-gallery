@@ -1,7 +1,7 @@
 
 'use client';
-export { default as AddIcon } from '@mui/icons-material/AddOutlined';
 export { default as AddAPhotoIcon } from '@mui/icons-material/AddAPhotoOutlined';
+export { default as AddIcon } from '@mui/icons-material/AddOutlined';
 export { default as ArrowDownIcon } from '@mui/icons-material/ExpandMore';
 export { default as ArrowLeftCircleIcon } from '@mui/icons-material/ArrowCircleLeft';
 export { default as ArrowLeftIcon } from '@mui/icons-material/ChevronLeft';
@@ -33,13 +33,14 @@ export { default as HomeIcon } from '@mui/icons-material/HomeOutlined';
 export { default as InfoIcon } from '@mui/icons-material/Info';
 export { default as JournalActiveIcon } from '@mui/icons-material/Article';
 export { default as JournalIcon } from '@mui/icons-material/ArticleOutlined';
+export { default as LinkIcon } from '@mui/icons-material/Link';
 export { default as LoginIcon } from '@mui/icons-material/Login';
 export { default as LogoutIcon } from '@mui/icons-material/Logout';
 export { default as MenuIcon } from '@mui/icons-material/Menu';
 export { default as MoreIcon } from '@mui/icons-material/MoreHoriz';
 export { default as ProfileActiveIcon } from '@mui/icons-material/Person';
 export { default as ProfileIcon } from '@mui/icons-material/PersonOutline';
-export { default as ProjectIcon } from '@mui/icons-material/Construction';
+export { default as ProjectIcon } from '@mui/icons-material/HandymanOutlined';
 export { default as RegisterIcon } from '@mui/icons-material/HowToRegOutlined';
 export { default as RegistrationIcon } from '@mui/icons-material/AppRegistration';
 export { default as SaveIcon } from '@mui/icons-material/SaveOutlined';

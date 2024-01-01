@@ -1,14 +1,18 @@
 'use client';
 import { Box, Button } from '@ui';
 import Link from 'next/link';
+import { CancelIcon, LinkIcon } from './icons';
 import {
 	ComponentProps,
 	HTMLAttributeAnchorTarget,
 	ReactNode,
 } from 'react';
 
+type IconType = typeof CancelIcon;
+
 interface ProfileButtonProps {
 	children: ReactNode;
+	icon?: IconType;
 	onClick? (): void;
 }
 
@@ -24,6 +28,7 @@ function ProfileButton(props: ProfileButtonProps) {
 interface ProfileLinkButtonProps {
 	children: ReactNode;
 	href: string;
+	icon?: IconType;
 	target?: HTMLAttributeAnchorTarget;
 }
 
@@ -48,10 +53,19 @@ function ProfileLinkButton(props: ProfileLinkButtonProps) {
 	);
 }
 
-function Btn(props: ComponentProps<typeof Button>) {
+interface BtnProps extends ComponentProps<typeof Button> {
+	icon?: IconType;
+}
+
+function Btn(props: BtnProps) {
+	const {
+		icon: Icon = LinkIcon,
+		...btnProps
+	} = props;
+
 	return (
 		<Button
-			{...props}
+			{...btnProps}
 			fullWidth
 			size="large"
 			variant="outlined"
@@ -60,6 +74,14 @@ function Btn(props: ComponentProps<typeof Button>) {
 				maxWidth: 600,
 				fontSize: 20,
 			}}
+			startIcon={
+				<Icon sx={{
+					position: 'absolute',
+					left: 30,
+					top: '50%',
+					transform: 'translateY(-50%)',
+				}}/>
+			}
 		/>
 	);
 }

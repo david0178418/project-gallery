@@ -2,6 +2,7 @@
 import { share } from '@components/common/share-button';
 import ProfileButton from './profile-button';
 import { usePushToastMsg } from '@common/atoms';
+import { ShareIcon } from './icons';
 
 interface Props {
 	shareObj: {
@@ -24,6 +25,7 @@ function ProfileShareButton(props: Props) {
 
 	return (
 		<ProfileButton
+			icon={ShareIcon}
 			onClick={async () => {
 				const result = await share(
 					url,
