@@ -1,5 +1,5 @@
-
 'use client';
+
 export { default as AddAPhotoIcon } from '@mui/icons-material/AddAPhotoOutlined';
 export { default as AddIcon } from '@mui/icons-material/AddOutlined';
 export { default as ArrowDownIcon } from '@mui/icons-material/ExpandMore';
@@ -49,4 +49,9 @@ export { default as SettingsActiveIcon } from '@mui/icons-material/Settings';
 export { default as SettingsIcon } from '@mui/icons-material/SettingsOutlined';
 export { default as SettingsOutlinedIcon } from '@mui/icons-material/SettingsOutlined';
 export { default as ShareIcon } from '@mui/icons-material/Share';
+export { default as SocialFacebookIcon } from '@mui/icons-material/Facebook';
+export { default as SocialGitHubIcon } from '@mui/icons-material/GitHub';
+export { default as SocialLinkedInIcon } from '@mui/icons-material/LinkedIn';
+export { default as SocialTwitterIcon } from '@mui/icons-material/Twitter';
+export { default as SocialYouTubeIcon } from '@mui/icons-material/YouTube';
 export { default as SpeedDialIcon } from '@mui/material/SpeedDialIcon';

@@ -1,12 +1,20 @@
 'use client';
 import { Box, Button } from '@ui';
 import Link from 'next/link';
-import { CancelIcon, LinkIcon } from './icons';
 import {
 	ComponentProps,
 	HTMLAttributeAnchorTarget,
 	ReactNode,
 } from 'react';
+import {
+	CancelIcon,
+	LinkIcon,
+	SocialFacebookIcon,
+	SocialGitHubIcon,
+	SocialLinkedInIcon,
+	SocialTwitterIcon,
+	SocialYouTubeIcon,
+} from './icons';
 
 type IconType = typeof CancelIcon;
 
@@ -47,7 +55,10 @@ function ProfileLinkButton(props: ProfileLinkButtonProps) {
 				href={href}
 				target={target}
 			>
-				<Btn {...btnProps} />
+				<Btn
+					href={href}
+					{...btnProps}
+				/>
 			</Link>
 		</Box>
 	);
@@ -59,9 +70,14 @@ interface BtnProps extends ComponentProps<typeof Button> {
 
 function Btn(props: BtnProps) {
 	const {
-		icon: Icon = LinkIcon,
+		href = '',
+		icon,
 		...btnProps
 	} = props;
+
+	const Icon = icon ||
+		WebIccons[extractUrlHost(href)] ||
+		LinkIcon;
 
 	return (
 		<Button
@@ -86,3 +102,20 @@ function Btn(props: BtnProps) {
 		/>
 	);
 }
+
+const HostnameRegex = /^(?:https?:\/\/)?(?:www\.)?([^/]+)/;
+
+export
+function extractUrlHost(str: string) {
+	const match = str.match(HostnameRegex);
+
+	return match?.[1]?.toLowerCase() || '';
+}
+
+const WebIccons: Record<string, typeof SocialFacebookIcon> = {
+	'facebook.com': SocialFacebookIcon,
+	'github.com': SocialGitHubIcon,
+	'linkedin.com': SocialLinkedInIcon,
+	'twitter.com': SocialTwitterIcon,
+	'youtube.com': SocialYouTubeIcon,
+};
