@@ -25,6 +25,7 @@ function ProfileShareButton(props: Props) {
 
 	return (
 		<ProfileButton
+			iconColor="#369E19"
 			icon={ShareIcon}
 			onClick={async () => {
 				const result = await share(

@@ -1,6 +1,8 @@
 'use client';
 import { Box, Button } from '@ui';
 import Link from 'next/link';
+import Image from 'next/image';
+import logo from '@common/images/logo-small.png';
 import {
 	ComponentProps,
 	HTMLAttributeAnchorTarget,
@@ -18,9 +20,8 @@ import {
 
 type IconType = typeof CancelIcon;
 
-interface ProfileButtonProps {
+interface ProfileButtonProps extends BtnProps {
 	children: ReactNode;
-	icon?: IconType;
 	onClick? (): void;
 }
 
@@ -33,10 +34,9 @@ function ProfileButton(props: ProfileButtonProps) {
 	);
 }
 
-interface ProfileLinkButtonProps {
+interface ProfileLinkButtonProps extends BtnProps {
 	children: ReactNode;
 	href: string;
-	icon?: IconType;
 	target?: HTMLAttributeAnchorTarget;
 }
 
@@ -66,18 +66,27 @@ function ProfileLinkButton(props: ProfileLinkButtonProps) {
 
 interface BtnProps extends ComponentProps<typeof Button> {
 	icon?: IconType;
+	iconColor?: string;
 }
 
 function Btn(props: BtnProps) {
 	const {
 		href = '',
 		icon,
+		iconColor,
 		...btnProps
 	} = props;
 
+	const maybeDomain = extractUrlHost(href);
+
 	const Icon = icon ||
-		WebIccons[extractUrlHost(href)] ||
+		WebIcons[maybeDomain as keyof typeof WebIcons] ||
 		LinkIcon;
+
+	const color = iconColor ||
+		(Icon === LinkIcon && '#5271ff') ||
+		WebIconColors[maybeDomain] ||
+		'inherit';
 
 	return (
 		<Button
@@ -93,6 +102,7 @@ function Btn(props: BtnProps) {
 			}}
 			startIcon={
 				<Icon sx={{
+					color,
 					position: 'absolute',
 					left: 30,
 					top: '50%',
@@ -112,10 +122,30 @@ function extractUrlHost(str: string) {
 	return match?.[1]?.toLowerCase() || '';
 }
 
-const WebIccons: Record<string, typeof SocialFacebookIcon> = {
+const WebIcons = {
 	'facebook.com': SocialFacebookIcon,
 	'github.com': SocialGitHubIcon,
 	'linkedin.com': SocialLinkedInIcon,
 	'twitter.com': SocialTwitterIcon,
 	'youtube.com': SocialYouTubeIcon,
+	'projectgallery.me': (props: ComponentProps<typeof Box>) => {
+		return (
+			<Box {...props}>
+				<Image
+					alt=""
+					src={logo}
+					width={18}
+					height={18}
+				/>
+			</Box>
+		);
+	},
+};
+
+const WebIconColors: Record<string, string> = {
+	'facebook.com': '#4267B2',
+	'github.com': '#24292F',
+	'linkedin.com': '#0077B5',
+	'twitter.com': '#1D9BF0',
+	'youtube.com': '#FF0000',
 };
