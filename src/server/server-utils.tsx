@@ -29,6 +29,7 @@ interface SendEmailArgs {
 
 export
 async function sendEmail(args: SendEmailArgs) {
+	console.log('called sendEmail');
 	const transporter = createTransport({
 		host: SmtpServer,
 		port: SmtpPort,
@@ -44,11 +45,12 @@ async function sendEmail(args: SendEmailArgs) {
 	});
 
 	try {
-		await transporter.sendMail({
+		const response = await transporter.sendMail({
 			from: NoReplyEmailAddress,
 			...args,
 		});
-		console.log(`sendEmail:success:${JSON.stringify(args)}`);
+
+		console.log(`sendEmail:success:${JSON.stringify(args)}::${JSON.stringify(response)}`);
 	} catch(e) {
 		console.log(`sendEmail:error: ${JSON.stringify(e)}`);
 	}

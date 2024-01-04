@@ -10,6 +10,7 @@ const FullVerifyUrl = urlJoin(BaseUrl, Paths.OneClickAuth);
 
 export default
 async function oneClickSendAction(email: string) {
+	console.log('called oneClickSendAction');
 	const session = await getServerSession();
 
 	if(session) {
