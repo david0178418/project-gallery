@@ -36,17 +36,18 @@ async function sendEmail(args: SendEmailArgs) {
 		auth,
 	});
 
-	const col = await getCollection(DbCollections.SentEmails);
-
-	col.insertOne({
-		date: nowISOString(),
-		from: NoReplyEmailAddress,
-		...args,
-	});
-
 	try {
 		const response = await transporter.sendMail({
 			from: NoReplyEmailAddress,
+			...args,
+		});
+
+		const col = await getCollection(DbCollections.SentEmails);
+
+		col.insertOne({
+			date: nowISOString(),
+			from: NoReplyEmailAddress,
+			response,
 			...args,
 		});
 
