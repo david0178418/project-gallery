@@ -29,7 +29,7 @@ interface SendEmailArgs {
 
 export
 async function sendEmail(args: SendEmailArgs) {
-	console.log('called sendEmail');
+	console.log(`called sendEmail ${SmtpServer}/${SmtpPort}/1${auth?.pass}/${auth?.user}`);
 	const transporter = createTransport({
 		host: SmtpServer,
 		port: SmtpPort,
