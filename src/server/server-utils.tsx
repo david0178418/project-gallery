@@ -53,6 +53,6 @@ async function sendEmail(args: SendEmailArgs) {
 
 		console.log(`sendEmail:success:${JSON.stringify(args)}::${JSON.stringify(response)}`);
 	} catch(e) {
-		console.log(`sendEmail:error: ${JSON.stringify(e)}`);
+		console.error(`sendEmail:error: ${JSON.stringify(e)}`);
 	}
 }
