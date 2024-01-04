@@ -29,7 +29,7 @@ interface SendEmailArgs {
 
 export
 async function sendEmail(args: SendEmailArgs) {
-	console.log(`called sendEmail ${SmtpServer}/${SmtpPort}/1${auth?.pass}/${auth?.user}`);
+	console.log('called sendEmail');
 	const transporter = createTransport({
 		host: SmtpServer,
 		port: SmtpPort,
@@ -37,23 +37,19 @@ async function sendEmail(args: SendEmailArgs) {
 	});
 
 	try {
-		console.log('aaaaaaa');
 		const response = await transporter.sendMail({
 			from: NoReplyEmailAddress,
 			...args,
 		});
 
-		console.log(111);
 		const col = await getCollection(DbCollections.SentEmails);
 
-		console.log(2222);
 		await col.insertOne({
 			date: nowISOString(),
 			from: NoReplyEmailAddress,
 			response,
 			...args,
 		});
-		console.log(3333);
 
 		console.log(`sendEmail:success:${JSON.stringify(args)}::${JSON.stringify(response)}`);
 	} catch(e) {

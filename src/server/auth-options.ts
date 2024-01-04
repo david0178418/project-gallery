@@ -48,6 +48,7 @@ const authOptions: NextAuthOptions = {
 			name: 'Magic Link',
 			credentials: { key: { type: 'hidden' } },
 			async authorize(credentials) {
+				console.log('called OneClick authorize');
 				if(!credentials) {
 					return null;
 				}
@@ -99,6 +100,7 @@ const authOptions: NextAuthOptions = {
 				},
 			},
 			async authorize(credentials) {
+				console.log('called Creds authorize');
 				if(!credentials) {
 					return null;
 				}
