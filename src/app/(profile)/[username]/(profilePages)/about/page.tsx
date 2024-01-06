@@ -1,14 +1,15 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
+import MarkdownContent from '@components/markdown-content';
+import { Box, Typography } from '@ui';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
-import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
-import { Metadata } from 'next';
-import { ProfilePages } from './profile-pages';
+import { LogoMain } from '@common/images';
 import {
 	AppName,
 	BaseUrl,
 	Paths,
 } from '@common/constants';
+import { Metadata } from 'next';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 
@@ -19,19 +20,36 @@ interface Props {
 	};
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-	const {
-		params: {
-			profilePage,
-			username: routeUsername,
-		},
-	} = props;
+export default
+async function UserAboutPage(props: Props) {
+	const { params: { username } } = props;
+	const result = await UsernameValidation.safeParseAsync(username);
 
-	const page = ProfilePages[profilePage as keyof typeof ProfilePages];
+	const userProfile = result.success ?
+		await fetchUserProfileByUsername(username) :
+		null;
 
-	if(!page) {
-		return {};
+	if(!userProfile) {
+		return (
+			<Typography>
+				Invalid User
+			</Typography>
+		);
 	}
+
+	return (
+		<>
+			<Box paddingTop={4}>
+				<MarkdownContent>
+					{userProfile.detailedBio}
+				</MarkdownContent>
+			</Box>
+		</>
+	);
+}
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+	const { params: { username: routeUsername } } = props;
 
 	const result = await UsernameValidation.safeParseAsync(routeUsername);
 
@@ -54,7 +72,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 		return {};
 	}
 
-	const title = `${username}'s Gallery - ${page.label}`;
+	const title = `${username}'s Gallery - About`;
 	const description = userProfile.shortBio;
 	const url = urlJoin(BaseUrl, Paths.UserGallery(username));
 
@@ -72,21 +90,4 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 			images: [{ url: SocialImageUrl }],
 		},
 	};
-}
-
-export default async function UserGalleryProfilePage(props: Props) {
-	const {
-		params: {
-			profilePage,
-			username,
-		},
-	} = props;
-
-	const page = ProfilePages[profilePage as keyof typeof ProfilePages];
-
-	if(!page) {
-		return null;
-	}
-
-	return <page.Component username={username} />;
 }

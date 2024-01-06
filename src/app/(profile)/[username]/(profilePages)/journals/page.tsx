@@ -1,17 +1,20 @@
 import { Typography } from '@ui';
 import { fetchUserJournals } from '@server/queries';
 import { ProfileLinkButton } from '@components/profile-button';
-import { Paths, SpecialCharacterCodes } from '@common/constants';
+import { Paths } from '@common/constants';
 import ProfileShareButton from '@components/profile-share-button';
-import { JournalIcon, ProfileIcon } from '@components/icons';
+import { JournalIcon } from '@components/icons';
 
 interface Props {
-	username: string;
+	params: {
+		username: string;
+		profilePage: string;
+	};
 }
 
 export default
 async function UserJournalsPage(props: Props) {
-	const { username } = props;
+	const { params: { username } } = props;
 	const journals = await fetchUserJournals(username);
 
 	return (
@@ -21,12 +24,6 @@ async function UserJournalsPage(props: Props) {
 					No journal posts yet
 				</Typography>
 			)}
-			<ProfileLinkButton
-				icon={ProfileIcon}
-				href={Paths.UserGallery(username)}
-			>
-				{username}{SpecialCharacterCodes.RSQUO}s Gallery
-			</ProfileLinkButton>
 			{journals.map(j => (
 				<ProfileLinkButton
 					icon={JournalIcon}
