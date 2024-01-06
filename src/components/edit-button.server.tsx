@@ -1,0 +1,36 @@
+import { EditIcon } from '@components/icons';
+import Link from 'next/link';
+import { getServerSession } from '@server/auth-options';
+import { Paths } from '@common/constants';
+import { Fab } from '@ui';
+
+interface Props {
+	userId: string;
+	href: string;
+}
+
+export default
+async function EditButton(props: Props) {
+	const { userId } = props;
+
+	const session = await getServerSession();
+	const isOwner = session?.user.id === userId;
+
+	return isOwner && (
+		<Link href={Paths.Settings} >
+			<Fab
+				color="primary"
+				sx={{
+					position: 'fixed',
+					bottom: 64,
+					right: {
+						xs: 16,
+						md: 32,
+					},
+				}}
+			>
+				<EditIcon />
+			</Fab>
+		</Link>
+	);
+}
