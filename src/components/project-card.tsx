@@ -3,11 +3,9 @@ import { ParsedContent } from './parsed-content';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
 import { ShareIconButton } from './common/share-button';
-import {
-	FavoriteIcon,
-	JournalIcon,
-	EditIcon,
-} from '@components/icons';
+import { FavoriteIcon, JournalIcon } from '@components/icons';
+import { Suspense } from 'react';
+import EditButton from './edit-button.server';
 import {
 	Box,
 	Card,
@@ -18,7 +16,6 @@ import {
 	Tooltip,
 	Typography,
 } from '@ui';
-import { getServerSession } from '@server/auth-options';
 
 interface Props {
 	project: DbProject | UiProject;
@@ -36,8 +33,6 @@ async function ProjectCard(props: Props) {
 			owner,
 		},
 	} = props;
-	const session = await getServerSession();
-	const isOwner = session?.user?.id === owner._id.toString();
 	const projectUrl = Paths.Project(_id.toString());
 
 	return (
@@ -103,23 +98,12 @@ async function ProjectCard(props: Props) {
 						</Tooltip>
 					</Link>
 				)}
-				{isOwner && (
-					<Link
-						shallow
+				<Suspense>
+					<EditButton
+						userId={owner._id.toString()}
 						href={Paths.ProjectEdit(_id.toString())}
-					>
-						<Tooltip
-							arrow
-							disableFocusListener
-							disableTouchListener
-							title="Edit"
-						>
-							<IconButton>
-								<EditIcon />
-							</IconButton>
-						</Tooltip>
-					</Link>
-				)}
+					/>
+				</Suspense>
 			</CardActions>
 		</Card>
 	);

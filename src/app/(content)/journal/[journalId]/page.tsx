@@ -1,5 +1,3 @@
-import { EditIcon } from '@components/icons';
-import { getServerSession } from '@server/auth-options';
 import { fetchJournal, fetchUserProfileByUsername } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
 import MarkdownContent from '@components/markdown-content';
@@ -8,6 +6,7 @@ import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import { red } from '@mui/material/colors';
 import Link from 'next/link';
+import EditButton from '@components/edit-button.server';
 import {
 	AppName,
 	BaseUrl,
@@ -16,10 +15,10 @@ import {
 import {
 	Avatar,
 	Box,
-	Fab,
 	Link as MuiLink,
 	Typography,
 } from '@ui';
+import { Suspense } from 'react';
 
 export
 async function generateMetadata(props: Props): Promise<Metadata> {
@@ -72,8 +71,6 @@ async function Journal(props: Props) {
 		);
 	}
 
-	const session = await getServerSession();
-	const isOwner = journal.owner._id.toString() === session?.user.id;
 	const profile = await fetchUserProfileByUsername(journal.owner.username);
 
 	return (
@@ -119,20 +116,12 @@ async function Journal(props: Props) {
 					{journal.body}
 				</MarkdownContent>
 			</Box>
-			{isOwner && (
-				<Link href={Paths.JournalEdit(journalId)}>
-					<Fab
-						color="primary"
-						sx={{
-							position: 'fixed',
-							bottom: 64,
-							right: 16,
-						}}
-					>
-						<EditIcon />
-					</Fab>
-				</Link>
-			)}
+			<Suspense>
+				<EditButton
+					userId={journal.owner._id.toString()}
+					href={Paths.JournalEdit(journalId)}
+				/>
+			</Suspense>
 		</>
 	);
 }

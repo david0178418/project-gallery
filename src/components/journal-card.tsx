@@ -5,9 +5,10 @@ import { Paths } from '@common/constants';
 import MarkdownContent from './markdown-content';
 import { ShareIconButton } from './common/share-button';
 import { LocalizedDate } from './localized-date';
-import { getServerSession } from '@server/auth-options';
 import { fetchUserProfileByUsername } from '@server/queries';
-import { FavoriteIcon, EditIcon } from '@components/icons';
+import { FavoriteIcon } from '@components/icons';
+import { Suspense } from 'react';
+import EditButton from './edit-button.server';
 import {
 	Avatar,
 	Box,
@@ -26,8 +27,6 @@ interface Props {
 
 export default
 async function JournalCard(props: Props) {
-	const session = await getServerSession();
-	const user = session?.user;
 	const {
 		journal: {
 			_id,
@@ -43,7 +42,6 @@ async function JournalCard(props: Props) {
 	} = props;
 	const profile = await fetchUserProfileByUsername(username);
 	const journaId = _id.toString();
-	const isOwner = user?.id === ownerId.toString();
 	const journalUrl = Paths.Journal(journaId);
 
 	return (
@@ -124,20 +122,12 @@ async function JournalCard(props: Props) {
 					label={title}
 					shareMsg="Check out this project journal post!"
 				/>
-				{isOwner && (
-					<Link prefetch={false} href={Paths.JournalEdit(journaId)}>
-						<Tooltip
-							arrow
-							disableFocusListener
-							disableTouchListener
-							title="Edit"
-						>
-							<IconButton>
-								<EditIcon />
-							</IconButton>
-						</Tooltip>
-					</Link>
-				)}
+				<Suspense>
+					<EditButton
+						userId={ownerId.toString()}
+						href={Paths.JournalEdit(journaId)}
+					/>
+				</Suspense>
 			</CardActions>
 		</Card>
 	);

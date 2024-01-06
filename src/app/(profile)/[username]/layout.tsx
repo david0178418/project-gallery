@@ -1,10 +1,8 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import MarkdownContent from '@components/markdown-content';
-import { ReactNode } from 'react';
-import { EditIcon } from '@components/icons';
-import Link from 'next/link';
-import { getServerSession } from '@server/auth-options';
+import { ReactNode, Suspense } from 'react';
+import EditButton from '@components/edit-button.server';
 import {
 	Paths,
 	SpecialCharacterCodes,
@@ -13,7 +11,6 @@ import {
 	Avatar,
 	Box,
 	Container,
-	Fab,
 	Typography,
 } from '@ui';
 
@@ -55,9 +52,6 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 	const username = profileUser.username;
 	const userProfile = await fetchUserProfileByUsername(username);
 
-	const session = await getServerSession();
-	const isOwner = session?.user.id === profileUser._id.toString();
-
 	return (
 		<Container>
 			<Box paddingTop={1} paddingBottom={2} >
@@ -91,22 +85,13 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 			<Box paddingX={2} paddingY={1}>
 				{children}
 			</Box>
-			{isOwner && (
-				<Link href={Paths.Settings} >
-					<Fab
-						color="primary"
-						sx={{
-							position: 'fixed',
-							bottom: 64,
-							right: {
-								xs: 16,
-								md: 32,
-							},
-						}}
-					>
-						<EditIcon />
-					</Fab>
-				</Link>
+			{userProfile && (
+				<Suspense>
+					<EditButton
+						userId={userProfile._id.toString()}
+						href={Paths.Settings}
+					/>
+				</Suspense>
 			)}
 		</Container>
 	);

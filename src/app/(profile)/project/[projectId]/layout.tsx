@@ -1,15 +1,12 @@
 import { fetchProject } from '@server/queries';
-import { ReactNode } from 'react';
-import { EditIcon } from '@components/icons';
-import Link from 'next/link';
-import { getServerSession } from '@server/auth-options';
+import { ReactNode, Suspense } from 'react';
 import { MongoIdValidation } from '@server/validations';
 import { Paths } from '@common/constants';
 import ImageSelector from './image-selector';
+import EditButton from '@components/edit-button.server';
 import {
 	Box,
 	Container,
-	Fab,
 	Typography,
 } from '@ui';
 
@@ -48,9 +45,6 @@ export default async function ProjectLayout(props: Props) {
 		);
 	}
 
-	const session = await getServerSession();
-	const isOwner = session?.user.id === project.owner._id.toString();
-
 	return (
 		<Container>
 			<Box paddingTop={1} paddingBottom={2} textAlign="center" >
@@ -71,23 +65,12 @@ export default async function ProjectLayout(props: Props) {
 			<Box paddingX={2} paddingY={1}>
 				{children}
 			</Box>
-			{isOwner && (
-				<Link href={Paths.ProjectEdit(projectId)}>
-					<Fab
-						color="primary"
-						sx={{
-							position: 'fixed',
-							bottom: 64,
-							right: {
-								xs: 16,
-								md: 32,
-							},
-						}}
-					>
-						<EditIcon />
-					</Fab>
-				</Link>
-			)}
+			<Suspense>
+				<EditButton
+					userId={project.owner._id.toString()}
+					href={Paths.ProjectEdit(projectId)}
+				/>
+			</Suspense>
 		</Container>
 	);
 }
