@@ -7,15 +7,15 @@ import { CustomLink } from '@common/types/CustomLink';
 import { Collapse } from '@mui/material';
 import { UiProject } from '@common/types/Project';
 import { useRouter } from 'next/navigation';
+import { useEffectOnce } from '@common/hooks';
+import { UiJournal } from '@common/types/Journal';
+import MarkdownContent from '@components/markdown-content';
 import {
 	CloseIcon,
 	JournalIcon,
 	ProfileIcon,
 	ProjectIcon,
 } from '@components/icons';
-import { useEffectOnce } from '@common/hooks';
-import { UiJournal } from '@common/types/Journal';
-import MarkdownContent from '@components/markdown-content';
 
 type Page = 'projects' | 'about' | 'journals';
 
