@@ -40,7 +40,7 @@ async function Foo(props: Props) {
 
 	return (
 		<AnimatedBody
-			username={username}
+			username={userProfile.username}
 			links={userProfile.links}
 			pageName="projects"
 			projects={projects.map(dbProjectToUiProject)}

@@ -38,7 +38,7 @@ async function UsernameJournals(props: Props) {
 
 	return (
 		<AnimatedBody
-			username={username}
+			username={userProfile.username}
 			links={userProfile.links}
 			pageName="about"
 			projects={[]}
