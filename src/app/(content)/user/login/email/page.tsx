@@ -1,11 +1,9 @@
 import LoginEmailForm from './login-email-form';
 import { Paths } from '@common/constants';
 import Link from 'next/link';
-import {
-	Button,
-	DialogActions,
-	DialogTitle,
-} from '@ui';
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export default function LoginPage() {
 	return (

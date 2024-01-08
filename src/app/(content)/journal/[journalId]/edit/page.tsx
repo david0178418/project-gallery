@@ -1,7 +1,7 @@
 import { getServerSession } from '@server/auth-options';
 import { fetchJournal, fetchProjectsByUser } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
-import { Typography } from '@ui';
+import Typography from '@mui/material/Typography';
 import { pick } from '@/common/utils';
 import EditJournalForm from './edit-journal-form';
 import { DbJournal, WriteJournal } from '@common/types/Journal';

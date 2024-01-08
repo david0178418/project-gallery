@@ -4,11 +4,9 @@ import { MongoIdValidation } from '@server/validations';
 import { Paths } from '@common/constants';
 import ImageSelector from './image-selector';
 import EditButton from '@components/edit-button.server';
-import {
-	Box,
-	Container,
-	Typography,
-} from '@ui';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 
 interface Props {
 	children: ReactNode;

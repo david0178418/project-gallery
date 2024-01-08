@@ -4,7 +4,7 @@ import ProfileShareButton from '@components/profile-share-button';
 import { Paths } from '@common/constants';
 import { ReactNode, useState } from 'react';
 import { CustomLink } from '@common/types/CustomLink';
-import { Collapse } from '@mui/material';
+import Collapse from '@mui/material/Collapse';
 import { UiProject } from '@common/types/Project';
 import { useRouter } from 'next/navigation';
 import { useEffectOnce } from '@common/hooks';

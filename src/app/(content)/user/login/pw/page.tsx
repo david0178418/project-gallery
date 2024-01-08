@@ -1,11 +1,9 @@
 import LoginPwForm from './login-pw-form';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
-import {
-	Button,
-	DialogActions,
-	DialogTitle,
-} from '@ui';
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export default function LoginModal() {
 	return (

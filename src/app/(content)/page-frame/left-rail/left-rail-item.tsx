@@ -2,10 +2,8 @@
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { RailButtonContent } from './rail-button-content';
-import {
-	ListItem,
-	ListItemButton,
-} from '@ui';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 
 interface Props {
 	label: string;

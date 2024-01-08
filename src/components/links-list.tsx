@@ -1,14 +1,12 @@
 
 import { CustomLink } from '@common/types/CustomLink';
 import { moveItemLeft, moveItemRight } from '@common/utils';
-import {
-	IconButton,
-	Link as MuiLink,
-	List,
-	ListItem,
-	ListItemIcon,
-	ListItemText,
-} from '@ui';
+import IconButton from '@mui/material/IconButton';
+import MuiLink from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import {
 	ArrowDownIcon,
 	ArrowUpIcon,

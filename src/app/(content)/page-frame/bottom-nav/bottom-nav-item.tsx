@@ -1,5 +1,5 @@
 'use client';
-import { BottomNavigationAction } from '@ui';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 

@@ -2,9 +2,9 @@
 import { CancelIcon } from '@components/icons';
 import { ComponentProps } from 'react';
 import { ConfirmIcon } from '@components/icons';
-import {
-	Button as MuiButton, useMediaQuery, useTheme,
-} from '@ui';
+import MuiButton from '@mui/material/Button';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import useTheme from '@mui/material/styles/useTheme';
 import { useRouteBackDefault } from '@common/hooks';
 
 // TODO Reorganize common buttons

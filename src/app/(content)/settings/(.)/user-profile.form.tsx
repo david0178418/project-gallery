@@ -8,7 +8,8 @@ import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import updateProfile from './update-profile-action';
 import LinkForm from '@app/(content)/project/[projectId]/edit/edit-project.form/link-form';
 import LinksList from '@components/links-list';
-import { Box, Typography } from '@ui';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 interface Props {
 	userProfile: WriteUserProfile;

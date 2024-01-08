@@ -2,7 +2,8 @@ import { Paths, ProfileActivity } from '@common/constants';
 import { LocalizedDate } from '@components/localized-date';
 import { ScrollContent } from '@components/scroll-content';
 import { fetchUserProfiles } from '@server/queries';
-import { Box, Typography } from '@ui';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 
 const ProfileActivityLabels = {

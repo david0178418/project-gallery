@@ -8,14 +8,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Register from '@server/actions/register';
-import {
-	Box,
-	Button,
-	DialogActions,
-	DialogContent,
-	DialogTitle,
-	TextField,
-} from '@ui';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
 
 export default
 function RegistrationModal() {

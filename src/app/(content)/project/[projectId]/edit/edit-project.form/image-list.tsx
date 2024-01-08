@@ -1,9 +1,7 @@
 import { ProjectImage } from '@common/types/Project';
-import {
-	Box,
-	Grid,
-	IconButton,
-} from '@ui';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,

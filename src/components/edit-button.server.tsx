@@ -2,7 +2,7 @@ import { EditIcon } from '@components/icons';
 import Link from 'next/link';
 import { getServerSession } from '@server/auth-options';
 import { Paths } from '@common/constants';
-import { Fab } from '@ui';
+import Fab from '@mui/material/Fab';
 
 interface Props {
 	userId: string;

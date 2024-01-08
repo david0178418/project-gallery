@@ -9,25 +9,20 @@ import MarkdownContent from '@components/markdown-content';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import { SaveIcon } from '@components/icons';
 import journalSaveAction from './journal-save-action';
-import {
-	useCallback,
-	useState,
-} from 'react';
+import { useCallback, useState } from 'react';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import {
 	MaxJournalPostLength,
 	MaxJournalProjectTitleLength,
 	MinJournalPostLength,
 	MinJournalProjectTitleLength,
 } from '@common/constants';
-import {
-	Box,
-	FormControl,
-	InputLabel,
-	MenuItem,
-	Select,
-	Tab,
-	Tabs,
-} from '@ui';
 
 const GeneralPost = 'general-post';
 

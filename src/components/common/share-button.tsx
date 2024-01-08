@@ -2,7 +2,8 @@
 import { usePushToastMsg } from '@common/atoms';
 import { urlJoin } from '@common/utils';
 import { ShareIcon } from '@components/icons';
-import { IconButton, Tooltip } from '@ui';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
 interface Props {
 	label: string;

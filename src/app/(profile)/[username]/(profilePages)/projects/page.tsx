@@ -1,6 +1,7 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserGallery } from '@server/queries';
-import { Box, Typography } from '@ui';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { Paths } from '@common/constants';
 import { ProfileLinkButton } from '@components/profile-button';
 import { ProjectIcon } from '@components/icons';

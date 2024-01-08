@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Snackbar, IconButton } from '@ui';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
 import { CloseIcon } from '@components/icons';
 import { clearCurrentToastMsgAtom, toastMsgAtom } from '@common/atoms';
 import { DefaultToastMsgDelay } from '@common/constants';

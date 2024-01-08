@@ -5,11 +5,9 @@ import { RailButtonContent } from './rail-button-content';
 import { Paths } from '@common/constants';
 import { LeftRailItem } from './left-rail-item';
 import { getServerSession } from '@server/auth-options';
-import {
-	List,
-	ListItem,
-	ListItemButton,
-} from '@ui';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 import {
 	HomeActiveIcon,
 	LoginIcon,

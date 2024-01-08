@@ -2,13 +2,13 @@ import '@styles/globals.css';
 
 import { Roboto } from 'next/font/google';
 import { ReactNode } from 'react';
-import Providers from './providers';
 import { AppName, BaseUrl } from '@common/constants';
 import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
+import SessionComponent from './session-component';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 
@@ -47,10 +47,10 @@ export default function RootLayout(props: Props) {
 	return (
 		<html lang="en" className={font.className}>
 			<body>
-				<Providers>
+				<SessionComponent>
 					{props.children}
 					{props.modal}
-				</Providers>
+				</SessionComponent>
 				<Analytics />
 				<SpeedInsights/>
 			</body>

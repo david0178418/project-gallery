@@ -1,11 +1,14 @@
-import { Box, Typography } from '@ui';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { fetchProject, fetchProjectJournals } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
 import { ProfileLinkButton } from '@components/profile-button';
 import { Paths, SpecialCharacterCodes } from '@common/constants';
 import ProfileShareButton from '@components/profile-share-button';
 import {
-	JournalIcon, ProfileIcon, ProjectIcon,
+	JournalIcon,
+	ProfileIcon,
+	ProjectIcon,
 } from '@components/icons';
 
 interface Props {

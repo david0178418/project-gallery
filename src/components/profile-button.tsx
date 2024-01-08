@@ -1,5 +1,6 @@
 'use client';
-import { Box, Button } from '@ui';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from '@common/images/logo-small.png';

@@ -1,7 +1,8 @@
 'use client';
 import { Paths } from '@common/constants';
 import { useSelectedLayoutSegment } from 'next/navigation';
-import { Tab, Tabs } from '@ui';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import Link from 'next/link';
 
 const TabPaths = {

@@ -6,13 +6,11 @@ import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Link from 'next/link';
 import oneClickSendAction from './one-click-send-action';
-import {
-	Box,
-	Button,
-	DialogActions,
-	DialogContent,
-	TextField,
-} from '@ui';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import TextField from '@mui/material/TextField';
 
 export default
 function LoginEmailForm() {

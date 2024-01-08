@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import {
-	Box,
-	Button,
-} from '@ui';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 interface Props {
 	obj: any;

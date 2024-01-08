@@ -3,11 +3,9 @@ import { Paths } from '@common/constants';
 import { getServerSession } from '@server/auth-options';
 import CreateButton from './create-button';
 import BottomNavItem from './bottom-nav-item';
-import {
-	BottomNavigation,
-	BottomNavigationAction,
-	Paper,
-} from '@ui';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import Paper from '@mui/material/Paper';
 import {
 	HomeIcon,
 	LoginIcon,

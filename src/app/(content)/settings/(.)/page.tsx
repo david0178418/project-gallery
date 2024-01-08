@@ -9,11 +9,9 @@ import { DbUserProfile, WriteUserProfile } from '@common/types/UserProfile';
 import { pick } from '@common/utils';
 import ProfilePhotoUploader from './profile-photo-uploader';
 import DeleteProfileButton from './delete-profile-button';
-import {
-	Box,
-	Button,
-	Typography,
-} from '@ui';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 export default
 async function SettingsLayout() {

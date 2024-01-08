@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Box } from '@ui';
+import Box from '@mui/material/Box';
 import { ProfileLinkButton } from '@components/profile-button';
 import { BackIcon } from '@components/icons';
 import { Paths, SpecialCharacterCodes } from '@common/constants';

@@ -1,7 +1,7 @@
 import { ScrollContent } from '@components/scroll-content';
 import SettingsTabs from './settings-tabs';
 import { ReactNode } from 'react';
-import { Box } from '@ui';
+import Box from '@mui/material/Box';
 
 interface Props {
 	children: ReactNode;

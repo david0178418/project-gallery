@@ -6,18 +6,16 @@ import { inRange } from '@common/utils';
 import Link from 'next/link';
 import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import { useRouter } from 'next/navigation';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import TextField from '@mui/material/TextField';
 import {
 	Paths,
 	UsernameMaxLength,
 	UsernameMinLength,
 } from '@common/constants';
-import {
-	Box,
-	Button,
-	DialogActions,
-	DialogContent,
-	TextField,
-} from '@ui';
 
 export default
 function LoginPwForm() {

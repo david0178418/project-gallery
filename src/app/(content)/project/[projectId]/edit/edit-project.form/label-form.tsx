@@ -1,6 +1,7 @@
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { useState } from 'react';
-import { Button, Grid } from '@ui';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import { UiProject } from '@common/types/Project';
 import { inRange } from '@common/utils';
 import {

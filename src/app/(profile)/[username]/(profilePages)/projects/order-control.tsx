@@ -1,5 +1,6 @@
 'use client';
-import { Box, IconButton } from '@ui';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 import updateProjectsOrder from './update-projects-order';
 import { Direction, DirectionEnum } from '@common/constants';
 import { useSetLoading } from '@common/atoms';

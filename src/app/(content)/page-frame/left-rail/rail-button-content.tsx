@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react';
-import {
-	ListItemIcon,
-	ListItemText,
-} from '@ui';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
 interface Props {
 	label: string;

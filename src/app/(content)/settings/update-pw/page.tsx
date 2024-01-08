@@ -5,11 +5,9 @@ import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import { ConfirmButton } from '@components/common/buttons';
 import updatePassword from './update-pw-action';
-import {
-	Grid,
-	TextField,
-	Typography,
-} from '@ui';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 export default
 function UpdatePwPage() {

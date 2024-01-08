@@ -1,4 +1,4 @@
-import { Box } from '@ui';
+import Box from '@mui/material/Box';
 import { fetchProject } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
 import MarkdownContent from '@components/markdown-content';

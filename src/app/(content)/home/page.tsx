@@ -3,11 +3,9 @@ import { SearchForm } from '@components/search-form';
 import { fetchJournals, fetchProjects } from '@server/queries';
 import JournalCard from '@components/journal-card';
 import ProjectCard from '@components/project-card';
-import {
-	Box,
-	Grid,
-	Typography,
-} from '@ui';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 export default
 async function HomePage() {

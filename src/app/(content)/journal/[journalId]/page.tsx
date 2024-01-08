@@ -7,18 +7,16 @@ import { Metadata } from 'next';
 import { red } from '@mui/material/colors';
 import Link from 'next/link';
 import EditButton from '@components/edit-button.server';
+import { Suspense } from 'react';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import MuiLink from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
 import {
 	AppName,
 	BaseUrl,
 	Paths,
 } from '@common/constants';
-import {
-	Avatar,
-	Box,
-	Link as MuiLink,
-	Typography,
-} from '@ui';
-import { Suspense } from 'react';
 
 export
 async function generateMetadata(props: Props): Promise<Metadata> {

@@ -2,11 +2,9 @@
 import Link from 'next/link';
 import { Paths } from '@common/constants';
 import { useState } from 'react';
-import {
-	Box,
-	SpeedDial,
-	SpeedDialAction,
-} from '@ui';
+import Box from '@mui/material/Box';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
 import {
 	SpeedDialIcon,
 	ProjectIcon,

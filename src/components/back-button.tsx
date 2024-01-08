@@ -2,7 +2,7 @@
 
 import { Paths } from '@common/constants';
 import { useRouteBackDefault } from '@common/hooks';
-import { IconButton } from '@ui';
+import IconButton from '@mui/material/IconButton';
 import { BackIcon } from './icons';
 
 interface Props {

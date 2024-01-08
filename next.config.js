@@ -2,15 +2,6 @@
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
-	experimental: {
-		optimizePackageImports: [
-			'@mui/icons-material',
-			'@mui/material',
-			'@mui/styles',
-			'@mui/lab',
-			'date-fns',
-		],
-	},
 };
 
 module.exports = nextConfig;

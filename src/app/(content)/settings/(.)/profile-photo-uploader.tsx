@@ -2,9 +2,9 @@
 import { red } from '@mui/material/colors';
 import { FileUploadCategories } from '@common/constants';
 import { Uploader } from '@components/uploader';
-import {
-	Avatar, Box, Fab,
-} from '@ui';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
 import updateProfile from './update-profile-action';
 import { AddAPhotoIcon } from '@components/icons';
 

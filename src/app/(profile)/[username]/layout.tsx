@@ -1,15 +1,13 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import MarkdownContent from '@components/markdown-content';
-import { ReactNode, Suspense } from 'react';
-import EditButton from '@components/edit-button.server';
-import { Paths, SpecialCharacterCodes } from '@common/constants';
-import {
-	Avatar,
-	Box,
-	Container,
-	Typography,
-} from '@ui';
+import type { ReactNode } from 'react';
+// import EditButton from '@components/edit-button.server';
+import { SpecialCharacterCodes } from '@common/constants';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 
 interface Props {
 	children: ReactNode;
@@ -82,14 +80,14 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 			<Box textAlign="center">
 				{children}
 			</Box>
-			{userProfile && (
+			{/* {userProfile && (
 				<Suspense>
 					<EditButton
 						userId={userProfile._id.toString()}
 						href={Paths.Settings}
 					/>
 				</Suspense>
-			)}
+			)} */}
 		</Container>
 	);
 }

@@ -9,17 +9,15 @@ import { fetchUserProfileByUsername } from '@server/queries';
 import { FavoriteIcon } from '@components/icons';
 import { Suspense } from 'react';
 import EditButton from './edit-button.server';
-import {
-	Avatar,
-	Box,
-	Card,
-	CardActions,
-	CardContent,
-	CardHeader,
-	IconButton,
-	Tooltip,
-	Typography,
-} from '@ui';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 
 interface Props {
 	journal: DbJournal;

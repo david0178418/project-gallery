@@ -1,7 +1,7 @@
 'use client';
 import { UiProject } from '@common/types/Project';
 import { ImagePreviews } from '@components/image-previews';
-import { Box } from '@ui';
+import Box from '@mui/material/Box';
 import { useState } from 'react';
 
 interface Props {

@@ -1,4 +1,4 @@
-import { Unstable_Grid2 as Grid } from '@ui';
+import Grid from '@mui/material/Unstable_Grid2';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import Img1 from './img1.png';
@@ -6,12 +6,10 @@ import Img2 from './img2.png';
 import Img3 from './img3.png';
 import Link from 'next/link';
 import { Paths, SpecialCharacterCodes } from '@common/constants';
-import {
-	Box,
-	Button,
-	Paper,
-	Typography,
-} from '@ui';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 const { NBSP: S } = SpecialCharacterCodes;
 

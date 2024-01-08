@@ -1,7 +1,8 @@
 'use client';
 
 import { AppName, Paths } from '@common/constants';
-import { InputAdornment, TextField } from '@ui';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';

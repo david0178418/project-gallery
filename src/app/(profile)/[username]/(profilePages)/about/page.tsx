@@ -1,6 +1,7 @@
 import { UsernameValidation } from '@common/types/UserCredentials';
 import MarkdownContent from '@components/markdown-content';
-import { Box, Typography } from '@ui';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import { urlJoin } from '@common/utils';
 import { LogoMain } from '@common/images';

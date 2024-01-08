@@ -3,10 +3,8 @@ import { TextFieldLengthValidation } from '@components/common/text-field-length-
 import { useState } from 'react';
 import { CustomLinkValidator } from '@common/types/CustomLink';
 import { Key } from 'ts-key-enum';
-import {
-	Button,
-	Grid,
-} from '@ui';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 
 interface Props {
 	onAdd(label: string, url: string): void;

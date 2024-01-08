@@ -1,8 +1,10 @@
 import CommonStuff from '@app/(content)/common-stuff';
 import Link from 'next/link';
 import { Paths } from '@common/constants';
-import { Box, Button } from '@ui';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import { ReactNode } from 'react';
+import ThemeComponent from '@app/theme-component';
 
 interface Props {
 	children: ReactNode;
@@ -10,7 +12,7 @@ interface Props {
 
 export default async function FooLayout(props: Props) {
 	return (
-		<>
+		<ThemeComponent>
 			{props.children}
 			<Box textAlign="center" paddingTop={5} paddingX={2} paddingBottom={15}>
 				<Link href={Paths.Home}>
@@ -20,6 +22,6 @@ export default async function FooLayout(props: Props) {
 				</Link>
 			</Box>
 			<CommonStuff/>
-		</>
+		</ThemeComponent>
 	);
 }

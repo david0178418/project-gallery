@@ -1,7 +1,8 @@
 import type { TooltipProps } from '@mui/material/Tooltip';
 
 import { InfoIcon } from '@components/icons';
-import { IconButton, Tooltip } from '@ui';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import { forwardRef } from 'react';
 
 interface Props {

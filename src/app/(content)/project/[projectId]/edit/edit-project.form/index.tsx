@@ -13,6 +13,13 @@ import saveProjectAction from './save-project-action';
 import { useRouteBackDefault } from '@common/hooks';
 import { SaveIcon } from '@components/icons';
 import { moveItemLeft, moveItemRight } from '@common/utils';
+import Box from '@mui/material/Box';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import TextField from '@mui/material/TextField';
 import {
 	ProjectImage,
 	WriteProject,
@@ -25,15 +32,6 @@ import {
 	MinProjectDescriptionLength,
 	MaxProjectDescriptionLength,
 } from '@common/constants';
-import {
-	Box,
-	Checkbox,
-	FormControlLabel,
-	Grid,
-	Tab,
-	Tabs,
-	TextField,
-} from '@ui';
 
 function dateToDateSubstring(date: Date) {
 	return date.toISOString().substring(0, 10);

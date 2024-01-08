@@ -3,17 +3,15 @@ import MainImage from './homepage-main-image.png';
 import { CheckCircleIcon } from '@components/icons';
 import Link from 'next/link';
 import { Paths, SpecialCharacterCodes } from '@common/constants';
-import {
-	Box,
-	Button,
-	Container,
-	Grid,
-	List,
-	ListItem,
-	ListItemIcon,
-	ListItemText,
-	Typography,
-} from '@ui';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 
 export default
 function Hero() {

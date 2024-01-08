@@ -1,5 +1,5 @@
 import { useDropzone } from 'react-dropzone';
-import { Box } from '@ui';
+import Box from '@mui/material/Box';
 import { postFile } from '@client/api-calls';
 import { useSetAtom } from 'jotai';
 import { loadingAtom } from '@common/atoms';

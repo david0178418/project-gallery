@@ -5,7 +5,8 @@ import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import BackButton from '@components/back-button';
 import { ReactNode } from 'react';
-import { Box, Typography } from '@ui';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import {
 	AppName,
 	BaseUrl,

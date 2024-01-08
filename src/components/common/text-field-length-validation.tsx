@@ -1,8 +1,5 @@
-import { TextField } from '@ui';
-import {
-	useEffect,
-	useState,
-} from 'react';
+import TextField from '@mui/material/TextField';
+import { useEffect, useState } from 'react';
 
 type Props = Parameters<typeof TextField>[0] & {
 	label: string;

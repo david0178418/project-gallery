@@ -1,4 +1,4 @@
-import { Typography } from '@ui';
+import Typography from '@mui/material/Typography';
 import { fetchUserJournals } from '@server/queries';
 import { ProfileLinkButton } from '@components/profile-button';
 import { Paths } from '@common/constants';
