@@ -25,7 +25,7 @@ interface ProfileButtonProps extends BtnProps {
 	onClick? (): void;
 }
 
-export default
+export
 function ProfileButton(props: ProfileButtonProps) {
 	return (
 		<Box marginBottom={3} color="black">

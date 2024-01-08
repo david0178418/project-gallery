@@ -3,10 +3,7 @@ import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import MarkdownContent from '@components/markdown-content';
 import { ReactNode, Suspense } from 'react';
 import EditButton from '@components/edit-button.server';
-import {
-	Paths,
-	SpecialCharacterCodes,
-} from '@common/constants';
+import { Paths, SpecialCharacterCodes } from '@common/constants';
 import {
 	Avatar,
 	Box,
@@ -82,7 +79,7 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 					</Container>
 				)}
 			</Box>
-			<Box paddingX={2} paddingY={1}>
+			<Box textAlign="center">
 				{children}
 			</Box>
 			{userProfile && (

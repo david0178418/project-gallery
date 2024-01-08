@@ -94,13 +94,13 @@ async function Journal(props: Props) {
 				<Link passHref href={Paths.Project(journal.project._id.toString())}>
 					<MuiLink>
 						<Typography variant="subtitle2" color="inherit">
-								For Project: {journal.project.title}
+							For Project: {journal.project.title}
 						</Typography>
 					</MuiLink>
 				</Link>
 			)}
 			<Typography variant="subtitle1" paddingTop={1} fontStyle="italic">
-						published: {
+				published: {
 					journal.publishedDate ?
 						<LocalizedDate date={journal.publishedDate} /> :
 						'Unpublished'
@@ -108,7 +108,7 @@ async function Journal(props: Props) {
 			</Typography>
 			{journal.lastUpdatedDate && (
 				<Typography variant="subtitle1" fontStyle="italic">
-							last updated: <LocalizedDate date={journal.lastUpdatedDate} />
+					last updated: <LocalizedDate date={journal.lastUpdatedDate} />
 				</Typography>
 			)}
 			<Box paddingTop={2}>

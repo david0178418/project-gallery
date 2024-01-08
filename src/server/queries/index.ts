@@ -21,7 +21,7 @@ const fetchUser = cache(async (usernameOrEmail: string): Promise<DbUser | null> 
 			$match: {
 				$or: [
 					{ usernameLower: usernameOrEmail.toLocaleLowerCase() },
-					{ email: usernameOrEmail },
+					{ email: new RegExp(usernameOrEmail, 'i') },
 				],
 			},
 		},
@@ -135,7 +135,7 @@ const fetchUserProfileByUsername = cache(async (username: string): Promise<DbUse
 	console.log('fetchUserProfileByUsername start');
 	const col = await getCollection(DbCollections.UserProfiles);
 
-	return col.findOne({ username: username.toLocaleLowerCase() });
+	return col.findOne({ username: new RegExp(username, 'i') });
 });
 
 export
@@ -247,7 +247,7 @@ async function fetchUserJournals(username: string): Promise<Array<WithId<DbJourn
 		{ $sort: { publishedDate: -1 } },
 		{
 			$match: {
-				'owner.username': username,
+				'owner.username': new RegExp(username, 'i'),
 				...ownerCondition,
 			},
 		},

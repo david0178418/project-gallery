@@ -1,6 +1,6 @@
 'use client';
 import { share } from '@components/common/share-button';
-import ProfileButton from './profile-button';
+import { ProfileButton } from './profile-button';
 import { usePushToastMsg } from '@common/atoms';
 import { ShareIcon } from './icons';
 

@@ -47,7 +47,7 @@ async function HomePage() {
 				}
 			>
 				<Typography variant="h6">
-						Projects
+					Projects
 				</Typography>
 				<Grid padding={1} container spacing={1} >
 					{projects.slice(0, 2).map(p => (

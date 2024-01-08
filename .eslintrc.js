@@ -25,6 +25,7 @@ module.exports = {
 		'comma-spacing': ERR,
 		'eol-last': ERR,
 		'jsx-a11y/alt-text': OFF,
+		'react/jsx-indent': [ERR, 'tab'],
 		'jsx-quotes': ERR,
 		'key-spacing': ERR,
 		'no-multiple-empty-lines': [ERR, {

@@ -1,5 +1,4 @@
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
-import { Box } from '@ui';
 import { ProfileLinkButton } from '@components/profile-button';
 import ProfileShareButton from '@components/profile-share-button';
 import { LogoMain } from '@common/images';
@@ -85,7 +84,7 @@ async function GalleryPage(props: Props) {
 	}
 
 	return (
-		<Box textAlign="center">
+		<>
 			<ProfileLinkButton
 				icon={ProjectIcon}
 				href={Paths.UserGalleryProjects(userProfile.username)}
@@ -120,6 +119,6 @@ async function GalleryPage(props: Props) {
 				label: `${username}'s Project Gallery`,
 				shareMsg: `Check out ${username}'s Project Gallery`,
 			}}/>
-		</Box>
+		</>
 	);
 }
