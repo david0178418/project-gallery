@@ -93,7 +93,7 @@ async function GalleryPage(props: Props) {
 			>
 				Posts
 			</ProfileLinkButton>
-			{userProfile.links?.map((l, i) => (
+			{userProfile.links.map((l, i) => (
 				<ProfileLinkButton
 					key={i}
 					href={l.url}
@@ -103,9 +103,9 @@ async function GalleryPage(props: Props) {
 				</ProfileLinkButton>
 			))}
 			<ProfileShareButton shareObj={{
-				url: Paths.UserGallery(username),
-				label: `${username}'s Project Gallery`,
-				shareMsg: `Check out ${username}'s Project Gallery`,
+				url: Paths.UserGallery(userProfile.username),
+				label: `${userProfile.username}'s Project Gallery`,
+				shareMsg: `Check out ${userProfile.username}'s Project Gallery`,
 			}}/>
 		</>
 	);
