@@ -40,7 +40,6 @@ const font = Roboto({
 
 interface Props {
 	children: ReactNode;
-	modal: ReactNode;
 }
 
 export default function RootLayout(props: Props) {
@@ -49,7 +48,6 @@ export default function RootLayout(props: Props) {
 			<body>
 				<SessionComponent>
 					{props.children}
-					{props.modal}
 				</SessionComponent>
 				<Analytics />
 				<SpeedInsights/>
