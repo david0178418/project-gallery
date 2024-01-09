@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default
-async function Foo(props: Props) {
+async function UsernameInlineProjects(props: Props) {
 	const { params: { username: rawUsername } } = props;
 
 	const result = await UsernameValidation.safeParseAsync(rawUsername);
@@ -45,7 +45,6 @@ async function Foo(props: Props) {
 			pageName="projects"
 			projects={projects.map(dbProjectToUiProject)}
 			journals={[]}
-			about=""
 		/>
 	);
 }

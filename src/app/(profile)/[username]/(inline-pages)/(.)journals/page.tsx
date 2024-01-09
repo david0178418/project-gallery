@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default
-async function UsernameJournals(props: Props) {
+async function UsernameInputJournals(props: Props) {
 	const { params: { username: rawUsername } } = props;
 
 	const result = await UsernameValidation.safeParseAsync(rawUsername);
@@ -46,7 +46,6 @@ async function UsernameJournals(props: Props) {
 			pageName="journals"
 			projects={[]}
 			journals={journals.map(dbJournalToUiJournal)}
-			about=""
 		/>
 	);
 }

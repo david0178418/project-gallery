@@ -9,15 +9,13 @@ import { UiProject } from '@common/types/Project';
 import { useRouter } from 'next/navigation';
 import { useEffectOnce } from '@common/hooks';
 import { UiJournal } from '@common/types/Journal';
-import MarkdownContent from '@components/markdown-content';
 import {
 	CloseIcon,
 	JournalIcon,
-	ProfileIcon,
 	ProjectIcon,
 } from '@components/icons';
 
-type Page = 'projects' | 'about' | 'journals';
+type Page = 'projects' | 'journals';
 
 interface Props {
 	pageName: Page;
@@ -25,14 +23,12 @@ interface Props {
 	links: CustomLink[];
 	projects: UiProject[];
 	journals: UiJournal[];
-	about: string;
 }
 
 const NextPage = {
 	['']: Paths.UserGallery,
 	projects: Paths.UserGalleryProjects,
 	journals: Paths.UserGalleryJournals,
-	about: Paths.UserGalleryAbout,
 } as const;
 
 // TODO: All this should be unnecessary since this should be handled in layout
@@ -47,14 +43,12 @@ function AnimatedBody(props: Props) {
 		projects,
 		journals,
 		pageName,
-		about,
 	} = props;
 	const [nextPage, setNextPage] = useState<Page | '' | null>(null);
 	const [initialRender, setInitialRender] = useState(true);
 	const { push } = useRouter();
 	const showing = {
 		projects: pageName === 'projects',
-		about: pageName === 'about',
 		journals: pageName === 'journals',
 	} as const;
 	const transitionToNextPage = nextPage !== null;
@@ -113,18 +107,6 @@ function AnimatedBody(props: Props) {
 						{p.title}
 					</ProfileLinkButton>
 				))}
-			</Foo>
-			<Foo
-				label="About"
-				show={!initialRender && showing.about && !transitionToNextPage}
-				active={showing.about}
-				icon={ProfileIcon}
-				onTransitionEnd={handleTransitionEnd}
-				onButtonClick={() => handlePageClick('about')}
-			>
-				<MarkdownContent>
-					{about}
-				</MarkdownContent>
 			</Foo>
 			{links.map((l, i) => (
 				<ProfileLinkButton

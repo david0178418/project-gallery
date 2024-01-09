@@ -5,16 +5,12 @@ import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { Metadata } from 'next';
+import { JournalIcon, ProjectIcon } from '@components/icons';
 import {
 	AppName,
 	BaseUrl,
 	Paths,
 } from '@common/constants';
-import {
-	JournalIcon,
-	ProfileIcon,
-	ProjectIcon,
-} from '@components/icons';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 interface Props {
@@ -97,14 +93,6 @@ async function GalleryPage(props: Props) {
 			>
 				Posts
 			</ProfileLinkButton>
-			{!!userProfile.detailedBio && (
-				<ProfileLinkButton
-					icon={ProfileIcon}
-					href={Paths.UserGalleryAbout(userProfile.username)}
-				>
-					About
-				</ProfileLinkButton>
-			)}
 			{userProfile.links?.map((l, i) => (
 				<ProfileLinkButton
 					key={i}
