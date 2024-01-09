@@ -63,7 +63,6 @@ function AnimatedBody(props: Props) {
 		}
 
 		push(NextPage[nextPage](username));
-		// setNextPage(null);
 	}
 
 	function handlePageClick(clickedPage: Page) {
