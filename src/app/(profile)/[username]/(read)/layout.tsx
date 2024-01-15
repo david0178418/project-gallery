@@ -1,7 +1,7 @@
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import MarkdownContent from '@components/markdown-content';
 import { Suspense, type ReactNode } from 'react';
-import { Paths, SpecialCharacterCodes } from '@common/constants';
+import { Paths } from '@common/constants';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -57,7 +57,7 @@ export default async function UserGalleryProfileReadPageLayout(props: Props) {
 						/>
 					)}
 					<Typography variant="h5" component="div">
-						{username}{SpecialCharacterCodes.RSQUO}s Gallery
+						{userProfile.title}
 					</Typography>
 				</Box>
 				{userProfile.shortBio && (

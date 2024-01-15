@@ -3,9 +3,10 @@ import { getCollection } from '@server/mongodb';
 import { getServerSession } from '@server/auth-options';
 import { ObjectId } from 'mongodb';
 import { z, ZodType } from 'zod';
-import { WriteUserProfile } from '@common/types/UserProfile';
+import { UserProfileTitleValidation, WriteUserProfile } from '@common/types/UserProfile';
 import { revalidatePath } from 'next/cache';
 import { CustomLinkValidator } from '@common/types/CustomLink';
+import { DisplayNameValidation } from '@common/types/User';
 import {
 	DbCollections,
 	MaxUserProfileBioLength,
@@ -15,6 +16,8 @@ import {
 } from '@common/constants';
 
 const Validator: ZodType<Partial<WriteUserProfile>> = z.object({
+	displayName: DisplayNameValidation,
+	title: UserProfileTitleValidation,
 	avatar: z
 		.string()
 		.trim()
@@ -70,6 +73,12 @@ async function updateProfile(profile: Partial<WriteUserProfile>) {
 				},
 			},
 		});
+
+		if(userProfile.detailedBio) {
+			const userCol = await getCollection(DbCollections.Users);
+
+			await userCol.updateOne({ _id }, { $set: { displayName: userProfile.detailedBio } });
+		}
 
 		revalidatePath(Paths.Settings);
 		revalidatePath(Paths.UserGallery(session.user.username));

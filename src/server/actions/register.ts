@@ -18,12 +18,14 @@ import {
 
 interface Schema {
 	email: string;
+	displayName: string;
 	password: string;
 	username: string;
 }
 
 const Validation: ZodType<Schema> = z.object({
 	email: EmailValidation,
+	displayName: UsernameValidation,
 	username: UsernameValidation,
 	password: PasswordValidation,
 });
@@ -55,6 +57,7 @@ async function Register(params: Schema) {
 		username,
 		email,
 		password,
+		displayName,
 	} = result.data;
 
 	const availabilityResults = await checkCredentialAvailability(username, email);
@@ -78,6 +81,7 @@ async function Register(params: Schema) {
 
 	await createUser({
 		username,
+		displayName,
 		email,
 		password,
 	});
@@ -89,6 +93,7 @@ export
 async function createUser(args: Schema) {
 	const {
 		email,
+		displayName,
 		password,
 		username,
 	} = args;
@@ -105,6 +110,7 @@ async function createUser(args: Schema) {
 		.insertOne({
 			_id,
 			username,
+			displayName,
 			usernameLower: username.toLocaleLowerCase(),
 			email,
 			hash,
@@ -132,6 +138,8 @@ async function createUser(args: Schema) {
 				shortBio: '',
 				detailedBio: '',
 				username,
+				displayName: username,
+				title: `${username}'s Gallery`,
 				links: [],
 				lastActivity: {
 					date: new Date(),

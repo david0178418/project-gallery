@@ -39,6 +39,8 @@ export const PasswordMinLength = 6;
 export const PasswordSaltLength = 10;
 export const UsernameMaxLength = 24;
 export const UsernameMinLength = 3;
+export const UserProfileTitleMaxLength = 32;
+export const UserProfileTitleMinLength = 3;
 
 export const AuthUser_tokensCookieName = `${CookieName}.AuthUserTokens`;
 export const AuthUserCookieName = `${CookieName}.AuthUser`;

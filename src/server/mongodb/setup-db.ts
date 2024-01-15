@@ -42,6 +42,7 @@ async function setupDb() {
 		console.log('Creating default admin user');
 		await createUser({
 			email: 'admin@test.com',
+			displayName: 'Admin',
 			username: 'admin',
 			password: 'password123',
 		});

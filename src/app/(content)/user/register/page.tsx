@@ -20,6 +20,7 @@ function RegistrationModal() {
 	const pushToastMsg = useSetAtom(pushToastMsgAtom);
 	const setLoading = useSetAtom(loadingAtom);
 	const [username, setUsername] = useState('');
+	const [displayName, setDisplayName] = useState('');
 	const { refresh } = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -48,6 +49,7 @@ function RegistrationModal() {
 		try {
 			const result = await Register({
 				username,
+				displayName,
 				email,
 				password,
 			});
@@ -87,11 +89,20 @@ function RegistrationModal() {
 						fullWidth
 						label="Username"
 						variant="standard"
-						placeholder="username"
 						type="text"
 						value={username}
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setUsername(e.target.value)}
+					/>
+					<TextField
+						autoFocus
+						fullWidth
+						label="Display name"
+						variant="standard"
+						type="text"
+						value={displayName}
+						onKeyUp={e => handleKeyUp(e.key)}
+						onChange={e => setDisplayName(e.target.value)}
 					/>
 					<TextField
 						autoFocus

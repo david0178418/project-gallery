@@ -72,5 +72,5 @@ async function SettingsLayout() {
 }
 
 function dbUserProfileToWriteUserProfile(userProfile: DbUserProfile): WriteUserProfile {
-	return pick(userProfile, 'shortBio', 'detailedBio', 'links');
+	return pick(userProfile, 'shortBio', 'title', 'displayName', 'detailedBio', 'links');
 }
