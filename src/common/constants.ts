@@ -122,6 +122,7 @@ const Paths = {
 	Settings: '/settings',
 	SettingsUpdatePw: '/settings/update-pw',
 	UserGallery: (username: string) => `/${username}`,
+	UserGalleryEdit: (username: string) => urlJoin(Paths.UserGallery(username), '/edit'),
 	UserGalleryProjects: (username: string) => urlJoin(Paths.UserGallery(username), '/projects'),
 	UserGalleryJournals: (username: string) => urlJoin(Paths.UserGallery(username), '/journals'),
 } as const;

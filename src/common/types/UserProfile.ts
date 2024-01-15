@@ -3,7 +3,7 @@ import { WithStringId } from '@common/types';
 import { ProfileActivity } from '@common/constants';
 import { CustomLink } from './CustomLink';
 
-type ProfileActivityLog = {
+type DbProfileActivityLog = {
 	date: Date;
 	id: ObjectId;
 	type: ProfileActivity;
@@ -16,12 +16,21 @@ type DbUserProfile = WithId<{
 	username: string;
 	shortBio: string
 	detailedBio: string;
-	lastActivity: ProfileActivityLog;
+	lastActivity: DbProfileActivityLog;
 	links: CustomLink[];
 }>;
 
+type UiProfileActivityLog = {
+	date: Date;
+	id: string;
+	type: ProfileActivity;
+	label: string;
+};
+
 export
-type UiUserProfile = WithStringId<DbUserProfile>;
+type UiUserProfile = WithStringId<Omit<DbUserProfile, 'lastActivity'>> & {
+	lastActivity: UiProfileActivityLog;
+};
 
 export
 type WriteUserProfile = Pick<UiUserProfile, 'shortBio' | 'detailedBio' | 'avatar' | 'links'>;

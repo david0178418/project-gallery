@@ -7,14 +7,18 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
 interface Props {
+	focus?: boolean;
 	onAdd(label: string, url: string): void;
 }
 
 export default
 function LinkForm(props: Props) {
+	const {
+		focus,
+		onAdd,
+	} = props;
 	const [label, setLabel] = useState('');
 	const [url, setUrl] = useState('');
-	const { onAdd } = props;
 	const validationResult = CustomLinkValidator.safeParse({
 		url,
 		label,
@@ -34,12 +38,14 @@ function LinkForm(props: Props) {
 
 	return (
 		<>
-			<Grid container columnGap={1}>
+			<Grid container columnGap={1} paddingBottom={2}>
 				<Grid item>
 					<TextFieldLengthValidation
 						fullWidth
 						margin="dense"
 						label="Label"
+						onFocus={() => console.log('asdfasdfsd')}
+						autoFocus={focus}
 						value={label}
 						onKeyUp={e => handleKeyUp(e.key)}
 						onChange={e => setLabel(e.target.value)}
@@ -57,6 +63,7 @@ function LinkForm(props: Props) {
 				</Grid>
 			</Grid>
 			<Button
+				variant="contained"
 				disabled={!validationResult.success}
 				onClick={handleAdd}
 			>

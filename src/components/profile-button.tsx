@@ -70,11 +70,13 @@ interface BtnProps extends ComponentProps<typeof Button> {
 	iconColor?: string;
 }
 
+export
 function Btn(props: BtnProps) {
 	const {
 		href = '',
 		icon,
 		iconColor,
+		sx = {},
 		...btnProps
 	} = props;
 
@@ -100,6 +102,7 @@ function Btn(props: BtnProps) {
 				maxWidth: 600,
 				fontSize: 20,
 				paddingX: 8,
+				...sx,
 			}}
 			startIcon={
 				<Icon sx={{

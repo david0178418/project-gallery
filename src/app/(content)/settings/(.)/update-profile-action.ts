@@ -73,6 +73,7 @@ async function updateProfile(profile: Partial<WriteUserProfile>) {
 
 		revalidatePath(Paths.Settings);
 		revalidatePath(Paths.UserGallery(session.user.username));
+		revalidatePath(Paths.UserGalleryEdit(session.user.username));
 
 		return { ok: true };
 	} catch {

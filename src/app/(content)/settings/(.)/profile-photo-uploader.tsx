@@ -11,6 +11,7 @@ import { AddAPhotoIcon } from '@components/icons';
 interface Props {
 	avatarUrl?: string;
 	username: string;
+	onUpdate?(): void;
 }
 
 export default
@@ -18,11 +19,19 @@ function ProfilePhotoUploader(props: Props) {
 	const {
 		avatarUrl,
 		username,
+		onUpdate,
 	} = props;
 	return (
 		<Uploader
 			category={FileUploadCategories.Profile}
-			onAdd={([url]) => url && updateProfile({ avatar: url })}
+			onAdd={async ([url]) => {
+				if(!url) {
+					return;
+				}
+
+				await updateProfile({ avatar: url });
+				onUpdate?.();
+			}}
 		>
 			<Box position="relative" display="inline-block">
 				<Avatar

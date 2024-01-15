@@ -6,18 +6,21 @@ import Fab from '@mui/material/Fab';
 
 interface Props {
 	userId: string;
-	href: string;
+	href?: string;
 }
 
 export default
 async function EditButton(props: Props) {
-	const { userId } = props;
+	const {
+		userId,
+		href = Paths.Settings,
+	} = props;
 
 	const session = await getServerSession();
 	const isOwner = session?.user.id === userId;
 
 	return isOwner && (
-		<Link href={Paths.Settings} >
+		<Link href={href} >
 			<Fab
 				color="primary"
 				sx={{

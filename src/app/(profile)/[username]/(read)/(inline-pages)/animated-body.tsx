@@ -71,7 +71,7 @@ function AnimatedBody(props: Props) {
 
 	return (
 		<>
-			<Foo
+			<ProfileButtonCollapseArea
 				label="Projects"
 				show={!initialRender && showing.projects && !transitionToNextPage}
 				active={showing.projects}
@@ -88,8 +88,8 @@ function AnimatedBody(props: Props) {
 						{p.title}
 					</ProfileLinkButton>
 				))}
-			</Foo>
-			<Foo
+			</ProfileButtonCollapseArea>
+			<ProfileButtonCollapseArea
 				label="Posts"
 				show={!initialRender && showing.journals && !transitionToNextPage}
 				active={showing.journals}
@@ -106,7 +106,7 @@ function AnimatedBody(props: Props) {
 						{p.title}
 					</ProfileLinkButton>
 				))}
-			</Foo>
+			</ProfileButtonCollapseArea>
 			{links.map((l, i) => (
 				<ProfileLinkButton
 					key={i}
@@ -135,7 +135,7 @@ interface FooProps {
 	label: string;
 }
 
-function Foo(props: FooProps) {
+function ProfileButtonCollapseArea(props: FooProps) {
 	const {
 		label,
 		onButtonClick,

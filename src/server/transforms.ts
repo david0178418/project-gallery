@@ -63,6 +63,10 @@ export
 function dbUserProfileToUiUserProfile(userProfile: DbUserProfile): UiUserProfile {
 	return {
 		...userProfile,
+		lastActivity: {
+			...userProfile.lastActivity,
+			id: userProfile.lastActivity.id.toString(),
+		},
 		_id: userProfile._id.toString(),
 	};
 }

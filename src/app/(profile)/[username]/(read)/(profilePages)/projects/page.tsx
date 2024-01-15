@@ -39,7 +39,7 @@ async function UserProjectsPage(props: Props) {
 					<>
 						{projects.map((p) => (
 							<ProfileLinkButton
-								icon={ProjectIcon}
+								startIcon={ProjectIcon}
 								key={p._id.toString()}
 								href={Paths.Project(p._id.toString())}
 							>
