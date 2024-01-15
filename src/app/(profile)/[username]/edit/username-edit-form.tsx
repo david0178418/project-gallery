@@ -28,11 +28,17 @@ import {
 
 // TODO Move out of "settings"
 import ProfilePhotoUploader from '@app/(content)/settings/(.)/profile-photo-uploader';
-import {
-	Dialog, DialogContent, DialogTitle, IconButton,
-} from '@mui/material';
 import LinkForm from '@app/(content)/project/[projectId]/edit/edit-project.form/link-form';
 import { removeItem } from '@common/utils';
+import MarkdownContent from '@components/markdown-content';
+import {
+	Dialog,
+	DialogContent,
+	DialogTitle,
+	IconButton,
+	Tabs,
+	Tab,
+} from '@mui/material';
 
 interface Props {
 	userProfile: UiUserProfile;
@@ -150,6 +156,7 @@ interface ShortBioFieldProps {
 function ShortBioField(props: ShortBioFieldProps) {
 	const pushToastMsg = usePushToastMsg();
 	const [persistedValue, setPersistedValue] = useState(props.value);
+	const [edit, setEdit] = useState(true);
 	const [value, setValue] = useState(persistedValue);
 
 	useDebouncedCallback(value, 750, async () => {
@@ -167,19 +174,42 @@ function ShortBioField(props: ShortBioFieldProps) {
 	});
 
 	return (
-		<TextFieldLengthValidation
-			fullWidth
-			multiline
-			autoComplete="off"
-			label="Bio summary"
-			variant="standard"
-			margin="normal"
-			type="text"
-			minRows={3}
-			maxLength={MaxUserProfileShortBioLength}
-			value={value}
-			onChange={e => setValue(e.target.value)}
-		/>
+		<>
+			<Tabs
+				value={edit ? 'edit' : 'preview'}
+				onChange={(e, newValue) => setEdit(newValue === 'edit')}
+			>
+				<Tab
+					label="Bio summary"
+					value="edit"
+					onClick={() => setEdit(true)}
+				/>
+				<Tab
+					label="Preview"
+					value="preview"
+					onClick={() => setEdit(false)}
+				/>
+			</Tabs>
+			{edit && (
+				<TextFieldLengthValidation
+					fullWidth
+					multiline
+					autoComplete="off"
+					label=""
+					margin="normal"
+					type="text"
+					minRows={3}
+					maxLength={MaxUserProfileShortBioLength}
+					value={value}
+					onChange={e => setValue(e.target.value)}
+				/>
+			)}
+			{!edit && (
+				<MarkdownContent>
+					{value}
+				</MarkdownContent>
+			)}
+		</>
 	);
 }
 
@@ -190,6 +220,7 @@ interface DetailedBioFieldProps {
 function DetailedBioField(props: DetailedBioFieldProps) {
 	const pushToastMsg = usePushToastMsg();
 	const [persistedValue, setPersistedValue] = useState(props.value);
+	const [edit, setEdit] = useState(true);
 	const [value, setValue] = useState(persistedValue);
 
 	useDebouncedCallback(value, 750, async () => {
@@ -207,19 +238,43 @@ function DetailedBioField(props: DetailedBioFieldProps) {
 	});
 
 	return (
-		<TextFieldLengthValidation
-			fullWidth
-			multiline
-			autoComplete="off"
-			label="Full Bio"
-			variant="standard"
-			margin="normal"
-			type="text"
-			minRows={6}
-			maxLength={MaxUserProfileBioLength}
-			value={value}
-			onChange={e => setValue(e.target.value)}
-		/>
+		<>
+			<Tabs
+				value={edit ? 'edit' : 'preview'}
+				onChange={(e, newValue) => setEdit(newValue === 'edit')}
+			>
+				<Tab
+					label="Full Bio"
+					value="edit"
+					onClick={() => setEdit(true)}
+				/>
+				<Tab
+					label="Preview"
+					value="preview"
+					onClick={() => setEdit(false)}
+				/>
+			</Tabs>
+			{edit && (
+				<TextFieldLengthValidation
+					fullWidth
+					multiline
+					label=""
+					autoComplete="off"
+					variant="standard"
+					margin="normal"
+					type="text"
+					minRows={6}
+					maxLength={MaxUserProfileBioLength}
+					value={value}
+					onChange={e => setValue(e.target.value)}
+				/>
+			)}
+			{!edit && (
+				<MarkdownContent>
+					{value}
+				</MarkdownContent>
+			)}
+		</>
 	);
 }
 
