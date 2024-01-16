@@ -77,7 +77,7 @@ async function doSaveProject(user: User, project: WriteProject) {
 		return null;
 	}
 
-	if(!isCreate) {
+	if(isCreate) {
 		const orderCol = await getCollection(DbCollections.UserGalleryOrder);
 
 		await orderCol.updateOne({ _id: userIdObj }, { $push: { projectIdOrder: _id } });
