@@ -131,10 +131,11 @@ interface FooProps {
 	show: boolean;
 	children: ReactNode;
 	onButtonClick(): void;
-	onTransitionEnd(): void;
+	onTransitionEnd?(): void;
 	label: string;
 }
 
+export
 function ProfileButtonCollapseArea(props: FooProps) {
 	const {
 		label,

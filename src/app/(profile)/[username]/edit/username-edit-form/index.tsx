@@ -11,6 +11,8 @@ import { CustomLink } from '@common/types/CustomLink';
 import { usePushToastMsg } from '@common/atoms';
 import updateProfile from '@app/(content)/settings/(.)/update-profile-action';
 import { removeItem } from '@common/utils';
+import AddLinks from './add-links-button';
+import { UiProject } from '@common/types/Project';
 import {
 	DetailedBioField,
 	ShortBioField,
@@ -25,15 +27,20 @@ import {
 
 // TODO Move out of "settings"
 import ProfilePhotoUploader from '@app/(content)/settings/(.)/profile-photo-uploader';
-import AddLinks from './add-links-button';
+import { ProfileButtonCollapseArea } from '../../(read)/(inline-pages)/animated-body';
+import updateProjectsOrder from '../../(read)/(profilePages)/projects/update-projects-order';
 
 interface Props {
 	userProfile: UiUserProfile;
+	projects: UiProject[];
 }
 
 export default
 function UserGalleryEditForm(props: Props) {
-	const { userProfile } = props;
+	const {
+		userProfile,
+		projects,
+	} = props;
 	const pushToastMsg = usePushToastMsg();
 	const [links, setLinks] = useState(userProfile.links);
 
@@ -67,12 +74,7 @@ function UserGalleryEditForm(props: Props) {
 				</Container>
 			</Box>
 			<Box textAlign="center" paddingTop={5} paddingX={2} paddingBottom={15}>
-				<ProfileButton
-					disabled
-					icon={ProjectIcon}
-				>
-					Projects
-				</ProfileButton>
+				<ProjectsButton projects={projects}/>
 				<ProfileButton
 					disabled
 					icon={JournalIcon}
@@ -134,4 +136,40 @@ function UserGalleryEditForm(props: Props) {
 		setLinks(updatedLinks);
 		pushToastMsg('Updated Links');
 	}
+}
+
+interface ProjectsButtonProps {
+	projects: UiProject[];
+}
+
+function ProjectsButton(props: ProjectsButtonProps) {
+	const { projects } = props;
+	const [isOpen, setIsOpen] = useState(false);
+
+	return (
+		<ProfileButtonCollapseArea
+			label="Projects"
+			show={isOpen}
+			active={isOpen}
+			icon={ProjectIcon}
+			onButtonClick={() => setIsOpen(!isOpen)}
+		>
+			<Foo
+				items={projects}
+				identifier="_id"
+				onUpdate={projectOrder =>
+					updateProjectsOrder({ projectIdOrder: projectOrder.map(p => p._id) })
+				}
+				ItemComponent={({ item }) => (
+					<SortableItemWrapper {...item}>
+						<ProfileButton
+							icon={DragHandleIcon}
+						>
+							{item.title}
+						</ProfileButton>
+					</SortableItemWrapper>
+				)}
+			/>
+		</ProfileButtonCollapseArea>
+	);
 }

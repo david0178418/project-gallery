@@ -6,18 +6,20 @@ import { z, ZodType } from 'zod';
 import { MongoIdValidation } from '@server/validations';
 import { fetchUserGalleryOrder } from '@server/queries';
 import { moveItemLeft, moveItemRight } from '@common/utils';
-import { revalidatePath } from 'next/cache';
 import {
 	DbCollections,
 	Direction,
 	DirectionEnum,
 	Paths,
 } from '@common/constants';
+import { revalidatePath } from 'next/cache';
 
-interface Schema {
+type Schema = {
 	projectId: string;
 	direction: DirectionEnum;
-}
+} | {
+	projectIdOrder: string[];
+};
 
 const Validator: ZodType<Schema> = z.object({
 	projectId: MongoIdValidation,
@@ -25,7 +27,9 @@ const Validator: ZodType<Schema> = z.object({
 		z.literal(Direction.Left),
 		z.literal(Direction.Right),
 	]),
-});
+}).or(
+	z.object({ projectIdOrder: z.array(MongoIdValidation) }),
+);
 
 export default
 async function updateProjectsOrder(params: Schema) {
@@ -50,31 +54,40 @@ async function updateProjectsOrder(params: Schema) {
 		};
 	}
 
-	const {
-		projectId,
-		direction,
-	} = result.data;
+	const order = await fetchUserGalleryOrder(session.user.id);
 
-	try{
-		const col = await getCollection(DbCollections.UserGalleryOrder);
-		const order = await fetchUserGalleryOrder(session.user.id);
+	if(!order) {
+		throw 'Gallery order not found';
+	}
 
-		if(!order) {
-			throw 'Gallery order not found';
-		}
+	let projectIdOrder: ObjectId[] = [];
+
+	if('projectIdOrder' in result.data) {
+		projectIdOrder = result.data.projectIdOrder.map(id => new ObjectId(id));
+	} else {
+		// TODO Kill this branch
+		const {
+			projectId,
+			direction,
+		} = result.data;
 
 		const projectIdObjId = new ObjectId(projectId);
 		const projectIndex = order.projectIdOrder.findIndex(pId => pId.equals(projectIdObjId));
 
-		await col.updateOne({ _id: order._id }, {
-			$set: {
-				projectIdOrder: direction === Direction.Left ?
-					moveItemLeft(order.projectIdOrder, projectIndex) :
-					moveItemRight(order.projectIdOrder, projectIndex),
-			},
-		});
+		projectIdOrder = direction === Direction.Left ?
+			moveItemLeft(order.projectIdOrder, projectIndex) :
+			moveItemRight(order.projectIdOrder, projectIndex);
+	}
 
+	try{
+		const col = await getCollection(DbCollections.UserGalleryOrder);
+
+		await col.updateOne({ _id: order._id }, { $set: { projectIdOrder } });
+
+		// TODO: Review this functionality to ensure this is
+		// actually needed here with the current flow
 		revalidatePath(Paths.UserGallery(session.user.username));
+		revalidatePath(Paths.UserGalleryProjects(session.user.username));
 
 		return { ok: true };
 	} catch(e) {
