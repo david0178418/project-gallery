@@ -1,12 +1,11 @@
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import MarkdownContent from '@components/markdown-content';
-import { Suspense, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { Paths } from '@common/constants';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import EditButton from '@components/edit-button.server';
 import CollapseToggle from '@components/collapse-toggle';
 import Link from 'next/link';
 import { Button } from '@mui/material';
@@ -87,14 +86,6 @@ export default async function UserGalleryProfileReadPageLayout(props: Props) {
 					</Link>
 				</Box>
 			</Box>
-			{userProfile && (
-				<Suspense>
-					<EditButton
-						userId={userProfile._id.toString()}
-						href={Paths.UserGalleryEdit(username)}
-					/>
-				</Suspense>
-			)}
 		</>
 	);
 }

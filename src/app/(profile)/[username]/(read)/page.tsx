@@ -6,6 +6,8 @@ import { urlJoin } from '@common/utils';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { Metadata } from 'next';
 import { JournalIcon, ProjectIcon } from '@components/icons';
+import { Suspense } from 'react';
+import EditButton from '@components/edit-button.server';
 import {
 	AppName,
 	BaseUrl,
@@ -107,6 +109,15 @@ async function GalleryPage(props: Props) {
 				label: `${userProfile.username}'s Project Gallery`,
 				shareMsg: `Check out ${userProfile.username}'s Project Gallery`,
 			}}/>
+
+			{userProfile && (
+				<Suspense>
+					<EditButton
+						userId={userProfile._id.toString()}
+						href={Paths.UserGalleryEdit(username)}
+					/>
+				</Suspense>
+			)}
 		</>
 	);
 }
