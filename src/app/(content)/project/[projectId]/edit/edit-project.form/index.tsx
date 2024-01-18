@@ -87,7 +87,8 @@ function EditProjectForm(props: Props) {
 			links: [
 				{
 					label,
-					url,
+					value: url,
+					type: 'link',
 				},
 				...links,
 			],

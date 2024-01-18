@@ -1,6 +1,6 @@
 import { ObjectId, WithId } from 'mongodb';
 import { WithStringId } from '@common/types';
-import { CustomLink } from './CustomLink';
+import { CustomProfileItem } from './CustomLink';
 import { z } from 'zod';
 import {
 	ProfileActivity,
@@ -24,7 +24,7 @@ type DbUserProfile = WithId<{
 	shortBio: string
 	detailedBio: string;
 	lastActivity: DbProfileActivityLog;
-	links: CustomLink[];
+	customItems: CustomProfileItem[];
 }>;
 
 type UiProfileActivityLog = {
@@ -40,7 +40,7 @@ type UiUserProfile = WithStringId<Omit<DbUserProfile, 'lastActivity'>> & {
 };
 
 export
-type WriteUserProfile = Pick<UiUserProfile, 'shortBio' | 'detailedBio' | 'title' | 'displayName' | 'avatar' | 'links'>;
+type WriteUserProfile = Pick<UiUserProfile, 'shortBio' | 'detailedBio' | 'title' | 'displayName' | 'avatar' | 'customItems'>;
 
 export
 const UserProfileTitleValidation = z

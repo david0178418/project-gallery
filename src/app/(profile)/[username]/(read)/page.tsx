@@ -6,13 +6,16 @@ import { urlJoin } from '@common/utils';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { Metadata } from 'next';
 import { JournalIcon, ProjectIcon } from '@components/icons';
-import { Suspense } from 'react';
+import { Fragment, Suspense } from 'react';
 import EditButton from '@components/edit-button.server';
+import ProfileCustomTextItem from '@components/profile-custom-item-button';
 import {
 	AppName,
 	BaseUrl,
 	Paths,
 } from '@common/constants';
+import { Box } from '@mui/material';
+import MarkdownContent from '@components/markdown-content';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 interface Props {
@@ -95,14 +98,32 @@ async function GalleryPage(props: Props) {
 			>
 				Posts
 			</ProfileLinkButton>
-			{userProfile.links.map((l, i) => (
-				<ProfileLinkButton
-					key={i}
-					href={l.url}
-					target="_blank"
-				>
-					{l.label}
-				</ProfileLinkButton>
+			{userProfile.customItems.map((l, i) => (
+				<Fragment key={i}>
+					{l.type === 'link' && (
+						<ProfileLinkButton
+							href={l.value}
+							target="_blank"
+						>
+							{l.label}
+						</ProfileLinkButton>
+					)}
+					{l.type === 'text' && (
+						<ProfileCustomTextItem label={l.label}>
+							<Box
+								display="inline-block"
+								maxWidth={600}
+								width="100%"
+								textAlign="left"
+								marginBottom={2}
+							>
+								<MarkdownContent>
+									{l.value}
+								</MarkdownContent>
+							</Box>
+						</ProfileCustomTextItem>
+					)}
+				</Fragment>
 			))}
 			<ProfileShareButton shareObj={{
 				url: Paths.UserGallery(userProfile.username),

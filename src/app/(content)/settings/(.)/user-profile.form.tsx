@@ -62,23 +62,24 @@ function UserProfileForm(props: Props) {
 			</Typography>
 			<LinkForm onAdd={(label, url) => {
 				handleChange({
-					links: [
+					customItems: [
 						{
 							label,
-							url,
+							value: url,
+							type: 'link',
 						},
-						...userProfile.links,
+						...userProfile.customItems,
 					],
 				});
 			}}/>
 			<Box paddingTop={1}>
 				<LinksList
-					links={userProfile.links}
+					links={userProfile.customItems}
 					onRemove={linkIndex => {
-						handleChange({ links: userProfile.links.filter((l, i) => i !== linkIndex) });
+						handleChange({ customItems: userProfile.customItems.filter((l, i) => i !== linkIndex) });
 					}}
 					onUpdate={updatedLinks => {
-						handleChange({ links: updatedLinks });
+						handleChange({ customItems: updatedLinks });
 					}}
 				/>
 			</Box>

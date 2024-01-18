@@ -30,7 +30,7 @@ const Validator: ZodType<Partial<WriteUserProfile>> = z.object({
 		.string()
 		.trim()
 		.max(MaxUserProfileBioLength),
-	links: z.array(CustomLinkValidator),
+	customItems: z.array(CustomLinkValidator),
 }).partial();
 
 export default

@@ -18,10 +18,11 @@ function LinkForm(props: Props) {
 		onAdd,
 	} = props;
 	const [label, setLabel] = useState('');
-	const [url, setUrl] = useState('');
+	const [value, setValue] = useState('');
 	const validationResult = CustomLinkValidator.safeParse({
-		url,
+		value,
 		label,
+		type: 'link',
 	});
 
 	function handleKeyUp(key: string) {
@@ -31,9 +32,9 @@ function LinkForm(props: Props) {
 	}
 
 	function handleAdd() {
-		onAdd(label, url);
+		onAdd(label, value);
 		setLabel('');
-		setUrl('');
+		setValue('');
 	}
 
 	return (
@@ -44,7 +45,6 @@ function LinkForm(props: Props) {
 						fullWidth
 						margin="dense"
 						label="Label"
-						onFocus={() => console.log('asdfasdfsd')}
 						autoFocus={focus}
 						value={label}
 						onKeyUp={e => handleKeyUp(e.key)}
@@ -56,9 +56,9 @@ function LinkForm(props: Props) {
 						fullWidth
 						margin="dense"
 						label="Url"
-						value={url}
+						value={value}
 						onKeyUp={e => handleKeyUp(e.key)}
-						onChange={e => setUrl(e.target.value)}
+						onChange={e => setValue(e.target.value)}
 					/>
 				</Grid>
 			</Grid>

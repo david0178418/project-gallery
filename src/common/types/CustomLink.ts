@@ -1,19 +1,31 @@
 import { MaxLinkLabelSize, MinLinkLabelSize } from '@common/constants';
-import { z } from 'zod';
+import { ZodSchema, z } from 'zod';
 
 export
-interface CustomLink {
+interface CustomProfileItem {
 	label: string;
-	url: string;
+	value: string;
+	type: 'link' | 'text';
 }
 
 export
-const CustomLinkValidator = z.object({
+const CustomLinkValidator: ZodSchema<CustomProfileItem> = z.object({
 	label: z
 		.string()
 		.min(MinLinkLabelSize)
 		.max(MaxLinkLabelSize),
-	url: z
-		.string()
-		.url(),
-});
+}).and(z.union([
+	z.object({
+		type: z.literal('link'),
+		value: z
+			.string()
+			.url(),
+	}),
+	z.object({
+		type: z.literal('text'),
+		value: z
+			.string()
+			.min(2)
+			.max(5000),
+	}),
+]));

@@ -2,7 +2,7 @@ import { WithId } from 'mongodb';
 import { WithStringId } from '.';
 import { DbJournal, UiJournal } from './Journal';
 import { DbUser, UiUser } from './User';
-import { CustomLink, CustomLinkValidator } from './CustomLink';
+import { CustomProfileItem, CustomLinkValidator } from './CustomLink';
 import { IsoDateValidation, MongoIdValidation } from '@server/validations';
 import { ZodType, z } from 'zod';
 import {
@@ -36,7 +36,7 @@ type DbProject = WithId<{
 	labels: Array<{
 		label: string;
 	}>;
-	links: CustomLink[];
+	links: CustomProfileItem[];
 }>;
 
 export

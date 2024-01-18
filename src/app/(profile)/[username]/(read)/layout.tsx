@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import CollapseToggle from '@components/collapse-toggle';
+import MoreLessToggle from '@components/more-less-toggle';
 import Link from 'next/link';
 import { Button } from '@mui/material';
 
@@ -68,11 +68,11 @@ export default async function UserGalleryProfileReadPageLayout(props: Props) {
 				)}
 				{userProfile.detailedBio && (
 					<Container maxWidth="sm">
-						<CollapseToggle>
+						<MoreLessToggle>
 							<MarkdownContent>
 								{userProfile.detailedBio}
 							</MarkdownContent>
-						</CollapseToggle>
+						</MoreLessToggle>
 					</Container>
 				)}
 			</Box>

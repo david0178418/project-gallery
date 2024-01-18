@@ -1,5 +1,5 @@
 
-import { CustomLink } from '@common/types/CustomLink';
+import { CustomProfileItem } from '@common/types/CustomLink';
 import { moveItemLeft, moveItemRight } from '@common/utils';
 import IconButton from '@mui/material/IconButton';
 import MuiLink from '@mui/material/Link';
@@ -14,9 +14,9 @@ import {
 } from '@components/icons';
 
 interface Props {
-	links: CustomLink[];
+	links: CustomProfileItem[];
 	onRemove(linkIndex: number): void;
-	onUpdate(newList: CustomLink[]): void
+	onUpdate(newList: CustomProfileItem[]): void
 }
 
 export default
@@ -54,9 +54,11 @@ function LinksList(props: Props) {
 						</ListItemIcon>
 					)}
 					<ListItemText>
-						<MuiLink href={l.url} target="_blank">
-							{l.label}
-						</MuiLink>
+						{l.type === 'link' && (
+							<MuiLink href={l.value} target="_blank">
+								{l.label}
+							</MuiLink>
+						)}
 					</ListItemText>
 					<ListItemIcon>
 						<IconButton onClick={() => onRemove(i)}>

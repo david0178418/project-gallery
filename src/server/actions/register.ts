@@ -140,7 +140,7 @@ async function createUser(args: Schema) {
 				username,
 				displayName: username,
 				title: `${username}'s Gallery`,
-				links: [],
+				customItems: [],
 				lastActivity: {
 					date: new Date(),
 					type: ProfileActivity.ProfileCreate,

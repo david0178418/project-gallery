@@ -2,15 +2,17 @@
 import { ProfileButton, ProfileLinkButton } from '@components/profile-button';
 import ProfileShareButton from '@components/profile-share-button';
 import { Paths } from '@common/constants';
-import { ReactNode, useState } from 'react';
-import { CustomLink } from '@common/types/CustomLink';
-import Collapse from '@mui/material/Collapse';
+import { CustomProfileItem } from '@common/types/CustomLink';
 import { UiProject } from '@common/types/Project';
 import { useRouter } from 'next/navigation';
 import { useEffectOnce } from '@common/hooks';
 import { UiJournal } from '@common/types/Journal';
+import CollpaseAreaToggle from '@components/collapse-area-toggle';
 import {
-	CloseIcon,
+	Fragment,
+	useState,
+} from 'react';
+import {
 	JournalIcon,
 	ProjectIcon,
 } from '@components/icons';
@@ -20,7 +22,7 @@ type Page = 'projects' | 'journals';
 interface Props {
 	pageName: Page;
 	username: string;
-	links: CustomLink[];
+	links: CustomProfileItem[];
 	projects: UiProject[];
 	journals: UiJournal[];
 }
@@ -71,7 +73,7 @@ function AnimatedBody(props: Props) {
 
 	return (
 		<>
-			<ProfileButtonCollapseArea
+			<CollpaseAreaToggle
 				label="Projects"
 				show={!initialRender && showing.projects && !transitionToNextPage}
 				active={showing.projects}
@@ -88,8 +90,8 @@ function AnimatedBody(props: Props) {
 						{p.title}
 					</ProfileLinkButton>
 				))}
-			</ProfileButtonCollapseArea>
-			<ProfileButtonCollapseArea
+			</CollpaseAreaToggle>
+			<CollpaseAreaToggle
 				label="Posts"
 				show={!initialRender && showing.journals && !transitionToNextPage}
 				active={showing.journals}
@@ -106,70 +108,31 @@ function AnimatedBody(props: Props) {
 						{p.title}
 					</ProfileLinkButton>
 				))}
-			</ProfileButtonCollapseArea>
+			</CollpaseAreaToggle>
 			{links.map((l, i) => (
-				<ProfileLinkButton
-					key={i}
-					href={l.url}
-					target="_blank"
-				>
-					{l.label}
-				</ProfileLinkButton>
+				<Fragment key={i}>
+					{l.type === 'link' && (
+						<ProfileLinkButton
+							href={l.value}
+							target="_blank"
+						>
+							{l.label}
+						</ProfileLinkButton>
+					)}
+					{l.type === 'text' && (
+						<ProfileButton
+							onClick={() => console.log(111)}
+						>
+							{l.label}
+						</ProfileButton>
+					)}
+				</Fragment>
 			))}
 			<ProfileShareButton shareObj={{
 				url: Paths.UserGallery(username),
 				label: `${username}'s Project Gallery`,
 				shareMsg: `Check out ${username}'s Project Gallery`,
 			}}/>
-		</>
-	);
-}
-
-interface FooProps {
-	icon: any;
-	active: boolean;
-	show: boolean;
-	children: ReactNode;
-	onButtonClick(): void;
-	onTransitionEnd?(): void;
-	label: string;
-}
-
-export
-function ProfileButtonCollapseArea(props: FooProps) {
-	const {
-		label,
-		onButtonClick,
-		show,
-		icon: Icon,
-		active,
-		onTransitionEnd,
-		children,
-	} = props;
-	return (
-		<>
-			<ProfileButton
-				onClick={onButtonClick}
-				icon={
-					active ?
-						CloseIcon :
-						Icon
-				}
-			>
-				{label}
-			</ProfileButton>
-			<Collapse
-				in={show}
-				onTransitionEnd={onTransitionEnd}
-				sx={{
-					marginLeft: {
-						xs: 2,
-						md: 10,
-					},
-				}}
-			>
-				{children}
-			</Collapse>
 		</>
 	);
 }

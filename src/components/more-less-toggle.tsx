@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default
-function CollapseToggle(props: Props) {
+function MoreLessToggle(props: Props) {
 	const { children } = props;
 	const [isOpen, setIsOpen] = useState(false);
 

@@ -2,10 +2,11 @@ import Box from '@mui/material/Box';
 import { fetchProject } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
 import MarkdownContent from '@components/markdown-content';
-import { ProfileLinkButton } from '@components/profile-button';
+import { ProfileButton, ProfileLinkButton } from '@components/profile-button';
 import ProfileShareButton from '@components/profile-share-button';
 import { Paths, SpecialCharacterCodes } from '@common/constants';
 import { JournalIcon, ProfileIcon } from '@components/icons';
+import { Fragment } from 'react';
 
 interface Props {
 	params: {
@@ -58,13 +59,21 @@ async function ProjectPage(props: Props) {
 					Project Posts
 				</ProfileLinkButton>
 				{project.links.map((l, i) => (
-					<ProfileLinkButton
-						key={i}
-						href={l.url}
-						target="_blank"
-					>
-						{l.label}
-					</ProfileLinkButton>
+					<Fragment key={i}>
+						{l.type === 'link' && (
+							<ProfileLinkButton
+								href={l.value}
+								target="_blank"
+							>
+								{l.label}
+							</ProfileLinkButton>
+						)}
+						{l.type === 'text' && (
+							<ProfileButton>
+								{l.label}
+							</ProfileButton>
+						)}
+					</Fragment>
 				))}
 				<ProfileLinkButton
 					icon={ProfileIcon}

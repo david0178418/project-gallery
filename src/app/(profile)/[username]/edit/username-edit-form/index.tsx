@@ -7,11 +7,11 @@ import ProfileShareButton from '@components/profile-share-button';
 import { UiUserProfile } from '@common/types/UserProfile';
 import Foo, { SortableItemWrapper } from '../foo';
 import { useState } from 'react';
-import { CustomLink } from '@common/types/CustomLink';
+import { CustomProfileItem } from '@common/types/CustomLink';
 import { usePushToastMsg } from '@common/atoms';
 import updateProfile from '@app/(content)/settings/(.)/update-profile-action';
 import { removeItem } from '@common/utils';
-import AddLinks from './add-links-button';
+import AddContentButton from './add-content-button';
 import { UiProject } from '@common/types/Project';
 import {
 	DetailedBioField,
@@ -27,8 +27,8 @@ import {
 
 // TODO Move out of "settings"
 import ProfilePhotoUploader from '@app/(content)/settings/(.)/profile-photo-uploader';
-import { ProfileButtonCollapseArea } from '../../(read)/(inline-pages)/animated-body';
 import updateProjectsOrder from '../../(read)/(profilePages)/projects/update-projects-order';
+import CollpaseAreaToggle from '@components/collapse-area-toggle';
 
 interface Props {
 	userProfile: UiUserProfile;
@@ -42,7 +42,7 @@ function UserGalleryEditForm(props: Props) {
 		projects,
 	} = props;
 	const pushToastMsg = usePushToastMsg();
-	const [links, setLinks] = useState(userProfile.links);
+	const [links, setLinks] = useState(userProfile.customItems);
 
 	return (
 		<>
@@ -83,8 +83,8 @@ function UserGalleryEditForm(props: Props) {
 				</ProfileButton>
 				<Foo
 					items={links}
-					identifier="url"
-					onUpdate={handleUpdateLinks}
+					identifier="label"
+					onUpdate={handleUpdateProfileItems}
 					ItemComponent={({ item }) => (
 						<Box position="relative">
 							<SortableItemWrapper
@@ -98,7 +98,7 @@ function UserGalleryEditForm(props: Props) {
 											color="error"
 											// prevent sort drag
 											onPointerDown={e => e.preventDefault()}
-											onClick={() => handleUpdateLinks(removeItem(links, links.findIndex(i => i.url === item.url)))}
+											onClick={() => handleUpdateProfileItems(removeItem(links, links.findIndex(i => i.label === item.label)))}
 											sx={{
 												cursor: 'pointer',
 												position: 'absolute',
@@ -115,14 +115,11 @@ function UserGalleryEditForm(props: Props) {
 						</Box>
 					)}
 				/>
-				<AddLinks
-					onAddLink={async (label, url) => {
-						handleUpdateLinks([
+				<AddContentButton
+					onAddContent={async (item) => {
+						handleUpdateProfileItems([
 							...links,
-							{
-								label,
-								url,
-							},
+							item,
 						]);
 					}}
 				/>
@@ -131,9 +128,9 @@ function UserGalleryEditForm(props: Props) {
 		</>
 	);
 
-	async function handleUpdateLinks(updatedLinks: CustomLink[]) {
-		await updateProfile({ links: updatedLinks });
-		setLinks(updatedLinks);
+	async function handleUpdateProfileItems(customItems: CustomProfileItem[]) {
+		await updateProfile({ customItems });
+		setLinks(customItems);
 		pushToastMsg('Updated Links');
 	}
 }
@@ -147,7 +144,7 @@ function ProjectsButton(props: ProjectsButtonProps) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
-		<ProfileButtonCollapseArea
+		<CollpaseAreaToggle
 			label="Projects"
 			show={isOpen}
 			active={isOpen}
@@ -170,6 +167,6 @@ function ProjectsButton(props: ProjectsButtonProps) {
 					</SortableItemWrapper>
 				)}
 			/>
-		</ProfileButtonCollapseArea>
+		</CollpaseAreaToggle>
 	);
 }
