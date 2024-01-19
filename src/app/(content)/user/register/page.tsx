@@ -67,7 +67,7 @@ function RegistrationModal() {
 			const { errors = ['Something went wrong. Try again.'] } = e;
 
 			errors.map(pushToastMsg);
-			console.log(e);
+			console.error(e);
 		}
 
 		setPassword('');
