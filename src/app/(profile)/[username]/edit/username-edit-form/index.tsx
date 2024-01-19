@@ -2,7 +2,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { ProfileButton } from '@components/profile-button';
+import { ProfileButton, ProfileLinkButton } from '@components/profile-button';
 import ProfileShareButton from '@components/profile-share-button';
 import { UiUserProfile } from '@common/types/UserProfile';
 import Foo, { SortableItemWrapper } from '../foo';
@@ -19,6 +19,7 @@ import {
 	TitleField,
 } from './text-fields';
 import {
+	AddIcon,
 	DeleteIcon,
 	DragHandleIcon,
 	JournalIcon,
@@ -29,6 +30,7 @@ import {
 import ProfilePhotoUploader from '@app/(content)/settings/(.)/profile-photo-uploader';
 import updateProjectsOrder from '../../(read)/(profilePages)/projects/update-projects-order';
 import CollpaseAreaToggle from '@components/collapse-area-toggle';
+import { Paths } from '@common/constants';
 
 interface Props {
 	userProfile: UiUserProfile;
@@ -167,6 +169,17 @@ function ProjectsButton(props: ProjectsButtonProps) {
 					</SortableItemWrapper>
 				)}
 			/>
+			<ProfileLinkButton
+				href={Paths.ProjectEdit()}
+				icon={AddIcon}
+				color="success"
+				sx={{
+					borderStyle: 'dashed',
+					color: 'green',
+				}}
+			>
+				Add Project
+			</ProfileLinkButton>
 		</CollpaseAreaToggle>
 	);
 }
