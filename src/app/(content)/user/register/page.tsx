@@ -54,11 +54,13 @@ function RegistrationModal() {
 				password,
 			});
 
-			if(result.ok && await login(username, password)) {
+			if(result.errors) {
+				result.errors.map(pushToastMsg);
+				console.error(result.errors);
+			} else if(await login(username, password)) {
 				pushToastMsg(`Logged in as ${username}`);
 				setUsername('');
 				setEmail('');
-
 				refresh();
 			}
 		} catch(e: any) {

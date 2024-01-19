@@ -23,5 +23,5 @@ type UiUser = WithStringId<DbUser>;
 export
 const DisplayNameValidation = z
 	.string()
-	.min(UsernameMinLength, `Must be at least ${UsernameMinLength} characters.`)
-	.max(UsernameMaxLength, `Can be no more than ${UsernameMaxLength} characters.`);
+	.min(UsernameMinLength, `Display name must be at least ${UsernameMinLength} characters.`)
+	.max(UsernameMaxLength, `Display name can be no more than ${UsernameMaxLength} characters.`);

@@ -5,6 +5,7 @@ import { checkCredentialAvailability } from '@server/queries';
 import { passwordToHash } from '@server/transforms';
 import { ObjectId } from 'mongodb';
 import { z, ZodType } from 'zod';
+import { DisplayNameValidation } from '@common/types/User';
 import {
 	DbCollections,
 	ProfileActivity,
@@ -25,7 +26,7 @@ interface Schema {
 
 const Validation: ZodType<Schema> = z.object({
 	email: EmailValidation,
-	displayName: UsernameValidation,
+	displayName: DisplayNameValidation,
 	username: UsernameValidation,
 	password: PasswordValidation,
 });
