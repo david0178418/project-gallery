@@ -5,7 +5,7 @@ import { login } from '@client/api-calls';
 import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Register from '@server/actions/register';
 import Box from '@mui/material/Box';
@@ -21,7 +21,7 @@ function RegistrationModal() {
 	const setLoading = useSetAtom(loadingAtom);
 	const [username, setUsername] = useState('');
 	const [displayName, setDisplayName] = useState('');
-	const { refresh } = useRouter();
+	const { replace } = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [repassword, setRepassword] = useState('');
@@ -61,7 +61,7 @@ function RegistrationModal() {
 				pushToastMsg(`Logged in as ${username}`);
 				setUsername('');
 				setEmail('');
-				refresh();
+				replace(Paths.UserGallery(username));
 			}
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;

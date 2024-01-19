@@ -13,7 +13,7 @@ async function Layout(props: Props) {
 	const session = await getServerSession();
 
 	if(session) {
-		redirect(Paths.Home);
+		redirect(Paths.UserGallery(session.user.username));
 	}
 
 	return (
