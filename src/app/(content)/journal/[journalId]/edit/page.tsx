@@ -6,6 +6,7 @@ import { pick } from '@/common/utils';
 import EditJournalForm from './edit-journal-form';
 import { DbJournal, WriteJournal } from '@common/types/Journal';
 import { dbProjectToUiProject } from '@server/transforms';
+import { Alert } from '@mui/material';
 
 interface Props {
 	params: {
@@ -42,14 +43,20 @@ async function JournalEditPage(props: Props) {
 	const projects = await fetchProjectsByUser(session.user.id);
 
 	return (
-		<EditJournalForm
-			projects={projects.map(dbProjectToUiProject)}
-			journal={
-				'owner' in journal ?
-					dbJournalToWriteJournal(journal) :
-					journal
-			}
-		/>
+		<>
+
+			<Alert severity="info">
+				Pardon our dust.  This page is in the middle of a rework.
+			</Alert>
+			<EditJournalForm
+				projects={projects.map(dbProjectToUiProject)}
+				journal={
+					'owner' in journal ?
+						dbJournalToWriteJournal(journal) :
+						journal
+				}
+			/>
+		</>
 	);
 }
 

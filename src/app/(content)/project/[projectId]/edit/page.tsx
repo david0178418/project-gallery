@@ -8,6 +8,7 @@ import { nowISOString, pick } from '@common/utils';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { Alert } from '@mui/material';
 
 interface Props {
 	params: {
@@ -45,6 +46,9 @@ async function ProjectEditPage(props: Props) {
 						<BackButton />
 						{title}
 					</Typography>
+					<Alert severity="info">
+						Pardon our dust!  This page is in the middle of a rework.
+					</Alert>
 				</Box>
 			}
 		>

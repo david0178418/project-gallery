@@ -1,11 +1,11 @@
 import { ScrollContent } from '@components/scroll-content';
-import { SearchForm } from '@components/search-form';
 import { fetchJournals, fetchProjects } from '@server/queries';
 import JournalCard from '@components/journal-card';
 import ProjectCard from '@components/project-card';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { Alert } from '@mui/material';
 
 export default
 async function HomePage() {
@@ -39,7 +39,9 @@ async function HomePage() {
 								},
 							}}
 						>
-							<SearchForm />
+							<Alert severity="info">
+								Pardon our dust.  This page is in the middle of a rework.
+							</Alert>
 						</Box>
 					</Box>
 				}
