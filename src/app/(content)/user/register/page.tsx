@@ -5,7 +5,7 @@ import { login } from '@client/api-calls';
 import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Register from '@server/actions/register';
 import Box from '@mui/material/Box';
