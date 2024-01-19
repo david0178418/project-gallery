@@ -22,7 +22,7 @@ type Page = 'projects' | 'journals';
 interface Props {
 	pageName: Page;
 	username: string;
-	links: CustomProfileItem[];
+	customItems: CustomProfileItem[];
 	projects: UiProject[];
 	journals: UiJournal[];
 }
@@ -41,7 +41,7 @@ export default
 function AnimatedBody(props: Props) {
 	const {
 		username,
-		links,
+		customItems,
 		projects,
 		journals,
 		pageName,
@@ -109,7 +109,7 @@ function AnimatedBody(props: Props) {
 					</ProfileLinkButton>
 				))}
 			</CollpaseAreaToggle>
-			{links.map((l, i) => (
+			{customItems.map((l, i) => (
 				<Fragment key={i}>
 					{l.type === 'link' && (
 						<ProfileLinkButton

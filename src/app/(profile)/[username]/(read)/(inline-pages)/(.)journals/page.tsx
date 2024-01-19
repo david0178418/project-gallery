@@ -42,7 +42,7 @@ async function UsernameInputJournals(props: Props) {
 	return (
 		<AnimatedBody
 			username={userProfile.username}
-			links={userProfile.customItems}
+			customItems={userProfile.customItems}
 			pageName="journals"
 			projects={[]}
 			journals={journals.map(dbJournalToUiJournal)}

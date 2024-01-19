@@ -41,7 +41,7 @@ async function UsernameInlineProjects(props: Props) {
 	return (
 		<AnimatedBody
 			username={userProfile.username}
-			links={userProfile.customItems}
+			customItems={userProfile.customItems}
 			pageName="projects"
 			projects={projects.map(dbProjectToUiProject)}
 			journals={[]}
