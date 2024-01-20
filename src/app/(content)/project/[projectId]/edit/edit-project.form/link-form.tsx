@@ -71,7 +71,7 @@ function LinkForm(props: Props) {
 				disabled={!validationResult.success}
 				onClick={handleAdd}
 			>
-				Add Link
+				Save
 			</Button>
 		</>
 	);

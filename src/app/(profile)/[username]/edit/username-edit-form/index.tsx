@@ -21,6 +21,7 @@ import {
 	AddIcon,
 	DeleteIcon,
 	DragHandleIcon,
+	EditIcon,
 	JournalIcon,
 	ProjectIcon,
 } from '@components/icons';
@@ -31,12 +32,12 @@ import updateProjectsOrder from '../../(read)/(profilePages)/projects/update-pro
 import CollpaseAreaToggle from '@components/collapse-area-toggle';
 import { Paths } from '@common/constants';
 import { DropdownMenu } from '@components/dropdown-menu';
-import { removeItem } from '@common/utils';
 import {
-	ListItemIcon,
-	ListItemText,
-	MenuItem,
+	Divider,
+	ListItemIcon, ListItemText, MenuItem,
 } from '@mui/material';
+import { removeItem } from '@common/utils';
+import { EditCustomLinkDialog, EditCustomTextContentDialog } from './edit-custom-content-dialog';
 
 interface Props {
 	userProfile: UiUserProfile;
@@ -51,6 +52,7 @@ function UserGalleryEditForm(props: Props) {
 	} = props;
 	const pushToastMsg = usePushToastMsg();
 	const [links, setLinks] = useState(userProfile.customItems);
+	const [activeItem, setActiveItem] = useState<CustomProfileItem | null>(null);
 
 	return (
 		<>
@@ -103,6 +105,7 @@ function UserGalleryEditForm(props: Props) {
 									endIcon={
 										<DropdownMenu
 											menuProps={{ slotProps: { root: { onPointerDown: e => e.stopPropagation() } } }}
+											// hacks to prevent drag/drop from triggering
 											onPointerDown={e => e.stopPropagation()}
 											sx={{
 												cursor: 'pointer',
@@ -112,6 +115,15 @@ function UserGalleryEditForm(props: Props) {
 												transform: 'translateY(-50%)',
 											}}
 										>
+											<MenuItem onClick={() => setActiveItem(item)}>
+												<ListItemIcon>
+													<EditIcon fontSize="small" />
+												</ListItemIcon>
+												<ListItemText>
+													Edit
+												</ListItemText>
+											</MenuItem>
+											<Divider />
 											<MenuItem onClick={() => handleUpdateProfileItems(removeItem (links, links.findIndex(i => i.label === item.label)))}>
 												<ListItemIcon>
 													<DeleteIcon fontSize="small" />
@@ -139,8 +151,27 @@ function UserGalleryEditForm(props: Props) {
 				/>
 				<ProfileShareButton disabled />
 			</Box>
+			<EditCustomTextContentDialog
+				activeItem={activeItem?.type === 'text' ? activeItem : null}
+				onUpdate={handleUpdateItem}
+				onClose={handleCloseEditDialog}
+			/>
+			<EditCustomLinkDialog
+				activeItem={activeItem?.type === 'link' ? activeItem : null}
+				onUpdate={handleUpdateItem}
+				onClose={handleCloseEditDialog}
+			/>
 		</>
 	);
+
+	function handleCloseEditDialog() {
+		setActiveItem(null);
+	}
+
+	function handleUpdateItem(item: CustomProfileItem) {
+		handleUpdateProfileItems(links.map(i => i.label === activeItem?.label ? item : i));
+		handleCloseEditDialog();
+	}
 
 	async function handleUpdateProfileItems(customItems: CustomProfileItem[]) {
 		await updateProfile({ customItems });

@@ -181,7 +181,7 @@ function TextContentForm(props: TextContentFormProps) {
 					disabled={!validationResult.success}
 					onClick={handleAdd}
 				>
-					Add Content
+					Save
 				</Button>
 			</Box>
 		</>
