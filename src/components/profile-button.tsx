@@ -6,6 +6,7 @@ import Image from 'next/image';
 import logo from '@common/images/logo-small.png';
 import {
 	ComponentProps,
+	ElementType,
 	HTMLAttributeAnchorTarget,
 	ReactNode,
 } from 'react';
@@ -68,6 +69,7 @@ function ProfileLinkButton(props: ProfileLinkButtonProps) {
 interface BtnProps extends ComponentProps<typeof Button> {
 	icon?: IconType;
 	iconColor?: string;
+	component?: ElementType;
 }
 
 export
@@ -77,6 +79,8 @@ function Btn(props: BtnProps) {
 		icon,
 		iconColor,
 		sx = {},
+		children,
+		component,
 		...btnProps
 	} = props;
 
@@ -94,6 +98,8 @@ function Btn(props: BtnProps) {
 	return (
 		<Button
 			{...btnProps}
+			// @ts-ignore
+			component={component}
 			fullWidth
 			size="large"
 			variant="outlined"
@@ -104,16 +110,16 @@ function Btn(props: BtnProps) {
 				paddingX: 8,
 				...sx,
 			}}
-			startIcon={
-				<Icon sx={{
-					color,
-					position: 'absolute',
-					left: 30,
-					top: '50%',
-					transform: 'translateY(-50%)',
-				}}/>
-			}
-		/>
+		>
+			<Icon sx={{
+				color,
+				position: 'absolute',
+				left: 30,
+				top: '50%',
+				transform: 'translateY(-50%)',
+			}}/>
+			{children}
+		</Button>
 	);
 }
 

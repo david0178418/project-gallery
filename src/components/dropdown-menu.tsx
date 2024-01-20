@@ -6,14 +6,20 @@ import {
 	useState,
 	useRef,
 } from 'react';
+import { IconButton } from '@mui/material';
 
-type Props = ComponentProps<typeof Button>;
+interface Props extends ComponentProps<typeof Button> {
+	anchorEl?: HTMLDivElement | null;
+	menuProps? : Partial<ComponentProps<typeof Menu>>;
+}
 
 export
 function DropdownMenu(props: Props) {
 	const {
 		children,
 		onClick,
+		anchorEl: externalAnchorEl,
+		menuProps = {},
 		...triggerProps
 	} = props;
 
@@ -22,7 +28,7 @@ function DropdownMenu(props: Props) {
 
 	return (
 		<>
-			<Button
+			<IconButton
 				{...triggerProps}
 				ref={anchorEl}
 				onClick={e => {
@@ -31,9 +37,9 @@ function DropdownMenu(props: Props) {
 				}}
 			>
 				<MoreIcon/>
-			</Button>
+			</IconButton>
 			<Menu
-				anchorEl={anchorEl.current}
+				anchorEl={externalAnchorEl || anchorEl.current}
 				onClick={() => setIsOpen(false)}
 				onClose={() => setIsOpen(false)}
 				open={isOpen}
@@ -45,6 +51,7 @@ function DropdownMenu(props: Props) {
 					vertical: 'top',
 					horizontal: 'right',
 				}}
+				{...menuProps}
 			>
 				{children}
 			</Menu>
