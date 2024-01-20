@@ -188,6 +188,7 @@ function DetailedBioField(props: DetailedBioFieldProps) {
 					margin="normal"
 					type="text"
 					minRows={6}
+					maxRows={20}
 					maxLength={MaxUserProfileBioLength}
 					value={value}
 					onChange={e => setValue(e.target.value)}
