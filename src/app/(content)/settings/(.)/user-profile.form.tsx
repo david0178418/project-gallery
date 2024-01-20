@@ -60,18 +60,22 @@ function UserProfileForm(props: Props) {
 			<Typography>
 				Links
 			</Typography>
-			<LinkForm onAdd={(label, url) => {
-				handleChange({
-					customItems: [
-						{
-							label,
-							value: url,
-							type: 'link',
-						},
-						...userProfile.customItems,
-					],
-				});
-			}}/>
+			<LinkForm
+				label=""
+				value=""
+				onAdd={(label, url) => {
+					handleChange({
+						customItems: [
+							{
+								label,
+								value: url,
+								type: 'link',
+							},
+							...userProfile.customItems,
+						],
+					});
+				}}
+			/>
 			<Box paddingTop={1}>
 				<LinksList
 					links={userProfile.customItems}

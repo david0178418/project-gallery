@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { CustomProfileItem } from '@common/types/CustomLink';
 import { usePushToastMsg } from '@common/atoms';
 import updateProfile from '@app/(content)/settings/(.)/update-profile-action';
-import AddContentButton from './add-content-button';
+import EditContentButton from './add-content-button';
 import { UiProject } from '@common/types/Project';
 import {
 	DetailedBioField,
@@ -19,6 +19,7 @@ import {
 } from './text-fields';
 import {
 	AddIcon,
+	DeleteIcon,
 	DragHandleIcon,
 	JournalIcon,
 	ProjectIcon,
@@ -30,8 +31,12 @@ import updateProjectsOrder from '../../(read)/(profilePages)/projects/update-pro
 import CollpaseAreaToggle from '@components/collapse-area-toggle';
 import { Paths } from '@common/constants';
 import { DropdownMenu } from '@components/dropdown-menu';
-import { MenuItem } from '@mui/material';
 import { removeItem } from '@common/utils';
+import {
+	ListItemIcon,
+	ListItemText,
+	MenuItem,
+} from '@mui/material';
 
 interface Props {
 	userProfile: UiUserProfile;
@@ -108,7 +113,12 @@ function UserGalleryEditForm(props: Props) {
 											}}
 										>
 											<MenuItem onClick={() => handleUpdateProfileItems(removeItem (links, links.findIndex(i => i.label === item.label)))}>
-												Remove
+												<ListItemIcon>
+													<DeleteIcon fontSize="small" />
+												</ListItemIcon>
+												<ListItemText>
+													Remove
+												</ListItemText>
 											</MenuItem>
 										</DropdownMenu>
 									}
@@ -118,36 +128,8 @@ function UserGalleryEditForm(props: Props) {
 							</SortableItemWrapper>
 						</Box>
 					)}
-					// ItemComponent={({ item }) => (
-					// 	<Box position="relative">
-					// 		<SortableItemWrapper {...item}>
-					// 			{item.label}
-					// 			{/* <ProfileButton
-					// 				sx={{ cursor: 'inherit' }}
-					// 				icon={DragHandleIcon}
-					// 				endIcon={ove
-					// 					<DeleteIcon
-					// 						color="error"
-					// 						// prevent sort drag
-					// 						onPointerDown={e => e.preventDefault()}
-					// 						onClick={() => handleUpdateProfileItems(removeItem(links, links.findIndex(i => i.label === item.label)))}
-					// 						sx={{
-					// 							cursor: 'pointer',
-					// 							position: 'absolute',
-					// 							right: 30,
-					// 							top: '50%',
-					// 							transform: 'translateY(-50%)',
-					// 						}}
-					// 					/>
-					// 				}
-					// 			>
-					// 				{item.label}
-					// 			</ProfileButton> */}
-					// 		</SortableItemWrapper>
-					// 	</Box>
-					// )}
 				/>
-				<AddContentButton
+				<EditContentButton
 					onAddContent={async (item) => {
 						handleUpdateProfileItems([
 							...links,

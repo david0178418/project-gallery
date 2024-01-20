@@ -8,6 +8,8 @@ import Grid from '@mui/material/Grid';
 
 interface Props {
 	focus?: boolean;
+	label: string;
+	value: string;
 	onAdd(label: string, url: string): void;
 }
 
@@ -15,10 +17,12 @@ export default
 function LinkForm(props: Props) {
 	const {
 		focus,
+		label: rawLabel,
+		value: rawValue,
 		onAdd,
 	} = props;
-	const [label, setLabel] = useState('');
-	const [value, setValue] = useState('');
+	const [label, setLabel] = useState(rawLabel);
+	const [value, setValue] = useState(rawValue);
 	const validationResult = CustomLinkValidator.safeParse({
 		value,
 		label,

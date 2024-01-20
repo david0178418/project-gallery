@@ -235,7 +235,11 @@ function EditProjectForm(props: Props) {
 						)}
 						{selectedTab === 2 && (
 							<>
-								<LinkForm onAdd={handleAddLink}/>
+								<LinkForm
+									label=""
+									value=""
+									onAdd={handleAddLink}
+								/>
 								<Box paddingTop={1}>
 									<LinksList
 										links={links}
