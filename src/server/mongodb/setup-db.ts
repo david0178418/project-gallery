@@ -8,6 +8,8 @@ async function setupDb() {
 		return;
 	}
 
+	console.log("Running in development mode, checking db setup.");
+
 	const GramTextIndexName = 'gram-text-index';
 
 	console.log('Setting up db');
