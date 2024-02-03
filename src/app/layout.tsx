@@ -9,9 +9,6 @@ import { Metadata } from 'next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import SessionComponent from './session-component';
-import { setupDb } from '@server/mongodb/setup-db';
-
-
 
 if(process.env.NODE_ENV === 'development') {
 	const { setupDb } = await import('@server/mongodb/setup-db');
