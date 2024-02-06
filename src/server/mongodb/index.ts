@@ -32,6 +32,7 @@ const uri = process.env.MONGODB_URI || '';
 let dbClientPromise: Promise<MongoClient>;
 let dbPromise: Promise<Db>;
 
+// TODO: Add retry logic on connection failure
 function getDbClient(): Promise<MongoClient> {
 	if(!dbClientPromise) {
 		dbClientPromise = global._dbClientPromise || new MongoClient(uri).connect();
