@@ -28,7 +28,7 @@ async function EditButton(props: Props) {
 					bottom: 64,
 					right: {
 						xs: 16,
-						md: 32,
+						sm: 32,
 					},
 				}}
 			>
