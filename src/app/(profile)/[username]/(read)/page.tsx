@@ -1,4 +1,3 @@
-import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import { ProfileLinkButton } from '@components/profile-button';
 import ProfileShareButton from '@components/profile-share-button';
 import { LogoMain } from '@common/images';
@@ -9,13 +8,19 @@ import { JournalIcon, ProjectIcon } from '@components/icons';
 import { Fragment, Suspense } from 'react';
 import EditButton from '@components/edit-button.server';
 import ProfileCustomTextItem from '@components/profile-custom-item-button';
+import { Box } from '@mui/material';
+import MarkdownContent from '@components/markdown-content';
 import {
 	AppName,
 	BaseUrl,
 	Paths,
 } from '@common/constants';
-import { Box } from '@mui/material';
-import MarkdownContent from '@components/markdown-content';
+import {
+	fetchUser,
+	fetchUserHasPostsByUsername,
+	fetchUserHasProjectsByUsername,
+	fetchUserProfileByUsername,
+} from '@server/queries';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 interface Props {
@@ -74,6 +79,8 @@ async function GalleryPage(props: Props) {
 	const { params: { username } } = props;
 
 	const userProfile = await fetchUserProfileByUsername(username);
+	const userHasProjects = await fetchUserHasProjectsByUsername(username);
+	const userHasPosts = await fetchUserHasPostsByUsername(username);
 
 	// Should be unnecessary since this should be handled in layout.
 	if(!userProfile) {
@@ -86,18 +93,22 @@ async function GalleryPage(props: Props) {
 
 	return (
 		<>
-			<ProfileLinkButton
-				icon={ProjectIcon}
-				href={Paths.UserGalleryProjects(userProfile.username)}
-			>
-				Projects
-			</ProfileLinkButton>
-			<ProfileLinkButton
-				icon={JournalIcon}
-				href={Paths.UserGalleryJournals(userProfile.username)}
-			>
-				Posts
-			</ProfileLinkButton>
+			{userHasProjects && (
+				<ProfileLinkButton
+					icon={ProjectIcon}
+					href={Paths.UserGalleryProjects(userProfile.username)}
+				>
+					Projects
+				</ProfileLinkButton>
+			)}
+			{userHasPosts && (
+				<ProfileLinkButton
+					icon={JournalIcon}
+					href={Paths.UserGalleryJournals(userProfile.username)}
+				>
+					Posts
+				</ProfileLinkButton>
+			)}
 			{userProfile.customItems.map((l, i) => (
 				<Fragment key={i}>
 					{l.type === 'link' && (

@@ -180,6 +180,23 @@ async function fetchProject(id: string): Promise<WithId<DbProject> | null> {
 }
 
 export
+async function fetchUserHasProjectsByUsername(username: string): Promise<boolean> {
+	console.log('userHasProjects start');
+	const col = await getCollection(DbCollections.Projects);
+	const result = await col.findOne({ 'owner.username': new RegExp(username, 'i') });
+
+	return !!result;
+}
+
+export async function fetchUserHasPostsByUsername(username: string): Promise<boolean> {
+	console.log('userHasPosts start');
+	const col = await getCollection(DbCollections.Journals);
+	const result = await col.findOne({ 'owner.username': new RegExp(username, 'i') });
+
+	return !!result;
+}
+
+export
 async function fetchJournal(id: string): Promise<WithId<DbJournal> | null> {
 	console.log('fetchJournal start');
 	const col = await getCollection(DbCollections.Journals);
