@@ -6,7 +6,7 @@ interface Props {
 	children: ReactNode;
 }
 
-export default async function FooLayout(props: Props) {
+export default async function ProfileLayout(props: Props) {
 	return (
 		<ThemeComponent>
 			{props.children}
