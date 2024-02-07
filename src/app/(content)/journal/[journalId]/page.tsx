@@ -79,7 +79,7 @@ async function Journal(props: Props) {
 					style={{ textDecoration: 'none' }}
 				>
 					<Avatar src={profile?.avatar} sx={{ bgcolor: red[500] }}>
-						{journal.owner.username[0].toLocaleUpperCase()}
+						{journal.owner.username[0]?.toLocaleUpperCase()}
 					</Avatar>
 				</Link>
 				<Link passHref href={Paths.UserGallery(journal.owner.username)}>

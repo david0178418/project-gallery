@@ -73,10 +73,10 @@ async function postFile(file: File, category: Enum<typeof FileUploadCategories>)
 		await fetch(url, {
 			method: 'POST',
 			headers: {
-				'X-Amz-Algorithm': fields['X-Amz-Algorithm'],
-				'X-Amz-Credential': fields['X-Amz-Credential'],
-				'X-Amz-Date': fields['X-Amz-Date'],
-				'X-Amz-Signature': fields['X-Amz-Signature'],
+				'X-Amz-Algorithm': fields['X-Amz-Algorithm'] || '',
+				'X-Amz-Credential': fields['X-Amz-Credential'] || '',
+				'X-Amz-Date': fields['X-Amz-Date'] || '',
+				'X-Amz-Signature': fields['X-Amz-Signature'] || '',
 			},
 			body: formData,
 		});

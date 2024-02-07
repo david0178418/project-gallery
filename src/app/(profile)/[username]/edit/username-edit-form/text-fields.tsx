@@ -33,7 +33,7 @@ function TitleField(props: TitleFieldProps) {
 		const result = UserProfileTitleValidation.safeParse(value);
 
 		if(!result.success) {
-			setErrorMsg(result.error.format()._errors[0]);
+			setErrorMsg(result.error.format()._errors[0] || 'Something went wrong');
 			return;
 		}
 

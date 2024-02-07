@@ -35,15 +35,17 @@ async function ProjectCard(props: Props) {
 
 	return (
 		<Card elevation={4}>
-			<Box>
-				<Link href={projectUrl}>
-					<CardMedia
-						component="img"
-						image={images?.[0].url}
-						sx={{ aspectRatio: '4 / 3' }}
-					/>
-				</Link>
-			</Box>
+			{images?.[0]?.url && (
+				<Box>
+					<Link href={projectUrl}>
+						<CardMedia
+							component="img"
+							image={images?.[0].url}
+							sx={{ aspectRatio: '4 / 3' }}
+						/>
+					</Link>
+				</Box>
+			)}
 			<CardContent>
 				<Typography variant="h6" component="div">
 					{title}

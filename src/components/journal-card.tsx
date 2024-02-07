@@ -68,7 +68,7 @@ async function JournalCard(props: Props) {
 							title={username}
 						>
 							<Avatar src={profile?.avatar} sx={{ bgcolor: red[500] }}>
-								{username[0].toLocaleUpperCase()}
+								{username[0]?.toLocaleUpperCase()}
 							</Avatar>
 						</Tooltip>
 					</Link>

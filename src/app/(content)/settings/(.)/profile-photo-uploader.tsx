@@ -43,7 +43,7 @@ function ProfilePhotoUploader(props: Props) {
 						fontSize: 60,
 					}}
 				>
-					{username[0].toLocaleUpperCase()}
+					{username[0]?.toLocaleUpperCase()}
 				</Avatar>
 				<Fab
 					size="small"

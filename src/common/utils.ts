@@ -154,10 +154,19 @@ function range(size: number, startValue = 0): number[] {
 
 export
 function swapItems<T>(arr: T[], indexA: number, indexB: number): T[] {
-	// TODO Cover edge cases
+	if(
+		indexA === indexB ||
+		indexA < 0 ||
+		indexA >= arr.length ||
+		indexB < 0 ||
+		indexB >= arr.length
+	) {
+		return arr;
+	}
+
 	const newArr = arr.slice(0);
 
-	[newArr[indexB], newArr[indexA]] = [arr[indexA], arr[indexB]];
+	[newArr[indexB], newArr[indexA]] = [arr[indexA] as T, arr[indexB] as T];
 
 	return newArr;
 }

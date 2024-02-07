@@ -11,7 +11,7 @@ interface Props {
 export default
 function ImageSelector(props: Props) {
 	const { images } = props;
-	const [activeImage, setActiveImage] = useState(images[0]);
+	const [activeImage, setActiveImage] = useState(images[0] || null);
 
 	return (
 		<>
