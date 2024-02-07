@@ -196,8 +196,8 @@ function EditProjectForm(props: Props) {
 				<Box paddingTop={1}>
 					<Tabs value={selectedTab} onChange={(e, val) => setSelectedTab(val)}>
 						<Tab label="Description" />
-						<Tab label="Images"/>
-						<Tab label="Links" />
+						<Tab label={`Images (${images.length})`}/>
+						<Tab label={`Links (${links.length})`} />
 					</Tabs>
 					<Box paddingTop={1}>
 						{selectedTab === 0 && (
