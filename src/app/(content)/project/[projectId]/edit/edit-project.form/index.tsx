@@ -23,7 +23,6 @@ import TextField from '@mui/material/TextField';
 import {
 	ProjectImage,
 	WriteProject,
-	WriteProjectValidator,
 } from '@common/types/Project';
 import {
 	MaxJournalProjectTitleLength,
@@ -69,7 +68,6 @@ function EditProjectForm(props: Props) {
 			...projectUpdates,
 		});
 	}, [project]);
-	const validationResult = WriteProjectValidator.safeParse(project);
 
 	const handleAddLabel = useCallback((label: string) => {
 		handleChange({
@@ -282,8 +280,8 @@ function EditProjectForm(props: Props) {
 					}}
 				>
 					<ConfirmButton
+						label="Save"
 						onClick={handleSave}
-						disabled={!validationResult.success}
 						endIcon={<SaveIcon/>}
 					/>
 				</Box>
