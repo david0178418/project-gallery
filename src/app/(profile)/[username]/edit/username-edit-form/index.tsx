@@ -28,7 +28,7 @@ import {
 
 // TODO Move out of "settings"
 import ProfilePhotoUploader from '@app/(content)/settings/(.)/profile-photo-uploader';
-import updateProjectsOrder from '../../(read)/(profile-pages)/projects/update-projects-order';
+import updateProjectsOrder from '../../(read)/(standalone-pages)/projects/update-projects-order';
 import CollpaseAreaToggle from '@components/collapse-area-toggle';
 import { Paths } from '@common/constants';
 import { DropdownMenu } from '@components/dropdown-menu';
