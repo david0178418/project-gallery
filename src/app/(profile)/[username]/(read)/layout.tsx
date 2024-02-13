@@ -1,6 +1,6 @@
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
 import MarkdownContent from '@components/markdown-content';
-import { type ReactNode } from 'react';
+import { Fragment, type ReactNode } from 'react';
 import { Paths } from '@common/constants';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -9,6 +9,9 @@ import Typography from '@mui/material/Typography';
 import MoreLessToggle from '@components/more-less-toggle';
 import Link from 'next/link';
 import { Button } from '@mui/material';
+import { ProfileLinkButton } from '@components/profile-button';
+import ProfileCustomTextItem from '@components/profile-custom-item-button';
+import ProfileShareButton from '@components/profile-share-button';
 
 interface Props {
 	children: ReactNode;
@@ -78,6 +81,38 @@ export default async function UserGalleryProfileReadPageLayout(props: Props) {
 			</Box>
 			<Box textAlign="center">
 				{children}
+				{userProfile.customItems.map((l, i) => (
+					<Fragment key={i}>
+						{l.type === 'link' && (
+							<ProfileLinkButton
+								href={l.value}
+								target="_blank"
+							>
+								{l.label}
+							</ProfileLinkButton>
+						)}
+						{l.type === 'text' && (
+							<ProfileCustomTextItem label={l.label}>
+								<Box
+									display="inline-block"
+									maxWidth={600}
+									width="100%"
+									textAlign="left"
+									marginBottom={2}
+								>
+									<MarkdownContent>
+										{l.value}
+									</MarkdownContent>
+								</Box>
+							</ProfileCustomTextItem>
+						)}
+					</Fragment>
+				))}
+				<ProfileShareButton shareObj={{
+					url: Paths.UserGallery(userProfile.username),
+					label: `${userProfile.username}'s Project Gallery`,
+					shareMsg: `Check out ${userProfile.username}'s Project Gallery`,
+				}}/>
 				<Box paddingTop={5} paddingX={2} paddingBottom={15}>
 					<Link href={Paths.UserRegister}>
 						<Button variant="outlined" size="small">

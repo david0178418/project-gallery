@@ -1,8 +1,6 @@
 'use client';
-import { ProfileButton, ProfileLinkButton } from '@components/profile-button';
-import ProfileShareButton from '@components/profile-share-button';
+import { ProfileLinkButton } from '@components/profile-button';
 import { Paths } from '@common/constants';
-import { CustomProfileItem } from '@common/types/CustomLink';
 import { UiProject } from '@common/types/Project';
 import { useRouter } from 'next/navigation';
 import { useEffectOnce } from '@common/hooks';
@@ -22,7 +20,6 @@ type Page = 'projects' | 'journals';
 interface Props {
 	pageName: Page;
 	username: string;
-	customItems: CustomProfileItem[];
 	projects: UiProject[];
 	journals: UiJournal[];
 }
@@ -41,7 +38,6 @@ export default
 function AnimatedBody(props: Props) {
 	const {
 		username,
-		customItems,
 		projects,
 		journals,
 		pageName,
@@ -109,30 +105,6 @@ function AnimatedBody(props: Props) {
 					</ProfileLinkButton>
 				))}
 			</CollpaseAreaToggle>
-			{customItems.map((l, i) => (
-				<Fragment key={i}>
-					{l.type === 'link' && (
-						<ProfileLinkButton
-							href={l.value}
-							target="_blank"
-						>
-							{l.label}
-						</ProfileLinkButton>
-					)}
-					{l.type === 'text' && (
-						<ProfileButton
-							onClick={() => console.log(111)}
-						>
-							{l.label}
-						</ProfileButton>
-					)}
-				</Fragment>
-			))}
-			<ProfileShareButton shareObj={{
-				url: Paths.UserGallery(username),
-				label: `${username}'s Project Gallery`,
-				shareMsg: `Check out ${username}'s Project Gallery`,
-			}}/>
 		</>
 	);
 }
