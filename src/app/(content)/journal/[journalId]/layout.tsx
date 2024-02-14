@@ -13,6 +13,7 @@ import {
 	Paths,
 	SpecialCharacterCodes,
 } from '@common/constants';
+import { Alert } from '@mui/material';
 
 export
 async function generateMetadata(props: Props): Promise<Metadata> {
@@ -81,6 +82,9 @@ async function Journal(props: Props) {
 						paddingTop: 1,
 						paddingBottom: 2,
 					}}>
+						<Alert severity="info" sx={{ marginBottom: 2 }}>
+							Pardon our dust.  This page is in the middle of a rework.
+						</Alert>
 						<Typography variant="h5" component="div" gutterBottom>
 							{/** TODO Capture direct links and send them to home page */}
 							<BackButton
