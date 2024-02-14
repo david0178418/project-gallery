@@ -196,6 +196,14 @@ export async function fetchUserHasPostsByUsername(username: string): Promise<boo
 	return !!result;
 }
 
+export async function fetchProjectHasPosts(projectId: string): Promise<boolean> {
+	console.log('projectHasPosts start');
+	const col = await getCollection(DbCollections.Journals);
+	const result = await col.findOne({ 'project._id': new ObjectId(projectId) });
+
+	return !!result;
+}
+
 export
 async function fetchJournal(id: string): Promise<WithId<DbJournal> | null> {
 	console.log('fetchJournal start');

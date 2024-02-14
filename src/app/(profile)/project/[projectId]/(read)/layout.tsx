@@ -1,12 +1,11 @@
 import { fetchProject } from '@server/queries';
-import { ReactNode, Suspense } from 'react';
+import { ReactNode } from 'react';
 import { MongoIdValidation } from '@server/validations';
-import { Paths } from '@common/constants';
-import ImageSelector from './image-selector';
-import EditButton from '@components/edit-button.server';
+import ImageSelector from './(standalone-pages)/image-selector';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import MarkdownContent from '@components/markdown-content';
 
 interface Props {
 	children: ReactNode;
@@ -61,14 +60,17 @@ export default async function ProjectLayout(props: Props) {
 				</Box>
 			</Box>
 			<Box paddingX={2} paddingY={1}>
+				{project.description && (
+					<Box textAlign="center" paddingBottom={2}>
+						<Box maxWidth={600} display="inline-block" textAlign="left">
+							<MarkdownContent>
+								{project.description}
+							</MarkdownContent>
+						</Box>
+					</Box>
+				)}
 				{children}
 			</Box>
-			<Suspense>
-				<EditButton
-					userId={project.owner._id.toString()}
-					href={Paths.ProjectEdit(projectId)}
-				/>
-			</Suspense>
 		</Container>
 	);
 }

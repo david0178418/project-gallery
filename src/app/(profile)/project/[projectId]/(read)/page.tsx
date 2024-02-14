@@ -1,21 +1,20 @@
-import Box from '@mui/material/Box';
-import { fetchProject } from '@server/queries';
+import { fetchProject, fetchProjectHasPosts } from '@server/queries';
+import { ReactNode } from 'react';
 import { MongoIdValidation } from '@server/validations';
-import MarkdownContent from '@components/markdown-content';
-import { ProfileButton, ProfileLinkButton } from '@components/profile-button';
-import ProfileShareButton from '@components/profile-share-button';
-import { Paths, SpecialCharacterCodes } from '@common/constants';
-import { JournalIcon, ProfileIcon } from '@components/icons';
-import { Fragment } from 'react';
+import ListBottom from './list-bottom';
+import { ProfileLinkButton } from '@components/profile-button';
+import { JournalIcon } from '@components/icons';
+import { Paths } from '@common/constants';
+import { Box } from '@mui/material';
 
 interface Props {
+	children: ReactNode;
 	params: {
 		projectId: string;
 	};
 }
 
-export default
-async function ProjectPage(props: Props) {
+export default async function ProjectLayout(props: Props) {
 	const { params: { projectId } } = props;
 
 	const result = await MongoIdValidation.safeParseAsync(projectId);
@@ -23,7 +22,7 @@ async function ProjectPage(props: Props) {
 	if(!result.success) {
 		return (
 			<>
-				User not found.
+				Project not found.
 			</>
 		);
 	}
@@ -40,53 +39,19 @@ async function ProjectPage(props: Props) {
 		);
 	}
 
+	const userHasPosts = await fetchProjectHasPosts(project._id.toString());
+
 	return (
-		<>
-			{project.description && (
-				<Box textAlign="center" paddingBottom={2}>
-					<Box maxWidth={600} display="inline-block" textAlign="left">
-						<MarkdownContent>
-							{project.description}
-						</MarkdownContent>
-					</Box>
-				</Box>
-			)}
-			<Box textAlign="center">
+		<Box textAlign="center">
+			{userHasPosts && (
 				<ProfileLinkButton
 					icon={JournalIcon}
 					href={Paths.ProjectJournals(projectId)}
 				>
 					Project Posts
 				</ProfileLinkButton>
-				{project.links.map((l, i) => (
-					<Fragment key={i}>
-						{l.type === 'link' && (
-							<ProfileLinkButton
-								href={l.value}
-								target="_blank"
-							>
-								{l.label}
-							</ProfileLinkButton>
-						)}
-						{l.type === 'text' && (
-							<ProfileButton>
-								{l.label}
-							</ProfileButton>
-						)}
-					</Fragment>
-				))}
-				<ProfileLinkButton
-					icon={ProfileIcon}
-					href={Paths.UserGallery(project.owner.username)}
-				>
-					{project.owner.username}{SpecialCharacterCodes.RSQUO}s Gallery
-				</ProfileLinkButton>
-				<ProfileShareButton shareObj={{
-					url: Paths.Project(projectId),
-					label: `${project.title} Project Page`,
-					shareMsg: `Check out ${project.title}'s project page`,
-				}}/>
-			</Box>
-		</>
+			)}
+			<ListBottom project={project} />
+		</Box>
 	);
 }
