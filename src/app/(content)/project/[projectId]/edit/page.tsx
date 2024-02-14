@@ -70,7 +70,7 @@ function dbProjectToWriteProject(project: DbProject): WriteProject {
 			'projectCreatedDate',
 			'projectLastUpdatedDate',
 			'labels',
-			'links',
+			'customItems',
 			'title',
 			'images',
 			'unlisted',
@@ -87,7 +87,7 @@ function newWriteProject(): WriteProject {
 		projectCreatedDate: nowStr,
 		projectLastUpdatedDate: nowStr,
 		labels: [],
-		links: [],
+		customItems: [],
 	};
 }
 

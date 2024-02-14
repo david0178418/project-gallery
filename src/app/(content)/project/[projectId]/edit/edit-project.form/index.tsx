@@ -55,7 +55,7 @@ function EditProjectForm(props: Props) {
 		title,
 		description,
 		labels,
-		links,
+		customItems,
 		unlisted = false,
 	} = project;
 	const [selectedTab, setSelectedTab] = useState(0);
@@ -82,19 +82,19 @@ function EditProjectForm(props: Props) {
 	}, [handleChange, labels]);
 	const handleAddLink = useCallback((label: string, url: string) => {
 		handleChange({
-			links: [
+			customItems: [
 				{
 					label,
 					value: url,
 					type: 'link',
 				},
-				...links,
+				...customItems,
 			],
 		});
-	}, [handleChange, links]);
+	}, [handleChange, customItems]);
 	const handleRemoveLink = useCallback((linkIndex: number) => {
-		handleChange({ links: links.filter((l, i) => i !== linkIndex) });
-	}, [handleChange, links]);
+		handleChange({ customItems: customItems.filter((l, i) => i !== linkIndex) });
+	}, [handleChange, customItems]);
 	const handleAddFiles = useCallback((newImageUrls: string[]) => {
 		const newImages = newImageUrls.map(url => ({
 			url,
@@ -197,7 +197,7 @@ function EditProjectForm(props: Props) {
 					<Tabs value={selectedTab} onChange={(e, val) => setSelectedTab(val)}>
 						<Tab label="Description" />
 						<Tab label={`Images (${images.length})`}/>
-						<Tab label={`Links (${links.length})`} />
+						<Tab label={`Links (${customItems.length})`} />
 					</Tabs>
 					<Box paddingTop={1}>
 						{selectedTab === 0 && (
@@ -240,10 +240,10 @@ function EditProjectForm(props: Props) {
 								/>
 								<Box paddingTop={1}>
 									<LinksList
-										links={links}
+										links={customItems}
 										onRemove={handleRemoveLink}
 										onUpdate={updatedLinks => {
-											handleChange({ links: updatedLinks });
+											handleChange({ customItems: updatedLinks });
 										}}
 									/>
 								</Box>
