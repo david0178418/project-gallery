@@ -4,8 +4,6 @@ import { urlJoin } from '@common/utils';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { Metadata } from 'next';
 import { JournalIcon, ProjectIcon } from '@components/icons';
-import { Suspense } from 'react';
-import EditButton from '@components/edit-button.server';
 import {
 	AppName,
 	BaseUrl,
@@ -17,6 +15,7 @@ import {
 	fetchUserHasProjectsByUsername,
 	fetchUserProfileByUsername,
 } from '@server/queries';
+import ListBottom from './list-bottom';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 interface Props {
@@ -105,14 +104,7 @@ async function GalleryPage(props: Props) {
 					Posts
 				</ProfileLinkButton>
 			)}
-			{userProfile && (
-				<Suspense>
-					<EditButton
-						userId={userProfile._id.toString()}
-						href={Paths.UserGalleryEdit(username)}
-					/>
-				</Suspense>
-			)}
+			<ListBottom userProfile={userProfile} />
 		</>
 	);
 }

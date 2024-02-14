@@ -1,7 +1,6 @@
 import { fetchUser, fetchUserProfileByUsername } from '@server/queries';
-import { Suspense, type ReactNode } from 'react';
-import { Paths } from '@common/constants';
-import EditButton from '@components/edit-button.server';
+import { type ReactNode } from 'react';
+import ListBottom from '../list-bottom';
 
 interface Props {
 	children: ReactNode;
@@ -33,14 +32,7 @@ export default async function UserGalleryProfileReadPageLayout(props: Props) {
 	return (
 		<>
 			{children}
-			{userProfile && (
-				<Suspense>
-					<EditButton
-						userId={userProfile._id.toString()}
-						href={Paths.UserGalleryEdit(username)}
-					/>
-				</Suspense>
-			)}
+			<ListBottom userProfile={userProfile} />
 		</>
 	);
 }
