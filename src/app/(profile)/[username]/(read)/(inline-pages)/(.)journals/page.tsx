@@ -44,8 +44,7 @@ async function UsernameInputJournals(props: Props) {
 	return (
 		<AnimatedBody
 			rootUrl={Paths.UserGallery(username)}
-			pageName="journals"
-			foos={[
+			collections={[
 				{
 					key: 'projects',
 					label: 'Projects',
@@ -54,6 +53,7 @@ async function UsernameInputJournals(props: Props) {
 					items: [],
 				},
 				{
+					active: true,
 					key: 'journals',
 					label: 'Posts',
 					url: Paths.UserGalleryJournals(username),

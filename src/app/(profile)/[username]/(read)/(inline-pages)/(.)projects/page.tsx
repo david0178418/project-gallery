@@ -42,10 +42,10 @@ async function UsernameInlineProjects(props: Props) {
 
 	return (
 		<AnimatedBody
-			pageName="projects"
 			rootUrl={Paths.UserGallery(username)}
-			foos={[
+			collections={[
 				{
+					active: true,
 					key: 'projects',
 					label: 'Projects',
 					url: Paths.UserGalleryProjects(username),

@@ -5,8 +5,8 @@ import { CloseIcon } from '@components/icons';
 
 interface Props {
 	icon: any;
-	active: boolean;
-	show: boolean;
+	active?: boolean;
+	show?: boolean;
 	children: ReactNode;
 	collapseSx?: ComponentProps<typeof Collapse>['sx']
 	label: string;

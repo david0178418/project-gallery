@@ -7,11 +7,11 @@ import { useState } from 'react';
 
 interface Props {
 	rootUrl: string;
-	pageName: string;
-	foos: Foo[];
+	collections: Collection[];
 }
 
-interface Foo {
+interface Collection {
+	active?: boolean;
 	key: string;
 	label: string;
 	url: string;
@@ -31,39 +31,38 @@ export default
 function AnimatedBody(props: Props) {
 	const {
 		rootUrl,
-		pageName,
-		foos,
+		collections,
 	} = props;
 	const [nextPage, setNextPage] = useState<string | null>(null);
 	const [initialRender, setInitialRender] = useState(true);
 	const { push } = useRouter();
 	const transitionToNextPage = nextPage !== null;
-	const activeFoo = foos.find((f) => f.key === pageName);
+	const activeCollection = collections.find(c => c.active);
 
 	useEffectOnce(() => {
 		setInitialRender(false);
 	});
 
-	if(!activeFoo) {
+	if(!activeCollection) {
 		return null;
 	}
 
 	return (
 		<>
-			{foos.map((f) => (
+			{collections.map(c => (
 				<CollpaseAreaToggle
-					key={f.key}
-					label={f.label}
-					show={!initialRender && pageName === f.key && !transitionToNextPage}
-					active={pageName === f.key}
-					icon={f.icon}
+					key={c.key}
+					label={c.label}
+					show={!initialRender && c.active && !transitionToNextPage}
+					active={c.active}
+					icon={c.icon}
 					onTransitionEnd={handleTransitionEnd}
-					onButtonClick={() => handlePageClick(f.key)}
+					onButtonClick={() => handlePageClick(c.key)}
 				>
-					{f.items.map((i) => (
+					{c.items.map((i) => (
 						<ProfileLinkButton
 							key={i._id}
-							icon={f.icon}
+							icon={c.icon}
 							href={i.url}
 						>
 							{i.title}
@@ -79,14 +78,14 @@ function AnimatedBody(props: Props) {
 			return;
 		}
 
-		const nextFooUrl = foos.find((f) => f.key === nextPage)?.url || rootUrl;
-		push(nextFooUrl);
+		const nextCollectionUrl = collections.find(c => c.key === nextPage)?.url || rootUrl;
+		push(nextCollectionUrl);
 	}
 
 	function handlePageClick(clickedPage: string) {
-		const keyOfShowingFoo = clickedPage === pageName ?
+		const keyOfOpenCollection = clickedPage === activeCollection?.key ?
 			'' :
-			foos.find((f) => f.key === clickedPage)?.key || '';
-		setNextPage(keyOfShowingFoo);
+			collections.find(c => c.key === clickedPage)?.key || '';
+		setNextPage(keyOfOpenCollection);
 	}
 }
