@@ -4,7 +4,7 @@ import { urlJoin } from '@common/utils';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { Metadata } from 'next';
 import { JournalIcon, ProjectIcon } from '@components/icons';
-import { Fragment, Suspense } from 'react';
+import { Suspense } from 'react';
 import EditButton from '@components/edit-button.server';
 import {
 	AppName,
