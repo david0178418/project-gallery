@@ -1,9 +1,13 @@
-import AnimatedBody from '../animated-body';
+import AnimatedBody, { AnimatedBodyCollection } from '../animated-body';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { dbJournalToUiJournal } from '@server/transforms';
-import { fetchUserJournals, fetchUserProfileByUsername } from '@server/queries';
 import { Paths } from '@common/constants';
 import { JournalIcon, ProjectIcon } from '@components/icons';
+import {
+	fetchUserHasProjectsByUsername,
+	fetchUserJournals,
+	fetchUserProfileByUsername,
+} from '@server/queries';
 
 interface Props {
 	params: {
@@ -39,33 +43,41 @@ async function UsernameInputJournals(props: Props) {
 		);
 	}
 
-	const journals = await fetchUserJournals(username);
+	const [journals, userHasProjects] = await Promise.all([
+		fetchUserJournals(username),
+		fetchUserHasProjectsByUsername(username),
+	]);
+
+	const collections: AnimatedBodyCollection[] = [
+		{
+			active: true,
+			key: 'journals',
+			label: 'Posts',
+			url: Paths.UserGalleryJournals(username),
+			icon: JournalIcon,
+			items: journals
+				.map(dbJournalToUiJournal)
+				.map((j) => ({
+					...j,
+					url: Paths.Journal(j._id),
+				})),
+		},
+	];
+
+	if(userHasProjects) {
+		collections.unshift({
+			key: 'projects',
+			label: 'Projects',
+			url: Paths.UserGalleryProjects(username),
+			icon: ProjectIcon,
+			items: [],
+		});
+	}
 
 	return (
 		<AnimatedBody
 			rootUrl={Paths.UserGallery(username)}
-			collections={[
-				{
-					key: 'projects',
-					label: 'Projects',
-					url: Paths.UserGalleryProjects(username),
-					icon: ProjectIcon,
-					items: [],
-				},
-				{
-					active: true,
-					key: 'journals',
-					label: 'Posts',
-					url: Paths.UserGalleryJournals(username),
-					icon: JournalIcon,
-					items: journals
-						.map(dbJournalToUiJournal)
-						.map((j) => ({
-							...j,
-							url: Paths.Journal(j._id),
-						})),
-				},
-			]}
+			collections={collections}
 		/>
 	);
 }

@@ -7,10 +7,11 @@ import { useState } from 'react';
 
 interface Props {
 	rootUrl: string;
-	collections: Collection[];
+	collections: AnimatedBodyCollection[];
 }
 
-interface Collection {
+export
+interface AnimatedBodyCollection {
 	active?: boolean;
 	key: string;
 	label: string;
