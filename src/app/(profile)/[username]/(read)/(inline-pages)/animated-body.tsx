@@ -6,14 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useEffectOnce } from '@common/hooks';
 import { UiJournal } from '@common/types/Journal';
 import CollpaseAreaToggle from '@components/collapse-area-toggle';
-import {
-	Fragment,
-	useState,
-} from 'react';
-import {
-	JournalIcon,
-	ProjectIcon,
-} from '@components/icons';
+import { useState } from 'react';
+import { JournalIcon, ProjectIcon } from '@components/icons';
 
 type Page = 'projects' | 'journals';
 
