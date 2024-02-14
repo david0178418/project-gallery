@@ -58,7 +58,12 @@ async function UsernameInputJournals(props: Props) {
 					label: 'Posts',
 					url: Paths.UserGalleryJournals(username),
 					icon: JournalIcon,
-					items: journals.map(dbJournalToUiJournal),
+					items: journals
+						.map(dbJournalToUiJournal)
+						.map((j) => ({
+							...j,
+							url: Paths.Journal(j._id),
+						})),
 				},
 			]}
 		/>

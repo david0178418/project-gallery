@@ -50,7 +50,12 @@ async function UsernameInlineProjects(props: Props) {
 					label: 'Projects',
 					url: Paths.UserGalleryProjects(username),
 					icon: ProjectIcon,
-					items: projects.map(dbProjectToUiProject),
+					items: projects
+						.map(dbProjectToUiProject)
+						.map((p) => ({
+							...p,
+							url: Paths.Project(p._id),
+						})),
 				},
 				{
 					key: 'journals',

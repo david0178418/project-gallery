@@ -16,7 +16,11 @@ interface Foo {
 	label: string;
 	url: string;
 	icon: any;
-	items: Array<{_id: string; title: string;}>;
+	items: Array<{
+		_id: string;
+		title: string;
+		url: string;
+	}>;
 }
 
 // TODO: All this should be unnecessary since this should be handled in layout
@@ -60,7 +64,7 @@ function AnimatedBody(props: Props) {
 						<ProfileLinkButton
 							key={i._id}
 							icon={f.icon}
-							href={f.url}
+							href={i.url}
 						>
 							{i.title}
 						</ProfileLinkButton>
