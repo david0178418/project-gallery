@@ -1,5 +1,4 @@
 import { ProfileLinkButton } from '@components/profile-button';
-import ProfileShareButton from '@components/profile-share-button';
 import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { UsernameValidation } from '@common/types/UserCredentials';
@@ -7,9 +6,6 @@ import { Metadata } from 'next';
 import { JournalIcon, ProjectIcon } from '@components/icons';
 import { Fragment, Suspense } from 'react';
 import EditButton from '@components/edit-button.server';
-import ProfileCustomTextItem from '@components/profile-custom-item-button';
-import { Box } from '@mui/material';
-import MarkdownContent from '@components/markdown-content';
 import {
 	AppName,
 	BaseUrl,
