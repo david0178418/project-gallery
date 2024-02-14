@@ -75,28 +75,26 @@ async function Journal(props: Props) {
 		Paths.UserGalleryJournals(journal.owner.username);
 
 	return (
-		<>
-			<ScrollContent
-				header={
-					<Box sx={{
-						paddingTop: 1,
-						paddingBottom: 2,
-					}}>
-						<Alert severity="info" sx={{ marginBottom: 2 }}>
-							Pardon our dust.  This page is in the middle of a rework.
-						</Alert>
-						<Typography variant="h5" component="div" gutterBottom>
-							{/** TODO Capture direct links and send them to home page */}
-							<BackButton
-								defaultHref={defaultBackPath}
-							/>{SpecialCharacterCodes.NBSP}
-							{journal.title || 'Not Found'}
-						</Typography>
-					</Box>
-				}
-			>
-				{children}
-			</ScrollContent>
-		</>
+		<ScrollContent
+			header={
+				<Box sx={{
+					paddingTop: 1,
+					paddingBottom: 2,
+				}}>
+					<Alert severity="info" sx={{ marginBottom: 2 }}>
+						Pardon our dust.  This page is in the middle of a rework.
+					</Alert>
+					<Typography variant="h5" component="div" gutterBottom>
+						{/** TODO Capture direct links and send them to home page */}
+						<BackButton
+							defaultHref={defaultBackPath}
+						/>{SpecialCharacterCodes.NBSP}
+						{journal.title || 'Not Found'}
+					</Typography>
+				</Box>
+			}
+		>
+			{children}
+		</ScrollContent>
 	);
 }
