@@ -36,7 +36,7 @@ type DbProject = WithId<{
 	labels: Array<{
 		label: string;
 	}>;
-	links: CustomProfileItem[];
+	customItems: CustomProfileItem[];
 }>;
 
 export
@@ -49,7 +49,7 @@ type UiProject = WithStringId<Omit<DbProject, 'owner' | 'lastJournalEntry'> & {
 }>;
 
 export
-type WriteProject = Pick<UiProject, 'description' | 'title' | 'images' | 'projectCreatedDate' | 'projectLastUpdatedDate' | 'labels' | 'links' | 'unlisted'> & {
+type WriteProject = Pick<UiProject, 'description' | 'title' | 'images' | 'projectCreatedDate' | 'projectLastUpdatedDate' | 'labels' | 'customItems' | 'unlisted'> & {
 	_id?: string;
 };
 
@@ -84,7 +84,7 @@ const WriteProjectValidator: ZodType<WriteProject> = z.object({
 				.max(MaxLabelSize),
 		}),
 	).max(maxLabelCount),
-	links: z.array(CustomLinkValidator),
+	customItems: z.array(CustomLinkValidator),
 	projectCreatedDate: IsoDateValidation,
 	projectLastUpdatedDate: IsoDateValidation,
 });

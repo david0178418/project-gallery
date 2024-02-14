@@ -47,7 +47,7 @@ async function ProjectPage(props: Props) {
 				>
 					Project Posts
 				</ProfileLinkButton>
-				{project.links.map((l, i) => (
+				{project.customItems.map((l, i) => (
 					<Fragment key={i}>
 						{l.type === 'link' && (
 							<ProfileLinkButton

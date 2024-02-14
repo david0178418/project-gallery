@@ -1,12 +1,9 @@
-import { ProfileLinkButton } from '@components/profile-button';
-import { Fragment, Suspense } from 'react';
+import { Suspense } from 'react';
 import { Paths } from '@common/constants';
-import ProfileCustomTextItem from '@components/profile-custom-item-button';
-import { Box } from '@mui/material';
-import MarkdownContent from '@components/markdown-content';
 import ProfileShareButton from '@components/profile-share-button';
 import { DbUserProfile } from '@common/types/UserProfile';
 import EditButton from '@components/edit-button.server';
+import CustomItem from '@components/custom-item';
 
 interface Props {
 	userProfile: DbUserProfile;
@@ -18,32 +15,11 @@ function ListBottom(props: Props) {
 
 	return (
 		<>
-			{userProfile.customItems.map((l, i) => (
-				<Fragment key={i}>
-					{l.type === 'link' && (
-						<ProfileLinkButton
-							href={l.value}
-							target="_blank"
-						>
-							{l.label}
-						</ProfileLinkButton>
-					)}
-					{l.type === 'text' && (
-						<ProfileCustomTextItem label={l.label}>
-							<Box
-								display="inline-block"
-								maxWidth={600}
-								width="100%"
-								textAlign="left"
-								marginBottom={2}
-							>
-								<MarkdownContent>
-									{l.value}
-								</MarkdownContent>
-							</Box>
-						</ProfileCustomTextItem>
-					)}
-				</Fragment>
+			{userProfile.customItems.map(i => (
+				<CustomItem
+					key={i.value}
+					item={i}
+				/>
 			))}
 			<ProfileShareButton shareObj={{
 				url: Paths.UserGallery(userProfile.username),
