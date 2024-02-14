@@ -2,6 +2,8 @@ import AnimatedBody from '../animated-body';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { dbJournalToUiJournal } from '@server/transforms';
 import { fetchUserJournals, fetchUserProfileByUsername } from '@server/queries';
+import { Paths } from '@common/constants';
+import { JournalIcon, ProjectIcon } from '@components/icons';
 
 interface Props {
 	params: {
@@ -41,10 +43,24 @@ async function UsernameInputJournals(props: Props) {
 
 	return (
 		<AnimatedBody
-			username={userProfile.username}
+			rootUrl={Paths.UserGallery(username)}
 			pageName="journals"
-			projects={[]}
-			journals={journals.map(dbJournalToUiJournal)}
+			foos={[
+				{
+					key: 'projects',
+					label: 'Projects',
+					url: Paths.UserGalleryProjects(username),
+					icon: ProjectIcon,
+					items: [],
+				},
+				{
+					key: 'journals',
+					label: 'Posts',
+					url: Paths.UserGalleryJournals(username),
+					icon: JournalIcon,
+					items: journals.map(dbJournalToUiJournal),
+				},
+			]}
 		/>
 	);
 }

@@ -1,28 +1,23 @@
 'use client';
 import { ProfileLinkButton } from '@components/profile-button';
-import { Paths } from '@common/constants';
-import { UiProject } from '@common/types/Project';
 import { useRouter } from 'next/navigation';
 import { useEffectOnce } from '@common/hooks';
-import { UiJournal } from '@common/types/Journal';
 import CollpaseAreaToggle from '@components/collapse-area-toggle';
 import { useState } from 'react';
-import { JournalIcon, ProjectIcon } from '@components/icons';
-
-type Page = 'projects' | 'journals';
 
 interface Props {
-	pageName: Page;
-	username: string;
-	projects: UiProject[];
-	journals: UiJournal[];
+	rootUrl: string;
+	pageName: string;
+	foos: Foo[];
 }
 
-const NextPage = {
-	['']: Paths.UserGallery,
-	projects: Paths.UserGalleryProjects,
-	journals: Paths.UserGalleryJournals,
-} as const;
+interface Foo {
+	key: string;
+	label: string;
+	url: string;
+	icon: any;
+	items: Array<{_id: string; title: string;}>;
+}
 
 // TODO: All this should be unnecessary since this should be handled in layout
 // once this issue is resolved:
@@ -31,74 +26,63 @@ const NextPage = {
 export default
 function AnimatedBody(props: Props) {
 	const {
-		username,
-		projects,
-		journals,
+		rootUrl,
 		pageName,
+		foos,
 	} = props;
-	const [nextPage, setNextPage] = useState<Page | '' | null>(null);
+	const [nextPage, setNextPage] = useState<string | null>(null);
 	const [initialRender, setInitialRender] = useState(true);
 	const { push } = useRouter();
-	const showing = {
-		projects: pageName === 'projects',
-		journals: pageName === 'journals',
-	} as const;
 	const transitionToNextPage = nextPage !== null;
+	const activeFoo = foos.find((f) => f.key === pageName);
 
 	useEffectOnce(() => {
 		setInitialRender(false);
 	});
+
+	if(!activeFoo) {
+		return null;
+	}
+
+	return (
+		<>
+			{foos.map((f) => (
+				<CollpaseAreaToggle
+					key={f.key}
+					label={f.label}
+					show={!initialRender && pageName === f.key && !transitionToNextPage}
+					active={pageName === f.key}
+					icon={f.icon}
+					onTransitionEnd={handleTransitionEnd}
+					onButtonClick={() => handlePageClick(f.key)}
+				>
+					{f.items.map((i) => (
+						<ProfileLinkButton
+							key={i._id}
+							icon={f.icon}
+							href={f.url}
+						>
+							{i.title}
+						</ProfileLinkButton>
+					))}
+				</CollpaseAreaToggle>
+			))}
+		</>
+	);
 
 	function handleTransitionEnd() {
 		if(!transitionToNextPage) {
 			return;
 		}
 
-		push(NextPage[nextPage](username));
+		const nextFooUrl = foos.find((f) => f.key === nextPage)?.url || rootUrl;
+		push(nextFooUrl);
 	}
 
-	function handlePageClick(clickedPage: Page) {
-		setNextPage(showing[clickedPage] ? '' : clickedPage);
+	function handlePageClick(clickedPage: string) {
+		const keyOfShowingFoo = clickedPage === pageName ?
+			'' :
+			foos.find((f) => f.key === clickedPage)?.key || '';
+		setNextPage(keyOfShowingFoo);
 	}
-
-	return (
-		<>
-			<CollpaseAreaToggle
-				label="Projects"
-				show={!initialRender && showing.projects && !transitionToNextPage}
-				active={showing.projects}
-				icon={ProjectIcon}
-				onTransitionEnd={handleTransitionEnd}
-				onButtonClick={() => handlePageClick('projects')}
-			>
-				{projects.map((p) => (
-					<ProfileLinkButton
-						key={p._id.toString()}
-						icon={ProjectIcon}
-						href={Paths.Project(p._id.toString())}
-					>
-						{p.title}
-					</ProfileLinkButton>
-				))}
-			</CollpaseAreaToggle>
-			<CollpaseAreaToggle
-				label="Posts"
-				show={!initialRender && showing.journals && !transitionToNextPage}
-				active={showing.journals}
-				icon={JournalIcon}
-				onTransitionEnd={handleTransitionEnd}
-				onButtonClick={() => handlePageClick('journals')}
-			>
-				{journals.map((p) => (
-					<ProfileLinkButton
-						key={p._id.toString()}
-						icon={JournalIcon}
-						href={Paths.Journal(p._id.toString())}
-					>
-						{p.title}
-					</ProfileLinkButton>
-				))}
-			</CollpaseAreaToggle>
-		</>
-	);
 }

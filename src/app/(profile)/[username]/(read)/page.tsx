@@ -109,39 +109,6 @@ async function GalleryPage(props: Props) {
 					Posts
 				</ProfileLinkButton>
 			)}
-			{userProfile.customItems.map((l, i) => (
-				<Fragment key={i}>
-					{l.type === 'link' && (
-						<ProfileLinkButton
-							href={l.value}
-							target="_blank"
-						>
-							{l.label}
-						</ProfileLinkButton>
-					)}
-					{l.type === 'text' && (
-						<ProfileCustomTextItem label={l.label}>
-							<Box
-								display="inline-block"
-								maxWidth={600}
-								width="100%"
-								textAlign="left"
-								marginBottom={2}
-							>
-								<MarkdownContent>
-									{l.value}
-								</MarkdownContent>
-							</Box>
-						</ProfileCustomTextItem>
-					)}
-				</Fragment>
-			))}
-			<ProfileShareButton shareObj={{
-				url: Paths.UserGallery(userProfile.username),
-				label: `${userProfile.username}'s Project Gallery`,
-				shareMsg: `Check out ${userProfile.username}'s Project Gallery`,
-			}}/>
-
 			{userProfile && (
 				<Suspense>
 					<EditButton
