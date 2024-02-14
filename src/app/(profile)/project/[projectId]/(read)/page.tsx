@@ -1,5 +1,4 @@
 import { fetchProject, fetchProjectHasPosts } from '@server/queries';
-import { ReactNode } from 'react';
 import { MongoIdValidation } from '@server/validations';
 import ListBottom from './list-bottom';
 import { ProfileLinkButton } from '@components/profile-button';
@@ -8,7 +7,6 @@ import { Paths } from '@common/constants';
 import { Box } from '@mui/material';
 
 interface Props {
-	children: ReactNode;
 	params: {
 		projectId: string;
 	};
