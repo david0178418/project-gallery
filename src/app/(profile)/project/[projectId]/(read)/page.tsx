@@ -43,6 +43,7 @@ export default async function ProjectLayout(props: Props) {
 		<Box textAlign="center">
 			{userHasPosts && (
 				<ProfileLinkButton
+					prefetch
 					icon={JournalIcon}
 					href={Paths.ProjectJournals(projectId)}
 				>

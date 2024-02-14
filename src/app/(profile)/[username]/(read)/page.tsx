@@ -90,6 +90,7 @@ async function GalleryPage(props: Props) {
 		<>
 			{userHasProjects && (
 				<ProfileLinkButton
+					prefetch
 					icon={ProjectIcon}
 					href={Paths.UserGalleryProjects(userProfile.username)}
 				>
@@ -98,6 +99,7 @@ async function GalleryPage(props: Props) {
 			)}
 			{userHasPosts && (
 				<ProfileLinkButton
+					prefetch
 					icon={JournalIcon}
 					href={Paths.UserGalleryJournals(userProfile.username)}
 				>

@@ -39,6 +39,7 @@ function ProfileButton(props: ProfileButtonProps) {
 interface ProfileLinkButtonProps extends BtnProps {
 	children: ReactNode;
 	href: string;
+	prefetch?: boolean;
 	target?: HTMLAttributeAnchorTarget;
 }
 
@@ -47,13 +48,14 @@ function ProfileLinkButton(props: ProfileLinkButtonProps) {
 	const {
 		href,
 		target,
+		prefetch = false,
 		...btnProps
 	} = props;
 
 	return (
 		<Box marginBottom={3} color="black">
 			<Link
-				prefetch={false}
+				prefetch={prefetch}
 				href={href}
 				target={target}
 			>
