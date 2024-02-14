@@ -13,72 +13,70 @@ async function HomePage() {
 	const projects = await fetchProjects();
 
 	return (
-		<>
-			<ScrollContent
-				header={
+		<ScrollContent
+			header={
+				<Box
+					sx={{
+						paddingTop: 1,
+						paddingBottom: 1,
+					}}
+				>
 					<Box
+						paddingBottom={1}
 						sx={{
-							paddingTop: 1,
-							paddingBottom: 1,
+							paddingLeft: {
+								xs: 2,
+								sm: 10,
+								md: 15,
+								lg: 20,
+							},
+							paddingRight: {
+								xs: 2,
+								sm: 10,
+								md: 15,
+								lg: 20,
+							},
 						}}
 					>
-						<Box
-							paddingBottom={1}
-							sx={{
-								paddingLeft: {
-									xs: 2,
-									sm: 10,
-									md: 15,
-									lg: 20,
-								},
-								paddingRight: {
-									xs: 2,
-									sm: 10,
-									md: 15,
-									lg: 20,
-								},
-							}}
-						>
-							<Alert severity="info">
-								Pardon our dust.  This page is in the middle of a rework.
-							</Alert>
-						</Box>
+						<Alert severity="info">
+							Pardon our dust.  This page is in the middle of a rework.
+						</Alert>
 					</Box>
-				}
-			>
-				<Typography variant="h6">
-					Projects
-				</Typography>
-				<Grid padding={1} container spacing={1} >
-					{projects.slice(0, 2).map(p => (
-						<Grid
-							key={p._id.toString()}
-							item
-							xs={12}
-							md={6}
-						>
-							{/** div hack to get around mui async child issue */}
-							<div>
-								<ProjectCard project={p} />
-							</div>
-						</Grid>
-					))}
-				</Grid>
-				<Typography variant="h6">
-					Journal Posts
-				</Typography>
-				{journals.map(j => (
-					<Box
-						padding={1}
-						key={j._id.toString()}
+				</Box>
+			}
+		>
+			<Typography variant="h6">
+				Projects
+			</Typography>
+			<Grid padding={1} container spacing={1} >
+				{projects.slice(0, 2).map(p => (
+					<Grid
+						key={p._id.toString()}
+						item
+						xs={12}
+						md={6}
 					>
-						{/** adding extra "div" since BOX seems to be angry with an async child */}
+						{/** div hack to get around mui async child issue */}
 						<div>
-							<JournalCard journal={j} />
+							<ProjectCard project={p} />
 						</div>
-					</Box>
+					</Grid>
 				))}
-			</ScrollContent>
-		</>
+			</Grid>
+			<Typography variant="h6">
+				Journal Posts
+			</Typography>
+			{journals.map(j => (
+				<Box
+					padding={1}
+					key={j._id.toString()}
+				>
+					{/** adding extra "div" since BOX seems to be angry with an async child */}
+					<div>
+						<JournalCard journal={j} />
+					</div>
+				</Box>
+			))}
+		</ScrollContent>
 	);
 }
