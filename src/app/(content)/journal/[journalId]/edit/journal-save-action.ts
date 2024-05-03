@@ -162,6 +162,7 @@ async function createJournalPost(user: User, post: WriteJournal) {
 	});
 
 	revalidatePath(Paths.Journal(_id.toString()));
+	revalidatePath(Paths.JournalEdit(_id.toString()));
 	revalidatePath(Paths.UserGalleryJournals(user.id));
 
 	return _id;
