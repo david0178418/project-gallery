@@ -1,7 +1,7 @@
 'use client';
 import { share } from '@components/common/share-button';
 import { ProfileButton } from './profile-button';
-import { usePushToastMsg } from '@common/atoms';
+import { toastManager } from '@common/atoms';
 import { ShareIcon } from './icons';
 
 interface Props {
@@ -19,7 +19,6 @@ function ProfileShareButton(props: Props) {
 		disabled,
 		shareObj,
 	} = props;
-	const pushToastMsg = usePushToastMsg();
 
 	return (
 		<ProfileButton
@@ -43,7 +42,7 @@ function ProfileShareButton(props: Props) {
 					shareMsg,
 				);
 
-				pushToastMsg(result);
+				toastManager.pushMessage(result);
 			}}
 		>
 			Share

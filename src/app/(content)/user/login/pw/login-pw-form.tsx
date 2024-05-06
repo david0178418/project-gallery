@@ -4,7 +4,7 @@ import { Key } from 'ts-key-enum';
 import { login } from '@client/api-calls';
 import { inRange } from '@common/utils';
 import Link from 'next/link';
-import { usePushToastMsg, loadingManager } from '@common/atoms';
+import { toastManager, loadingManager } from '@common/atoms';
 import { useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -19,7 +19,6 @@ import {
 
 export default
 function LoginPwForm() {
-	const pushToastMsg = usePushToastMsg();
 	const { refresh } = useRouter();
 	const [usernameOrEmail, setUsernameOrEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -47,14 +46,14 @@ function LoginPwForm() {
 			const results = await login(usernameOrEmail, password);
 
 			if(results?.ok) {
-				pushToastMsg(`Logged in as ${usernameOrEmail}`);
+				toastManager.pushMessage(`Logged in as ${usernameOrEmail}`);
 				refresh();
 			} else {
-				pushToastMsg('Incorrect Login');
+				toastManager.pushMessage('Incorrect Login');
 			}
 
 		} catch(e) {
-			pushToastMsg('Something went wrong. Try again.');
+			toastManager.pushMessage('Something went wrong. Try again.');
 			console.log(e);
 		}
 

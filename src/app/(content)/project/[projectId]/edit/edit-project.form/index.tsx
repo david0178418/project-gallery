@@ -8,7 +8,7 @@ import LabelForm from './label-form';
 import { useCallback, useState } from 'react';
 import Label from '@components/label';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
-import { usePushToastMsg, loadingManager } from '@common/atoms';
+import { toastManager, loadingManager } from '@common/atoms';
 import saveProjectAction from './save-project-action';
 import { useRouteBackDefault } from '@common/hooks';
 import { SaveIcon } from '@components/icons';
@@ -60,7 +60,6 @@ function EditProjectForm(props: Props) {
 	} = project;
 	const [selectedTab, setSelectedTab] = useState(0);
 	const routeBack = useRouteBackDefault();
-	const pushToastMsg = usePushToastMsg();
 	const handleChange = useCallback((projectUpdates: Partial<WriteProject>) => {
 		setProject({
 			...project,
@@ -122,15 +121,15 @@ function EditProjectForm(props: Props) {
 			const result = await saveProjectAction(project);
 
 			if(!result.ok) {
-				result.errors?.map(pushToastMsg);
+				result.errors?.map(toastManager.pushMessage);
 			} else {
-				pushToastMsg(`"${project.title}" saved`);
+				toastManager.pushMessage(`"${project.title}" saved`);
 				routeBack();
 			}
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
 
-			errors.map(pushToastMsg);
+			errors.map(toastManager.pushMessage);
 			console.log(e);
 		}
 
