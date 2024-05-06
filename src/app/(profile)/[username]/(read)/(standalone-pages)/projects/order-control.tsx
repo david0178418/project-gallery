@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import updateProjectsOrder from './update-projects-order';
 import { Direction, DirectionEnum } from '@common/constants';
-import { loadingManager } from '@common/atoms';
+import { useSetLoading } from '@common/atoms';
 import {
 	ArrowDownIcon,
 	ArrowLeftIcon,
@@ -24,9 +24,10 @@ function OrderControlBlock(props: Props) {
 		first,
 		projectId,
 	} = props;
+	const setLoading = useSetLoading();
 
 	async function handleUpdateProjectOrder(direction: DirectionEnum) {
-		loadingManager.show();
+		setLoading(true);
 
 		try {
 			await updateProjectsOrder({
@@ -37,7 +38,7 @@ function OrderControlBlock(props: Props) {
 			// do stuff
 		}
 
-		loadingManager.hide();
+		setLoading(false);
 	}
 
 	return (

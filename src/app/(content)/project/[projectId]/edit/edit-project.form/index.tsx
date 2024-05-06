@@ -8,7 +8,7 @@ import LabelForm from './label-form';
 import { useCallback, useState } from 'react';
 import Label from '@components/label';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
-import { usePushToastMsg, loadingManager } from '@common/atoms';
+import { usePushToastMsg, useSetLoading } from '@common/atoms';
 import saveProjectAction from './save-project-action';
 import { useRouteBackDefault } from '@common/hooks';
 import { SaveIcon } from '@components/icons';
@@ -59,6 +59,7 @@ function EditProjectForm(props: Props) {
 		unlisted = false,
 	} = project;
 	const [selectedTab, setSelectedTab] = useState(0);
+	const setLoading = useSetLoading();
 	const routeBack = useRouteBackDefault();
 	const pushToastMsg = usePushToastMsg();
 	const handleChange = useCallback((projectUpdates: Partial<WriteProject>) => {
@@ -116,7 +117,7 @@ function EditProjectForm(props: Props) {
 			return;
 		}
 
-		loadingManager.hide();
+		setLoading(true);
 
 		try {
 			const result = await saveProjectAction(project);
@@ -134,7 +135,7 @@ function EditProjectForm(props: Props) {
 			console.log(e);
 		}
 
-		loadingManager.hide();
+		setLoading(false);
 	}, [project]);
 
 	return (

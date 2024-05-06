@@ -3,25 +3,8 @@
 import { atom, useSetAtom } from 'jotai';
 import { ToastMesssage } from './types';
 
-type LoadingCallback = (isLoading: boolean) => void;
-
-class LoadingManager {
-	private callback: LoadingCallback | null = null;
-
-	subscribe(callback: LoadingCallback): void {
-		this.callback = callback;
-	}
-
-	show() {
-		this.callback?.(true);
-	}
-
-	hide() {
-		this.callback?.(false);
-	}
-}
-
-export const loadingManager = new LoadingManager();
+export
+const loadingAtom = atom(false);
 
 const toastQueueAtom = atom<ToastMesssage[]>([]);
 
@@ -55,4 +38,9 @@ const clearCurrentToastMsgAtom = atom(
 export
 function usePushToastMsg() {
 	return useSetAtom(pushToastMsgAtom);
+}
+
+export
+function useSetLoading() {
+	return useSetAtom(loadingAtom);
 }
