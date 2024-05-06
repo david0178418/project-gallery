@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { PasswordMaxLength, PasswordMinLength } from '@common/constants';
-import { loadingManager, toastManager } from '@common/atoms';
+import { useSetAtom } from 'jotai';
+import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import { ConfirmButton } from '@components/common/buttons';
 import updatePassword from './update-pw-action';
 import Grid from '@mui/material/Grid';
@@ -10,6 +11,8 @@ import Typography from '@mui/material/Typography';
 
 export default
 function UpdatePwPage() {
+	const pustToastMsg = useSetAtom(pushToastMsgAtom);
+	const setLoading = useSetAtom(loadingAtom);
 	const [touched, setTouched] = useState(false);
 	const [pw, setPw] = useState('');
 	const [pw2, setPw2] = useState('');
@@ -31,17 +34,17 @@ function UpdatePwPage() {
 
 	async function handleUpdate() {
 		try {
-			loadingManager.show();
+			setLoading(true);
 			await updatePassword(pw);
-			toastManager.pushMessage('Password updated!');
+			pustToastMsg('Password updated!');
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
 
-			errors.map(toastManager.pushMessage);
+			errors.map(pustToastMsg);
 			console.log(e);
 		}
 
-		loadingManager.hide();
+		setLoading(false);
 	}
 
 	return (

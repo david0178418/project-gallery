@@ -1,7 +1,8 @@
 import { useDropzone } from 'react-dropzone';
 import Box from '@mui/material/Box';
 import { postFile } from '@client/api-calls';
-import { loadingManager } from '@common/atoms';
+import { useSetAtom } from 'jotai';
+import { loadingAtom } from '@common/atoms';
 import { isTruthy } from '@common/utils';
 import { Enum } from '@common/types';
 import { FileUploadCategories, SpecialCharacterCodes } from '@common/constants';
@@ -24,6 +25,7 @@ interface Props extends ComponentProps<typeof Box> {
 
 export
 function Uploader(props: Props) {
+	const setLoading = useSetAtom(loadingAtom);
 	const {
 		category,
 		onAdd,
@@ -33,7 +35,7 @@ function Uploader(props: Props) {
 	} = props;
 
 	async function onDrop (acceptedFiles: File[]) {
-		loadingManager.show();
+		setLoading(true);
 		try {
 			const results = await Promise.all(acceptedFiles.map(f => uploadPhoto(f, category)));
 			onAdd(results.filter(isTruthy));
@@ -41,7 +43,7 @@ function Uploader(props: Props) {
 			// do something
 		}
 
-		loadingManager.hide();
+		setLoading(false);
 	}
 
 	const {

@@ -6,7 +6,7 @@ import { WriteJournal } from '@common/types/Journal';
 import { useRouteBackDefault } from '@common/hooks';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import MarkdownContent from '@components/markdown-content';
-import { toastManager, loadingManager } from '@common/atoms';
+import { usePushToastMsg, loadingManager } from '@common/atoms';
 import { SaveIcon } from '@components/icons';
 import journalSaveAction from './journal-save-action';
 import { useCallback, useState } from 'react';
@@ -43,6 +43,7 @@ function EditJournalForm(props: Props) {
 		title,
 		projectId,
 	} = journal;
+	const pushToastMsg = usePushToastMsg();
 	const routeBack = useRouteBackDefault();
 	const [showPreview, setShowPreview] = useState(false);
 
@@ -71,15 +72,15 @@ function EditJournalForm(props: Props) {
 			});
 
 			if(!result.ok) {
-				result.errors?.map(toastManager.pushMessage);
+				result.errors?.map(pushToastMsg);
 			} else {
-				toastManager.pushMessage(`"${journal.title}" ${publish ? 'published' : 'saved'}`);
+				pushToastMsg(`"${journal.title}" ${publish ? 'published' : 'saved'}`);
 				routeBack();
 			}
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
 
-			errors.map(toastManager.pushMessage);
+			errors.map(pushToastMsg);
 			console.log(e);
 		}
 

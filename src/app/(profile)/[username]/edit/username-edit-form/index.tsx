@@ -8,7 +8,7 @@ import { UiUserProfile } from '@common/types/UserProfile';
 import Foo, { SortableItemWrapper } from '../foo';
 import { useState } from 'react';
 import { CustomProfileItem } from '@common/types/CustomLink';
-import { toastManager } from '@common/atoms';
+import { usePushToastMsg } from '@common/atoms';
 import updateProfile from '@app/(content)/settings/(.)/update-profile-action';
 import EditContentButton from './add-content-button';
 import { UiProject } from '@common/types/Project';
@@ -50,6 +50,7 @@ function UserGalleryEditForm(props: Props) {
 		userProfile,
 		projects,
 	} = props;
+	const pushToastMsg = usePushToastMsg();
 	const [links, setLinks] = useState(userProfile.customItems);
 	const [activeItem, setActiveItem] = useState<CustomProfileItem | null>(null);
 
@@ -67,7 +68,7 @@ function UserGalleryEditForm(props: Props) {
 							<ProfilePhotoUploader
 								avatarUrl={userProfile.avatar}
 								username={userProfile.username}
-								onUpdate={() => toastManager.pushMessage('Avatar Updated')}
+								onUpdate={() => pushToastMsg('Avatar Updated')}
 							/>
 						</Box>
 					)}
@@ -175,7 +176,7 @@ function UserGalleryEditForm(props: Props) {
 	async function handleUpdateProfileItems(customItems: CustomProfileItem[]) {
 		await updateProfile({ customItems });
 		setLinks(customItems);
-		toastManager.pushMessage('Updated Links');
+		pushToastMsg('Updated Links');
 	}
 }
 

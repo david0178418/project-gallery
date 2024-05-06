@@ -1,7 +1,7 @@
 'use client';
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { useState } from 'react';
-import { toastManager } from '@common/atoms';
+import { usePushToastMsg } from '@common/atoms';
 import { useDebouncedCallback } from '@common/hooks';
 import updateProfile from '@app/(content)/settings/(.)/update-profile-action';
 import MarkdownContent from '@components/markdown-content';
@@ -20,6 +20,7 @@ interface TitleFieldProps {
 
 export
 function TitleField(props: TitleFieldProps) {
+	const pushToastMsg = usePushToastMsg();
 	const [persistedValue, setPersistedValue] = useState(props.value);
 	const [value, setValue] = useState(persistedValue);
 	const [errorMsg, setErrorMsg] = useState('');
@@ -38,7 +39,7 @@ function TitleField(props: TitleFieldProps) {
 
 		await updateProfile({ title: value });
 
-		toastManager.pushMessage({
+		pushToastMsg({
 			message: 'Title Updated',
 			delay: 1500,
 		});
@@ -76,6 +77,7 @@ interface ShortBioFieldProps {
 
 export
 function ShortBioField(props: ShortBioFieldProps) {
+	const pushToastMsg = usePushToastMsg();
 	const [persistedValue, setPersistedValue] = useState(props.value);
 	const [edit, setEdit] = useState(true);
 	const [value, setValue] = useState(persistedValue);
@@ -87,7 +89,7 @@ function ShortBioField(props: ShortBioFieldProps) {
 
 		await updateProfile({ shortBio: value });
 
-		toastManager.pushMessage({
+		pushToastMsg({
 			message: 'Summary Updated',
 			delay: 1500,
 		});
@@ -140,6 +142,7 @@ interface DetailedBioFieldProps {
 
 export
 function DetailedBioField(props: DetailedBioFieldProps) {
+	const pushToastMsg = usePushToastMsg();
 	const [persistedValue, setPersistedValue] = useState(props.value);
 	const [edit, setEdit] = useState(true);
 	const [value, setValue] = useState(persistedValue);
@@ -151,7 +154,7 @@ function DetailedBioField(props: DetailedBioFieldProps) {
 
 		await updateProfile({ detailedBio: value });
 
-		toastManager.pushMessage({
+		pushToastMsg({
 			message: 'Detailed Bio Updated',
 			delay: 1500,
 		});

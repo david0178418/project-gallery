@@ -3,27 +3,23 @@ import { useEffect, useState } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import { CloseIcon } from '@components/icons';
-import { toastManager } from '@common/atoms';
+import { clearCurrentToastMsgAtom, toastMsgAtom } from '@common/atoms';
 import { DefaultToastMsgDelay } from '@common/constants';
-
-import { ToastMesssage } from '@common/types';
-import { useEffectOnce } from '@common/hooks';
+import {
+	useAtomValue,
+	useSetAtom,
+} from 'jotai';
 
 export default
 function Toast() {
-	const [toastMsg, setToastMsg] = useState<ToastMesssage | null>(null);
+	const toastMsg = useAtomValue(toastMsgAtom);
+	const clearMsg = useSetAtom(clearCurrentToastMsgAtom);
 	const [isOpen, setOpen] = useState(false);
 	const {
 		delay = DefaultToastMsgDelay,
 		message = '',
 		onClose = () => {},
 	} = toastMsg || {};
-
-	useEffectOnce(() => {
-		toastManager.subscribe(setToastMsg);
-
-		return () => toastManager.unsubscribe();
-	});
 
 	useEffect(() => {
 		setOpen(!!toastMsg);
@@ -39,7 +35,7 @@ function Toast() {
 			open={isOpen}
 			autoHideDuration={delay}
 			onClose={handleClose}
-			TransitionProps={{ onExited: toastManager.clearCurrentMessage }}
+			TransitionProps={{ onExited: clearMsg }}
 			message={message}
 			action={
 				<IconButton

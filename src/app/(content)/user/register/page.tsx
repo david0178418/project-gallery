@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
 import { login } from '@client/api-calls';
-import { loadingManager, toastManager } from '@common/atoms';
+import { useSetAtom } from 'jotai';
+import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
@@ -16,6 +17,8 @@ import TextField from '@mui/material/TextField';
 
 export default
 function RegistrationModal() {
+	const pushToastMsg = useSetAtom(pushToastMsgAtom);
+	const setLoading = useSetAtom(loadingAtom);
 	const [username, setUsername] = useState('');
 	const [displayName, setDisplayName] = useState('');
 	const { replace } = useRouter();
@@ -41,7 +44,7 @@ function RegistrationModal() {
 			return;
 		}
 
-		loadingManager.show();
+		setLoading(true);
 
 		try {
 			const result = await Register({
@@ -52,10 +55,10 @@ function RegistrationModal() {
 			});
 
 			if(result.errors) {
-				result.errors.map(toastManager.pushMessage);
+				result.errors.map(pushToastMsg);
 				console.error(result.errors);
 			} else if(await login(username, password)) {
-				toastManager.pushMessage(`Logged in as ${username}`);
+				pushToastMsg(`Logged in as ${username}`);
 				setUsername('');
 				setEmail('');
 				replace(Paths.UserGallery(username));
@@ -63,13 +66,13 @@ function RegistrationModal() {
 		} catch(e: any) {
 			const { errors = ['Something went wrong. Try again.'] } = e;
 
-			errors.map(toastManager.pushMessage);
+			errors.map(pushToastMsg);
 			console.error(e);
 		}
 
 		setPassword('');
 		setRepassword('');
-		loadingManager.hide();
+		setLoading(false);
 	}
 
 	return (

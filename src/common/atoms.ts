@@ -1,5 +1,6 @@
 'use client';
 
+import { atom, useSetAtom } from 'jotai';
 import { ToastMesssage } from './types';
 
 type LoadingCallback = (isLoading: boolean) => void;
@@ -22,41 +23,36 @@ class LoadingManager {
 
 export const loadingManager = new LoadingManager();
 
-type Foo = (message: ToastMesssage | null) => void;
+const toastQueueAtom = atom<ToastMesssage[]>([]);
 
-class ToastManager {
-	private queue: ToastMesssage[] = [];
-	private callback: Foo | null = null;
+export
+const toastMsgAtom = atom(get => get(toastQueueAtom)[0] || null);
 
-	get currentMessage() {
-		return this.queue[0] || null;
-	}
+export
+const pushToastMsgAtom = atom(
+	null,
+	(get, set, message: ToastMesssage | string) => {
 
-	subscribe = (callback: Foo) => {
-		this.callback = callback;
-
-		this.callback(this.currentMessage);
-	};
-
-	unsubscribe = () => {
-		this.callback = null;
-	};
-
-	pushMessage = (message: ToastMesssage | string) => {
 		const addedMsg = (typeof message === 'string') ? { message } : message;
 
-		this.queue.push(addedMsg);
+		const tqa = get(toastQueueAtom);
 
-		if(this.queue.length === 1) {
-			this.callback?.(this.currentMessage);
-		}
-	};
+		set(toastQueueAtom, [ ...tqa, addedMsg ]);
+	},
+);
 
-	clearCurrentMessage = () => {
-		this.queue.shift();
+export
+const clearCurrentToastMsgAtom = atom(
+	null,
+	(get, set) => {
+		const tqa = get(toastQueueAtom);
+		tqa.shift();
 
-		this.callback?.(this.currentMessage);
-	};
+		set(toastQueueAtom, [ ...tqa ]);
+	},
+);
+
+export
+function usePushToastMsg() {
+	return useSetAtom(pushToastMsgAtom);
 }
-
-export const toastManager = new ToastManager();
