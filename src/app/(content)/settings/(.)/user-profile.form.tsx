@@ -4,7 +4,7 @@ import { TextFieldLengthValidation } from '@components/common/text-field-length-
 import { useCallback, useState } from 'react';
 import { MaxUserProfileBioLength, MaxUserProfileShortBioLength } from '@common/constants';
 import { ConfirmButton } from '@components/common/buttons';
-import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import { usePushToastMsg, loadingManager } from '@common/atoms';
 import updateProfile from './update-profile-action';
 import LinkForm from '@app/(content)/project/[projectId]/edit/edit-project.form/link-form';
 import LinksList from '@components/links-list';
@@ -18,7 +18,6 @@ interface Props {
 export default
 function UserProfileForm(props: Props) {
 	const { userProfile: rawUserProfile } = props;
-	const setLoading = useSetLoading();
 	const pushToastMsg = usePushToastMsg();
 	const [userProfile, setUserProfile] = useState(rawUserProfile);
 
@@ -39,7 +38,7 @@ function UserProfileForm(props: Props) {
 			return;
 		}
 
-		setLoading(true);
+		loadingManager.show();
 
 		try {
 			const response = await updateProfile(userProfile);
@@ -52,7 +51,7 @@ function UserProfileForm(props: Props) {
 			pushToastMsg('Something whent wrong');
 		}
 
-		setLoading(false);
+		loadingManager.hide();
 	}, [userProfile]);
 
 	return (

@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Key } from 'ts-key-enum';
-import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import { usePushToastMsg, loadingManager } from '@common/atoms';
 import { useRouter } from 'next/navigation';
 import { Paths } from '@common/constants';
 import Link from 'next/link';
@@ -16,7 +16,6 @@ export default
 function LoginEmailForm() {
 	const { replace } = useRouter();
 	const pushToastMsg = usePushToastMsg();
-	const setLoading = useSetLoading();
 	const [email, setEmail] = useState('');
 	const valid = email.includes('@');
 
@@ -27,7 +26,7 @@ function LoginEmailForm() {
 	}
 
 	async function handleLogin() {
-		setLoading(true);
+		loadingManager.show();
 
 		try {
 			await oneClickSendAction(email);
@@ -38,7 +37,7 @@ function LoginEmailForm() {
 			console.log(e);
 		}
 
-		setLoading(false);
+		loadingManager.hide();
 	}
 
 	return (

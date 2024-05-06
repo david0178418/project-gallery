@@ -4,7 +4,7 @@ import { Key } from 'ts-key-enum';
 import { login } from '@client/api-calls';
 import { inRange } from '@common/utils';
 import Link from 'next/link';
-import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import { usePushToastMsg, loadingManager } from '@common/atoms';
 import { useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -20,7 +20,6 @@ import {
 export default
 function LoginPwForm() {
 	const pushToastMsg = usePushToastMsg();
-	const setLoading = useSetLoading();
 	const { refresh } = useRouter();
 	const [usernameOrEmail, setUsernameOrEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -42,7 +41,7 @@ function LoginPwForm() {
 			return;
 		}
 
-		setLoading(true);
+		loadingManager.show();
 
 		try {
 			const results = await login(usernameOrEmail, password);
@@ -59,7 +58,7 @@ function LoginPwForm() {
 			console.log(e);
 		}
 
-		setLoading(false);
+		loadingManager.hide();
 		setPassword('');
 	}
 

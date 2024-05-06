@@ -6,7 +6,7 @@ import { WriteJournal } from '@common/types/Journal';
 import { useRouteBackDefault } from '@common/hooks';
 import { CancelButton, ConfirmButton } from '@components/common/buttons';
 import MarkdownContent from '@components/markdown-content';
-import { usePushToastMsg, useSetLoading } from '@common/atoms';
+import { usePushToastMsg, loadingManager } from '@common/atoms';
 import { SaveIcon } from '@components/icons';
 import journalSaveAction from './journal-save-action';
 import { useCallback, useState } from 'react';
@@ -43,7 +43,6 @@ function EditJournalForm(props: Props) {
 		title,
 		projectId,
 	} = journal;
-	const setLoading = useSetLoading();
 	const pushToastMsg = usePushToastMsg();
 	const routeBack = useRouteBackDefault();
 	const [showPreview, setShowPreview] = useState(false);
@@ -64,7 +63,7 @@ function EditJournalForm(props: Props) {
 			return;
 		}
 
-		setLoading(true);
+		loadingManager.show();
 
 		try {
 			const result = await journalSaveAction({
@@ -85,7 +84,7 @@ function EditJournalForm(props: Props) {
 			console.log(e);
 		}
 
-		setLoading(false);
+		loadingManager.hide();
 	}
 
 	return (
