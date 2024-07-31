@@ -85,6 +85,17 @@ function UserGalleryEditForm(props: Props) {
 			</Box>
 			<Box textAlign="center" paddingTop={5} paddingX={2} paddingBottom={15}>
 				<ProjectsButton projects={projects}/>
+				<ProfileLinkButton
+					href={Paths.ProjectEdit()}
+					icon={AddIcon}
+					color="success"
+					sx={{
+						borderStyle: 'dashed',
+						color: 'green',
+					}}
+				>
+					Add Project
+				</ProfileLinkButton>
 				<ProfileButton
 					disabled
 					icon={JournalIcon}
@@ -212,17 +223,6 @@ function ProjectsButton(props: ProjectsButtonProps) {
 					</SortableItemWrapper>
 				)}
 			/>
-			<ProfileLinkButton
-				href={Paths.ProjectEdit()}
-				icon={AddIcon}
-				color="success"
-				sx={{
-					borderStyle: 'dashed',
-					color: 'green',
-				}}
-			>
-				Add Project
-			</ProfileLinkButton>
 		</CollpaseAreaToggle>
 	);
 }
