@@ -70,7 +70,10 @@ async function doSaveProject(user: User, project: WriteProject) {
 				createdDate: now,
 			},
 		},
-		{ upsert: true }
+		{
+			upsert: true,
+			returnDocument: 'after',
+		}
 	);
 
 	if(!resultProject) {
