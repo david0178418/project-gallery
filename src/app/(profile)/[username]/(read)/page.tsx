@@ -3,19 +3,23 @@ import { LogoMain } from '@common/images';
 import { urlJoin } from '@common/utils';
 import { UsernameValidation } from '@common/types/UserCredentials';
 import { Metadata } from 'next';
-import { JournalIcon, ProjectIcon } from '@components/icons';
-import {
-	AppName,
-	BaseUrl,
-	Paths,
-} from '@common/constants';
+import ListBottom from './list-bottom';
 import {
 	fetchUser,
 	fetchUserHasPostsByUsername,
 	fetchUserHasProjectsByUsername,
 	fetchUserProfileByUsername,
 } from '@server/queries';
-import ListBottom from './list-bottom';
+import {
+	ExpandMoreIcon,
+	JournalIcon,
+	ProjectIcon,
+} from '@components/icons';
+import {
+	AppName,
+	BaseUrl,
+	Paths,
+} from '@common/constants';
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 interface Props {
@@ -92,6 +96,7 @@ async function GalleryPage(props: Props) {
 				<ProfileLinkButton
 					prefetch
 					icon={ProjectIcon}
+					endIcon={ExpandMoreIcon}
 					href={Paths.UserGalleryProjects(userProfile.username)}
 				>
 					Projects
@@ -101,6 +106,7 @@ async function GalleryPage(props: Props) {
 				<ProfileLinkButton
 					prefetch
 					icon={JournalIcon}
+					endIcon={ExpandMoreIcon}
 					href={Paths.UserGalleryJournals(userProfile.username)}
 				>
 					Posts

@@ -5,6 +5,7 @@ import { CloseIcon } from '@components/icons';
 
 interface Props {
 	icon: any;
+	endIcon?: any;
 	active?: boolean;
 	show?: boolean;
 	children: ReactNode;
@@ -18,6 +19,7 @@ export default
 function CollpaseAreaToggle(props: Props) {
 	const {
 		label,
+		endIcon,
 		onButtonClick,
 		show,
 		icon: Icon,
@@ -35,6 +37,7 @@ function CollpaseAreaToggle(props: Props) {
 						CloseIcon :
 						Icon
 				}
+				endIcon={endIcon}
 			>
 				{label}
 			</ProfileButton>

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffectOnce } from '@common/hooks';
 import CollpaseAreaToggle from '@components/collapse-area-toggle';
 import { useState } from 'react';
+import { ExpandLessIcon } from '@components/icons';
 
 interface Props {
 	rootUrl: string;
@@ -57,6 +58,7 @@ function AnimatedBody(props: Props) {
 					show={!initialRender && c.active && !transitionToNextPage}
 					active={c.active}
 					icon={c.icon}
+					endIcon={ExpandLessIcon}
 					onTransitionEnd={handleTransitionEnd}
 					onButtonClick={() => handlePageClick(c.key)}
 				>

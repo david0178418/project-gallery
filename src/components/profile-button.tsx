@@ -69,6 +69,7 @@ function ProfileLinkButton(props: ProfileLinkButtonProps) {
 }
 
 interface BtnProps extends ComponentProps<typeof Button> {
+	endIcon?: any;
 	icon?: IconType;
 	iconColor?: string;
 	component?: ElementType;
@@ -79,6 +80,7 @@ function Btn(props: BtnProps) {
 	const {
 		href = '',
 		icon,
+		endIcon: EndIcon,
 		iconColor,
 		sx = {},
 		children,
@@ -121,6 +123,15 @@ function Btn(props: BtnProps) {
 				transform: 'translateY(-50%)',
 			}}/>
 			{children}
+			{EndIcon && (
+				<EndIcon sx={{
+					color,
+					position: 'absolute',
+					right: 30,
+					top: '50%',
+					transform: 'translateY(-50%)',
+				}}/>
+			)}
 		</Button>
 	);
 }
