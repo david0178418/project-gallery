@@ -58,7 +58,21 @@ function AnimatedBody(props: Props) {
 					show={!initialRender && c.active && !transitionToNextPage}
 					active={c.active}
 					icon={c.icon}
-					endIcon={c.active ? ExpandLessIcon : ExpandMoreIcon}
+					endIcon={
+						c.active ?
+							<ExpandLessIcon sx={{
+								position: 'absolute',
+								right: 30,
+								top: '50%',
+								transform: 'translateY(-50%)',
+							}}/> :
+							<ExpandMoreIcon sx={{
+								position: 'absolute',
+								right: 30,
+								top: '50%',
+								transform: 'translateY(-50%)',
+							}}/>
+					}
 					onTransitionEnd={handleTransitionEnd}
 					onButtonClick={() => handlePageClick(c.key)}
 				>

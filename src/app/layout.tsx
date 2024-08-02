@@ -8,7 +8,7 @@ import { urlJoin } from '@common/utils';
 import { Metadata } from 'next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
-import SessionComponent from './session-component';
+import Providers from './providers';
 
 if(process.env.NODE_ENV === 'development') {
 	const { setupDb } = await import('@server/mongodb/setup-db');
@@ -51,9 +51,9 @@ export default function RootLayout(props: Props) {
 	return (
 		<html lang="en" className={font.className}>
 			<body>
-				<SessionComponent>
+				<Providers>
 					{props.children}
-				</SessionComponent>
+				</Providers>
 				<Analytics />
 				<SpeedInsights/>
 			</body>

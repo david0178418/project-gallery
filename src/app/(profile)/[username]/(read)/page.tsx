@@ -96,7 +96,14 @@ async function GalleryPage(props: Props) {
 				<ProfileLinkButton
 					prefetch
 					icon={ProjectIcon}
-					endIcon={ExpandMoreIcon}
+					endIcon={
+						<ExpandMoreIcon sx={{
+							position: 'absolute',
+							right: 30,
+							top: '50%',
+							transform: 'translateY(-50%)',
+						}}/>
+					}
 					href={Paths.UserGalleryProjects(userProfile.username)}
 				>
 					Projects
@@ -106,7 +113,14 @@ async function GalleryPage(props: Props) {
 				<ProfileLinkButton
 					prefetch
 					icon={JournalIcon}
-					endIcon={ExpandMoreIcon}
+					endIcon={
+						<ExpandMoreIcon sx={{
+							position: 'absolute',
+							right: 30,
+							top: '50%',
+							transform: 'translateY(-50%)',
+						}}/>
+					}
 					href={Paths.UserGalleryJournals(userProfile.username)}
 				>
 					Posts
