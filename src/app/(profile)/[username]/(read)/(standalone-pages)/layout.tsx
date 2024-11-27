@@ -8,15 +8,13 @@ import { UsernameValidation } from '@common/types/UserCredentials';
 
 interface Props {
 	children: ReactNode;
-	params: {
+	params: Promise<{
 		username: string;
-	};
+	}>;
 }
 
 export default async function UserGalleryProfilePageLayout(props: Props) {
-	const {
-		children, params: { username: routeUsername },
-	} = props;
+	const { username: routeUsername } = await props.params;
 
 	const result = await UsernameValidation.safeParseAsync(routeUsername);
 	const pageUser = result.success ?
@@ -40,7 +38,7 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 			>
 				{username}{SpecialCharacterCodes.RSQUO}s Gallery
 			</ProfileLinkButton>
-			{children}
+			{props.children}
 		</Box>
 	);
 }

@@ -9,16 +9,13 @@ import MarkdownContent from '@components/markdown-content';
 
 interface Props {
 	children: ReactNode;
-	params: {
+	params: Promise<{
 		projectId: string;
-	};
+	}>;
 }
 
 export default async function ProjectLayout(props: Props) {
-	const {
-		children,
-		params: { projectId },
-	} = props;
+	const { projectId } = await props.params;
 
 	const result = await MongoIdValidation.safeParseAsync(projectId);
 
@@ -69,7 +66,7 @@ export default async function ProjectLayout(props: Props) {
 						</Box>
 					</Box>
 				)}
-				{children}
+				{props.children}
 			</Box>
 		</Container>
 	);

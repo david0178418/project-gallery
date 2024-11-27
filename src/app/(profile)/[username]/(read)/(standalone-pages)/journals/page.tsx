@@ -6,15 +6,15 @@ import ProfileShareButton from '@components/profile-share-button';
 import { JournalIcon } from '@components/icons';
 
 interface Props {
-	params: {
+	params: Promise<{
 		username: string;
 		profilePage: string;
-	};
+	}>;
 }
 
 export default
 async function UserJournalsPage(props: Props) {
-	const { params: { username } } = props;
+	const { username } = await props.params;
 	const journals = await fetchUserJournals(username);
 
 	return (

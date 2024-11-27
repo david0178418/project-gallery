@@ -9,14 +9,14 @@ import { dbProjectToUiProject } from '@server/transforms';
 import { Alert } from '@mui/material';
 
 interface Props {
-	params: {
+	params: Promise<{
 		journalId?: string;
-	};
+	}>;
 }
 
 export default
 async function JournalEditPage(props: Props) {
-	const { params: { journalId } } = props;
+	const { journalId } = await props.params;
 
 	const journal = journalId ?
 		await validateAndFetchJournal(journalId) :

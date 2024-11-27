@@ -23,14 +23,14 @@ import {
 
 const SocialImageUrl = urlJoin(BaseUrl, LogoMain.src);
 interface Props {
-	params: {
+	params: Promise<{
 		username: string;
 		profilePage: string;
-	};
+	}>;
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-	const { params: { username: routeUsername } } = props;
+	const { username: routeUsername } = await props.params;
 
 	const result = await UsernameValidation.safeParseAsync(routeUsername);
 
@@ -75,7 +75,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default
 async function GalleryPage(props: Props) {
-	const { params: { username } } = props;
+	const { username } = await props.params;
 
 	const userProfile = await fetchUserProfileByUsername(username);
 	const userHasProjects = await fetchUserHasProjectsByUsername(username);

@@ -10,14 +10,14 @@ import {
 } from '@server/queries';
 
 interface Props {
-	params: {
+	params: Promise<{
 		username: string;
-	};
+	}>;
 }
 
 export default
 async function UsernameInlineProjects(props: Props) {
-	const { params: { username: rawUsername } } = props;
+	const { username: rawUsername } = await props.params;
 
 	const result = await UsernameValidation.safeParseAsync(rawUsername);
 

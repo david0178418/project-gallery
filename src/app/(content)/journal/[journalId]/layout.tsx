@@ -17,7 +17,7 @@ import { Alert } from '@mui/material';
 
 export
 async function generateMetadata(props: Props): Promise<Metadata> {
-	const { params: { journalId } } = props;
+	const { journalId } = await props.params;
 
 	const result = await MongoIdValidation.safeParseAsync(journalId);
 	const journal = result.success ?
@@ -45,17 +45,14 @@ async function generateMetadata(props: Props): Promise<Metadata> {
 
 interface Props {
 	children: ReactNode;
-	params: {
+	params: Promise<{
 		journalId: string;
-	};
+	}>;
 }
 
 export default
 async function Journal(props: Props) {
-	const {
-		children,
-		params: { journalId },
-	} = props;
+	const { journalId } = await props.params;
 
 	const result = await MongoIdValidation.safeParseAsync(journalId);
 	const journal = result.success ?
@@ -94,7 +91,7 @@ async function Journal(props: Props) {
 				</Box>
 			}
 		>
-			{children}
+			{props.children}
 		</ScrollContent>
 	);
 }

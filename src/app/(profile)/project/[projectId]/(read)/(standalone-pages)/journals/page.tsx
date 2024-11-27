@@ -12,14 +12,14 @@ import {
 } from '@components/icons';
 
 interface Props {
-	params: {
+	params: Promise<{
 		projectId: string;
-	};
+	}>;
 }
 
 export default
 async function ProjectPage(props: Props) {
-	const { params: { projectId } } = props;
+	const { projectId } = await props.params;
 
 	const result = await MongoIdValidation.safeParseAsync(projectId);
 

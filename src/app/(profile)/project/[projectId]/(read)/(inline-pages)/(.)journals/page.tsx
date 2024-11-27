@@ -8,14 +8,14 @@ import AnimatedBody from '@app/(profile)/[username]/(read)/(inline-pages)/animat
 import ListBottom from '../../list-bottom';
 
 interface Props {
-	params: {
+	params: Promise<{
 		projectId: string;
-	};
+	}>;
 }
 
 export default
 async function InlineJournalsPage(props: Props) {
-	const { params: { projectId: rawProjectId } } = props;
+	const { projectId: rawProjectId } = await props.params;
 
 	const result = await MongoIdValidation.safeParseAsync(rawProjectId);
 

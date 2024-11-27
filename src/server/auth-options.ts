@@ -22,9 +22,9 @@ const getServerSession = cache(async () => {
 	// Found here:
 	// https://github.com/nextauthjs/next-auth/issues/7486#issuecomment-1543747325
 	const req = {
-		headers: Object.fromEntries(headers() as Headers),
+		headers: Object.fromEntries(await headers()),
 		cookies: Object.fromEntries(
-			cookies()
+			(await cookies())
 				.getAll()
 				.map((c) => [c.name, c.value]),
 		),

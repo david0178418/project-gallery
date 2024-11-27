@@ -10,6 +10,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import Providers from './providers';
 
+export const experimental_ppr = true;
+
 if(process.env.NODE_ENV === 'development') {
 	const { setupDb } = await import('@server/mongodb/setup-db');
 	await setupDb();

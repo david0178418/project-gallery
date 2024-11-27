@@ -11,14 +11,14 @@ import Typography from '@mui/material/Typography';
 import { Alert } from '@mui/material';
 
 interface Props {
-	params: {
+	params: Promise<{
 		projectId: string;
-	}
+	}>;
 }
 
 export default
 async function ProjectEditPage(props: Props) {
-	const { params: { projectId } } = props;
+	const { projectId } = await props.params;
 
 	const project = projectId ?
 		await validateAndFetchProject(projectId) :

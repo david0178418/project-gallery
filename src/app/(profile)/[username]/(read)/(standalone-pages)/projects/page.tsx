@@ -7,15 +7,15 @@ import { ProfileLinkButton } from '@components/profile-button';
 import { ProjectIcon } from '@components/icons';
 
 interface Props {
-	params: {
+	params: Promise<{
 		username: string;
 		profilePage: string;
-	};
+	}>;
 }
 
 export default
 async function UserProjectsPage(props: Props) {
-	const { params: { username: routeUsername } } = props;
+	const { username: routeUsername } = await props.params;
 	const result = await UsernameValidation.safeParseAsync(routeUsername);
 	const pageUser = result.success ?
 		await fetchUser(result.data) :

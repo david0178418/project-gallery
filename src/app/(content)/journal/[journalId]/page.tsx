@@ -20,7 +20,7 @@ import {
 
 export
 async function generateMetadata(props: Props): Promise<Metadata> {
-	const { params: { journalId } } = props;
+	const { journalId } = await props.params;
 
 	const result = await MongoIdValidation.safeParseAsync(journalId);
 	const journal = result.success ?
@@ -47,14 +47,14 @@ async function generateMetadata(props: Props): Promise<Metadata> {
 }
 
 interface Props {
-	params: {
+	params: Promise<{
 		journalId: string;
-	};
+	}>;
 }
 
 export default
 async function Journal(props: Props) {
-	const { params: { journalId } } = props;
+	const { journalId } = await props.params;
 
 	const result = await MongoIdValidation.safeParseAsync(journalId);
 	const journal = result.success ?

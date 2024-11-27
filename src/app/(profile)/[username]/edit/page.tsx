@@ -14,13 +14,13 @@ import {
 import { isTruthy } from '@common/utils';
 
 interface Props {
-	params: {
+	params: Promise<{
 		username: string;
-	};
+	}>;
 }
 
 export default async function UserGalleryProfileReadPageLayout(props: Props) {
-	const { params: { username: routeUsername } } = props;
+	const { username: routeUsername } = await props.params;
 
 	// Validated in about route
 	const profileUser = await fetchUser(routeUsername);

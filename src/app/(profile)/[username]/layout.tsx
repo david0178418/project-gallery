@@ -5,16 +5,13 @@ import Container from '@mui/material/Container';
 
 interface Props {
 	children: ReactNode;
-	params: {
+	params: Promise<{
 		username: string;
-	};
+	}>;
 }
 
 export default async function UserGalleryProfilePageLayout(props: Props) {
-	const {
-		children,
-		params: { username: routeUsername },
-	} = props;
+	const { username: routeUsername } = await props.params;
 
 	const result = await UsernameValidation.safeParseAsync(routeUsername);
 
@@ -51,7 +48,7 @@ export default async function UserGalleryProfilePageLayout(props: Props) {
 
 	return (
 		<Container>
-			{children}
+			{props.children}
 		</Container>
 	);
 }

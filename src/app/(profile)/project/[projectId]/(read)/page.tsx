@@ -7,13 +7,13 @@ import { Paths } from '@common/constants';
 import { Box } from '@mui/material';
 
 interface Props {
-	params: {
+	params: Promise<{
 		projectId: string;
-	};
+	}>;
 }
 
 export default async function ProjectLayout(props: Props) {
-	const { params: { projectId } } = props;
+	const { projectId } = await props.params;
 
 	const result = await MongoIdValidation.safeParseAsync(projectId);
 

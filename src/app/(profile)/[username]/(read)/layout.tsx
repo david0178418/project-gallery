@@ -12,16 +12,13 @@ import { Button } from '@mui/material';
 
 interface Props {
 	children: ReactNode;
-	params: {
+	params: Promise<{
 		username: string;
-	};
+	}>;
 }
 
 export default async function UserGalleryProfileReadPageLayout(props: Props) {
-	const {
-		children,
-		params: { username: routeUsername },
-	} = props;
+	const { username: routeUsername } = await props.params;
 
 	// Validated in about route
 	const profileUser = await fetchUser(routeUsername);
@@ -77,7 +74,7 @@ export default async function UserGalleryProfileReadPageLayout(props: Props) {
 				)}
 			</Box>
 			<Box textAlign="center">
-				{children}
+				{props.children}
 				<Box paddingTop={5} paddingX={2} paddingBottom={15}>
 					<Link href={Paths.UserRegister}>
 						<Button variant="outlined" size="small">

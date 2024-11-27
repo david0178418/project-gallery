@@ -4,16 +4,13 @@ import ListBottom from '../list-bottom';
 
 interface Props {
 	children: ReactNode;
-	params: {
+	params: Promise<{
 		username: string;
-	};
+	}>;
 }
 
 export default async function UserGalleryProfileReadPageLayout(props: Props) {
-	const {
-		children,
-		params: { username: routeUsername },
-	} = props;
+	const { username: routeUsername } = await props.params;
 
 	// Validated in about route
 	const profileUser = await fetchUser(routeUsername);
@@ -31,7 +28,7 @@ export default async function UserGalleryProfileReadPageLayout(props: Props) {
 
 	return (
 		<>
-			{children}
+			{props.children}
 			<ListBottom userProfile={userProfile} />
 		</>
 	);
