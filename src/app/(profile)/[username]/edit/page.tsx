@@ -5,13 +5,15 @@ import Link from 'next/link';
 import { Paths } from '@common/constants';
 import { Fab } from '@mui/material';
 import { CheckIcon } from '@components/icons';
+import { isTruthy } from '@common/utils';
 import {
 	fetchProjectsByUser,
 	fetchUser,
 	fetchUserGalleryOrder,
 	fetchUserProfileByUsername,
 } from '@server/queries';
-import { isTruthy } from '@common/utils';
+
+export const experimental_ppr = false;
 
 interface Props {
 	params: Promise<{

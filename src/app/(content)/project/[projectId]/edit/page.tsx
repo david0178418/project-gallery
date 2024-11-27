@@ -10,6 +10,8 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { Alert } from '@mui/material';
 
+export const experimental_ppr = false;
+
 interface Props {
 	params: Promise<{
 		projectId: string;

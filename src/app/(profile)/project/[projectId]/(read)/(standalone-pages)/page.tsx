@@ -6,6 +6,9 @@ import { Paths } from '@common/constants';
 import { JournalIcon } from '@components/icons';
 import { Fragment } from 'react';
 
+// TODO Figure out why this page is breaking on ppr
+export const experimental_ppr = false;
+
 interface Props {
 	params: Promise<{
 		projectId: string;

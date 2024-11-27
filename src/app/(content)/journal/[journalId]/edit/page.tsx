@@ -8,6 +8,8 @@ import { DbJournal, WriteJournal } from '@common/types/Journal';
 import { dbProjectToUiProject } from '@server/transforms';
 import { Alert } from '@mui/material';
 
+export const experimental_ppr = false;
+
 interface Props {
 	params: Promise<{
 		journalId?: string;
