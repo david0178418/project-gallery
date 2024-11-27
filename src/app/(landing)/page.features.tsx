@@ -1,4 +1,4 @@
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import Img1 from './img1.png';
@@ -27,8 +27,10 @@ function Features() {
 				sx={{ backgroundColor: '#5271ff11' }}
 			>
 				<Grid
-					xs={12}
-					md={7}
+					size={{
+						xs: 12,
+						md: 7,
+					}}
 					padding={3}
 					textAlign={{
 						xs: 'center',
@@ -51,8 +53,10 @@ function Features() {
 					</ImageWrapper>
 				</Grid>
 				<Grid
-					xs={12}
-					md={4}
+					size={{
+						xs: 12,
+						md: 4,
+					}}
 					padding={5}
 					paddingBottom={{
 						xs: 0,
@@ -78,9 +82,11 @@ function Features() {
 				marginTop={5}
 			>
 				<Grid
-					mdOffset={1}
-					xs={12}
-					md={4}
+					size={{
+						xs: 12,
+						md: 4,
+					}}
+					offset={{ md: 1 }}
 					padding={5}
 					paddingTop={{
 						xs: 0,
@@ -101,8 +107,10 @@ function Features() {
 					</Typography>
 				</Grid>
 				<Grid
-					xs={12}
-					md={5}
+					size={{
+						xs: 12,
+						md: 5,
+					}}
 					padding={3}
 					paddingTop={{
 						xs: 0,
@@ -136,8 +144,10 @@ function Features() {
 				sx={{ backgroundColor: '#5271ff11' }}
 			>
 				<Grid
-					xs={12}
-					md={7}
+					size={{
+						xs: 12,
+						md: 7,
+					}}
 					padding={3}
 					textAlign={{
 						xs: 'center',
@@ -160,8 +170,10 @@ function Features() {
 					</ImageWrapper>
 				</Grid>
 				<Grid
-					xs={12}
-					md={4}
+					size={{
+						xs: 12,
+						md: 4,
+					}}
 					padding={5}
 					paddingBottom={{
 						xs: 0,
