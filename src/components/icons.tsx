@@ -56,6 +56,6 @@ export { default as ShareIcon } from '@mui/icons-material/Share';
 export { default as SocialFacebookIcon } from '@mui/icons-material/Facebook';
 export { default as SocialGitHubIcon } from '@mui/icons-material/GitHub';
 export { default as SocialLinkedInIcon } from '@mui/icons-material/LinkedIn';
-export { default as SocialTwitterIcon } from '@mui/icons-material/Twitter';
+export { default as SocialXIcon } from '@mui/icons-material/X';
 export { default as SocialYouTubeIcon } from '@mui/icons-material/YouTube';
 export { default as SpeedDialIcon } from '@mui/material/SpeedDialIcon';

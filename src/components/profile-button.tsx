@@ -16,7 +16,7 @@ import {
 	SocialFacebookIcon,
 	SocialGitHubIcon,
 	SocialLinkedInIcon,
-	SocialTwitterIcon,
+	SocialXIcon,
 	SocialYouTubeIcon,
 } from './icons';
 
@@ -140,7 +140,8 @@ const WebIcons = {
 	'facebook.com': SocialFacebookIcon,
 	'github.com': SocialGitHubIcon,
 	'linkedin.com': SocialLinkedInIcon,
-	'twitter.com': SocialTwitterIcon,
+	'twitter.com': SocialXIcon,
+	'x.com': SocialXIcon,
 	'youtube.com': SocialYouTubeIcon,
 	'projectgallery.me': (props: ComponentProps<typeof Box>) => {
 		return (
@@ -160,6 +161,7 @@ const WebIconColors: Record<string, string> = {
 	'facebook.com': '#4267B2',
 	'github.com': '#24292F',
 	'linkedin.com': '#0077B5',
-	'twitter.com': '#1D9BF0',
+	'twitter.com': '#000000',
+	'x.com': '#000000',
 	'youtube.com': '#FF0000',
 };
