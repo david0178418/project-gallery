@@ -5,7 +5,7 @@ import { useSetAtom } from 'jotai';
 import { loadingAtom, pushToastMsgAtom } from '@common/atoms';
 import { ConfirmButton } from '@components/common/buttons';
 import updatePassword from './update-pw-action';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
@@ -58,7 +58,7 @@ function UpdatePwPage() {
 				columnSpacing={1}
 				columns={{ xs: 1 }}
 			>
-				<Grid item xs={1}>
+				<Grid size={{ xs: 1 }}>
 					<TextField
 						autoComplete="off"
 						label="New Password"
@@ -71,7 +71,7 @@ function UpdatePwPage() {
 						onChange={e => setPw(e.target.value)}
 					/>
 				</Grid>
-				<Grid item xs={1}>
+				<Grid size={{ xs: 1 }}>
 					<TextField
 						autoComplete="off"
 						label="Confirm Password"
@@ -81,7 +81,7 @@ function UpdatePwPage() {
 						onChange={e => setPw2(e.target.value)}
 					/>
 				</Grid>
-				<Grid item xs={1}>
+				<Grid size={{ xs: 1 }}>
 					<ConfirmButton disabled={!canSave} onClick={handleUpdate}>
 						Save New Password
 					</ConfirmButton>

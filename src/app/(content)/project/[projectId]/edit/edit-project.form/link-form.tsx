@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { CustomLinkValidator } from '@common/types/CustomLink';
 import { Key } from 'ts-key-enum';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 
 interface Props {
 	focus?: boolean;
@@ -44,7 +44,7 @@ function LinkForm(props: Props) {
 	return (
 		<>
 			<Grid container columnGap={1} paddingBottom={2}>
-				<Grid item>
+				<Grid>
 					<TextFieldLengthValidation
 						fullWidth
 						margin="dense"
@@ -55,7 +55,7 @@ function LinkForm(props: Props) {
 						onChange={e => setLabel(e.target.value)}
 					/>
 				</Grid>
-				<Grid item>
+				<Grid>
 					<TextFieldLengthValidation
 						fullWidth
 						margin="dense"

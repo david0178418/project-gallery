@@ -1,7 +1,7 @@
 import { TextFieldLengthValidation } from '@components/common/text-field-length-validation';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import { UiProject } from '@common/types/Project';
 import { inRange } from '@common/utils';
 import {
@@ -23,7 +23,7 @@ function LabelForm(props: Props) {
 	return (
 		<>
 			<Grid container columnGap={1}>
-				<Grid item>
+				<Grid>
 					<TextFieldLengthValidation
 						fullWidth
 						margin="dense"

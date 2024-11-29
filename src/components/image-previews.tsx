@@ -1,5 +1,5 @@
 import { ProjectImage } from '@common/types/Project';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 
 interface Props {
 	images: ProjectImage[];
@@ -23,9 +23,10 @@ function ImagePreviews(props: Props) {
 			{images.map(f => (
 				<Grid
 					key={f.url}
-					item
-					xs={4}
-					md={2}
+					size={{
+						xs: 4,
+						md: 2,
+					}}
 				>
 					<img
 						src={f.url}

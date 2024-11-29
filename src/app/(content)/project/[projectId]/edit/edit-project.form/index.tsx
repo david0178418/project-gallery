@@ -16,7 +16,7 @@ import { moveItemLeft, moveItemRight } from '@common/utils';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import TextField from '@mui/material/TextField';
@@ -158,7 +158,7 @@ function EditProjectForm(props: Props) {
 					onChange={e => handleChange({ title: e.target.value })}
 				/>
 				<Grid container>
-					<Grid item xs>
+					<Grid size="grow">
 						<TextField
 							label="Created"
 							type="date"
@@ -168,7 +168,7 @@ function EditProjectForm(props: Props) {
 							onChange={e => handleChange({ projectCreatedDate: dateInputStrToDate(e.target.value).toISOString() })}
 						/>
 					</Grid>
-					<Grid item xs>
+					<Grid size="grow">
 						<TextField
 							label="Last Updated"
 							type="date"

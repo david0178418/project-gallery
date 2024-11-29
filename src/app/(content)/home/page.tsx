@@ -3,7 +3,7 @@ import { fetchJournals, fetchProjects } from '@server/queries';
 import JournalCard from '@components/journal-card';
 import ProjectCard from '@components/project-card';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import { Alert, Typography } from '@mui/material';
 
 export default
@@ -51,9 +51,10 @@ async function HomePage() {
 				{projects.slice(0, 2).map(p => (
 					<Grid
 						key={p._id.toString()}
-						item
-						xs={12}
-						md={6}
+						size={{
+							xs: 12,
+							md: 6,
+						}}
 					>
 						{/** div hack to get around mui async child issue */}
 						<div>

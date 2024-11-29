@@ -6,7 +6,7 @@ import { Paths, SpecialCharacterCodes } from '@common/constants';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -37,12 +37,11 @@ function Hero() {
 					justifyContent="center"
 					marginTop={4}
 				>
-					<Grid
-						item
-						xs={12}
-						sm={6}
-						lg={4}
-					>
+					<Grid size={{
+						xs: 12,
+						sm: 6,
+						lg: 4,
+					}}>
 						<List dense>
 							{[
 								<>

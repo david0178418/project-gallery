@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { LeftRail } from './page-frame/left-rail';
 import { BottomNav } from './page-frame/bottom-nav';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import CommonStuff from './common-stuff';
 import ThemeComponent from '@app/theme-component';
 
@@ -35,9 +35,10 @@ function ContentLayout(props: Props) {
 					marginY={0}
 				>
 					<Grid
-						item
-						sm={2}
-						md={4}
+						size={{
+							sm: 2,
+							md: 4,
+						}}
 						sx={{
 							display: {
 								xs: 'none',
@@ -53,10 +54,11 @@ function ContentLayout(props: Props) {
 						</div>
 					</Grid>
 					<Grid
-						item
-						xs={16}
-						sm={14}
-						md={12}
+						size={{
+							xs: 16,
+							sm: 14,
+							md: 12,
+						}}
 						style={{
 							maxHeight: '100%',
 							overflow: 'hidden',

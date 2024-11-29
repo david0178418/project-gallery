@@ -1,6 +1,6 @@
 import { ProjectImage } from '@common/types/Project';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import IconButton from '@mui/material/IconButton';
 import {
 	ArrowLeftIcon,
@@ -33,9 +33,8 @@ function ImageList(props: Props) {
 		>
 			{images.map((f, i) => (
 				<Grid
-					item
 					key={f.url}
-					xs={4}
+					size={{ xs: 4 }}
 				>
 					<Box
 						width="100%"
