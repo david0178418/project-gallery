@@ -1,13 +1,10 @@
-import Box from '@mui/material/Box';
-import { fetchProject } from '@server/queries';
+import { fetchProject, fetchProjectHasPosts } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
-import { ProfileButton, ProfileLinkButton } from '@components/profile-button';
-import { Paths } from '@common/constants';
+import ListBottom from '../list-bottom';
+import { ProfileLinkButton } from '@components/profile-button';
 import { JournalIcon } from '@components/icons';
-import { Fragment } from 'react';
-
-// TODO Figure out why this page is breaking on ppr
-export const experimental_ppr = false;
+import { Paths } from '@common/constants';
+import { Box } from '@mui/material';
 
 interface Props {
 	params: Promise<{
@@ -15,8 +12,7 @@ interface Props {
 	}>;
 }
 
-export default
-async function ProjectPage(props: Props) {
+export default async function ProjectLayout(props: Props) {
 	const { projectId } = await props.params;
 
 	const result = await MongoIdValidation.safeParseAsync(projectId);
@@ -24,7 +20,7 @@ async function ProjectPage(props: Props) {
 	if(!result.success) {
 		return (
 			<>
-				User not found.
+				Project not found.
 			</>
 		);
 	}
@@ -41,33 +37,20 @@ async function ProjectPage(props: Props) {
 		);
 	}
 
+	const userHasPosts = await fetchProjectHasPosts(project._id.toString());
+
 	return (
-		<>
-			<Box textAlign="center">
+		<Box textAlign="center">
+			{userHasPosts && (
 				<ProfileLinkButton
+					prefetch
 					icon={JournalIcon}
 					href={Paths.ProjectJournals(projectId)}
 				>
 					Project Posts
 				</ProfileLinkButton>
-				{project.customItems.map((l, i) => (
-					<Fragment key={i}>
-						{l.type === 'link' && (
-							<ProfileLinkButton
-								href={l.value}
-								target="_blank"
-							>
-								{l.label}
-							</ProfileLinkButton>
-						)}
-						{l.type === 'text' && (
-							<ProfileButton>
-								{l.label}
-							</ProfileButton>
-						)}
-					</Fragment>
-				))}
-			</Box>
-		</>
+			)}
+			<ListBottom project={project} />
+		</Box>
 	);
 }
