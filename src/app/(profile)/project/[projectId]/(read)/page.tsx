@@ -1,6 +1,6 @@
 import { fetchProject, fetchProjectHasPosts } from '@server/queries';
 import { MongoIdValidation } from '@server/validations';
-import ListBottom from '../list-bottom';
+import ListBottom from './list-bottom';
 import { ProfileLinkButton } from '@components/profile-button';
 import { JournalIcon } from '@components/icons';
 import { Paths } from '@common/constants';
@@ -12,7 +12,7 @@ interface Props {
 	}>;
 }
 
-export default async function ProjectLayout(props: Props) {
+export default async function ProjectPage(props: Props) {
 	const { projectId } = await props.params;
 
 	const result = await MongoIdValidation.safeParseAsync(projectId);

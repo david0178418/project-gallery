@@ -78,7 +78,7 @@ export default async function UserGalleryProfileReadPageLayout(props: Props) {
 				<Box paddingTop={5} paddingX={2} paddingBottom={15}>
 					<Link href={Paths.UserRegister}>
 						<Button variant="outlined" size="small">
-							Create your own project gallery!
+							Create your own project gallery / Login
 						</Button>
 					</Link>
 				</Box>
